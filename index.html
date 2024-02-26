@@ -1,0 +1,161 @@
+<!doctype HTML>
+<html lang="en">
+<head>
+    <title>HTML Structure</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="HTML">
+    <meta name="description" content="HTML Tutorial">
+    <meta name="author" content="Andrey Mironov">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="./assets/logo.png">
+</head>
+<body>
+
+<br>
+<hr>
+<br>
+
+<main>
+    <header>
+        <h1>
+            <a href="https://сенла.рф/"
+               target="_ blank">
+                Senla!
+            </a>
+        </h1>
+        <img src="./assets/i.webp" alt="asd">
+        <div>
+            <b>Bold text</b>
+            <strong>Important text</strong>
+            <i>Italic text</i>
+            <em>Emphasized text</em>
+            <mark>Marked text</mark>
+        </div>
+        <div>
+            <small>Smaller text</small>
+            <del>Deleted text</del>
+            <ins>Inserted text</ins>
+            <sub>Subscript text</sub>
+            <sup>Superscript text</sup>
+        </div>
+    </header>
+
+    <br>
+    <hr>
+    <br>
+
+    <article>
+        <form action="./index.html">
+            <fieldset>
+                <legend>User data</legend>
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName">
+                <label for="age">Age:</label>
+                <input type="text" id="age" name="age">
+                <input type="submit">
+                <input type="reset">
+                <input type="hidden">
+            </fieldset>
+        </form>
+    </article>
+
+    <br>
+    <hr>
+    <br>
+
+    <article>
+        <form>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="password">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="email">
+
+            <label for="tel">Telephone:</label>
+            <input type="tel" id="tel" placeholder="telephone">
+
+            <label for="date">Meeting date</label>
+            <input id="date" type="date">
+
+            <label for="time">Meeting time</label>
+            <input id="time" type="time">
+        </form>
+    </article>
+
+    <br>
+    <hr>
+    <br>
+
+    <article>
+        <form action="./index.html">
+            <label for="dataList">Check please</label>
+            <input id="dataList" list="language">
+            <datalist id="language">
+                <option value="TypeScript">
+                <option value="C++">
+                <option value="PHP">
+                <option value="Swift">
+                <option value="Go">
+            </datalist>
+            <input type="submit">
+        </form>
+        <br>
+        <form action="./index.html">
+            <label for="select">Choose a language:</label>
+            <select name="select" id="select">
+                <option value="JavaScript">JavaScript</option>
+                <option value="Java">Java</option>
+                <option value="Python">Python</option>
+            </select>
+            <input type="submit">
+        </form>
+    </article>
+
+    <br>
+    <hr>
+    <br>
+
+    <article>
+        <form>
+            <label>
+                <input type="radio" name="framework" value="Vue">Vue
+                <input type="radio" name="framework" value="Angular">Angular
+                <input type="radio" name="framework" value="Next">Next.js
+            </label>
+            <label>
+                <input type="checkbox">
+                <input type="file">
+                <input type="color">
+            </label>
+        </form>
+    </article>
+
+    <br>
+    <hr>
+    <br>
+
+    <footer>
+        <form action="./index.html">
+            <label for="textarea">Send your message:</label>
+            <textarea name="message"
+                      rows="2"
+                      cols="20"
+                      id="textarea"
+            >
+    </textarea>
+            <input type="submit">
+        </form>
+    </footer>
+</main>
+
+<br>
+<hr>
+<br>
+
+</body>
+</html>
