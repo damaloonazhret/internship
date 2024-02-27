@@ -1,7 +1,2 @@
-| Module           | Link                                                         |
-|------------------|----------------------------------------------------------------|
-| Iteration 1: HTML| [Click Me!](https://damaloonazhret.github.io/internship/HTML/) |
-| ...              | ...                                                            |
-
 ### HTML
 - [Iteration 1: HTML](https://damaloonazhret.github.io/internship/HTML/)
