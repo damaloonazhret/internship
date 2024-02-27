@@ -9,35 +9,69 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" type="image/x-icon" href="./assets/logo.png">
 </head>
-<body>
+<body bgcolor="#fff8dc">
 
-<br>
 <hr>
-<br>
 
-<main>
+<main align="center">
     <header>
-        <h1>
-            <a href="https://сенла.рф/"
-               target="_ blank">
-                Senla!
-            </a>
-        </h1>
-        <img src="./assets/i.webp" alt="asd">
-        <div>
-            <b>Bold text</b>
-            <strong>Important text</strong>
-            <i>Italic text</i>
-            <em>Emphasized text</em>
-            <mark>Marked text</mark>
-        </div>
-        <div>
-            <small>Smaller text</small>
-            <del>Deleted text</del>
-            <ins>Inserted text</ins>
-            <sub>Subscript text</sub>
-            <sup>Superscript text</sup>
-        </div>
+        <a href="https://сенла.рф/"
+           target="_blank">
+            <img src="./assets/i.webp" alt="asd">
+        </a>
+
+        <table border="1" align="center" cellpadding="2" cellspacing="2">
+            <caption>Tags</caption>
+            <thead>
+            <tr>
+                <td colspan="5">Header for table</td>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr>
+                <td>
+                    <b>Bold text</b>
+                </td>
+                <td>
+                    <strong>Important text</strong>
+                </td>
+                <td>
+                    <sup>Superscript text</sup>
+                </td>
+                <td>
+                    <sub>Subscript text</sub>
+                </td>
+                <td>
+                    <ins>Inserted text</ins>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <del>Deleted text</del>
+                </td>
+                <td>
+                    <small>Smaller text</small>
+                </td>
+                <td>
+                    <mark>Marked text</mark>
+                </td>
+                <td>
+                    <i>Italic text</i>
+                </td>
+                <td>
+                    <em>Emphasized text</em>
+                </td>
+            </tr>
+
+            </tbody>
+            <tfoot>
+            <tr>
+                <td colspan="5">Footer for table</td>
+            </tr>
+            </tfoot>
+        </table>
     </header>
 
     <br>
@@ -93,8 +127,10 @@
 
     <article>
         <form action="./index.html">
-            <label for="dataList">Check please</label>
+
+            <label for="dataList">Check:</label>
             <input id="dataList" list="language">
+
             <datalist id="language">
                 <option value="TypeScript">
                 <option value="C++">
@@ -102,16 +138,20 @@
                 <option value="Swift">
                 <option value="Go">
             </datalist>
+
             <input type="submit">
         </form>
         <br>
         <form action="./index.html">
-            <label for="select">Choose a language:</label>
+
+            <label for="select">Choose:</label>
+
             <select name="select" id="select">
                 <option value="JavaScript">JavaScript</option>
                 <option value="Java">Java</option>
                 <option value="Python">Python</option>
             </select>
+
             <input type="submit">
         </form>
     </article>
@@ -126,10 +166,7 @@
                 <input type="radio" name="framework" value="Vue">Vue
                 <input type="radio" name="framework" value="Angular">Angular
                 <input type="radio" name="framework" value="Next">Next.js
-            </label>
-            <label>
                 <input type="checkbox">
-                <input type="file">
                 <input type="color">
             </label>
         </form>
@@ -142,12 +179,11 @@
     <footer>
         <form action="./index.html">
             <label for="textarea">Send your message:</label>
-            <textarea name="message"
-                      rows="2"
-                      cols="20"
-                      id="textarea"
-            >
-    </textarea>
+            <br>
+            <textarea name="message" rows="2" cols="20" id="textarea">
+
+            </textarea>
+            <br>
             <input type="submit">
         </form>
     </footer>
@@ -155,7 +191,6 @@
 
 <br>
 <hr>
-<br>
 
 </body>
 </html>
