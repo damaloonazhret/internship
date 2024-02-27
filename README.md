@@ -1,1 +1,4 @@
-[Iteration 1: HTML](https://damaloonazhret.github.io/internship/HTML/)
+| Модуль           | Ссылка                                                |
+|------------------|-------------------------------------------------------|
+| Iteration 1: HTML| [Ссылка](https://damaloonazhret.github.io/internship/HTML/) |
+| ...              | ...                                                   |
