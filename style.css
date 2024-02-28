@@ -1,11 +1,23 @@
 :root {
-    --background-color-dark: #333;
-    --background-color-interaction-dark: #8c8c8c;
-    --text-color-dark: #fff;
-    --background-color-light: #fff;
+    --background-color-dark: #19253b;
+    --background-color-interaction-dark: #e8e8e8;
+    --text-color-dark-input-label: #dc0155;
+    --text-color-dark: #ffc548;
+
+    --background-color-light: #ffffff;
     --background-color-interaction-light: #8c8c8c;
+    --text-color-light-input-label: #000dff;
     --text-color-light: #333;
+
     --font-family-main: consolas, "Times New Roman", serif;
+}
+
+input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    outline: none;
 }
 
 body {
@@ -16,6 +28,18 @@ body {
     text-align: center;
 }
 
+body::-webkit-scrollbar {
+    width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
 @media (prefers-color-scheme: dark) {
     body {
         background-color: var(--background-color-dark);
@@ -24,6 +48,46 @@ body {
         input, select, textarea {
             background: var(--background-color-interaction-dark);
             color: var(--text-color-dark);
+        }
+
+        .data__form > fieldset > legend ~ label {
+            color: var(--text-color-dark-input-label);
+        }
+
+        .data__form > label {
+            color: var(--text-color-dark-input-label);
+        }
+
+        .data input {
+            border-bottom: 1px solid var(--background-color-interaction-dark);
+        }
+
+        .data textarea {
+            border: 1px solid var(--background-color-interaction-dark);
+            border-top: none;
+        }
+
+        table td:hover {
+            background-color: var(--background-color-interaction-dark);
+            color: var(--background-color-dark)
+        }
+
+        fieldset > legend {
+            color: var(--text-color-dark-input-label);
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background-color: var(--background-color-interaction-dark);
+        }
+
+        textarea::-webkit-scrollbar-thumb {
+            background-color: var(--background-color-interaction-dark);
+        }
+
+        .radio input[type=radio]:checked, input[type=checkbox]:checked {
+            border-color: var(--background-color-dark);
+            background-color: var(--text-color-dark);
+            box-shadow: inset 1px 2px 3px 0 rgba(0,0,0,0.1);
         }
     }
 }
@@ -36,6 +100,10 @@ body {
         input, select, textarea {
             background: var(--background-color-light);
             color: var(--text-color-light);
+        }
+
+        .data__form > fieldset > legend ~ label {
+            color: var(--text-color-light-input-label);
         }
     }
 }
@@ -54,41 +122,37 @@ table td {
     cursor: not-allowed;
 }
 
-table td:hover {
-    background-color: green;
-}
-
-#firstRow span.bold {
+#firstRow .bold {
     font-weight: 800;
 }
 
-#firstRow span.strong {
+#firstRow .strong {
     font-weight: 100;
 }
 
-#firstRow span.sup {
+#firstRow .sup {
     vertical-align: super;
     font-size: smaller;
 }
 
-#firstRow span.sub {
+#firstRow .sub {
     vertical-align: sub;
     font-size: smaller;
 }
 
-#firstRow span.ins {
+#firstRow .ins {
     text-decoration: underline;
 }
 
-#secondRow span.del {
+#secondRow .del {
     text-decoration: line-through;
 }
 
-#secondRow div.small {
+#secondRow .small {
     font-size: 80%;
 }
 
-#secondRow div.mark {
+#secondRow .mark {
     position: relative;
 }
 
@@ -104,10 +168,79 @@ table td:hover {
     z-index: -1;
 }
 
-#secondRow div.i {
+#secondRow .i {
     font-style: italic;
 }
 
-#secondRow div.em {
+#secondRow .em {
+    font-style: oblique;
+}
 
+.data input, .data select, .data textarea {
+    border: 0;
+    outline: none;
+    background-color: transparent;
+}
+
+[data-submit], [data-reset] {
+    cursor: pointer !important;
+}
+
+.button-hover:hover {
+    cursor: pointer;
+    background-color: rgba(152, 152, 152, 0.39);
+}
+
+[data-footer-label] {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+textarea {
+    resize: none;
+}
+
+textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+select:focus {
+    background-color: var(--background-color-dark);
+    border: none;
+    outline: none;
+}
+
+.radio input[type=radio]:checked + label {
+    color: var(--text-color-dark);
+    margin: 0;
+    padding: 0;
+}
+
+.radio input[type=radio] {
+    display: inline-block;
+    position: relative;
+    height: 20px;
+    width: 20px;
+    border-radius: 20px;
+    border: 3px solid var(--background-color-interaction-dark);
+    background-color: var(--text-color-dark-input-label);
+    transition: .5s all;
+}
+
+input[type=checkbox] {
+    display: inline-block;
+    position: relative;
+    height: 20px;
+    width: 20px;
+    background-color: var(--text-color-dark-input-label);
+    box-shadow: 0 0 1px 1px rgb(255, 255, 255);
+    transition: .5s all;
 }
