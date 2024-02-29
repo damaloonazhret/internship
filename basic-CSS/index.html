@@ -1,0 +1,215 @@
+<!doctype HTML>
+<html lang="en">
+<head>
+    <title>HTML Structure</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="HTML">
+    <meta name="description" content="HTML Tutorial">
+    <meta name="author" content="Andrey Mironov">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="HTML">
+    <meta property="og:title" content="HTML Structure">
+    <meta property="og:description" content="HTML Tutorial">
+    <meta property="og:url" content="https://damaloonazhret.github.io/internship/HTML/">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:image"
+          content="https://сенла.рф/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/telecommunications.jpg.webp">
+    <meta property="og:image:width" content="968">
+    <meta property="og:image:height" content="504">
+    <link rel="icon" type="image/x-icon" href="./assets/logo.png">
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+
+<hr>
+
+<main>
+    <header class="header">
+        <a href="https://сенла.рф/"
+           target="_blank">
+            <p></p>
+            <img src="./assets/i.webp" alt="asd">
+        </a>
+
+        <table border="1" align="center" cellpadding="2" cellspacing="2">
+            <caption>Tags</caption>
+            <thead>
+            <tr>
+                <td colspan="5">Header for table</td>
+            </tr>
+            </thead>
+            <tbody>
+
+            <tr id="firstRow">
+                <td>
+                    <span class="bold">Bold text</span>
+                </td>
+                <td>
+                    <span class="strong">Important text</span>
+                </td>
+                <td>
+                    <span class="sup">Superscript text</span>
+                </td>
+                <td>
+                    <span class="sub">Subscript text</span>
+                </td>
+                <td>
+                    <span class="ins">Inserted text</span>
+                </td>
+            </tr>
+
+            <tr id="secondRow">
+                <td>
+                    <span class="del">Deleted text</span>
+                </td>
+                <td>
+                    <span class="small">Smaller text</span>
+                </td>
+                <td>
+                    <span class="mark">Marked text</span>
+                </td>
+                <td>
+                    <span class="i">Italic text</span>
+                </td>
+                <td>
+                    <span class="em">Emphasized text</span>
+                </td>
+            </tr>
+
+            </tbody>
+            <tfoot id="tfoot">
+            <tr>
+                <td colspan="5">Footer for table</td>
+            </tr>
+            </tfoot>
+        </table>
+    </header>
+
+    <br>
+    <hr>
+    <br>
+
+    <article class="data">
+        <form class="data__form" action="./index.html">
+            <fieldset>
+                <legend>User data</legend>
+                <label for="firstName">First Name:</label>
+                <input type="text" id="firstName" name="firstName">
+                <label for="lastName">Last Name:</label>
+                <input type="text" id="lastName" name="lastName">
+                <label for="age">Age:</label>
+                <input type="number" id="age" name="age">
+                <input class="button-hover" type="submit">
+                <input class="button-hover" type="reset">
+                <input type="hidden">
+            </fieldset>
+        </form>
+    </article>
+
+    <br>
+    <hr>
+    <br>
+
+    <article class="data">
+        <form class="data__form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name">
+
+            <label for="password">Password:</label>
+            <input type="password" id="password">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email">
+
+            <label for="tel">Telephone:</label>
+            <input type="tel" id="tel">
+
+            <label for="date">Meeting date</label>
+            <input id="date" type="date">
+
+            <label for="time">Meeting time</label>
+            <input id="time" value="13:30" type="time">
+        </form>
+    </article>
+
+    <br>
+    <hr>
+    <br>
+
+    <article class="data">
+        <form class="data__form" action="./index.html">
+
+            <label for="dataList">Check:</label>
+            <input id="dataList" list="language">
+
+            <datalist id="language">
+                <option value="TypeScript">
+                <option value="C++">
+                <option value="PHP">
+                <option value="Swift">
+                <option value="Go">
+            </datalist>
+
+            <input class="button-hover" type="submit">
+        </form>
+        <br>
+        <form action="./index.html">
+
+            <label for="select">Choose:</label>
+
+            <select name="select" id="select">
+                <option value="JavaScript">JavaScript</option>
+                <option value="Java">Java</option>
+                <option value="Python">Python</option>
+            </select>
+
+            <input class="button-hover" type="submit">
+        </form>
+    </article>
+
+    <br>
+    <hr>
+    <br>
+
+    <article class="data">
+        <form class="data__form">
+            <label class="radio">
+                <input id="vue" type="radio" name="framework" value="Vue">
+                <label for="vue">Vue</label>
+            </label>
+            <label class="radio">
+                <input id="angular" type="radio" name="framework" value="Angular">
+                <label for="angular">Angular</label>
+            </label>
+            <label class="radio">
+                <input id="next" type="radio" name="framework" value="Next" checked>
+                <label for="next">Next.js</label>
+            </label>
+            <input style="border: none" type="checkbox">
+            <input id="color" style="border: none" type="color">
+        </form>
+    </article>
+
+    <br>
+    <hr>
+    <br>
+
+    <footer class="data">
+        <form class="data__form" action="./index.html">
+            <label data-footer-label for="textarea">Send your message:</label>
+            <br>
+            <textarea name="message" rows="2" cols="20" id="textarea">
+
+            </textarea>
+            <br>
+            <input class="button-hover" type="submit">
+        </form>
+    </footer>
+</main>
+
+<br>
+<hr>
+
+</body>
+</html>
