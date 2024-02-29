@@ -22,9 +22,8 @@
 </head>
 <body>
 
-<hr>
 
-<main>
+<main class="main">
     <header class="header">
         <a href="https://сенла.рф/"
            target="_blank">
@@ -86,11 +85,8 @@
         </table>
     </header>
 
-    <br>
-    <hr>
-    <br>
 
-    <article class="data">
+    <article class="data content">
         <form class="data__form" action="./index.html">
             <fieldset>
                 <legend>User data</legend>
@@ -107,109 +103,104 @@
         </form>
     </article>
 
-    <br>
-    <hr>
-    <br>
 
-    <article class="data">
+    <article class="data footer">
         <form class="data__form">
-            <label for="name">Name:</label>
-            <input type="text" id="name" name="name">
-
-            <label for="password">Password:</label>
-            <input type="password" id="password">
-
-            <label for="email">Email:</label>
-            <input type="email" id="email">
-
-            <label for="tel">Telephone:</label>
-            <input type="tel" id="tel">
-
-            <label for="date">Meeting date</label>
-            <input id="date" type="date">
-
-            <label for="time">Meeting time</label>
-            <input id="time" value="13:30" type="time">
+            <label>
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name">
+            </label>
+            <label>
+                <label for="password">Password:</label>
+                <input type="password" id="password">
+            </label>
+            <label>
+                <label for="email">Email:</label>
+                <input type="email" id="email">
+            </label>
+            <label>
+                <label for="tel">Telephone:</label>
+                <input type="tel" id="tel">
+            </label>
+            <label>
+                <label for="date">Meeting date</label>
+                <input id="date" type="date">
+            </label>
+            <label>
+                <label for="time">Meeting time</label>
+                <input id="time" value="13:30" type="time">
+            </label>
         </form>
     </article>
 
-    <br>
-    <hr>
-    <br>
+    <div class="items">
+        <article class="data check">
+            <form class="data__form" action="./index.html">
 
-    <article class="data">
-        <form class="data__form" action="./index.html">
+                <label for="dataList">Check:</label>
+                <input id="dataList" list="language">
 
-            <label for="dataList">Check:</label>
-            <input id="dataList" list="language">
+                <datalist id="language">
+                    <option value="TypeScript">
+                    <option value="C++">
+                    <option value="PHP">
+                    <option value="Swift">
+                    <option value="Go">
+                </datalist>
 
-            <datalist id="language">
-                <option value="TypeScript">
-                <option value="C++">
-                <option value="PHP">
-                <option value="Swift">
-                <option value="Go">
-            </datalist>
+                <input class="button-hover" type="submit">
+            </form>
+            <form action="./index.html">
 
-            <input class="button-hover" type="submit">
-        </form>
-        <br>
-        <form action="./index.html">
+                <label for="select">Choose:</label>
 
-            <label for="select">Choose:</label>
+                <select name="select" id="select">
+                    <option value="JavaScript">JavaScript</option>
+                    <option value="Java">Java</option>
+                    <option value="Python">Python</option>
+                </select>
 
-            <select name="select" id="select">
-                <option value="JavaScript">JavaScript</option>
-                <option value="Java">Java</option>
-                <option value="Python">Python</option>
-            </select>
+                <input class="button-hover" type="submit">
+            </form>
+        </article>
 
-            <input class="button-hover" type="submit">
-        </form>
-    </article>
 
-    <br>
-    <hr>
-    <br>
+        <article class="data">
+            <form id="radio" class="data__form">
+                <label class="radio">
+                    <input id="vue" type="radio" name="framework" value="Vue">
+                    <label for="vue">Vue</label>
+                </label>
+                <label class="radio">
+                    <input id="angular" type="radio" name="framework" value="Angular">
+                    <label for="angular">Angular</label>
+                </label>
+                <label class="radio">
+                    <input id="next" type="radio" name="framework" value="Next" checked>
+                    <label for="next">Next.js</label>
+                </label>
+                <div>
+                    <input style="border: none" type="checkbox">
+                    <input id="color" style="border: none" type="color">
+                </div>
+            </form>
+        </article>
 
-    <article class="data">
-        <form class="data__form">
-            <label class="radio">
-                <input id="vue" type="radio" name="framework" value="Vue">
-                <label for="vue">Vue</label>
-            </label>
-            <label class="radio">
-                <input id="angular" type="radio" name="framework" value="Angular">
-                <label for="angular">Angular</label>
-            </label>
-            <label class="radio">
-                <input id="next" type="radio" name="framework" value="Next" checked>
-                <label for="next">Next.js</label>
-            </label>
-            <input style="border: none" type="checkbox">
-            <input id="color" style="border: none" type="color">
-        </form>
-    </article>
 
-    <br>
-    <hr>
-    <br>
-
-    <footer class="data">
-        <form class="data__form" action="./index.html">
-            <label data-footer-label for="textarea">Send your message:</label>
-            <br>
-            <textarea name="message" rows="2" cols="20" id="textarea">
+        <footer class="data send">
+            <form class="data__form" action="./index.html">
+                <label data-footer-label for="textarea">Send your message:</label>
+                <textarea class="textarea" name="message" rows="2" cols="20" id="textarea">
 
             </textarea>
-            <br>
-            <input class="button-hover" type="submit">
-        </form>
-    </footer>
+                <input class="button-hover" type="submit">
+            </form>
+        </footer>
+    </div>
+
+
 </main>
 
-<br>
-<hr>
 
 </body>
 </html>

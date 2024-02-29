@@ -404,3 +404,57 @@ input[type=checkbox] {
     width: 20px;
     transition: var(--transition-all);
 }
+
+.main {
+    display: grid;
+    grid-template-areas:
+    "header header header"
+    "content content content"
+    "items items items"
+    "footer footer footer";
+    gap: 20px;
+    padding: 10px 20px 10px 20px;
+}
+
+.header {
+    grid-area: header;
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.content {
+    grid-area: content;
+}
+
+.items {
+    display: grid;
+    grid-template-columns: repeat(3, 100px);
+    grid-area: items;
+    justify-content: space-between;
+    border: 2px solid red;
+    padding: 10px;
+}
+
+.items, #radio {
+    display: grid;
+}
+
+.items .radio {
+    grid-template-rows: repeat(4, auto);
+}
+
+.textarea {
+    width: 60px;
+}
+
+.footer {
+    grid-area: footer;
+    border: 2px solid red;
+    padding: 10px;
+}
+
+.footer > form {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-template-rows: repeat(2, auto);
+}
