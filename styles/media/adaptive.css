@@ -1,0 +1,135 @@
+@media screen and (max-width: 1280px) {
+    .main {
+        display: grid;
+        gap: 20px;
+        padding: 0 20px 20px 20px;
+        grid-template-rows: repeat(4, 22vh);
+        height: 100%;
+    }
+
+    #firstRow .bold {
+        line-height: 0;
+    }
+
+    .header {
+        display: grid;
+        column-gap: 10px;
+        grid-row: 1 / 2;
+        position: sticky;
+        top: 0;
+    }
+
+    .header > a {
+        display: none;
+        opacity: 0;
+        visibility: hidden;
+    }
+
+    .header > table {
+        width: 100%;
+        grid-row: 1 / 3;
+    }
+
+    .content {
+        grid-row: 2 / 3;
+    }
+
+    .content > form {
+        height: 100%;
+    }
+
+    .content > form > fieldset {
+        height: 100%;
+        padding: 0;
+        display: grid;
+        grid-template-rows: repeat(2, auto);
+        align-items: center;
+    }
+
+    .content > form > fieldset input {
+        width: 14vw;
+    }
+
+    .content > form > fieldset > label:nth-child(2) {
+        grid-row: 1 / 2;
+    }
+
+    .content > form > fieldset > label:nth-child(3) {
+        grid-row: 2 / 3;
+    }
+
+    .items {
+        display: grid;
+        grid-template-columns: repeat(3, 100px);
+        grid-row: 3 / 4;
+        justify-content: space-between;
+        align-content: center;
+        border: 2px solid red;
+    }
+
+    .items, #radio {
+        display: grid;
+        height: 100%;
+    }
+
+    #radio > label, #radio > div {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        justify-content: space-between;
+        align-content: center;
+    }
+
+    .items .radio {
+        grid-template-rows: repeat(4, auto);
+    }
+
+    .textarea {
+        width: 60px;
+    }
+
+    .footer {
+        grid-row: 4 / 5;
+        border: 2px solid red;
+    }
+
+    .footer > form {
+        display: grid;
+        grid-template-columns: repeat(2, auto);
+        grid-template-rows: repeat(3, auto);
+        row-gap: 5%;
+        width: 100%;
+        height: 100%;
+    }
+
+    .footer > form > label {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        position: relative;
+    }
+
+    input[type="date"] {
+        margin-right: 30px;
+        -webkit-appearance: textfield;
+    }
+
+    input[type="date"]::-webkit-calendar-picker-indicator {
+        position: absolute;
+        right: 5px;
+        top: 50%;
+        transform: translateY(-50%);
+        display: none;
+    }
+
+    .footer > form > label > input {
+        width: auto;
+    }
+
+    #dataList {
+        width: 70%;
+    }
+}
+
+@media screen and (min-width: 1280px) {
+
+}

@@ -18,16 +18,14 @@
     <meta property="og:image:width" content="968">
     <meta property="og:image:height" content="504">
     <link rel="icon" type="image/x-icon" href="./assets/logo.png">
-    <link rel="stylesheet" href="./style.css">
+    <link rel="stylesheet" href="./styles/style.css">
 </head>
 <body>
-
 
 <main class="main">
     <header class="header">
         <a href="https://сенла.рф/"
            target="_blank">
-            <p></p>
             <img src="./assets/i.webp" alt="asd">
         </a>
 
@@ -85,49 +83,51 @@
         </table>
     </header>
 
-
     <article class="data content">
         <form class="data__form" action="./index.html">
             <fieldset>
                 <legend>User data</legend>
-                <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName">
-                <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName">
-                <label for="age">Age:</label>
-                <input type="number" id="age" name="age">
-                <input class="button-hover" type="submit">
-                <input class="button-hover" type="reset">
+                <label>
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age">
+                </label>
+                <label>
+                    <input class="button-hover" type="submit">
+                    <input class="button-hover" type="reset">
+                </label>
                 <input type="hidden">
             </fieldset>
         </form>
     </article>
 
-
     <article class="data footer">
-        <form class="data__form">
-            <label>
+        <form class="data__form data__form-table-cell">
+            <label class="tr">
                 <label for="name">Name:</label>
                 <input type="text" id="name" name="name">
             </label>
-            <label>
+            <label class="tr">
                 <label for="password">Password:</label>
                 <input type="password" id="password">
             </label>
-            <label>
+            <label class="tr">
                 <label for="email">Email:</label>
                 <input type="email" id="email">
             </label>
-            <label>
+            <label class="tr">
                 <label for="tel">Telephone:</label>
                 <input type="tel" id="tel">
             </label>
-            <label>
-                <label for="date">Meeting date</label>
+            <label class="tr">
+                <label for="date">Meeting date:</label>
                 <input id="date" type="date">
             </label>
-            <label>
-                <label for="time">Meeting time</label>
+            <label class="tr">
+                <label for="time">Meeting time:</label>
                 <input id="time" value="13:30" type="time">
             </label>
         </form>
@@ -164,7 +164,6 @@
             </form>
         </article>
 
-
         <article class="data">
             <form id="radio" class="data__form">
                 <label class="radio">
@@ -186,7 +185,6 @@
             </form>
         </article>
 
-
         <footer class="data send">
             <form class="data__form" action="./index.html">
                 <label data-footer-label for="textarea">Send your message:</label>
@@ -198,9 +196,7 @@
         </footer>
     </div>
 
-
 </main>
-
 
 </body>
 </html>

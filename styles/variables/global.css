@@ -1,0 +1,14 @@
+:root {
+    --background-color-dark: #19253b;
+    --background-color-interaction-dark: #e8e8e8;
+    --text-color-dark-input-label: #dc0155;
+    --text-color-dark: #ffc548;
+
+    --background-color-light: #ffffff;
+    --background-color-interaction-light: #404b62;
+    --text-color-light-input-label: #ff0000;
+    --text-color-light: #000000;
+
+    --font-family-main: consolas, "Times New Roman", serif;
+    --transition-all: .5s all;
+}
