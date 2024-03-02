@@ -295,6 +295,10 @@ table td {
 #firstRow .bold {
     font-weight: 800;
     line-height: 2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 #firstRow .strong {
