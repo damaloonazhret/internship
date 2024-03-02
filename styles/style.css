@@ -1,5 +1,6 @@
 @import "reset.css";
 @import "./media/themes.css";
+@import './media/adaptive.css';
 
 body::-webkit-scrollbar {
     width: 5px;
@@ -142,4 +143,3 @@ input[type=checkbox] {
     transition: var(--transition-all);
 }
 
-@import './media/adaptive.css';
