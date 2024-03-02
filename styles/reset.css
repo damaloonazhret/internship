@@ -6,6 +6,15 @@ input {
     outline: none;
 }
 
+textarea {
+    resize: none;
+}
+
+select:focus {
+    border: none;
+    outline: none;
+}
+
 html, body {
     height: 100%;
 }
