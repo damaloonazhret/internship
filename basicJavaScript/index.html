@@ -1,0 +1,273 @@
+<!doctype HTML>
+<html lang="en">
+<head>
+    <title>HTML Structure</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="basic JavaScript">
+    <meta name="description" content="basic JavaScript">
+    <meta name="author" content="Andrey Mironov">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="basic JavaScript">
+    <meta property="og:title" content="basic JavaScript">
+    <meta property="og:description" content="basic JavaScript Tutorial">
+    <meta property="og:url" content="https://damaloonazhret.github.io/internship/CSS/">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:image"
+          content="https://сенла.рф/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/telecommunications.jpg.webp">
+    <meta property="og:image:width" content="968">
+    <meta property="og:image:height" content="504">
+    <link rel="icon" type="image/x-icon" href="./assets/logo.png">
+    <link rel="stylesheet" href="./styles/style.css">
+    <link rel="stylesheet" href="./styles/media/adaptive.css">
+    <script src="./index.js"></script>
+    <script>
+        window.addEventListener('DOMContentLoaded', () => {
+            const tHead = document.getElementById('thead');
+            tHead.innerText = 'Changed via script in file index.html!';
+            tHead.classList.add('animation');
+
+            const tFoot = document.getElementById('tfoot');
+            tFoot.innerText = 'Please hover over me!';
+
+            let throttleTimer;
+            console.log(throttleTimer)
+            const throttleDelay = 100;
+
+            tFoot.addEventListener('mousemove', (event) => {
+                if (!throttleTimer) {
+                    throttleTimer = setTimeout(() => {
+                        throttleTimer = null;
+                        const x = event.clientX;
+                        const y = event.clientY;
+                        console.log(`Mouse coordinates: x = ${x}, y = ${y}`);
+                    }, throttleDelay);
+                }
+            });
+
+            const spanAll = document.querySelectorAll('span');
+            spanAll.forEach((el) => {
+                el.innerText = `Click me ${el.innerText}`
+
+                el.addEventListener('click', () => {
+                    alert(el.innerText)
+                })
+            })
+
+            const fieldset = document.querySelector('fieldset');
+            const legend = document.createElement('legend');
+            let count = 0;
+            fieldset.innerText = `Mouse leave me please!!`;
+
+            legend.innerText = 'YoYoYo, mouse leave me please'
+            fieldset.append(legend);
+            fieldset.addEventListener('mouseleave', () => {
+                count++
+                legend.innerText = `The mouse leave ${count} times`
+            })
+
+            const inputElements = document.querySelectorAll('input');
+
+            inputElements.forEach((el) => {
+                el.placeholder = 'Focus Me';
+                el.addEventListener('focus', function (e) {
+                    console.log(`Input ${e.target.name || e.target.id} is focused!`);
+                });
+            })
+
+            const items = document.querySelector('.items');
+            items.innerHTML = 'Click me to change something :)'
+
+            const getRandomColor = () => {
+                const r = Math.floor(Math.random() * 256);
+                const g = Math.floor(Math.random() * 256);
+                const b = Math.floor(Math.random() * 256);
+                return `rgb(${r}, ${g}, ${b})`;
+            };
+            const changeColors = () => {
+                items.style.backgroundColor = getRandomColor();
+                const colorText = getRandomColor();
+                items.style.color = colorText;
+                items.innerHTML = colorText;
+            }
+
+            items.addEventListener('click', () => {
+                changeColors()
+            })
+
+            const time = document.getElementById('time');
+            time.addEventListener('click', (e) => {
+                e.preventDefault();
+            })
+
+        })
+    </script>
+</head>
+<body>
+
+<main class="main">
+    <header class="header">
+        <a href="https://сенла.рф/"
+           target="_blank">
+            <img src="./assets/i.webp" alt="asd">
+        </a>
+
+        <section class="table">
+            <div id="thead">Header for table</div>
+            <div id="firstRow">
+                <div>
+                    <span class="bold">Bold text</span>
+                </div>
+                <div>
+                    <span class="strong">Important text</span>
+                </div>
+                <div>
+                    <span class="sup">Superscript text</span>
+                </div>
+                <div>
+                    <span class="sub">Subscript text</span>
+                </div>
+                <div>
+                    <span class="ins">Inserted text</span>
+                </div>
+            </div>
+            <div id="secondRow">
+                <div>
+                    <span class="del">Deleted text</span>
+                </div>
+                <div>
+                    <span class="small">Smaller text</span>
+                </div>
+                <div>
+                    <span class="mark">Marked text</span>
+                </div>
+                <div>
+                    <span class="i">Italic text</span>
+                </div>
+                <div>
+                    <span class="em">Emphasized text</span>
+                </div>
+            </div>
+            <div id="tfoot">Footer for table</div>
+        </section>
+
+    </header>
+
+    <article class="data content">
+        <form class="data__form" action="./index.html">
+            <fieldset>
+                <legend>User data</legend>
+                <label>
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName">
+                    <label for="age">Age:</label>
+                    <input type="number" id="age" name="age">
+                </label>
+                <label>
+                    <input class="button-hover" type="submit">
+                    <input class="button-hover" type="reset">
+                </label>
+            </fieldset>
+        </form>
+    </article>
+
+    <aside id="aside">
+        <section class="items">
+            <article class="data check">
+                <form class="data__form" action="./index.html">
+
+                    <label for="dataList">Check:</label>
+                    <input id="dataList" list="language">
+
+                    <datalist id="language">
+                        <option value="TypeScript">
+                        <option value="C++">
+                        <option value="PHP">
+                        <option value="Swift">
+                        <option value="Go">
+                    </datalist>
+
+                    <input class="button-hover" type="submit">
+                </form>
+                <form action="./index.html">
+
+                    <label for="select">Choose:</label>
+
+                    <select name="select" id="select">
+                        <option value="JavaScript">JavaScript</option>
+                        <option value="Java">Java</option>
+                        <option value="Python">Python</option>
+                    </select>
+
+                    <input class="button-hover" type="submit">
+                </form>
+            </article>
+
+            <article class="data">
+                <form id="radio" class="data__form">
+                    <label class="radio">
+                        <input id="vue" type="radio" name="framework" value="Vue">
+                        <label for="vue">Vue</label>
+                    </label>
+                    <label class="radio">
+                        <input id="angular" type="radio" name="framework" value="Angular">
+                        <label for="angular">Angular</label>
+                    </label>
+                    <label class="radio">
+                        <input id="next" type="radio" name="framework" value="Next" checked>
+                        <label for="next">Next.js</label>
+                    </label>
+                    <div>
+                        <input style="border: none" type="checkbox">
+                        <input id="color" style="border: none" type="color">
+                    </div>
+                </form>
+            </article>
+
+            <article class="data send">
+                <form class="data__form" action="./index.html">
+                    <label data-footer-label for="textarea">Send your message:</label>
+                    <textarea class="textarea" name="message" rows="2" cols="20" id="textarea">
+
+            </textarea>
+                    <input class="button-hover" type="submit">
+                </form>
+            </article>
+        </section>
+
+        <footer class="data footer">
+            <form class="data__form data__form-table-cell">
+                <label class="tr">
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name">
+                </label>
+                <label class="tr">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password">
+                </label>
+                <label class="tr">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email">
+                </label>
+                <label class="tr">
+                    <label for="tel">Telephone:</label>
+                    <input type="tel" id="tel">
+                </label>
+                <label class="tr">
+                    <label for="date">Meeting date:</label>
+                    <input id="date" type="date">
+                </label>
+                <label class="tr">
+                    <label for="time">Meeting time:</label>
+                    <input id="time" value="13:30" type="time">
+                </label>
+            </form>
+        </footer>
+    </aside>
+
+</main>
+
+</body>
+</html>

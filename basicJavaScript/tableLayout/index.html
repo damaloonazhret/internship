@@ -1,0 +1,318 @@
+<!doctype HTML>
+<html lang="en">
+<head>
+    <title>HTML Structure</title>
+    <meta charset="UTF-8">
+    <meta name="keywords" content="HTML">
+    <meta name="description" content="HTML Tutorial">
+    <meta name="author" content="Andrey Mironov">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="HTML">
+    <meta property="og:title" content="HTML Structure">
+    <meta property="og:description" content="HTML Tutorial">
+    <meta property="og:url" content="https://damaloonazhret.github.io/internship/HTML/">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:image"
+          content="https://сенла.рф/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/telecommunications.jpg.webp">
+    <meta property="og:image:width" content="968">
+    <meta property="og:image:height" content="504">
+    <link rel="icon" type="image/x-icon" href="../assets/logo.png">
+</head>
+<style>
+    * {
+        text-align: center;
+        margin: 0 auto;
+    }
+
+    html {
+        height: 100%;
+    }
+
+    body {
+        height: 100%;
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        background: antiquewhite;
+    }
+
+    tr, tr, input, textarea, select {
+        font-size: 1.5vw;
+    }
+</style>
+<body style="">
+<div class="table-responsive" style="height: 100%">
+    <table border="1" cellspacing="10" style="width: 100%; height: 100%;">
+        <tbody>
+        <tr>
+            <td colspan="8" style="padding: 5rem; background: #ed1d25">
+                <table style="width: 100%; height: 100%;">
+                    <caption>User data</caption>
+                    <tr>
+                        <td>
+                            <label for="firstName">First Name:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="firstName" name="firstName">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="lastName">Last Name:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="lastName" name="lastName">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="age">Age:</label>
+                        </td>
+                        <td>
+                            <input type="number" id="age" name="age">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <input class="button-hover" type="submit">
+                        </td>
+                        <td style="text-align:center;">
+                            <input class="button-hover" type="reset">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td rowspan="2" style="width: 31.5%; background: #ffc90e">
+                <table border="1" cellpadding="2" cellspacing="10"
+                       style="width: 100%; height: 100%; color: white; text-align:center;">
+                    <thead>
+                    <tr>
+                        <td>Header for table</td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>
+                            <b>Bold text</b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <strong>Important text</strong>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <sup>Superscript text</sup>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <sub>Subscript text</sub>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ins>Inserted text</ins>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <del>Deleted text</del>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <small>Smaller text</small>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <mark>Marked text</mark>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <i>Italic text</i>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <em>Emphasized text</em>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                        <td>Footer for table</td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </td>
+        </tr>
+        <tr style="height: 70%">
+            <td colspan="3" style="background: #22b14c;">
+                <table cellspacing="20" cellpadding="10" style="width: 100%; height: 100%;">
+                    <tr style="height: 33.3%;">
+                        <td style="border: 1px solid black">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <label for="dataList">Check:</label>
+                                    </td>
+                                    <td>
+                                        <input id="dataList" list="language">
+                                    </td>
+                                    <datalist id="language">
+                                        <option value="TypeScript">
+                                        <option value="C++">
+                                        <option value="PHP">
+                                        <option value="Swift">
+                                        <option value="Go">
+                                    </datalist>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <label for="select">Choose:</label>
+                                    </td>
+                                    <td>
+                                        <select name="select" id="select">
+                                            <option value="JavaScript">JavaScript</option>
+                                            <option value="Java">Java</option>
+                                            <option value="Python">Python</option>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input class="button-hover" type="submit">
+                                    </td>
+                                    <td style="text-align:center;">
+                                        <input class="button-hover" type="submit">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr style="height: 33.3%;">
+                        <td style="border: 1px solid black">
+                            <table>
+                                <tr>
+                                    <td>
+                                        <input id="vue" type="radio" name="framework" value="Vue">
+                                    </td>
+                                    <td>
+                                        <label for="vue">Vue</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input id="angular" type="radio" name="framework" value="Angular">
+                                    </td>
+                                    <td>
+                                        <label for="angular">Angular</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input id="next" type="radio" name="framework" value="Next" checked>
+                                    </td>
+                                    <td>
+                                        <label for="next">Next.js</label>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <input style="border: none" type="checkbox">
+                                    </td>
+                                    <td>
+                                        <input id="color" style="border: none" type="color">
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr style="height: 33.3%;">
+                        <td style="border: 1px solid black">
+                            <table>
+                                <thead>
+                                <th>
+                                    <label for="textarea">Send your message:</label>
+                                </th>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>
+                                        <textarea class="textarea"
+                                                  name="message"
+                                                  rows="2"
+                                                  cols="20"
+                                                  id="textarea"
+                                        >
+                                        </textarea>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                <tfoot>
+                                <tr>
+                                    <td>
+                                        <input class="button-hover" type="submit">
+                                    </td>
+                                </tr>
+                                </tfoot>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+            <td colspan="5" rowspan="-2" style="background: #ffaec9; width: 47%;">
+                <table cellspacing="20" cellpadding="20">
+                    <tr>
+                        <td>
+                            <label for="name">Name:</label>
+                        </td>
+                        <td>
+                            <input type="text" id="name" name="name">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="password">Password:</label>
+                        </td>
+                        <td>
+                            <input type="password" id="password">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="email">Email:</label>
+                        </td>
+                        <td>
+                            <input type="email" id="email">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="tel">Telephone:</label>
+                        </td>
+                        <td>
+                            <input type="tel" id="tel">
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <label for="date">Meeting date:</label>
+                        </td>
+                        <td>
+                            <input id="date" type="date">
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>
