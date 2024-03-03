@@ -1,0 +1,34 @@
+input {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    outline: none;
+}
+
+textarea {
+    resize: none;
+}
+
+select:focus {
+    border: none;
+    outline: none;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family-main);
+    text-align: center;
+}
+
+.data input, .data select, .data textarea {
+    border: 0;
+    outline: none;
+    background-color: transparent;
+}
