@@ -6,4 +6,5 @@
 - [Iteration 4: basic JS](https://damaloonazhret.github.io/internship/basicJS)
 - [Iteration 5: JS Features](https://damaloonazhret.github.io/internship/JSFeatures)
 - [Iteration 6: browser JS](https://damaloonazhret.github.io/internship/browserJS)
+- [Iteration 7: Async/promise](https://damaloonazhret.github.io/internship/requestGitHubAPI)
 
