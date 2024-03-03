@@ -5,4 +5,5 @@
     - [Iteration 3.1: CSS-table-layout](https://damaloonazhret.github.io/internship/CSS/tableLayout)
 - [Iteration 4: basic JS](https://damaloonazhret.github.io/internship/basicJavaScript)
 - [Iteration 5: JS Features](https://damaloonazhret.github.io/internship/JSFeatures)
+- [Iteration 6: browser JS](https://damaloonazhret.github.io/internship/browserJS)
 
