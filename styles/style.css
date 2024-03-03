@@ -1,0 +1,26 @@
+@import "reset.css";
+
+body {
+    background-color: #4b4b4b;
+    color: #22b14c;
+}
+
+main {
+    height: 100%;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+}
+
+a {
+    display: block;
+    color: black;
+    font-weight: 900;
+    background-color: #ffffff;
+    padding: 10px;
+}
+
+.localStorage, .sessionStorage {
+    display: grid;
+    align-items: center;
+}
