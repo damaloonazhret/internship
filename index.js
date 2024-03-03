@@ -130,5 +130,127 @@ if (html || css) {
         console.log("Completing error processing");
     }
 
+    // Arrow Function, default parameters
+
+    const sum = (a = 2, b = 2) => {
+        return a + b;
+    }
+
+    console.log(sum());
+    console.log(sum(1, 1));
+
+    // Spread
+    (function () {
+        const returnMaxNumber = (arr) => {
+            return Math.max(...arr)
+        }
+
+        const arr = [6, 7, 8, 9, 10, 20, 33, 1, 2, 3, 4, 5,]
+
+        console.log(returnMaxNumber(arr))
+    })()
+
+
+    const middle = [2, 3];
+    const arr = [1, ...middle, 4]
+    console.log(arr)
+
+    const str = 'Hello'
+    const chars = [...str]
+    console.log(chars)
+
+    // Rest
+
+    const totalSum = (...values) => {
+        let sum = 0;
+        for (let i = 0; i < values.length; i++) {
+            sum += values[i];
+        }
+        return sum;
+    }
+
+    console.log(totalSum(1, 2, 3, 4, 5, 6, 7, 8, 9));
+
+
+    (function () {
+        const arr = [1, 2, 3, 4, 5, 6];
+
+        const [first, second, ...rest] = arr;
+        console.log(first, second, rest)
+    })();
+
+    // Class, super
+
+    class Parent {
+        constructor(name) {
+            this.name = name;
+        }
+
+        sayHello() {
+            return `Hello ${this.name}`
+        }
+    }
+
+    const parent = new Parent('John');
+    console.log(parent.sayHello())
+
+    class Child extends Parent {
+        constructor(name) {
+            super(name);
+        }
+
+        sayHello() {
+            return `${super.sayHello()} into the Child class`
+        }
+    }
+
+    const child = new Child('Joanna');
+    console.log(child.sayHello())
+
+    // Object destructuring
+
+    const obj = {
+        name: 'John',
+        surname: 'Doe',
+        age: '28'
+    }
+
+    const {name, surname, age} = obj;
+    console.log(name, surname, age + ` y.o.`);
+
+    const {name: firstName, surname: secondName, age: YO} = obj;
+    console.log(firstName,secondName, YO)
+
+    // Yield
+
+    function* generator() {
+        yield 1;
+        yield 2;
+        yield 3;
+    }
+
+    const gen = generator();
+
+    console.log(gen.next().value);
+    console.log(gen.next().value);
+    console.log(gen.next().value);
+
+    (function() {
+        function* fibonacciSequence() {
+            let prev = 1;
+            let curr = 1;
+            while(true) {
+                yield curr;
+                [prev, curr] = [curr, prev + curr];
+            }
+        }
+
+        const gen = fibonacciSequence();
+
+        for (let i = 0; i <= 10; i++) {
+            console.log(gen.next().value)
+        }
+    })()
+
 
 })
