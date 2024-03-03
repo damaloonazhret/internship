@@ -61,11 +61,14 @@
     }
 
     .items {
-        grid-template-columns: repeat(3, 100px);
-        grid-template-rows: 1fr;
-        justify-content: space-between;
-        align-content: center;
-        padding: 5px;
+        /*grid-template-columns: repeat(3, 100px);*/
+        /*grid-template-rows: 1fr;*/
+        /*justify-content: space-between;*/
+        /*align-content: center;*/
+        /*padding: 5px;*/
+        /*display: grid;*/
+        /*justify-content: center;*/
+        /*align-content: center;*/
     }
 
     .items article {

@@ -44,7 +44,6 @@ body::-webkit-scrollbar-track {
 
 .table > div div {
     user-select: none;
-    cursor: none;
     transition: var(--transition-all);
 }
 
@@ -120,6 +119,25 @@ body::-webkit-scrollbar-track {
     justify-content: center;
 }
 
+#thead.animation {
+    animation: blink 3s infinite alternate;
+}
+
+@keyframes blink {
+    0% {
+        background: black;
+        color: pink;
+    }
+    50% {
+        background: red;
+        color: yellow;
+    }
+    100% {
+        background: white;
+        color: blue;
+    }
+}
+
 #aside {
     display: grid;
     grid-template-columns: 100px auto;
@@ -129,9 +147,12 @@ body::-webkit-scrollbar-track {
 
 .items {
     display: grid;
-    grid-template-rows: repeat(3, auto);
-    grid-template-columns: 100px;
-    row-gap: 40px;
+    /*grid-template-rows: repeat(3, auto);*/
+    /*grid-template-columns: 100px;*/
+    /*row-gap: 40px;*/
+    justify-content: center;
+    align-content: center;
+    user-select: none;
 }
 
 .items article {
