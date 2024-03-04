@@ -1,3 +1,21 @@
+function fetchRepositories(searchValue) {
+    return new Promise((resolve, reject) => {
+        fetch(`https://api.github.com/users/${searchValue}/repos`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Failed to fetch repositories');
+                }
+                return response.json();
+            })
+            .then(repos => {
+                resolve(repos);
+            })
+            .catch(error => {
+                reject(error);
+            });
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     const btn = document.querySelector('#promiseBtn');
     const search = document.querySelector('#search');
@@ -16,14 +34,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if (searchValue === '') {
             span.innerHTML = 'Empty string';
         } else if (!isValidGitHubUsername(searchValue)) {
-            span.innerHTML = 'Invalid GitHub username';
         } else {
+            span.innerHTML = 'Invalid GitHub username';
             span.innerHTML = '';
 
             btn.setAttribute('disabled', 'true');
 
-            fetch(`https://api.github.com/users/${searchValue}/repos`)
-                .then(response => response.json())
+            fetchRepositories(searchValue)
                 .then(repos => {
                     const repositoriesElement = document.getElementById('repositories');
                     repositoriesElement.innerHTML = '';
@@ -43,8 +60,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 })
                 .catch(error => {
                     console.error('Error fetching repositories:', error);
-                });
-            btn.removeAttribute('disabled');
+                })
+                .finally(() => {
+                    btn.removeAttribute('disabled');
+                })
         }
     })
 });
