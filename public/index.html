@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <link rel="icon" href="%PUBLIC_URL%/favicon.ico"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <meta name="theme-color" content="#000000"/>
+    <meta
+            name="description"
+            content="Web site created using create-react-app"
+    />
+    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png"/>
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json"/>
+    <title>React App</title>
+    <link rel="stylesheet" href="./index.css">
+</head>
+<body>
+<noscript>You need to enable JavaScript to run this app.</noscript>
+<main>
+    <header class="header">
+        <h1>GitHub Repositories</h1>
+        <form>
+            <label for="search">Type GitHub username</label>
+            <input id="search" type="text"/>
+            <div class="buttons">
+                <button id="asyncBtn" type="submit">AsyncSearch</button>
+                <button id="promiseBtn" type="submit">PromiseSearch</button>
+            </div>
+            <span id="span"></span>
+        </form>
+    </header>
+    <div id="repositories"></div>
+</main>
+<script src="./asyncAwait/index.js"></script>
+<script src="./promise/index.js"></script>
+</body>
+</html>
+
