@@ -1,43 +1,61 @@
 import React from "react";
+import {Repositories} from "../components/Repositories/Repositories";
+import {fetchRepositories} from "../features/fetchRepositories/fetchRepositories";
+import {isValidGitHubUsername} from "../features/isValidGitHubUsername/isValidGitHubUsername";
 
 class PromisePage extends React.Component {
-    render() {
-        const { username, errorMessage, repos, isLoading } = this.props.state;
 
-        return React.createElement('main', {key: 'main'}, [
-            React.createElement('header', {className: 'header', key: 'header'}, [
-                React.createElement('h1', {key: 'h1'}, 'GitHub Repositories'),
-                React.createElement('form', {key: 'form', onSubmit: (e) => this.props.githubPromiseRequest(e)}, [
-                    React.createElement('label', {htmlFor: 'search', key: 'label'}, 'Type GitHub username'),
-                    React.createElement('input', {
-                        id: 'search',
-                        key: 'input',
-                        type: 'text',
-                        value: username,
-                        onChange: (e) => this.props.onUsernameChange(e.target.value)
-                    }),
-                    React.createElement('div', {className: 'buttons', key: 'div',}, [
-                        React.createElement('button', {
-                            id: 'asyncBtn',
-                            type: 'submit',
-                            key: 'button',
-                            disabled: !!isLoading
-                        }, 'PromiseSearch'),
-                    ]),
-                    React.createElement('span', {id: 'span', key: 'span'}, errorMessage)
-                ])
-            ]),
-            React.createElement('div', {id: 'repositories', key: 'repositories',}, repos.map(repo =>
-                React.createElement('div', {key: repo.id}, [
-                    React.createElement('h3', {}, repo.name),
-                    React.createElement('p', {}, repo.description || 'No description'),
-                    React.createElement('p', {}, `Language: ${repo.language || 'Unknown'}`),
-                    React.createElement('p', {}, `Stars: ${repo.stargazers_count}`),
-                    React.createElement('p', {}, `Forks: ${repo.forks_count}`),
-                    React.createElement('hr')
-                ])
-            ))
-        ]);
+    constructor(props) {
+        super(props);
+        this.state = {
+            isLoading: false,
+            username: '',
+            errorMessage: '',
+            repos: [],
+        };
+        this.handleUsernameChange = this.handleUsernameChange.bind(this);
+        this.githubPromiseRequest = this.githubPromiseRequest.bind(this);
+    }
+
+    handleUsernameChange(username) {
+        this.setState({username: username});
+    }
+
+    githubPromiseRequest(e) {
+        e.preventDefault();
+        const {username} = this.state;
+
+        if (username === '') {
+            this.setState({errorMessage: 'Empty string'});
+        } else if (!isValidGitHubUsername(username)) {
+            this.setState({errorMessage: 'Invalid GitHub username'});
+        } else {
+            this.setState({errorMessage: ''});
+            this.setState({isLoading: true});
+            fetchRepositories(username)
+                .then(repos => {
+                    if (Array.isArray(repos)) {
+                        this.setState({ repos: repos, errorMessage: '' });
+                    } else {
+                        this.setState({ errorMessage: repos.message });
+                    }
+                })
+                .catch(error => {
+                    this.setState({errorMessage: error.message})
+                })
+                .finally(() => {
+                    this.setState({isLoading: false});
+                })
+        }
+    }
+
+    render() {
+        return (
+            <Repositories state={this.state}
+                          gitHubRequest={this.githubPromiseRequest}
+                          onUsernameChange={this.handleUsernameChange}
+                          buttonName='PromiseSearch'/>
+        )
     }
 }
 
