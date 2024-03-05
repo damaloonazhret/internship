@@ -1,0 +1,19 @@
+.header {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(2, auto);
+    column-gap: 20px;
+    padding: 10px;
+}
+
+.header a {
+    color: white;
+}
+
+.header span:hover {
+    transform: scale(0.98);
+}
+
+.header span:active {
+    transform: scale(0.94);
+}
