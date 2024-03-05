@@ -1,60 +1,55 @@
-import React from "react";
 import {Repositories} from "../components/Repositories/Repositories";
+import React, {useState} from "react";
 import {isValidGitHubUsername} from "../features/isValidGitHubUsername/isValidGitHubUsername";
 
-class AsyncPage extends React.Component {
+export const AsyncPage = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoading: false,
-            username: '',
-            errorMessage: '',
-            repos: [],
-        };
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.gitHubRequest = this.gitHubRequest.bind(this);
+    const [isLoading, setIsLoading] = useState(false);
+    const [username, setUsername] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [repos, setRepos] = useState([]);
+
+    const handleUsernameChange = (username) => {
+        setUsername(username);
     }
 
-    handleUsernameChange(username) {
-        this.setState({username: username});
-    }
-
-    async gitHubRequest(e) {
+    const gitHubRequest = async (e) => {
         e.preventDefault();
-        const {username} = this.state;
 
         if (username === '') {
-            this.setState({errorMessage: 'Empty string'});
+            setErrorMessage('Empty string')
         } else if (!isValidGitHubUsername(username)) {
-            this.setState({errorMessage: 'Invalid GitHub username'});
+            setErrorMessage('Invalid GitHub username')
         } else {
-            this.setState({errorMessage: ''});
-            this.setState({isLoading: true});
+            setErrorMessage('')
+            setIsLoading(true)
             try {
-                this.setState({isLoading: true});
+                setIsLoading(false)
                 const response = await fetch(`https://api.github.com/users/${username}/repos`);
                 if (!response.ok) {
-                    this.setState({errorMessage: 'Failed to fetch Repositories'})
+                    setErrorMessage('Failed to fetch Repositories')
                 }
                 const repos = await response.json();
-                this.setState({repos: repos})
+                setRepos(repos)
             } catch (error) {
-                this.setState({errorMessage: error})
+                setErrorMessage(error)
             } finally {
-                this.setState({isLoading: false});
+                setIsLoading(false)
             }
         }
     }
 
-    render() {
-        return (
-            <Repositories state={this.state}
-                          onUsernameChange={this.handleUsernameChange}
-                          gitHubRequest={this.gitHubRequest}
-                          buttonName='AsyncSearch'/>
-        )
-    }
-}
+    const state = {
+        isLoading: isLoading,
+        username: username,
+        errorMessage: errorMessage,
+        repos: repos
+    };
 
-export default AsyncPage;
+    return (
+        <Repositories state={state}
+                      onUsernameChange={handleUsernameChange}
+                      gitHubRequest={gitHubRequest}
+                      buttonName='AsyncSearch'/>
+    )
+}

@@ -1,62 +1,58 @@
-import React from "react";
+import React, {useState} from "react";
 import {Repositories} from "../components/Repositories/Repositories";
 import {fetchRepositories} from "../features/fetchRepositories/fetchRepositories";
 import {isValidGitHubUsername} from "../features/isValidGitHubUsername/isValidGitHubUsername";
 
-class PromisePage extends React.Component {
+export const PromisePage = () => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoading: false,
-            username: '',
-            errorMessage: '',
-            repos: [],
-        };
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
-        this.githubPromiseRequest = this.githubPromiseRequest.bind(this);
+    const [isLoading, setIsLoading] = useState(false);
+    const [username, setUsername] = useState('');
+    const [errorMessage, setErrorMessage] = useState('');
+    const [repos, setRepos] = useState([]);
+
+    const handleUsernameChange = (username) => {
+        setUsername(username);
     }
 
-    handleUsernameChange(username) {
-        this.setState({username: username});
-    }
-
-    githubPromiseRequest(e) {
+    const githubPromiseRequest = (e) => {
         e.preventDefault();
-        const {username} = this.state;
 
         if (username === '') {
-            this.setState({errorMessage: 'Empty string'});
+            setErrorMessage('Empty string')
         } else if (!isValidGitHubUsername(username)) {
-            this.setState({errorMessage: 'Invalid GitHub username'});
+            setErrorMessage('Invalid GitHub username')
         } else {
-            this.setState({errorMessage: ''});
-            this.setState({isLoading: true});
+            setErrorMessage('')
+            setIsLoading(true)
             fetchRepositories(username)
                 .then(repos => {
                     if (Array.isArray(repos)) {
-                        this.setState({ repos: repos, errorMessage: '' });
+                        setRepos(repos)
+                        setErrorMessage('')
                     } else {
-                        this.setState({ errorMessage: repos.message });
+                        setErrorMessage(repos.message)
                     }
                 })
                 .catch(error => {
-                    this.setState({errorMessage: error.message})
+                    setErrorMessage(error)
                 })
                 .finally(() => {
-                    this.setState({isLoading: false});
+                    setIsLoading(false)
                 })
         }
     }
 
-    render() {
-        return (
-            <Repositories state={this.state}
-                          gitHubRequest={this.githubPromiseRequest}
-                          onUsernameChange={this.handleUsernameChange}
-                          buttonName='PromiseSearch'/>
-        )
-    }
-}
+    const state = {
+        isLoading: isLoading,
+        username: username,
+        errorMessage: errorMessage,
+        repos: repos
+    };
 
-export default PromisePage;
+    return (
+        <Repositories state={state}
+                      gitHubRequest={githubPromiseRequest}
+                      onUsernameChange={handleUsernameChange}
+                      buttonName='PromiseSearch'/>
+    )
+}
