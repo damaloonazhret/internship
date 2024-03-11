@@ -95,10 +95,10 @@
                 <legend>User data</legend>
 
                 <label for="firstName">First Name:</label>
-                <input type="text" id="firstName" name="firstName" placeholder="name">
+                <input type="text" id="firstName" name="firstName" placeholder="name" autocapitalize="on">
 
                 <label for="lastName">Last Name:</label>
-                <input type="text" id="lastName" name="lastName" placeholder="surname">
+                <input type="text" id="lastName" name="lastName" placeholder="surname" autocapitalize="words">
 
                 <label for="password">Password:</label>
                 <input type="password" id="password" placeholder="password">
@@ -126,7 +126,7 @@
                         <input id="angular" type="radio" name="framework" value="Angular">Angular
                     </label>
                     <label for="next">
-                        <input id="next" type="radio" name="framework" value="Next">Next.js
+                        <input id="next" type="radio" name="framework" value="Next" checked>Next.js
                     </label>
                 </label>
 
@@ -153,7 +153,7 @@
                 </label>
 
                 <input type="hidden">
-                <input value="Type Button" type="button">
+                <input value="Type Button" disabled type="button">
                 <input type="file">
                 <input type="range" min="1" max="5">
                 <input type="search" placeholder="Search query">
