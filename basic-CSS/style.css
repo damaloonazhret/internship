@@ -13,14 +13,6 @@
     --transition-all: .5s all;
 }
 
-input {
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    border: none;
-    outline: none;
-}
-
 body {
     padding: 0;
     margin: 0;
@@ -29,7 +21,9 @@ body {
     text-align: center;
 }
 
-.data input, .data select, .data textarea {
+.data input,
+select,
+.data textarea {
     border: 0;
     outline: none;
     background-color: transparent;
@@ -43,7 +37,6 @@ body::-webkit-scrollbar-thumb {
     border-radius: 5px;
 }
 
-
 @media (prefers-color-scheme: dark) {
     body::-webkit-scrollbar-thumb {
         background-color: var(--background-color-interaction-dark);
@@ -54,8 +47,23 @@ body::-webkit-scrollbar-thumb {
         color: var(--text-color-dark);
     }
 
+    a {
+        color-scheme: dark;
+    }
+
+    a:visited {
+        color: var(--text-color-dark);
+    }
+
+    a:active {
+        color: var(--background-color-interaction-dark);
+    }
+
+    a:hover {
+        color: white;
+    }
+
     input, select, textarea {
-        background: var(--background-color-interaction-dark);
         color: var(--text-color-dark);
     }
 
@@ -168,8 +176,19 @@ body::-webkit-scrollbar-thumb {
         color: var(--text-color-light);
     }
 
+    a:visited {
+        color: var(--text-color-light);
+    }
+
+    a:active {
+        color: var(--background-color-interaction-light);
+    }
+
+    a:hover {
+        color: black;
+    }
+
     input, select, textarea {
-        background: var(--background-color-interaction-light);
         color: var(--text-color-light);
     }
 
@@ -182,11 +201,11 @@ body::-webkit-scrollbar-thumb {
     }
 
     .data input {
-        border-bottom: 1px solid var(--background-color-interaction-light);
+        border-bottom: 2px solid var(--background-color-interaction-light);
     }
 
     .data textarea {
-        border: 1px solid var(--background-color-interaction-light);
+        border: 2px solid var(--background-color-interaction-light);
         border-top: none;
     }
 
@@ -272,6 +291,39 @@ body::-webkit-scrollbar-thumb {
     }
 }
 
+input[type = range] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    margin: 0;
+}
+
+input[type = file] {
+    background-color: transparent;
+}
+
+input[type = image] {
+    transition: 1s;
+}
+
+input[type = image]:hover {
+    transform: rotate(360deg);
+}
+
+
+.data {
+    padding: 5px;
+}
+
+.data div {
+    padding-bottom: 20px;
+}
+
+/*.header table {*/
+/*    width: 50vw;*/
+/*}*/
+
 .header > a > img {
     width: 30vw;
     transition: var(--transition-all);
@@ -282,19 +334,29 @@ body::-webkit-scrollbar-thumb {
 }
 
 table td {
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
     user-select: none;
     cursor: not-allowed;
     transition: var(--transition-all);
 }
 
+.lists table {
+    border-spacing: 20px;
+}
+
+.lists table td {
+    padding: 10px;
+    cursor: text;
+    user-select: text;
+}
+
+
 #firstRow .bold {
     font-weight: 800;
     line-height: 2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
 }
 
 #firstRow .strong {
@@ -357,6 +419,10 @@ table td {
     background-color: rgba(152, 152, 152, 0.39);
 }
 
+.button-hover:active {
+    background-color: rgba(152, 152, 152, 0.16);
+}
+
 [data-footer-label] {
     display: inline-block;
     margin-bottom: 10px;
@@ -404,3 +470,5 @@ input[type=checkbox] {
     width: 20px;
     transition: var(--transition-all);
 }
+
+
