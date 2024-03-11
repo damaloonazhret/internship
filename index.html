@@ -75,99 +75,98 @@
             <fieldset>
                 <legend>User data</legend>
 
-                <div>
-                    <label for="firstName">First Name:
-                        <input type="text" id="firstName" name="firstName" placeholder="name">
-                    </label>
-
-                    <label for="lastName">Last Name:
-                        <input type="text" id="lastName" name="lastName" placeholder="surname">
-                    </label>
-
-                    <label for="password">Password:
-                        <input type="password" id="password" placeholder="password">
-                    </label>
-                </div>
-
-                <div>
-                    <label for="email">Email:
-                        <input type="email" id="email" placeholder="email">
-                    </label>
-
-                    <label for="tel">Telephone:
-                        <input type="tel" id="tel" placeholder="telephone">
-                    </label>
-
-                    <label for="age">Age:
-                        <input type="text" id="age" name="age" maxlength="3" placeholder="age">
-                    </label>
-                </div>
-
-                <div>
-                    <label for="date">Meeting date:
-                        <input id="date" type="date">
-                    </label>
-
-                    <label for="time">Meeting time:
-                        <input id="time" type="time">
-                    </label>
-                </div>
-
-                <div>
-                    <label for="select">Lang:
-                        <select name="select" id="select">
-                            <option value="JavaScript">JavaScript</option>
-                            <option value="Java">Java</option>
-                            <option value="Python">Python</option>
-                        </select>
-                    </label>
-
-                    <label>Framework:
-                        <label for="vue">
-                            <input id="vue" type="radio" name="framework" value="Vue">Vue
+                <section>
+                    <div>
+                        <label for="firstName">First Name:
+                            <input type="text" id="firstName" name="firstName" placeholder="name">
                         </label>
-                        <label for="angular">
-                            <input id="angular" type="radio" name="framework" value="Angular">Angular
+
+                        <label for="lastName">Last Name:
+                            <input type="text" id="lastName" name="lastName" placeholder="surname">
                         </label>
-                        <label for="next">
-                            <input id="next" type="radio" name="framework" value="Next">Next.js
+
+                        <label for="password">Password:
+                            <input type="password" id="password" placeholder="password">
                         </label>
-                    </label>
+                    </div>
 
-                    <label for="dataList">Check:
-                        <input id="dataList" list="language">
-                        <datalist id="language">
-                            <option value="TypeScript">
-                            <option value="C++">
-                            <option value="PHP">
-                            <option value="Swift">
-                            <option value="Go">
-                        </datalist>
-                    </label>
-                </div>
+                    <div>
+                        <label for="email">Email:
+                            <input type="email" id="email" placeholder="email">
+                        </label>
 
-                <div>
-                    <label>
-                        <input type="checkbox">
-                        <input type="color">
-                        <input type="range" min="1" max="5">
-                        <input type="file">
-                    </label>
-                </div>
+                        <label for="tel">Telephone:
+                            <input type="tel" id="tel" placeholder="telephone">
+                        </label>
 
-                <div>
-                    <label for="textarea">Send your message:
-                        <br>
-                        <textarea name="message" rows="2" cols="20" id="textarea"></textarea>
-                    </label>
-                </div>
+                        <label for="age">Age:
+                            <input type="text" id="age" name="age" maxlength="3" placeholder="age">
+                        </label>
+                    </div>
 
-                <div>
-                    <input type="hidden">
-                    <input class="button-hover" value="Type Button" type="button">
-                    <input class="button-hover" type="reset">
-                    <input class="button-hover" type="submit">
-                </div>
+                    <div>
+                        <label for="date">Meeting date:
+                            <input id="date" type="date">
+                        </label>
+
+                        <label for="time">Meeting time:
+                            <input id="time" type="time">
+                        </label>
+                    </div>
+
+                    <div>
+
+                        <label>Framework:
+                            <label class="no-flex" for="vue">
+                                <input id="vue" type="radio" name="framework" value="Vue">Vue
+                            </label>
+                            <label class="no-flex" for="angular">
+                                <input id="angular" type="radio" name="framework" value="Angular">Angular
+                            </label>
+                            <label class="no-flex" for="next">
+                                <input id="next" type="radio" name="framework" value="Next">Next.js
+                            </label>
+                        </label>
+
+                        <label for="dataList">Check:
+                            <input id="dataList" list="language">
+                            <datalist id="language">
+                                <option value="TypeScript">
+                                <option value="C++">
+                                <option value="PHP">
+                                <option value="Swift">
+                                <option value="Go">
+                            </datalist>
+                        </label>
+                    </div>
+
+                    <div>
+                        <label>
+                            <input type="checkbox">
+                            <input type="color">
+                            <input type="range" min="1" max="5">
+                            <input type="file">
+                        </label>
+                    </div>
+
+                    <div>
+                        <label for="textarea">Send your message:
+                            <br>
+                            <textarea name="message" rows="2" cols="20" id="textarea"></textarea>
+                        </label>
+                        <label>
+                            <input type="search" placeholder="Search query">
+                            <input type="url" placeholder="URL">
+                        </label>
+                    </div>
+
+                    <div>
+                        <input type="hidden">
+                        <input class="button-hover" value="Type Button" type="button">
+                        <input class="button-hover" type="reset">
+                        <input class="button-hover" type="submit">
+                    </div>
+                </section>
 
             </fieldset>
         </form>
@@ -175,30 +174,85 @@
 
     <article class="lists">
         <h3>Lists</h3>
-        <table align="center">
-            <tr>
-                <td>
+        <section>
+            <div>
+                <ul>
+                    <li>Intel</li>
+                    <li>AMD</li>
+                    <li>Oracle SPARC</li>
+                    <li>IBM Power</li>
+                    <li>Elbrus</li>
+                    <li>Zhaoxin KX</li>
+                </ul>
+            </div>
+            <div>
+                <ol type="I" reversed start="6">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                </ol>
+            </div>
+            <div>
+                <ul>
+                    <li>
+                        Обучайся
+                    </li>
+                    <li>
+                        Развивайся
+                    </li>
+                    <li>
+                        И помни
+                    </li>
                     <ul>
-                        <li>Intel</li>
-                        <li>AMD</li>
-                        <li>Elbrus</li>
+                        <li>Живи</li>
+                        <ul>
+                            <li>А работай</li>
+                            <li>В свободное</li>
+                            <li>Время</li>
+                        </ul>
                     </ul>
-                </td>
-                <td>
-                    <ol type="I">
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                    </ol>
-                </td>
-                <td>
-                    <dl>
-                        <dt>Creator JavaScript:</dt>
-                        <dd>Brendan Eich</dd>
-                    </dl>
-                </td>
-            </tr>
-        </table>
+                </ul>
+            </div>
+            <div>
+                <dl>
+                    <dt>
+                        <strong>
+                            Creator JavaScript:
+                        </strong>
+                    </dt>
+                    <dd>Brendan Eich</dd>
+
+                    <dt>
+                        <strong>
+                            HTML transcript:
+                        </strong>
+                    </dt>
+                    <dd>Hyper Text Markup Language</dd>
+                </dl>
+            </div>
+            <div>
+                <ol>
+                    <li>Hello</li>
+                    <ul>
+                        <li>
+                            Word
+                        </li>
+                        <li>World</li>
+                    </ul>
+                </ol>
+            </div>
+            <div>
+                <label for="select">Java Script:
+                    <select name="select" id="select">
+                        <option value="JavaScript">Object</option>
+                        <option value="Java">Notation</option>
+                    </select>
+                </label>
+            </div>
+        </section>
     </article>
 
     <div class="elements">
@@ -212,8 +266,10 @@
         </article>
 
         <aside class="contact">
-            <h4>
+            <h3>
                 <a href="mailto:someMeil@gmail.com">Email</a>
+            </h3>
+            <h4>
                 <a href="tel:+78005553535">Phone</a>
             </h4>
         </aside>

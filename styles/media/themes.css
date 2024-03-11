@@ -11,7 +11,6 @@
     }
 
     input, select, textarea {
-        background: var(--background-color-interaction-dark);
         color: var(--text-color-dark);
     }
 
@@ -25,6 +24,14 @@
 
     .data input {
         border-bottom: 1px solid var(--background-color-interaction-dark);
+    }
+
+    a {
+        color: var(--background-color-interaction-dark);
+    }
+
+    a:visited {
+        color: var(--text-color-dark);
     }
 
     .data textarea {
@@ -125,7 +132,6 @@
     }
 
     input, select, textarea {
-        background: var(--background-color-interaction-light);
         color: var(--text-color-light);
     }
 

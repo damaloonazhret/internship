@@ -1,4 +1,4 @@
-input {
+input:not([type="radio"]) {
     appearance: none;
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -20,13 +20,20 @@ select:focus {
 }
 
 body {
-    padding: 0;
-    margin: 0;
     font-family: var(--font-family-main);
     text-align: center;
 }
 
-.data input, .data select, .data textarea {
+body, html {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-size: larger;
+}
+
+select,
+.data input,
+.data textarea {
     border: 0;
     outline: none;
     background-color: transparent;

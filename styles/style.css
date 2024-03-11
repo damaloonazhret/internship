@@ -26,6 +26,7 @@ body::-webkit-scrollbar-track {
     display: grid;
     border: 1px solid yellow;
     padding: 10px;
+    align-content: space-evenly;
 }
 
 .header .table {
@@ -56,7 +57,6 @@ body::-webkit-scrollbar-track {
 }
 
 fieldset {
-    display: grid;
     margin-inline-start: 0;
     margin-inline-end: 0;
     padding-block-start: 0;
@@ -69,35 +69,41 @@ fieldset {
     border-color: red;
     border-image: initial;
     padding: 5px;
+    font-size: medium;
 }
 
 fieldset div {
     padding-bottom: 5px;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
 }
 
-fieldset > div label {
+fieldset section {
+    display: grid;
+    height: 100%;
+}
+
+fieldset > div label:not(.no-flex) {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-evenly;
     width: 100%;
+    align-items: end;
 }
 
 .lists {
-    grid-column: 2 / 3;
-    grid-row: 2 / 3;
+    display: grid;
+    align-content: center;
     border: 1px solid pink;
     height: 100%;
     width: 100%;
+}
+
+.lists section {
     display: grid;
-}
-
-.lists h3 {
-    align-self: end;
-}
-
-.lists table {
-    align-self: start;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    justify-items: center;
+    align-items: center;
 }
 
 .elements {
@@ -339,3 +345,4 @@ input[type=checkbox] {
     display: inline-block;
     margin-bottom: 10px;
 }
+
