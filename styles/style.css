@@ -13,17 +13,128 @@ body::-webkit-scrollbar-track {
     background-color: transparent;
 }
 
-.main {
+.body {
     display: grid;
     grid-template-columns: 2fr 1fr;
-    gap: 20px;
+    column-gap: 20px;
+    padding: 20px;
 }
 
 .header {
-    grid-row: 1 / 3;
     grid-column: 2 / 3;
-    border: 2px solid #ffc90e;
+    height: 100%;
+    display: grid;
+    border: 1px solid yellow;
+    padding: 10px;
+}
+
+.header .table {
+    height: 100%;
+}
+
+.main {
+    grid-row: 1 / 2;
+    display: grid;
+    grid-template-columns: 100px auto;
+    grid-template-rows: 1fr 2fr;
+    justify-items: center;
+    align-items: center;
+    gap: 20px;
+    height: 100%;
+}
+
+.data {
+    grid-column: 1 / 3;
+    width: 100%;
+    margin-top: -20px;
+}
+
+.data,
+.data fieldset,
+.data form {
+    height: 100%;
+}
+
+fieldset {
+    display: grid;
+    margin-inline-start: 0;
+    margin-inline-end: 0;
+    padding-block-start: 0;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+    padding-block-end: 0;
+    min-inline-size: unset;
+    border-width: 1px;
+    border-style: solid;
+    border-color: red;
+    border-image: initial;
     padding: 5px;
+}
+
+fieldset div {
+    padding-bottom: 5px;
+    display: flex;
+    justify-content: space-around;
+}
+
+fieldset > div label {
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+}
+
+.lists {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    border: 1px solid pink;
+    height: 100%;
+    width: 100%;
+    display: grid;
+}
+
+.lists h3 {
+    align-self: end;
+}
+
+.lists table {
+    align-self: start;
+}
+
+.elements {
+    grid-row: 2 / 3;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    height: 100%;
+    row-gap: 40px;
+}
+
+.elements > nav,
+.elements > article,
+.elements > aside {
+    border: 1px solid green;
+    width: 100px;
+    height: 100%;
+    display: grid;
+    justify-items: center;
+    align-items: center;
+}
+
+.input-btn input {
+    background: transparent;
+}
+
+.input-btn input:hover {
+    animation: hackerRotate linear 1s infinite;
+}
+
+@keyframes hackerRotate {
+    0% {
+        transform: rotate(0);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .header > a > img {
@@ -37,7 +148,7 @@ body::-webkit-scrollbar-track {
 
 .table {
     display: grid;
-    grid-template-rows: repeat(4,auto);
+    grid-template-rows: 1fr 2fr 2fr 1fr;
     grid-template-columns: 1fr;
     border: 1px solid var(--background-color-interaction-dark);
 }
