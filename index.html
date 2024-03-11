@@ -1,17 +1,17 @@
 <!doctype HTML>
 <html lang="en">
 <head>
-    <title>HTML Structure</title>
+    <title>Basic CSS Structure</title>
     <meta charset="UTF-8">
-    <meta name="keywords" content="HTML">
-    <meta name="description" content="HTML Tutorial">
+    <meta name="keywords" content="Basic CSS">
+    <meta name="description" content="Basic CSS Tutorial">
     <meta name="author" content="Andrey Mironov">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="HTML">
-    <meta property="og:title" content="HTML Structure">
-    <meta property="og:description" content="HTML Tutorial">
-    <meta property="og:url" content="https://damaloonazhret.github.io/internship/HTML/">
+    <meta property="og:site_name" content="Basic CSS">
+    <meta property="og:title" content="Basic CSS Structure">
+    <meta property="og:description" content="Basic CSS Tutorial">
+    <meta property="og:url" content="https://damaloonazhret.github.io/internship/basic-CSS/">
     <meta property="og:locale" content="ru_RU">
     <meta property="og:image"
           content="https://сенла.рф/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/telecommunications.jpg.webp">
@@ -132,13 +132,6 @@
                 </div>
 
                 <div>
-                    <label for="select">Lang:
-                        <select name="select" id="select">
-                            <option value="JavaScript">JavaScript</option>
-                            <option value="Java">Java</option>
-                            <option value="Python">Python</option>
-                        </select>
-                    </label>
 
                     <label>Framework:
                         <label for="vue">
@@ -148,12 +141,12 @@
                             <input id="angular" type="radio" name="framework" value="Angular">Angular
                         </label>
                         <label for="next">
-                            <input id="next" type="radio" name="framework" value="Next">Next.js
+                            <input id="next" type="radio" name="framework" value="Next" checked>Next.js
                         </label>
                     </label>
 
                     <label for="dataList">Check:
-                        <input id="dataList" list="language">
+                        <input id="dataList" list="language" placeholder="please">
                         <datalist id="language">
                             <option value="TypeScript">
                             <option value="C++">
@@ -162,14 +155,16 @@
                             <option value="Go">
                         </datalist>
                     </label>
+                    <input type="checkbox">
+                    <input type="color">
                 </div>
 
                 <div>
                     <label>
-                        <input type="checkbox">
-                        <input type="color">
                         <input type="range" min="1" max="5">
                         <input type="file">
+                        <input type="search" placeholder="Search query">
+                        <input type="url" placeholder="URL">
                     </label>
                 </div>
 
@@ -195,29 +190,88 @@
     <hr>
     <br>
 
-    <article class="lists">
-        <h3>Lists</h3>
-        <table align="center">
+    <article>
+        <h3 align="center">Lists</h3>
+        <table align="center" cellpadding="10px">
             <tr>
                 <td>
                     <ul>
                         <li>Intel</li>
                         <li>AMD</li>
+                        <li>Oracle SPARC</li>
+                        <li>IBM Power</li>
                         <li>Elbrus</li>
+                        <li>Zhaoxin KX</li>
                     </ul>
                 </td>
                 <td>
-                    <ol type="I">
+                    <ol type="I" reversed start="6">
                         <li>1</li>
                         <li>2</li>
                         <li>3</li>
+                        <li>4</li>
+                        <li>5</li>
+                        <li>6</li>
                     </ol>
                 </td>
                 <td>
+                    <ul>
+                        <li>
+                            Обучайся
+                        </li>
+                        <li>
+                            Развивайся
+                        </li>
+                        <li>
+                            И помни
+                        </li>
+                        <ul>
+                            <li>Живи</li>
+                            <ul>
+                                <li>А работай</li>
+                                <li>В свободное</li>
+                                <li>Время</li>
+                            </ul>
+                        </ul>
+                    </ul>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <dl>
-                        <dt>Creator JavaScript:</dt>
+                        <dt>
+                            <strong>
+                                Creator JavaScript:
+                            </strong>
+                        </dt>
                         <dd>Brendan Eich</dd>
+
+                        <dt>
+                            <strong>
+                                HTML transcript:
+                            </strong>
+                        </dt>
+                        <dd>Hyper Text Markup Language</dd>
                     </dl>
+                </td>
+                <td>
+                    <ol>
+                        <li>Hello</li>
+                        <ul>
+                            <li>
+                                Word
+                            </li>
+                            <li>World</li>
+                        </ul>
+                    </ol>
+                </td>
+                <td>
+                    <label for="select">Java Script:
+                        <select name="select" id="select">
+                            <option value="JavaScript">Object</option>
+                            <option value="Java">Notation</option>
+                        </select>
+                    </label>
                 </td>
             </tr>
         </table>

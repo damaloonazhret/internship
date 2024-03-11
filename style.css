@@ -21,7 +21,9 @@ body {
     text-align: center;
 }
 
-.data input, .data select, .data textarea {
+.data input,
+select,
+.data textarea {
     border: 0;
     outline: none;
     background-color: transparent;
@@ -62,7 +64,6 @@ body::-webkit-scrollbar-thumb {
     }
 
     input, select, textarea {
-        background: var(--background-color-interaction-dark);
         color: var(--text-color-dark);
     }
 
@@ -188,7 +189,6 @@ body::-webkit-scrollbar-thumb {
     }
 
     input, select, textarea {
-        background: var(--background-color-interaction-light);
         color: var(--text-color-light);
     }
 
@@ -201,11 +201,11 @@ body::-webkit-scrollbar-thumb {
     }
 
     .data input {
-        border-bottom: 1px solid var(--background-color-interaction-light);
+        border-bottom: 2px solid var(--background-color-interaction-light);
     }
 
     .data textarea {
-        border: 1px solid var(--background-color-interaction-light);
+        border: 2px solid var(--background-color-interaction-light);
         border-top: none;
     }
 
