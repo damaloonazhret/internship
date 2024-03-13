@@ -13,6 +13,10 @@
     --transition-all: .5s all;
 }
 
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     padding: 0;
     margin: 0;
@@ -472,3 +476,5 @@ input[type=checkbox] {
 }
 
 
+input:invalid:not(:placeholder-shown).required {border-color: red;}
+input:valid:not(:placeholder-shown).required {border-color: green;}
