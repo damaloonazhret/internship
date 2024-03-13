@@ -168,6 +168,10 @@ body::-webkit-scrollbar-thumb {
         box-shadow: 0 0 1px 1px rgb(255, 255, 255);
     }
 
+    #file::file-selector-button {
+        color: var(--text-color-dark)
+    }
+
 }
 
 @media (prefers-color-scheme: light) {
@@ -293,6 +297,10 @@ body::-webkit-scrollbar-thumb {
         background-color: var(--text-color-light-input-label);
         box-shadow: 0 0 1px 1px rgb(255, 255, 255);
     }
+
+    #file::file-selector-button {
+        color: var(--text-color-light)
+    }
 }
 
 input[type = range] {
@@ -324,10 +332,6 @@ input[type = image]:hover {
     padding-bottom: 20px;
 }
 
-/*.header table {*/
-/*    width: 50vw;*/
-/*}*/
-
 .header > a > img {
     width: 30vw;
     transition: var(--transition-all);
@@ -352,7 +356,6 @@ table td {
     cursor: text;
     user-select: text;
 }
-
 
 #firstRow .bold {
     font-weight: 800;
@@ -436,6 +439,19 @@ textarea {
     resize: none;
 }
 
+#file::file-selector-button {
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+}
+
+#file::file-selector-button:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+#file::file-selector-button:active {
+    background: rgba(255, 255, 255, 0.36);
+}
+
 textarea::-webkit-scrollbar {
     width: 6px;
 }
@@ -478,3 +494,9 @@ input[type=checkbox] {
 
 input:invalid:not(:placeholder-shown).required {border-color: red;}
 input:valid:not(:placeholder-shown).required {border-color: green;}
+
+li::first-letter,
+dt::first-letter,
+dd::first-letter{
+    color: red;
+}
