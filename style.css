@@ -46,6 +46,14 @@ body::-webkit-scrollbar-thumb {
         background-color: var(--background-color-interaction-dark);
     }
 
+    ::selection {
+        background-color: white;
+    }
+
+    ::marker {
+        color: white;
+    }
+
     body {
         background-color: var(--background-color-dark);
         color: var(--text-color-dark);
@@ -63,7 +71,7 @@ body::-webkit-scrollbar-thumb {
         color: var(--background-color-interaction-dark);
     }
 
-    a:hover {
+    a:link:hover {
         color: white;
     }
 
@@ -88,9 +96,13 @@ body::-webkit-scrollbar-thumb {
         border-top: none;
     }
 
-    table td:hover {
+    #styleTable td:hover {
         background-color: var(--background-color-interaction-dark);
         color: var(--background-color-dark)
+    }
+
+    table thead tr :only-child {
+        text-shadow: 3px 3px var(--text-color-dark-input-label);
     }
 
     input[type = date]::-webkit-datetime-edit-day-field,
@@ -179,6 +191,14 @@ body::-webkit-scrollbar-thumb {
         background-color: var(--background-color-interaction-light);
     }
 
+    ::selection {
+        background-color: black;
+    }
+
+    ::marker {
+        color: black;
+    }
+
     body {
         background-color: var(--background-color-light);
         color: var(--text-color-light);
@@ -217,9 +237,13 @@ body::-webkit-scrollbar-thumb {
         border-top: none;
     }
 
-    table td:hover {
+    #styleTable td:hover {
         background-color: var(--background-color-interaction-light);
         color: var(--background-color-light)
+    }
+
+    table thead tr :only-child {
+        text-shadow: 3px 3px var(--text-color-light-input-label);
     }
 
     input[type = date]::-webkit-datetime-edit-day-field,
@@ -323,6 +347,9 @@ input[type = image]:hover {
     transform: rotate(360deg);
 }
 
+input:focus {
+    background-color: rgba(82, 82, 82, 0.18);
+}
 
 .data {
     padding: 5px;
@@ -341,9 +368,9 @@ input[type = image]:hover {
     transform: scale(0.9)
 }
 
-table td {
+#styleTable td {
     user-select: none;
-    cursor: not-allowed;
+    cursor: wait;
     transition: var(--transition-all);
 }
 
@@ -355,6 +382,26 @@ table td {
     padding: 10px;
     cursor: text;
     user-select: text;
+}
+
+#listAnchor {
+    text-shadow: 5px 5px rgba(255, 0, 0, 0.4);
+}
+
+#anchor {
+    margin-bottom: 20px;
+    display: block;
+}
+
+#anchor img{
+    border-top: 8px groove #541515;
+    border-bottom: 8px inset #82d8da;
+    border-left: 8px groove #155254;
+    border-right: 8px inset #82d8da;
+    background-color: transparent;
+    background-image: url("./assets/button.png");
+    background-size: 25%;
+    box-shadow: -8px -8px, 10px 10px 10px green, 15px 15px 10px red;
 }
 
 #firstRow .bold {
@@ -492,11 +539,55 @@ input[type=checkbox] {
 }
 
 
-input:invalid:not(:placeholder-shown).required {border-color: red;}
-input:valid:not(:placeholder-shown).required {border-color: green;}
+input:invalid:not(:placeholder-shown).required {
+    border-color: red;
+}
+
+input:valid:not(:placeholder-shown).required {
+    border-color: green;
+}
 
 li::first-letter,
 dt::first-letter,
-dd::first-letter{
+dd::first-letter {
     color: red;
+}
+
+li::first-letter,
+dt::first-letter,
+dd::first-letter {
+    color: red;
+}
+
+.nav :first-child {
+    text-transform: lowercase;
+}
+
+.nav :last-child {
+    text-transform: uppercase;
+}
+
+article[data-hacker]:before {
+    content: 'hac';
+}
+
+article[data-hacker]:after {
+    content: 'ker';
+}
+
+.footer h4,
+.footer h3 {
+    display: inline;
+}
+
+.footer h4 a {
+    text-decoration: overline wavy green;
+}
+
+.footer h4 a:fullscreen {
+    color: #ffc548;
+}
+
+.footer h3 a {
+    text-decoration: underline double red;
 }
