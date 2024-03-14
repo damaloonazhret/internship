@@ -1,1 +1,593 @@
-.radio input[type=radio]:checked+label,body{margin:0;padding:0}.radio input[type=radio],input[type=checkbox]{display:inline-block;position:relative;height:20px;width:20px;transition:var(--transition-all)}.header>a>img,.radio input[type=radio],input[type=checkbox],table td{transition:var(--transition-all)}:root{--background-color-dark:#19253b;--background-color-interaction-dark:#e8e8e8;--text-color-dark-input-label:#dc0155;--text-color-dark:#ffc548;--background-color-light:#ffffff;--background-color-interaction-light:#404b62;--text-color-light-input-label:#ff0000;--text-color-light:#000000;--font-family-main:consolas,"Times New Roman",serif;--transition-all:.5s all}html{scroll-behavior:smooth}body{box-sizing:border-box;font-family:var(--font-family-main);text-align:center}.data input,.data textarea,select{border:0;outline:0;background-color:transparent}body::-webkit-scrollbar{width:5px}body::-webkit-scrollbar-thumb{border-radius:5px}@media (prefers-color-scheme:dark){body,select:focus{background-color:var(--background-color-dark)}body{color:var(--text-color-dark)}a{color-scheme:dark}.radio input[type=radio]:checked+label,a:visited,input,select,textarea{color:var(--text-color-dark)}a:active{color:var(--background-color-interaction-dark)}a:hover{color:#fff}.data__form>fieldset>legend~label,.data__form>label,fieldset>legend{color:var(--text-color-dark-input-label)}.data input{border-bottom:1px solid var(--background-color-interaction-dark)}.data textarea{border:1px solid var(--background-color-interaction-dark);border-top:none}table td:hover{background-color:var(--background-color-interaction-dark);color:var(--background-color-dark)}input[type=date]::-webkit-datetime-edit-day-field,input[type=date]::-webkit-datetime-edit-month-field,input[type=date]::-webkit-datetime-edit-year-field{color:var(--text-color-dark-input-label)}input[type=date]::-webkit-datetime-edit-day-field:focus,input[type=date]::-webkit-datetime-edit-month-field:focus,input[type=date]::-webkit-datetime-edit-year-field:focus{color:var(--background-color-interaction-dark);background-color:var(--text-color-dark-input-label)}input[type=date]::-webkit-calendar-picker-indicator:active{color-scheme:dark;background-color:var(--background-color-dark);padding:5px}input[type=date]::-webkit-calendar-picker-indicator{color-scheme:light;background-color:var(--text-color-dark);padding:5px}input[type=time]::-webkit-calendar-picker-indicator{filter:invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%)}input[type=time]::-webkit-datetime-edit-hour-field{background-color:var(--background-color-interaction-dark);color:var(--background-color-dark)}input[type=time]::-webkit-datetime-edit-minute-field{background-color:var(--text-color-dark-input-label);color:var(--background-color-interaction-dark)}body::-webkit-scrollbar-thumb{background-color:var(--background-color-interaction-dark)}textarea::-webkit-scrollbar-thumb{background-color:var(--background-color-interaction-dark)}.radio input[type=radio]:checked,input[type=checkbox]:checked{border-color:var(--background-color-dark);background-color:var(--text-color-dark);box-shadow:inset 1px 2px 3px 0 rgba(0,0,0,.1)}.radio input[type=radio],input[type=checkbox]{background-color:var(--text-color-dark-input-label)}.radio input[type=radio]{border:3px solid var(--background-color-interaction-dark)}input[type=checkbox]{box-shadow:0 0 1px 1px #fff}}@media (prefers-color-scheme:light){.radio input[type=radio]:checked+label,a:visited,body,input,select,textarea{color:var(--text-color-light)}body,select:focus{background-color:var(--background-color-light)}a:active{color:var(--background-color-interaction-light)}a:hover{color:#000}.data__form>fieldset>legend~label,.data__form>label,fieldset>legend{color:var(--text-color-light-input-label)}.data input{border-bottom:2px solid var(--background-color-interaction-light)}.data textarea{border:2px solid var(--background-color-interaction-light);border-top:none}table td:hover{background-color:var(--background-color-interaction-light);color:var(--background-color-light)}input[type=date]::-webkit-datetime-edit-day-field,input[type=date]::-webkit-datetime-edit-month-field,input[type=date]::-webkit-datetime-edit-year-field{color:var(--text-color-light-input-label)}input[type=date]::-webkit-datetime-edit-day-field:focus,input[type=date]::-webkit-datetime-edit-month-field:focus,input[type=date]::-webkit-datetime-edit-year-field:focus{color:var(--background-color-light);background-color:var(--text-color-light-input-label)}input[type=date]::-webkit-calendar-picker-indicator:active{color-scheme:light;background-color:var(--background-color-light);padding:5px}input[type=date]::-webkit-calendar-picker-indicator{color-scheme:dark;background-color:var(--text-color-light);padding:5px}input[type=time]::-webkit-calendar-picker-indicator{filter:invert(100%) brightness(50%) sepia(100%) saturate(10000%)}input[type=time]::-webkit-datetime-edit-hour-field{background-color:var(--text-color-light);color:var(--background-color-light)}input[type=time]::-webkit-datetime-edit-minute-field{background-color:var(--text-color-light-input-label);color:var(--background-color-light)}body::-webkit-scrollbar-thumb{background-color:var(--background-color-interaction-light)}textarea::-webkit-scrollbar-thumb{background-color:var(--background-color-interaction-light)}.radio input[type=radio]:checked,input[type=checkbox]:checked{border-color:var(--background-color-light);background-color:var(--text-color-light);box-shadow:inset 1px 2px 3px 0 rgba(0,0,0,.1)}.radio input[type=radio],input[type=checkbox]{background-color:var(--text-color-light-input-label)}.radio input[type=radio]{border:3px solid var(--background-color-interaction-light)}input[type=checkbox]{box-shadow:0 0 1px 1px #fff}}input[type=range]{appearance:none;-webkit-appearance:none;-moz-appearance:none;outline:0;margin:0}input[type=file]{background-color:transparent}input[type=image]{transition:1s}input[type=image]:hover{transform:rotate(360deg)}.data{padding:5px}.data div{padding-bottom:20px}.header>a>img{width:30vw}.header>a p~img:hover{transform:scale(.9)}table td{user-select:none;cursor:not-allowed}.lists table{border-spacing:20px}.lists table td{padding:10px;cursor:text;user-select:text}#firstRow .bold{font-weight:800;line-height:2rem;display:-webkit-box;-webkit-line-clamp:1;-webkit-box-orient:vertical;overflow:hidden}#firstRow .strong{font-weight:100;letter-spacing:4px}#firstRow .sup{vertical-align:super;font-size:smaller}#firstRow .sub{vertical-align:sub;font-size:smaller}#firstRow .ins{text-decoration:underline}#secondRow .del{text-decoration:line-through}#secondRow .small{font-size:80%}#secondRow .mark{position:relative}#secondRow div.mark::before{content:'';position:absolute;top:0;left:0;width:100%;height:100%;background-color:#ff0;opacity:.5;z-index:-1}#secondRow .i{font-style:italic}#secondRow .em{font-style:oblique}[data-reset],[data-submit]{cursor:pointer!important}.button-hover:hover{cursor:pointer;background-color:rgba(152,152,152,.39)}.button-hover:active{background-color:rgba(152,152,152,.16)}[data-footer-label]{display:inline-block;margin-bottom:10px}textarea{resize:none}textarea::-webkit-scrollbar{width:6px}textarea::-webkit-scrollbar-thumb{border-radius:5px}body::-webkit-scrollbar-track{background-color:transparent}select:focus{border:none;outline:0}.radio input[type=radio]{border-radius:20px}input:invalid:not(:placeholder-shown).required{border-color:red}input:valid:not(:placeholder-shown).required{border-color:green}li::first-letter,dt::first-letter,dd::first-letter{color: red;}
+:root {
+    --background-color-dark: #19253b;
+    --background-color-interaction-dark: #e8e8e8;
+    --text-color-dark-input-label: #dc0155;
+    --text-color-dark: #ffc548;
+
+    --background-color-light: #ffffff;
+    --background-color-interaction-light: #404b62;
+    --text-color-light-input-label: #ff0000;
+    --text-color-light: #000000;
+
+    --font-family-main: consolas, "Times New Roman", serif;
+    --transition-all: .5s all;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family-main);
+    text-align: center;
+}
+
+.data input,
+select,
+.data textarea {
+    border: 0;
+    outline: none;
+    background-color: transparent;
+}
+
+body::-webkit-scrollbar {
+    width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+}
+
+@media (prefers-color-scheme: dark) {
+    body::-webkit-scrollbar-thumb {
+        background-color: var(--background-color-interaction-dark);
+    }
+
+    ::selection {
+        background-color: white;
+    }
+
+    ::marker {
+        color: white;
+    }
+
+    body {
+        background-color: var(--background-color-dark);
+        color: var(--text-color-dark);
+    }
+
+    a {
+        color-scheme: dark;
+    }
+
+    a:visited {
+        color: var(--text-color-dark);
+    }
+
+    a:active {
+        color: var(--background-color-interaction-dark);
+    }
+
+    a:link:hover {
+        color: white;
+    }
+
+    input, select, textarea {
+        color: var(--text-color-dark);
+    }
+
+    .data__form > fieldset > legend ~ label {
+        color: var(--text-color-dark-input-label);
+    }
+
+    .data__form > label {
+        color: var(--text-color-dark-input-label);
+    }
+
+    .data input {
+        border-bottom: 1px solid var(--background-color-interaction-dark);
+    }
+
+    .data textarea {
+        border: 1px solid var(--background-color-interaction-dark);
+        border-top: none;
+    }
+
+    #styleTable td:hover {
+        background-color: var(--background-color-interaction-dark);
+        color: var(--background-color-dark)
+    }
+
+    table thead tr :only-child {
+        text-shadow: 3px 3px var(--text-color-dark-input-label);
+    }
+
+    input[type = date]::-webkit-datetime-edit-day-field,
+    input[type = date]::-webkit-datetime-edit-month-field,
+    input[type = date]::-webkit-datetime-edit-year-field {
+        color: var(--text-color-dark-input-label);
+    }
+
+    input[type = date]::-webkit-datetime-edit-day-field:focus,
+    input[type = date]::-webkit-datetime-edit-month-field:focus,
+    input[type = date]::-webkit-datetime-edit-year-field:focus {
+        color: var(--background-color-interaction-dark);
+        background-color: var(--text-color-dark-input-label);
+    }
+
+    input[type = date]::-webkit-calendar-picker-indicator:active {
+        color-scheme: dark;
+        background-color: var(--background-color-dark);
+        padding: 5px;
+    }
+
+    input[type = date]::-webkit-calendar-picker-indicator {
+        color-scheme: light;
+        background-color: var(--text-color-dark);
+        padding: 5px;
+    }
+
+    input[type = time]::-webkit-calendar-picker-indicator {
+        filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);
+    }
+
+    input[type=time]::-webkit-datetime-edit-hour-field {
+        background-color: var(--background-color-interaction-dark);
+        color: var(--background-color-dark);
+    }
+
+    input[type=time]::-webkit-datetime-edit-minute-field {
+        background-color: var(--text-color-dark-input-label);
+        color: var(--background-color-interaction-dark);
+    }
+
+    fieldset > legend {
+        color: var(--text-color-dark-input-label);
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background-color: var(--background-color-interaction-dark);
+    }
+
+    textarea::-webkit-scrollbar-thumb {
+        background-color: var(--background-color-interaction-dark);
+    }
+
+    .radio input[type=radio]:checked, input[type=checkbox]:checked {
+        border-color: var(--background-color-dark);
+        background-color: var(--text-color-dark);
+        box-shadow: inset 1px 2px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    select:focus {
+        background-color: var(--background-color-dark);
+    }
+
+    .radio input[type=radio]:checked + label {
+        color: var(--text-color-dark);
+    }
+
+    .radio input[type=radio] {
+        border: 3px solid var(--background-color-interaction-dark);
+        background-color: var(--text-color-dark-input-label);
+    }
+
+    input[type=checkbox] {
+        background-color: var(--text-color-dark-input-label);
+        box-shadow: 0 0 1px 1px rgb(255, 255, 255);
+    }
+
+    #file::file-selector-button {
+        color: var(--text-color-dark)
+    }
+
+}
+
+@media (prefers-color-scheme: light) {
+    body::-webkit-scrollbar-thumb {
+        background-color: var(--background-color-interaction-light);
+    }
+
+    ::selection {
+        background-color: black;
+    }
+
+    ::marker {
+        color: black;
+    }
+
+    body {
+        background-color: var(--background-color-light);
+        color: var(--text-color-light);
+    }
+
+    a:visited {
+        color: var(--text-color-light);
+    }
+
+    a:active {
+        color: var(--background-color-interaction-light);
+    }
+
+    a:hover {
+        color: black;
+    }
+
+    input, select, textarea {
+        color: var(--text-color-light);
+    }
+
+    .data__form > fieldset > legend ~ label {
+        color: var(--text-color-light-input-label);
+    }
+
+    .data__form > label {
+        color: var(--text-color-light-input-label);
+    }
+
+    .data input {
+        border-bottom: 2px solid var(--background-color-interaction-light);
+    }
+
+    .data textarea {
+        border: 2px solid var(--background-color-interaction-light);
+        border-top: none;
+    }
+
+    #styleTable td:hover {
+        background-color: var(--background-color-interaction-light);
+        color: var(--background-color-light)
+    }
+
+    table thead tr :only-child {
+        text-shadow: 3px 3px var(--text-color-light-input-label);
+    }
+
+    input[type = date]::-webkit-datetime-edit-day-field,
+    input[type = date]::-webkit-datetime-edit-month-field,
+    input[type = date]::-webkit-datetime-edit-year-field {
+        color: var(--text-color-light-input-label);
+    }
+
+    input[type = date]::-webkit-datetime-edit-day-field:focus,
+    input[type = date]::-webkit-datetime-edit-month-field:focus,
+    input[type = date]::-webkit-datetime-edit-year-field:focus {
+        color: var(--background-color-light);
+        background-color: var(--text-color-light-input-label);
+    }
+
+    input[type = date]::-webkit-calendar-picker-indicator:active {
+        color-scheme: light;
+        background-color: var(--background-color-light);
+        padding: 5px;
+    }
+
+    input[type = date]::-webkit-calendar-picker-indicator {
+        color-scheme: dark;
+        background-color: var(--text-color-light);
+        padding: 5px;
+    }
+
+    input[type = time]::-webkit-calendar-picker-indicator {
+        /*filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);*/
+        filter: invert(100%) brightness(50%) sepia(100%) saturate(10000%);
+    }
+
+    input[type=time]::-webkit-datetime-edit-hour-field {
+        background-color: var(--text-color-light);
+        color: var(--background-color-light);
+    }
+
+    input[type=time]::-webkit-datetime-edit-minute-field {
+        background-color: var(--text-color-light-input-label);
+        color: var(--background-color-light);
+    }
+
+    fieldset > legend {
+        color: var(--text-color-light-input-label);
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background-color: var(--background-color-interaction-light);
+    }
+
+    textarea::-webkit-scrollbar-thumb {
+        background-color: var(--background-color-interaction-light);
+    }
+
+    .radio input[type=radio]:checked, input[type=checkbox]:checked {
+        border-color: var(--background-color-light);
+        background-color: var(--text-color-light);
+        box-shadow: inset 1px 2px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    select:focus {
+        background-color: var(--background-color-light);
+    }
+
+    .radio input[type=radio]:checked + label {
+        color: var(--text-color-light);
+    }
+
+    .radio input[type=radio] {
+        border: 3px solid var(--background-color-interaction-light);
+        background-color: var(--text-color-light-input-label);
+    }
+
+    input[type=checkbox] {
+        background-color: var(--text-color-light-input-label);
+        box-shadow: 0 0 1px 1px rgb(255, 255, 255);
+    }
+
+    #file::file-selector-button {
+        color: var(--text-color-light)
+    }
+}
+
+input[type = range] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    margin: 0;
+}
+
+input[type = file] {
+    background-color: transparent;
+}
+
+input[type = image] {
+    transition: 1s;
+}
+
+input[type = image]:hover {
+    transform: rotate(360deg);
+}
+
+input:focus {
+    background-color: rgba(82, 82, 82, 0.18);
+}
+
+.data {
+    padding: 5px;
+}
+
+.data div {
+    padding-bottom: 20px;
+}
+
+.header > a > img {
+    width: 30vw;
+    transition: var(--transition-all);
+}
+
+.header > a p ~ img:hover {
+    transform: scale(0.9)
+}
+
+#styleTable td {
+    user-select: none;
+    cursor: wait;
+    transition: var(--transition-all);
+}
+
+.lists table {
+    border-spacing: 20px;
+}
+
+.lists table td {
+    padding: 10px;
+    cursor: text;
+    user-select: text;
+}
+
+#listAnchor {
+    text-shadow: 5px 5px rgba(255, 0, 0, 0.4);
+}
+
+#anchor {
+    margin-bottom: 20px;
+    display: block;
+}
+
+#anchor img{
+    border-top: 8px groove #541515;
+    border-bottom: 8px inset #82d8da;
+    border-left: 8px groove #155254;
+    border-right: 8px inset #82d8da;
+    background-color: transparent;
+    background-image: url("./assets/button.png");
+    background-size: 25%;
+    box-shadow: -8px -8px, 10px 10px 10px green, 15px 15px 10px red;
+}
+
+#firstRow .bold {
+    font-weight: 800;
+    line-height: 2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#firstRow .strong {
+    font-weight: 100;
+    letter-spacing: 4px;
+}
+
+#firstRow .sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+
+#firstRow .sub {
+    vertical-align: sub;
+    font-size: smaller;
+}
+
+#firstRow .ins {
+    text-decoration: underline;
+}
+
+#secondRow .del {
+    text-decoration: line-through;
+}
+
+#secondRow .small {
+    font-size: 80%;
+}
+
+#secondRow .mark {
+    position: relative;
+}
+
+#secondRow div.mark::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: yellow;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+#secondRow .i {
+    font-style: italic;
+}
+
+#secondRow .em {
+    font-style: oblique;
+}
+
+[data-submit], [data-reset] {
+    cursor: pointer !important;
+}
+
+.button-hover:hover {
+    cursor: pointer;
+    background-color: rgba(152, 152, 152, 0.39);
+}
+
+.button-hover:active {
+    background-color: rgba(152, 152, 152, 0.16);
+}
+
+[data-footer-label] {
+    display: inline-block;
+    margin-bottom: 10px;
+}
+
+textarea {
+    resize: none;
+}
+
+#file::file-selector-button {
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+}
+
+#file::file-selector-button:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+#file::file-selector-button:active {
+    background: rgba(255, 255, 255, 0.36);
+}
+
+textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+select:focus {
+    border: none;
+    outline: none;
+}
+
+.radio input[type=radio]:checked + label {
+    margin: 0;
+    padding: 0;
+}
+
+.radio input[type=radio] {
+    display: inline-block;
+    position: relative;
+    height: 20px;
+    width: 20px;
+    border-radius: 20px;
+    transition: var(--transition-all);
+}
+
+input[type=checkbox] {
+    display: inline-block;
+    position: relative;
+    height: 20px;
+    width: 20px;
+    transition: var(--transition-all);
+}
+
+
+input:invalid:not(:placeholder-shown).required {
+    border-color: red;
+}
+
+input:valid:not(:placeholder-shown).required {
+    border-color: green;
+}
+
+li::first-letter,
+dt::first-letter,
+dd::first-letter {
+    color: red;
+}
+
+li::first-letter,
+dt::first-letter,
+dd::first-letter {
+    color: red;
+}
+
+.nav :first-child {
+    text-transform: lowercase;
+}
+
+.nav :last-child {
+    text-transform: uppercase;
+}
+
+article[data-hacker]:before {
+    content: 'hac';
+}
+
+article[data-hacker]:after {
+    content: 'ker';
+}
+
+.footer h4,
+.footer h3 {
+    display: inline;
+}
+
+.footer h4 a {
+    text-decoration: overline wavy green;
+}
+
+.footer h4 a:fullscreen {
+    color: #ffc548;
+}
+
+.footer h3 a {
+    text-decoration: underline double red;
+}
