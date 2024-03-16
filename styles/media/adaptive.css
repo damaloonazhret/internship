@@ -1,4 +1,4 @@
-@media screen and (max-width: 1280px) {
+@media screen and (width <= 1280px) {
     .body {
         grid-template-columns: 1fr;
         grid-template-rows: 1fr 3fr;
@@ -62,4 +62,34 @@
         justify-content: space-around;
     }
 
+}
+
+@media print and (orientation: landscape) {
+    .body {
+        background-color: #ff0000;
+    }
+}
+
+@media print and (orientation: portrait) {
+    .body {
+        background-color: violet;
+    }
+}
+
+@media print and (min-resolution: 150dpi) {
+    span {
+        font-size: 30px;
+    }
+}
+
+@media print and (min-resolution: 300dpi) {
+    span {
+        font-size: 18px;
+    }
+}
+
+@media (aspect-ratio: 1/1) {
+    .body {
+        background-color: #dc0155;
+    }
 }
