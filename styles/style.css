@@ -476,8 +476,23 @@ input:valid:not(:placeholder-shown).required {
     margin-bottom: 10px;
 }
 
-.contact a {
-    animation: footerLink ease-in 1s reverse infinite;
+.nav-link a {
+    transition: 0.3s;
+}
+
+.nav-link a:hover {
+    color: blueviolet;
+    border-bottom: 1px solid red;
+    transform: scale(0.95);
+}
+
+.contact h3 a {
+    animation: footerLink ease-in 1s alternate-reverse infinite;
+    padding: 1px;
+}
+
+.contact h4 a {
+    animation: footerLink ease-in 1s alternate infinite;
     padding: 1px;
 }
 
