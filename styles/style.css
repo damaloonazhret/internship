@@ -251,8 +251,12 @@ fieldset > div label:not(.no-flex) {
     background: transparent;
 }
 
+.input-btn input {
+    animation: hackerRotate linear 1.5s infinite;
+}
+
 .input-btn input:hover {
-    animation: hackerRotate linear 1s infinite;
+    animation-play-state: paused;
 }
 
 @media (hover: none) {
@@ -267,11 +271,23 @@ fieldset > div label:not(.no-flex) {
 
 @keyframes hackerRotate {
     0% {
-        transform: rotate(0);
+        transform: rotate(0) scale(1);
+    }
+
+    25% {
+        transform: rotate(90deg) scale(1.2);
+    }
+
+    50% {
+        transform: rotate(180deg) scale(1);
+    }
+
+    75% {
+        transform: rotate(270deg) scale(0.8);
     }
 
     100% {
-        transform: rotate(360deg);
+        transform: rotate(360deg) scale(1);
     }
 }
 
@@ -352,6 +368,50 @@ input:focus {
     background-color: rgba(82, 82, 82, 0.18);
 }
 
+input:invalid:not(:placeholder-shown).required {
+    border-color: red;
+}
+
+input:valid:not(:placeholder-shown).required {
+    border-color: green;
+}
+
+input:required {
+    animation: shake 0.1s 5;
+}
+
+input:valid:not(:placeholder-shown).required {
+    animation: shakeUp 0.2s 1;
+}
+
+@keyframes shake {
+    0% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-0.2vw);
+    }
+    50% {
+        transform: translateX(0);
+    }
+    75% {
+        transform: translateX(0.2vw);
+    }
+}
+
+@keyframes shakeUp {
+    0% {
+        transform: translateY(-3px);
+    }
+
+    50% {
+        transform: translateY(3px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
 .button-hover:hover {
     cursor: pointer;
     background-color: rgba(152, 152, 152, 0.39);
@@ -414,4 +474,20 @@ input:focus {
 [data-footer-label] {
     display: inline-block;
     margin-bottom: 10px;
+}
+
+.contact a {
+    animation: footerLink ease-in 1s reverse infinite;
+    padding: 1px;
+}
+
+@keyframes footerLink {
+    0% {
+        border: 0 solid #ff0000;
+    }
+
+
+    100% {
+        border: 8px double #0000ff;
+    }
 }
