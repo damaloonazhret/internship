@@ -11,7 +11,6 @@
     }
 
     input, select, textarea {
-        background: var(--background-color-interaction-dark);
         color: var(--text-color-dark);
     }
 
@@ -27,6 +26,14 @@
         border-bottom: 1px solid var(--background-color-interaction-dark);
     }
 
+    a {
+        color: var(--background-color-interaction-dark);
+    }
+
+    a:visited {
+        color: var(--text-color-dark);
+    }
+
     .data textarea {
         border: 1px solid var(--background-color-interaction-dark);
         border-top: none;
@@ -35,6 +42,18 @@
     .table > div div:hover {
         background-color: var(--background-color-interaction-dark);
         color: var(--background-color-dark)
+    }
+
+    @media (hover: none) {
+        .table > div div:hover {
+            background-color: unset;
+            color: unset;
+        }
+
+        .table > div div:active {
+            background-color: var(--background-color-interaction-dark);
+            color: var(--background-color-dark)
+        }
     }
 
     input[type = date]::-webkit-datetime-edit-day-field,
@@ -112,6 +131,9 @@
         box-shadow: 0 0 1px 1px rgb(255, 255, 255);
     }
 
+    #file::file-selector-button {
+        color: var(--text-color-dark)
+    }
 }
 
 @media (prefers-color-scheme: light) {
@@ -125,7 +147,6 @@
     }
 
     input, select, textarea {
-        background: var(--background-color-interaction-light);
         color: var(--text-color-light);
     }
 
@@ -149,6 +170,18 @@
     .table > div div:hover {
         background-color: var(--background-color-interaction-light);
         color: var(--background-color-light)
+    }
+
+    @media (hover: none) {
+        .table > div div:hover {
+            background-color: unset;
+            color: unset;
+        }
+
+        .table > div div:active {
+            background-color: var(--background-color-interaction-light);
+            color: var(--background-color-light)
+        }
     }
 
     input[type = date]::-webkit-datetime-edit-day-field,
@@ -224,5 +257,9 @@
     input[type=checkbox] {
         background-color: var(--text-color-light-input-label);
         box-shadow: 0 0 1px 1px rgb(255, 255, 255);
+    }
+
+    #file::file-selector-button {
+        color: var(--text-color-light)
     }
 }

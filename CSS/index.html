@@ -3,187 +3,296 @@
 <head>
     <title>CSS</title>
     <meta charset="UTF-8">
-    <meta name="keywords" content="CSS">
-    <meta name="description" content="CSS Tutorial, grid, flex, animation, table">
     <meta name="author" content="Andrey Mironov">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="CSS">
-    <meta property="og:title" content="CSS Layout">
-    <meta property="og:description" content="CSS Tutorial">
-    <meta property="og:url" content="https://damaloonazhret.github.io/internship/CSS/">
-    <meta property="og:locale" content="ru_RU">
-    <meta property="og:image"
-          content="https://сенла.рф/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/telecommunications.jpg.webp">
-    <meta property="og:image:width" content="968">
-    <meta property="og:image:height" content="504">
-    <link rel="icon" type="image/x-icon" href="./assets/logo.png">
+    <link rel="icon" type="image/x-icon" href="assets/logo.png">
     <link rel="stylesheet" href="./styles/style.css">
     <link rel="stylesheet" href="./styles/media/adaptive.css">
 </head>
-<body>
+
+<body class="body">
+
+<header class="header">
+    <a href="https://сенла.рф/"
+       target="_blank">
+        <img src="./assets/i.webp" alt="logo link to company site">
+    </a>
+
+    <section id="styleTable" class="table">
+        <div id="thead">Header for table</div>
+        <div id="firstRow">
+            <div>
+                <span class="bold">Bold text</span>
+            </div>
+            <div>
+                <span class="strong">Important text</span>
+            </div>
+            <div>
+                <span class="sup">Superscript text</span>
+            </div>
+            <div>
+                <span class="sub">Subscript text</span>
+            </div>
+            <div>
+                <span class="ins">Inserted text</span>
+            </div>
+        </div>
+        <div id="secondRow">
+            <div>
+                <span class="del">Deleted text</span>
+            </div>
+            <div>
+                <span class="small">Smaller text</span>
+            </div>
+            <div>
+                <span class="mark">Marked text</span>
+            </div>
+            <div>
+                <span class="i">Italic text</span>
+            </div>
+            <div>
+                <span class="em">Emphasized text</span>
+            </div>
+        </div>
+        <div id="tfoot">Footer for table</div>
+    </section>
+</header>
 
 <main class="main">
-    <header class="header">
-        <a href="https://сенла.рф/"
-           target="_blank">
-            <img src="./assets/i.webp" alt="asd">
-        </a>
 
-        <section class="table">
-            <div id="thead">Header for table</div>
-            <div id="firstRow">
-                <div>
-                    <span class="bold">Bold text</span>
-                </div>
-                <div>
-                    <span class="strong">Important text</span>
-                </div>
-                <div>
-                    <span class="sup">Superscript text</span>
-                </div>
-                <div>
-                    <span class="sub">Subscript text</span>
-                </div>
-                <div>
-                    <span class="ins">Inserted text</span>
-                </div>
-            </div>
-            <div id="secondRow">
-                <div>
-                    <span class="del">Deleted text</span>
-                </div>
-                <div>
-                    <span class="small">Smaller text</span>
-                </div>
-                <div>
-                    <span class="mark">Marked text</span>
-                </div>
-                <div>
-                    <span class="i">Italic text</span>
-                </div>
-                <div>
-                    <span class="em">Emphasized text</span>
-                </div>
-            </div>
-            <div id="tfoot">Footer for table</div>
-        </section>
-
-    </header>
-
-    <article class="data content">
+    <article class="data">
         <form class="data__form" action="./index.html">
             <fieldset>
-                <legend>User data</legend>
-                <label>
-                    <label for="firstName">First Name:</label>
-                    <input type="text" id="firstName" name="firstName">
-                    <label for="lastName">Last Name:</label>
-                    <input type="text" id="lastName" name="lastName">
-                    <label for="age">Age:</label>
-                    <input type="number" id="age" name="age">
-                </label>
-                <label>
-                    <input class="button-hover" type="submit">
-                    <input class="button-hover" type="reset">
-                </label>
+                <section>
+                    <div>
+                        <label for="firstName">First Name:</label>
+                        <input required
+                               class="required"
+                               type="text"
+                               id="firstName"
+                               name="firstName"
+                               title="You can only enter letters"
+                               placeholder="name"
+                               minlength="2"
+                               pattern="[A-Za-z]+">
+
+                        <label for="lastName">Last Name:</label>
+                        <input required
+                               class="required"
+                               type="text"
+                               id="lastName"
+                               name="lastName"
+                               title="You can only enter letters"
+                               placeholder="surname"
+                               minlength="2"
+                               pattern="[A-Za-z]+">
+
+                        <label for="password">Password:</label>
+                        <input required
+                               class="required"
+                               type="password"
+                               id="password"
+                               placeholder="password"
+                               pattern=".{8,}"
+                               title="Minimum 8 symbols">
+                    </div>
+
+                    <div>
+                        <label for="email">Email:</label>
+                        <input required
+                               class="required"
+                               type="email"
+                               id="email"
+                               placeholder="email">
+
+                        <label for="tel">Telephone:</label>
+                        <input required
+                               class="required"
+                               type="tel"
+                               id="tel"
+                               maxlength="12"
+                               placeholder="telephone"
+                               title="The phone number must start with +7 and contain 8 digits"
+                               pattern="^\+7\d{10}$">
+
+                        <label for="age">Age:</label>
+                        <input required
+                               class="required"
+                               type="number"
+                               id="age"
+                               name="age"
+                               maxlength="3"
+                               placeholder="age"
+                               title="Age must be between 18 and 66"
+                               min="18"
+                               max="66">
+                    </div>
+
+                    <div>
+                        <label for="date">Meeting date</label>
+                        <input required id="date" placeholder=" " type="date">
+
+                        <label for="time">Meeting time</label>
+                        <input required id="time" placeholder=" " type="time">
+                    </div>
+
+                    <div>
+
+                        <label>Framework:
+                            <label for="vue">
+                                <input id="vue" type="radio" name="framework" value="Vue">Vue
+                            </label>
+                            <label for="angular">
+                                <input id="angular" type="radio" name="framework" value="Angular">Angular
+                            </label>
+                            <label for="next">
+                                <input id="next" type="radio" name="framework" value="Next" checked>Next.js
+                            </label>
+                        </label>
+
+                        <label for="dataList">Check:
+                            <input required id="dataList" list="language" placeholder="please">
+                            <datalist id="language">
+                                <option value="TypeScript">
+                                <option value="C++">
+                                <option value="PHP">
+                                <option value="Swift">
+                                <option value="Go">
+                            </datalist>
+                        </label>
+                        <input type="checkbox">
+                        <input type="color">
+                    </div>
+
+                    <div>
+                        <label>
+                            <input type="range" min="1" max="5">
+                            <input id="file" type="file">
+                            <input type="search" placeholder="Search query">
+                            <input type="url" placeholder="URL">
+                        </label>
+                    </div>
+
+                    <div>
+                        <label for="textarea">Send your message:
+                            <br>
+                            <textarea name="message" rows="2" cols="20" id="textarea" maxlength="20"></textarea>
+                        </label>
+                    </div>
+
+                    <div>
+                        <input type="hidden">
+                        <input class="button-hover" value="Type Button" type="button">
+                        <input class="button-hover" type="reset">
+                        <input class="button-hover" type="submit">
+                    </div>
+                </section>
             </fieldset>
         </form>
     </article>
 
-    <aside id="aside">
-        <section class="items">
-            <article class="data check">
-                <form class="data__form" action="./index.html">
+    <article class="lists">
+        <h3>Lists</h3>
+        <section>
+            <div>
+                <ul>
+                    <li>Intel</li>
+                    <li>AMD</li>
+                    <li>Oracle SPARC</li>
+                    <li>IBM Power</li>
+                    <li>Elbrus</li>
+                    <li>Zhaoxin KX</li>
+                </ul>
+            </div>
+            <div>
+                <ol type="I" reversed start="6">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                    <li>6</li>
+                </ol>
+            </div>
+            <div>
+                <ul>
+                    <li>
+                        Обучайся
+                    </li>
+                    <li>
+                        Развивайся
+                    </li>
+                    <li>
+                        И помни
+                    </li>
+                    <ul>
+                        <li>Живи</li>
+                        <ul>
+                            <li>А работай</li>
+                            <li>В свободное</li>
+                            <li>Время</li>
+                        </ul>
+                    </ul>
+                </ul>
+            </div>
+            <div>
+                <dl>
+                    <dt>
+                        <strong>
+                            Creator JavaScript:
+                        </strong>
+                    </dt>
+                    <dd>Brendan Eich</dd>
 
-                    <label for="dataList">Check:</label>
-                    <input id="dataList" list="language">
-
-                    <datalist id="language">
-                        <option value="TypeScript">
-                        <option value="C++">
-                        <option value="PHP">
-                        <option value="Swift">
-                        <option value="Go">
-                    </datalist>
-
-                    <input class="button-hover" type="submit">
-                </form>
-                <form action="./index.html">
-
-                    <label for="select">Choose:</label>
-
+                    <dt>
+                        <strong>
+                            HTML transcript:
+                        </strong>
+                    </dt>
+                    <dd>Hyper Text Markup Language</dd>
+                </dl>
+            </div>
+            <div>
+                <ol>
+                    <li>Hello</li>
+                    <ul>
+                        <li>
+                            Word
+                        </li>
+                        <li>World</li>
+                    </ul>
+                </ol>
+            </div>
+            <div>
+                <label for="select">Java Script:
                     <select name="select" id="select">
-                        <option value="JavaScript">JavaScript</option>
-                        <option value="Java">Java</option>
-                        <option value="Python">Python</option>
+                        <option value="JavaScript">Object</option>
+                        <option value="Java">Notation</option>
                     </select>
-
-                    <input class="button-hover" type="submit">
-                </form>
-            </article>
-
-            <article class="data">
-                <form id="radio" class="data__form">
-                    <label class="radio">
-                        <input id="vue" type="radio" name="framework" value="Vue">
-                        <label for="vue">Vue</label>
-                    </label>
-                    <label class="radio">
-                        <input id="angular" type="radio" name="framework" value="Angular">
-                        <label for="angular">Angular</label>
-                    </label>
-                    <label class="radio">
-                        <input id="next" type="radio" name="framework" value="Next" checked>
-                        <label for="next">Next.js</label>
-                    </label>
-                    <div>
-                        <input style="border: none" type="checkbox">
-                        <input id="color" style="border: none" type="color">
-                    </div>
-                </form>
-            </article>
-
-            <article class="data send">
-                <form class="data__form" action="./index.html">
-                    <label data-footer-label for="textarea">Send your message:</label>
-                    <textarea class="textarea" name="message" rows="2" cols="20" id="textarea">
-
-            </textarea>
-                    <input class="button-hover" type="submit">
-                </form>
-            </article>
+                </label>
+            </div>
         </section>
+    </article>
 
-        <footer class="data footer">
-            <form class="data__form data__form-table-cell">
-                <label class="tr">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name">
-                </label>
-                <label class="tr">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password">
-                </label>
-                <label class="tr">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email">
-                </label>
-                <label class="tr">
-                    <label for="tel">Telephone:</label>
-                    <input type="tel" id="tel">
-                </label>
-                <label class="tr">
-                    <label for="date">Meeting date:</label>
-                    <input id="date" type="date">
-                </label>
-                <label class="tr">
-                    <label for="time">Meeting time:</label>
-                    <input id="time" value="13:30" type="time">
-                </label>
-            </form>
-        </footer>
-    </aside>
+    <div class="elements">
+        <nav class="nav-link">
+            <a href="https://github.com/" target="_blank">GitHub</a>
+            <a href="https://gmail.com/" target="_self">Google</a>
+        </nav>
+
+        <article class="input-btn">
+            <input type="image" src="./assets/button.png" width="100px">
+        </article>
+
+        <aside class="contact">
+            <h3>
+                <a href="mailto:someMeil@gmail.com">Email</a>
+            </h3>
+            <h4>
+                <a href="tel:+78005553535">Phone</a>
+            </h4>
+        </aside>
+    </div>
 
 </main>
 
