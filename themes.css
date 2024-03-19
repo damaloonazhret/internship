@@ -25,7 +25,7 @@
     }
 
     a:active {
-        color: var(--background-color-interaction-dark);
+        color: var(--active-link-color-dark);
     }
 
     a:link:hover {
@@ -45,21 +45,21 @@
     }
 
     .data input {
-        border-bottom: 1px solid var(--background-color-interaction-dark);
+        border-bottom: 1px solid var(--border-color-interaction-dark);
     }
 
     .data textarea {
-        border: 1px solid var(--background-color-interaction-dark);
+        border: 1px solid var(--border-color-interaction-dark);
         border-top: none;
     }
 
     #styleTable td:hover {
-        background-color: var(--background-color-interaction-dark);
+        background-color: var(--hover-color-dark);
         color: var(--background-color-dark)
     }
 
     table thead tr :only-child {
-        text-shadow: 3px 3px var(--text-color-dark-input-label);
+        text-shadow: 3px 3px var(--text-shadow-dark);
     }
 
     input[type = date]::-webkit-datetime-edit-day-field,
@@ -71,8 +71,8 @@
     input[type = date]::-webkit-datetime-edit-day-field:focus,
     input[type = date]::-webkit-datetime-edit-month-field:focus,
     input[type = date]::-webkit-datetime-edit-year-field:focus {
-        color: var(--background-color-interaction-dark);
-        background-color: var(--text-color-dark-input-label);
+        color: var(--focus-color-interaction-dark);
+        background-color: var(--text-color-dark-input-bg);
     }
 
     input[type = date]::-webkit-calendar-picker-indicator:active {
@@ -83,7 +83,7 @@
 
     input[type = date]::-webkit-calendar-picker-indicator {
         color-scheme: light;
-        background-color: var(--text-color-dark);
+        background-color: var(--background-color-dark);
         padding: 5px;
     }
 
@@ -93,11 +93,11 @@
 
     input[type=time]::-webkit-datetime-edit-hour-field {
         background-color: var(--background-color-interaction-dark);
-        color: var(--background-color-dark);
+        color: var(--time-color-dark);
     }
 
     input[type=time]::-webkit-datetime-edit-minute-field {
-        background-color: var(--text-color-dark-input-label);
+        background-color: var(--time-bg-dark-input);
         color: var(--background-color-interaction-dark);
     }
 
@@ -115,7 +115,7 @@
 
     .radio input[type=radio]:checked, input[type=checkbox]:checked {
         border-color: var(--background-color-dark);
-        background-color: var(--text-color-dark);
+        background-color: var(--checked-input-color-dark);
         box-shadow: inset 1px 2px 3px 0 rgba(0, 0, 0, 0.1);
     }
 
@@ -128,12 +128,12 @@
     }
 
     .radio input[type=radio] {
-        border: 3px solid var(--background-color-interaction-dark);
-        background-color: var(--text-color-dark-input-label);
+        border: 3px solid var(--border-color-interaction-dark);
+        background-color: var(--text-color-dark-input-bg);
     }
 
     input[type=checkbox] {
-        background-color: var(--text-color-dark-input-label);
+        background-color: var(--text-color-dark-input-bg);
         box-shadow: 0 0 1px 1px rgb(255, 255, 255);
     }
 
@@ -162,11 +162,11 @@
     }
 
     a:visited {
-        color: var(--text-color-light);
+        color: var(--visited-link-color-light);
     }
 
     a:active {
-        color: var(--background-color-interaction-light);
+        color: var(--active-link-color-light);
     }
 
     a:hover {
@@ -186,21 +186,21 @@
     }
 
     .data input {
-        border-bottom: 2px solid var(--background-color-interaction-light);
+        border-bottom: 2px solid var(--border-color-interaction-light);
     }
 
     .data textarea {
-        border: 2px solid var(--background-color-interaction-light);
+        border: 2px solid var(--border-color-interaction-light);
         border-top: none;
     }
 
     #styleTable td:hover {
         background-color: var(--background-color-interaction-light);
-        color: var(--background-color-light)
+        color: var(--hover-color-light)
     }
 
     table thead tr :only-child {
-        text-shadow: 3px 3px var(--text-color-light-input-label);
+        text-shadow: 3px 3px var(--text-shadow-lighg);
     }
 
     input[type = date]::-webkit-datetime-edit-day-field,
@@ -212,8 +212,8 @@
     input[type = date]::-webkit-datetime-edit-day-field:focus,
     input[type = date]::-webkit-datetime-edit-month-field:focus,
     input[type = date]::-webkit-datetime-edit-year-field:focus {
-        color: var(--background-color-light);
-        background-color: var(--text-color-light-input-label);
+        color: var(--focus-color-interaction-light);
+        background-color: var(--text-color-light-input-bg);
     }
 
     input[type = date]::-webkit-calendar-picker-indicator:active {
@@ -224,7 +224,7 @@
 
     input[type = date]::-webkit-calendar-picker-indicator {
         color-scheme: dark;
-        background-color: var(--text-color-light);
+        background-color: var(--background-color-light);
         padding: 5px;
     }
 
@@ -235,11 +235,11 @@
 
     input[type=time]::-webkit-datetime-edit-hour-field {
         background-color: var(--text-color-light);
-        color: var(--background-color-light);
+        color: var(--time-color-light);
     }
 
     input[type=time]::-webkit-datetime-edit-minute-field {
-        background-color: var(--text-color-light-input-label);
+        background-color: var(--time-bg-light-input);
         color: var(--background-color-light);
     }
 
@@ -257,7 +257,7 @@
 
     .radio input[type=radio]:checked, input[type=checkbox]:checked {
         border-color: var(--background-color-light);
-        background-color: var(--text-color-light);
+        background-color: var(--checked-input-color-light);
         box-shadow: inset 1px 2px 3px 0 rgba(0, 0, 0, 0.1);
     }
 
@@ -270,12 +270,12 @@
     }
 
     .radio input[type=radio] {
-        border: 3px solid var(--background-color-interaction-light);
-        background-color: var(--text-color-light-input-label);
+        border: 3px solid var(--border-color-interaction-light);
+        background-color: var(--text-color-light-input-bg);
     }
 
     input[type=checkbox] {
-        background-color: var(--text-color-light-input-label);
+        background-color: var(--text-color-light-input-bg);
         box-shadow: 0 0 1px 1px rgb(255, 255, 255);
     }
 
