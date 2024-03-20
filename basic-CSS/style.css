@@ -1,16 +1,43 @@
 :root {
-    --background-color-dark: #19253b;
-    --background-color-interaction-dark: #e8e8e8;
-    --text-color-dark-input-label: #dc0155;
-    --text-color-dark: #ffc548;
+    --white: #e8e8e8;
+    --red: #dc0155;
+    --yellow: #ffc548;
+    --black: #000000;
+    --gray: #404b62;
+    --dark-blue: #19253b;
 
-    --background-color-light: #ffffff;
-    --background-color-interaction-light: #404b62;
-    --text-color-light-input-label: #ff0000;
-    --text-color-light: #000000;
+    --background-color-dark: var(--dark-blue);
+    --time-color-dark: var(--dark-blue);
+    --hover-color-dark: var(--dark-blue);
+    --border-color-interaction-dark: var(--white);
+    --background-color-interaction-dark: var(--white);
+    --focus-color-interaction-dark: var(--white);
+    --active-link-color-dark: var(--white);
+    --text-color-dark-input-label: var(--red);
+    --text-color-dark-input-bg: var(--red);
+    --time-bg-dark-input: var(--red);
+    --text-shadow-dark: var(--red);
+    --text-color-dark: var(--yellow);
+    --visited-link-color-dark: var(--yellow);
+    --checked-input-color-dark: var(--yellow);
+
+    --background-color-light: var(--white);
+    --time-color-light: var(--white);
+    --hover-color-light: var(--white);
+    --border-color-interaction-light: var(--gray);
+    --background-color-interaction-light: var(--gray);
+    --focus-color-interaction-light: var(--gray);
+    --active-link-color-light: var(--gray);
+    --text-color-light-input-label: var(--red);
+    --text-color-light-input-bg: var(--red);
+    --time-bg-light-input: var(--red);
+    --text-shadow-lighg: var(--red);
+    --text-color-light: var(--black);
+    --visited-link-color-light: var(--black);
+    --checked-input-color-light: var(--black);
 
     --font-family-main: consolas, "Times New Roman", serif;
-    --transition-all: .5s all;
+    /*--transition-all: .5s all;*/
 }
 
 html {
@@ -39,7 +66,7 @@ body::-webkit-scrollbar-track {
 
 .header > a > img {
     width: 30vw;
-    transition: var(--transition-all);
+    /*transition: var(--transition-all);*/
 }
 
 .header > a p ~ img:hover {
@@ -65,7 +92,7 @@ body::-webkit-scrollbar-track {
 #styleTable td {
     user-select: none;
     cursor: wait;
-    transition: var(--transition-all);
+    /*transition: var(--transition-all);*/
 }
 
 select,
@@ -156,12 +183,12 @@ input[type = file] {
     background-color: transparent;
 }
 
-input[type = image] {
-    transition: 1s;
-}
+/*input[type = image] {*/
+/*    transition: 1s;*/
+/*}*/
 
 input[type = image]:hover {
-    transform: rotate(360deg);
+    transform: rotate(260deg);
 }
 
 input:focus {
@@ -173,7 +200,7 @@ input[type=checkbox] {
     position: relative;
     height: 20px;
     width: 20px;
-    transition: var(--transition-all);
+    /*transition: var(--transition-all);*/
 }
 
 input:invalid:not(:placeholder-shown).required {
@@ -195,7 +222,7 @@ input:valid:not(:placeholder-shown).required {
     height: 20px;
     width: 20px;
     border-radius: 20px;
-    transition: var(--transition-all);
+    /*transition: var(--transition-all);*/
 }
 
 .button-hover:hover {
