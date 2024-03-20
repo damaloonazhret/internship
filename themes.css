@@ -1,0 +1,287 @@
+@media (prefers-color-scheme: dark) {
+    body::-webkit-scrollbar-thumb {
+        background-color: var(--background-color-interaction-dark);
+    }
+
+    ::selection {
+        background-color: white;
+    }
+
+    ::marker {
+        color: white;
+    }
+
+    body {
+        background-color: var(--background-color-dark);
+        color: var(--text-color-dark);
+    }
+
+    a {
+        color-scheme: dark;
+    }
+
+    a:visited {
+        color: var(--text-color-dark);
+    }
+
+    a:active {
+        color: var(--active-link-color-dark);
+    }
+
+    a:link:hover {
+        color: white;
+    }
+
+    input, select, textarea {
+        color: var(--text-color-dark);
+    }
+
+    .data__form > fieldset > legend ~ label {
+        color: var(--text-color-dark-input-label);
+    }
+
+    .data__form > label {
+        color: var(--text-color-dark-input-label);
+    }
+
+    .data input {
+        border-bottom: 1px solid var(--border-color-interaction-dark);
+    }
+
+    .data textarea {
+        border: 1px solid var(--border-color-interaction-dark);
+        border-top: none;
+    }
+
+    #styleTable td:hover {
+        background-color: var(--hover-color-dark);
+        color: var(--background-color-dark)
+    }
+
+    table thead tr :only-child {
+        text-shadow: 3px 3px var(--text-shadow-dark);
+    }
+
+    input[type = date]::-webkit-datetime-edit-day-field,
+    input[type = date]::-webkit-datetime-edit-month-field,
+    input[type = date]::-webkit-datetime-edit-year-field {
+        color: var(--text-color-dark-input-label);
+    }
+
+    input[type = date]::-webkit-datetime-edit-day-field:focus,
+    input[type = date]::-webkit-datetime-edit-month-field:focus,
+    input[type = date]::-webkit-datetime-edit-year-field:focus {
+        color: var(--focus-color-interaction-dark);
+        background-color: var(--text-color-dark-input-bg);
+    }
+
+    input[type = date]::-webkit-calendar-picker-indicator:active {
+        color-scheme: dark;
+        background-color: var(--background-color-dark);
+        padding: 5px;
+    }
+
+    input[type = date]::-webkit-calendar-picker-indicator {
+        color-scheme: light;
+        background-color: var(--background-color-dark);
+        padding: 5px;
+    }
+
+    input[type = time]::-webkit-calendar-picker-indicator {
+        /*filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);*/
+        filter: invert(100%);
+    }
+
+    input[type=time]::-webkit-datetime-edit-hour-field {
+        background-color: var(--background-color-interaction-dark);
+        color: var(--time-color-dark);
+    }
+
+    input[type=time]::-webkit-datetime-edit-minute-field {
+        background-color: var(--time-bg-dark-input);
+        color: var(--background-color-interaction-dark);
+    }
+
+    fieldset > legend {
+        color: var(--text-color-dark-input-label);
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background-color: var(--background-color-interaction-dark);
+    }
+
+    textarea::-webkit-scrollbar-thumb {
+        background-color: var(--background-color-interaction-dark);
+    }
+
+    .radio input[type=radio]:checked, input[type=checkbox]:checked {
+        border-color: var(--background-color-dark);
+        background-color: var(--checked-input-color-dark);
+        box-shadow: inset 1px 2px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    select:focus {
+        background-color: var(--background-color-dark);
+    }
+
+    .radio input[type=radio]:checked + label {
+        color: var(--text-color-dark);
+    }
+
+    .radio input[type=radio] {
+        border: 3px solid var(--border-color-interaction-dark);
+        background-color: var(--text-color-dark-input-bg);
+    }
+
+    input[type=checkbox] {
+        background-color: var(--text-color-dark-input-bg);
+        box-shadow: 0 0 1px 1px rgb(255, 255, 255);
+    }
+
+    #file::file-selector-button {
+        color: var(--text-color-dark)
+    }
+
+}
+
+@media (prefers-color-scheme: light) {
+    body::-webkit-scrollbar-thumb {
+        background-color: var(--background-color-interaction-light);
+    }
+
+    ::selection {
+        background-color: black;
+    }
+
+    ::marker {
+        color: black;
+    }
+
+    body {
+        background-color: var(--background-color-light);
+        color: var(--text-color-light);
+    }
+
+    a:visited {
+        color: var(--visited-link-color-light);
+    }
+
+    a:active {
+        color: var(--active-link-color-light);
+    }
+
+    a:hover {
+        color: black;
+    }
+
+    input, select, textarea {
+        color: var(--text-color-light);
+    }
+
+    .data__form > fieldset > legend ~ label {
+        color: var(--text-color-light-input-label);
+    }
+
+    .data__form > label {
+        color: var(--text-color-light-input-label);
+    }
+
+    .data input {
+        border-bottom: 2px solid var(--border-color-interaction-light);
+    }
+
+    .data textarea {
+        border: 2px solid var(--border-color-interaction-light);
+        border-top: none;
+    }
+
+    #styleTable td:hover {
+        background-color: var(--background-color-interaction-light);
+        color: var(--hover-color-light)
+    }
+
+    table thead tr :only-child {
+        text-shadow: 3px 3px var(--text-shadow-lighg);
+    }
+
+    input[type = date]::-webkit-datetime-edit-day-field,
+    input[type = date]::-webkit-datetime-edit-month-field,
+    input[type = date]::-webkit-datetime-edit-year-field {
+        color: var(--text-color-light-input-label);
+    }
+
+    input[type = date]::-webkit-datetime-edit-day-field:focus,
+    input[type = date]::-webkit-datetime-edit-month-field:focus,
+    input[type = date]::-webkit-datetime-edit-year-field:focus {
+        color: var(--focus-color-interaction-light);
+        background-color: var(--text-color-light-input-bg);
+    }
+
+    input[type = date]::-webkit-calendar-picker-indicator:active {
+        color-scheme: light;
+        background-color: var(--background-color-light);
+        padding: 5px;
+    }
+
+    input[type = date]::-webkit-calendar-picker-indicator {
+        color-scheme: dark;
+        background-color: var(--background-color-light);
+        padding: 5px;
+    }
+
+    input[type = time]::-webkit-calendar-picker-indicator {
+        /*filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);*/
+        /*filter: invert(100%) brightness(50%) sepia(100%) saturate(10000%);*/
+        filter: invert(100%);
+    }
+
+    input[type=time]::-webkit-datetime-edit-hour-field {
+        background-color: var(--text-color-light);
+        color: var(--time-color-light);
+    }
+
+    input[type=time]::-webkit-datetime-edit-minute-field {
+        background-color: var(--time-bg-light-input);
+        color: var(--background-color-light);
+    }
+
+    fieldset > legend {
+        color: var(--text-color-light-input-label);
+    }
+
+    body::-webkit-scrollbar-thumb {
+        background-color: var(--background-color-interaction-light);
+    }
+
+    textarea::-webkit-scrollbar-thumb {
+        background-color: var(--background-color-interaction-light);
+    }
+
+    .radio input[type=radio]:checked, input[type=checkbox]:checked {
+        border-color: var(--background-color-light);
+        background-color: var(--checked-input-color-light);
+        box-shadow: inset 1px 2px 3px 0 rgba(0, 0, 0, 0.1);
+    }
+
+    select:focus {
+        background-color: var(--background-color-light);
+    }
+
+    .radio input[type=radio]:checked + label {
+        color: var(--text-color-light);
+    }
+
+    .radio input[type=radio] {
+        border: 3px solid var(--border-color-interaction-light);
+        background-color: var(--text-color-light-input-bg);
+    }
+
+    input[type=checkbox] {
+        background-color: var(--text-color-light-input-bg);
+        box-shadow: 0 0 1px 1px rgb(255, 255, 255);
+    }
+
+    #file::file-selector-button {
+        color: var(--text-color-light)
+    }
+}
