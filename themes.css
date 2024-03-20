@@ -88,7 +88,8 @@
     }
 
     input[type = time]::-webkit-calendar-picker-indicator {
-        filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);
+        /*filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);*/
+        filter: invert(100%);
     }
 
     input[type=time]::-webkit-datetime-edit-hour-field {
@@ -230,7 +231,8 @@
 
     input[type = time]::-webkit-calendar-picker-indicator {
         /*filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);*/
-        filter: invert(100%) brightness(50%) sepia(100%) saturate(10000%);
+        /*filter: invert(100%) brightness(50%) sepia(100%) saturate(10000%);*/
+        filter: invert(100%);
     }
 
     input[type=time]::-webkit-datetime-edit-hour-field {
