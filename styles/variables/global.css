@@ -1,13 +1,40 @@
 :root {
-    --background-color-dark: #19253b;
-    --background-color-interaction-dark: #e8e8e8;
-    --text-color-dark-input-label: #dc0155;
-    --text-color-dark: #ffc548;
+    --white: #ffffff;
+    --red: #dc0155;
+    --yellow: #ffc548;
+    --black: #000000;
+    --gray: #404b62;
+    --dark-blue: #19253b;
 
-    --background-color-light: #ffffff;
-    --background-color-interaction-light: #404b62;
-    --text-color-light-input-label: #ff0000;
-    --text-color-light: #000000;
+    --background-color-dark: var(--dark-blue);
+    --time-color-dark: var(--dark-blue);
+    --hover-color-dark: var(--dark-blue);
+    --border-color-interaction-dark: var(--white);
+    --background-color-interaction-dark: var(--white);
+    --focus-color-interaction-dark: var(--white);
+    --active-link-color-dark: var(--white);
+    --text-color-dark-input-label: var(--red);
+    --text-color-dark-input-bg: var(--red);
+    --time-bg-dark-input: var(--red);
+    --text-shadow-dark: var(--red);
+    --text-color-dark: var(--yellow);
+    --visited-link-color-dark: var(--yellow);
+    --checked-input-color-dark: var(--yellow);
+
+    --background-color-light: var(--white);
+    --time-color-light: var(--white);
+    --hover-color-light: var(--white);
+    --border-color-interaction-light: var(--gray);
+    --background-color-interaction-light: var(--gray);
+    --focus-color-interaction-light: var(--gray);
+    --active-link-color-light: var(--gray);
+    --text-color-light-input-label: var(--red);
+    --text-color-light-input-bg: var(--red);
+    --time-bg-light-input: var(--red);
+    --text-shadow-lighg: var(--red);
+    --text-color-light: var(--black);
+    --visited-link-color-light: var(--black);
+    --checked-input-color-light: var(--black);
 
     --font-family-main: "Mystery Quest", "Rubik Broken Fax", serif;
     --transition-all: .5s all;

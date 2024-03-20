@@ -23,25 +23,33 @@
     }
 
     .data input {
-        border-bottom: 1px solid var(--background-color-interaction-dark);
+        border-bottom: 1px solid var(--border-color-interaction-dark);
     }
 
     a {
-        color: var(--background-color-interaction-dark);
+        color-scheme: dark;
     }
 
     a:visited {
         color: var(--text-color-dark);
     }
 
+    a:active {
+        color: var(--active-link-color-dark);
+    }
+
+    a:link:hover {
+        color: white;
+    }
+
     .data textarea {
-        border: 1px solid var(--background-color-interaction-dark);
+        border: 1px solid var(--border-color-interaction-dark);
         border-top: none;
     }
 
     .table > div div:hover {
         background-color: var(--background-color-interaction-dark);
-        color: var(--background-color-dark)
+        color: var(--hover-color-dark)
     }
 
     @media (hover: none) {
@@ -52,7 +60,7 @@
 
         .table > div div:active {
             background-color: var(--background-color-interaction-dark);
-            color: var(--background-color-dark)
+            color: var(--hover-color-dark)
         }
     }
 
@@ -65,8 +73,8 @@
     input[type = date]::-webkit-datetime-edit-day-field:focus,
     input[type = date]::-webkit-datetime-edit-month-field:focus,
     input[type = date]::-webkit-datetime-edit-year-field:focus {
-        color: var(--background-color-interaction-dark);
-        background-color: var(--text-color-dark-input-label);
+        color: var(--focus-color-interaction-dark);
+        background-color: var(--text-color-dark-input-bg);
     }
 
     input[type = date]::-webkit-calendar-picker-indicator:active {
@@ -82,17 +90,20 @@
     }
 
     input[type = time]::-webkit-calendar-picker-indicator {
-        filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);
+        /*filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);*/
+        /*background-color: var(--white);*/
+        /*opacity: 0.7;*/
+        filter: invert(100%);
     }
 
     input[type=time]::-webkit-datetime-edit-hour-field {
         background-color: var(--background-color-interaction-dark);
-        color: var(--background-color-dark);
+        color: var(--time-color-dark);
     }
 
     input[type=time]::-webkit-datetime-edit-minute-field {
-        background-color: var(--text-color-dark-input-label);
-        color: var(--background-color-interaction-dark);
+        background-color: var(--text-color-dark-input-bg);
+        color: var(--white);
     }
 
     fieldset > legend {
@@ -108,8 +119,8 @@
     }
 
     .radio input[type=radio]:checked, input[type=checkbox]:checked {
-        border-color: var(--background-color-dark);
-        background-color: var(--text-color-dark);
+        border-color: var(--dark-blue);
+        background-color: var(--yellow);
         box-shadow: inset 1px 2px 3px 0 rgba(0, 0, 0, 0.1);
     }
 
@@ -122,12 +133,12 @@
     }
 
     .radio input[type=radio] {
-        border: 3px solid var(--background-color-interaction-dark);
-        background-color: var(--text-color-dark-input-label);
+        border: 3px solid var(--border-color-interaction-dark);
+        background-color: var(--red);
     }
 
     input[type=checkbox] {
-        background-color: var(--text-color-dark-input-label);
+        background-color: var(--text-color-dark-input-bg);
         box-shadow: 0 0 1px 1px rgb(255, 255, 255);
     }
 
@@ -159,17 +170,17 @@
     }
 
     .data input {
-        border-bottom: 1px solid var(--background-color-interaction-light);
+        border-bottom: 1px solid var(--gray);
     }
 
     .data textarea {
-        border: 1px solid var(--background-color-interaction-light);
+        border: 1px solid var(--gray);
         border-top: none;
     }
 
     .table > div div:hover {
         background-color: var(--background-color-interaction-light);
-        color: var(--background-color-light)
+        color: var(--white)
     }
 
     @media (hover: none) {
@@ -180,7 +191,7 @@
 
         .table > div div:active {
             background-color: var(--background-color-interaction-light);
-            color: var(--background-color-light)
+            color: var(--white)
         }
     }
 
@@ -193,34 +204,30 @@
     input[type = date]::-webkit-datetime-edit-day-field:focus,
     input[type = date]::-webkit-datetime-edit-month-field:focus,
     input[type = date]::-webkit-datetime-edit-year-field:focus {
-        color: var(--background-color-light);
-        background-color: var(--text-color-light-input-label);
+        color: var(--white);
+        background-color: var(--red);
     }
 
     input[type = date]::-webkit-calendar-picker-indicator:active {
         color-scheme: light;
-        background-color: var(--background-color-light);
+        background-color: var(--white);
         padding: 5px;
     }
 
     input[type = date]::-webkit-calendar-picker-indicator {
         color-scheme: dark;
-        background-color: var(--text-color-light);
+        background-color: var(--black);
         padding: 5px;
     }
 
-    input[type = time]::-webkit-calendar-picker-indicator {
-        filter: invert(100%) brightness(50%) sepia(100%) saturate(10000%);
-    }
-
     input[type=time]::-webkit-datetime-edit-hour-field {
-        background-color: var(--text-color-light);
-        color: var(--background-color-light);
+        background-color: var(--black);
+        color: var(--white);
     }
 
     input[type=time]::-webkit-datetime-edit-minute-field {
-        background-color: var(--text-color-light-input-label);
-        color: var(--background-color-light);
+        background-color: var(--red);
+        color: var(--white);
     }
 
     fieldset > legend {
@@ -236,8 +243,8 @@
     }
 
     .radio input[type=radio]:checked, input[type=checkbox]:checked {
-        border-color: var(--background-color-light);
-        background-color: var(--text-color-light);
+        border-color: var(--white);
+        background-color: var(--black);
         box-shadow: inset 1px 2px 3px 0 rgba(0, 0, 0, 0.1);
     }
 
@@ -250,12 +257,12 @@
     }
 
     .radio input[type=radio] {
-        border: 3px solid var(--background-color-interaction-light);
-        background-color: var(--text-color-light-input-label);
+        border: 3px solid var(--gray);
+        background-color: var(--red);
     }
 
     input[type=checkbox] {
-        background-color: var(--text-color-light-input-label);
+        background-color: var(--red);
         box-shadow: 0 0 1px 1px rgb(255, 255, 255);
     }
 

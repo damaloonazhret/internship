@@ -217,6 +217,13 @@ fieldset section {
     padding: 10px;
 }
 
+fieldset > section > div > label {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    column-gap: 10px;
+}
+
 fieldset > div label:not(.no-flex) {
     display: flex;
     justify-content: space-evenly;
@@ -505,12 +512,12 @@ input:valid:not(:placeholder-shown).required {
 
 .contact h3 a {
     animation: footerLink ease-in 1s alternate-reverse infinite;
-    padding: 1px;
+    padding: 8px;
 }
 
 .contact h4 a {
     animation: footerLink ease-in 1s alternate infinite;
-    padding: 1px;
+    padding: 8px;
 }
 
 @keyframes footerLink {
