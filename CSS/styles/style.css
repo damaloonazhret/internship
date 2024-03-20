@@ -8,6 +8,12 @@
     padding: 20px;
 }
 
+input,
+textarea,
+select {
+    font-family: inherit;
+}
+
 .body::-webkit-scrollbar {
     width: 5px;
 }
@@ -209,6 +215,13 @@ fieldset section {
     display: grid;
     height: 100%;
     padding: 10px;
+}
+
+fieldset > section > div > label {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    column-gap: 10px;
 }
 
 fieldset > div label:not(.no-flex) {
@@ -431,6 +444,7 @@ input:valid:not(:placeholder-shown).required {
         cursor: unset;
         background-color: unset;
     }
+
     .button-hover:active {
         cursor: pointer;
         background-color: rgba(152, 152, 152, 0.39);
@@ -498,12 +512,12 @@ input:valid:not(:placeholder-shown).required {
 
 .contact h3 a {
     animation: footerLink ease-in 1s alternate-reverse infinite;
-    padding: 1px;
+    padding: 8px;
 }
 
 .contact h4 a {
     animation: footerLink ease-in 1s alternate infinite;
-    padding: 1px;
+    padding: 8px;
 }
 
 @keyframes footerLink {

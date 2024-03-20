@@ -58,10 +58,8 @@
         row-gap: 5px;
     }
 
-    fieldset > section > div > label {
-        display: flex;
-        width: 80%;
-        justify-content: space-around;
+    fieldset > section > div:nth-child(5) > label {
+        width: 100%;
     }
 
 }
