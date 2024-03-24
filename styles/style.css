@@ -205,30 +205,25 @@ fieldset {
     font-size: medium;
 }
 
-fieldset div {
-    padding-bottom: 5px;
-    display: flex;
-    justify-content: space-evenly;
-}
 
 fieldset section {
-    display: grid;
-    height: 100%;
-    padding: 10px;
-}
-
-fieldset > section > div > label {
     display: flex;
+    flex-wrap: wrap;
+    height: 100%;
+    flex-direction: row;
+    align-content: space-around;
     justify-content: space-around;
     align-items: center;
-    column-gap: 10px;
+    gap: 5px;
 }
 
-fieldset > div label:not(.no-flex) {
+fieldset section div {
     display: flex;
-    justify-content: space-evenly;
-    width: 100%;
-    align-items: end;
+    gap: 10px;
+}
+
+fieldset section > * {
+    margin: 5px;
 }
 
 .lists {
