@@ -59,7 +59,7 @@
 }
 
 @media screen and (width <= 500px) {
-    .lists section {
+    .lists {
         justify-content: center;
     }
 
