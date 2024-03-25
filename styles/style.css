@@ -97,14 +97,7 @@ select {
     flex: 2 1 15vh;
 }
 
-.table > div div {
-    user-select: none;
-    cursor: none;
-    transition: var(--transition-all);
-}
-
-#styleTable div {
-    user-select: none;
+#styleTable span {
     cursor: wait;
     transition: var(--transition-all);
 }
