@@ -47,18 +47,18 @@
         border-top: none;
     }
 
-    .table > div div:hover {
+    .table span:hover {
         background-color: var(--background-color-interaction-dark);
         color: var(--hover-color-dark)
     }
 
     @media (hover: none) {
-        .table > div div:hover {
+        .table span:hover {
             background-color: unset;
             color: unset;
         }
 
-        .table > div div:active {
+        .table span:hover {
             background-color: var(--background-color-interaction-dark);
             color: var(--hover-color-dark)
         }
@@ -90,9 +90,6 @@
     }
 
     input[type = time]::-webkit-calendar-picker-indicator {
-        /*filter: invert(48%) sepia(13%) saturate(3207%) hue-rotate(130deg) brightness(95%) contrast(80%);*/
-        /*background-color: var(--white);*/
-        /*opacity: 0.7;*/
         filter: invert(100%);
     }
 
@@ -178,18 +175,18 @@
         border-top: none;
     }
 
-    .table > div div:hover {
+    .table span:hover {
         background-color: var(--background-color-interaction-light);
         color: var(--white)
     }
 
     @media (hover: none) {
-        .table > div div:hover {
+        .table span:hover {
             background-color: unset;
             color: unset;
         }
 
-        .table > div div:active {
+        .table span:hover {
             background-color: var(--background-color-interaction-light);
             color: var(--white)
         }
