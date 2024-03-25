@@ -28,11 +28,14 @@ select {
 
 .header {
     grid-column: 2 / 3;
+    order: 1;
+    flex-grow: 1;
     height: 100%;
-    display: grid;
     border: 1px solid yellow;
     padding: 10px;
-    align-content: space-between;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .header .table {
@@ -42,6 +45,7 @@ select {
 .header > a > img {
     width: 100%;
     transition: var(--transition-all);
+    flex-basis: 10px;
 }
 
 .header > a p ~ img:hover {
@@ -61,10 +65,36 @@ select {
 }
 
 .table {
-    display: grid;
-    grid-template-rows: 1fr 2fr 2fr 1fr;
-    grid-template-columns: 1fr;
+    display: flex;
     border: 1px solid var(--background-color-interaction-dark);
+    flex-direction: column;
+}
+
+#firstRow,
+#secondRow {
+    display: flex;
+    flex-direction: column;
+}
+
+#firstRow > span,
+#secondRow > span {
+    padding: 10px;
+    flex-basis: 5vh;
+}
+
+#firstRow span,
+#secondRow span,
+#tfoot,
+#thead {
+    border: 1px solid var(--background-color-interaction-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#thead,
+#tfoot {
+    flex: 2 1 15vh;
 }
 
 .table > div div {
@@ -103,27 +133,6 @@ select {
     text-decoration: underline;
 }
 
-#firstRow,
-#secondRow {
-    display: grid;
-    grid-template-columns: 1fr;
-}
-
-#firstRow > div,
-#secondRow > div {
-    padding: 10px;
-}
-
-#firstRow div,
-#secondRow div,
-#tfoot,
-#thead {
-    border: 1px solid var(--background-color-interaction-dark);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
 #secondRow .del {
     text-decoration: line-through;
 }
@@ -133,19 +142,7 @@ select {
 }
 
 #secondRow .mark {
-    position: relative;
-}
-
-#secondRow span.mark::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: yellow;
-    opacity: 0.5;
-    z-index: -1;
+    background-color: rgba(255, 197, 72, 0.44);
 }
 
 #secondRow .i {
@@ -182,13 +179,6 @@ select {
     height: 100%;
 }
 
-.data.check,
-.data.send form {
-    display: grid;
-    align-items: center;
-    justify-items: center;
-}
-
 fieldset {
     margin-inline-start: 0;
     margin-inline-end: 0;
@@ -206,7 +196,7 @@ fieldset {
 }
 
 
-fieldset section {
+fieldset {
     display: flex;
     flex-wrap: wrap;
     height: 100%;
@@ -217,49 +207,66 @@ fieldset section {
     gap: 5px;
 }
 
-fieldset section div {
+fieldset div,
+fieldset time,
+fieldset > label {
     display: flex;
     gap: 10px;
 }
 
-fieldset section > * {
+fieldset > * {
     margin: 5px;
 }
 
 .lists {
-    display: grid;
-    align-content: center;
     border: 1px solid pink;
     height: 100%;
     width: 100%;
-    padding: 10px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    padding: 20px;
 }
 
-.lists section {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: repeat(2, 1fr);
-    justify-items: center;
-    align-items: center;
+.lists div {
+    flex-basis: 25%;
+}
+
+.lists div:nth-child(3) {
+    flex-basis: 10%;
+}
+
+.lists div:nth-child(5) {
+    order: -1;
+}
+
+h3 {
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-basis: 100%;
+    order: -2;
+    /*flex: 1 1 100%;*/
 }
 
 .elements {
     grid-row: 2 / 3;
-    display: grid;
-    grid-template-rows: repeat(3, 1fr);
+    display: flex;
+    flex-direction: column;
     height: 100%;
     row-gap: 40px;
 }
 
 .elements > nav,
-.elements > article,
-.elements > aside {
+.elements > figure {
     border: 1px solid green;
     width: 100px;
     height: 100%;
-    display: grid;
-    justify-items: center;
-    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 25px 0;
 }
 
 .input-btn input {
@@ -306,20 +313,6 @@ fieldset section > * {
     }
 }
 
-#aside {
-    display: grid;
-    grid-template-columns: 100px auto;
-    grid-template-rows: 1fr;
-    column-gap: 20px;
-}
-
-.items {
-    display: grid;
-    grid-template-rows: repeat(3, auto);
-    grid-template-columns: 100px;
-    row-gap: 40px;
-}
-
 .items article {
     border: 2px solid #22b14c;
 }
@@ -327,23 +320,6 @@ fieldset section > * {
 .items input,
 .items textarea {
     width: 80px;
-}
-
-#radio {
-    display: grid;
-    height: 100%;
-}
-
-#radio label {
-    display: grid;
-    grid-template-columns: auto auto;
-}
-
-.content fieldset {
-    padding: 0;
-    display: grid;
-    align-content: space-around;
-    border: 2px solid #ed1d25;
 }
 
 .content form,
@@ -478,18 +454,6 @@ input:valid:not(:placeholder-shown).required {
     cursor: pointer !important;
 }
 
-.footer {
-    display: grid;
-    border: 1px solid #ffaec9;
-}
-
-.footer form {
-    display: grid;
-    justify-self: center;
-    align-self: center;
-    gap: 40px;
-}
-
 [data-footer-label] {
     display: inline-block;
     margin-bottom: 10px;
@@ -524,4 +488,9 @@ input:valid:not(:placeholder-shown).required {
     100% {
         border: 8px double #0000ff;
     }
+}
+
+::selection {
+    background-color: black;
+    color: white;
 }

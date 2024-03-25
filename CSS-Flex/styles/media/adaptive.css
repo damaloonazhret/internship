@@ -1,67 +1,79 @@
 @media screen and (width <= 1280px) {
     .body {
-        grid-template-columns: 1fr;
-        grid-template-rows: 250px auto;
+        display: flex;
+        flex-direction: column;
         row-gap: 20px;
     }
 
     .header {
-        grid-column: 1 / 2;
-        grid-row: 1 / 2;
-        grid-template-columns: repeat(2, auto);
-        display: block;
-        position: sticky;
-        top: 0;
-        z-index: -1;
+        order: -1;
     }
 
-    .header a {
+    .header figure {
         display: none;
     }
 
-    #firstRow, #secondRow {
-        grid-template-columns: repeat(5, 1fr);
-    }
-
-    .main {
-        grid-row: 2 / 3;
-    }
-
-    .data {
-        margin-top: 0;
-    }
-
-    .main {
-        grid-row: 2 / 3;
-        grid-template-columns: auto;
-        grid-template-rows: auto auto 1fr;
-    }
-
-    .elements {
-        grid-row: 2 / 3;
-        grid-column: 1 / 3;
-        grid-template-rows: 1fr;
-        grid-template-columns: repeat(3, 100px);
+    #firstRow,
+    #secondRow {
+        flex-flow: wrap row;
         width: 100%;
-        justify-content: space-between;
     }
 
-    .lists {
-        grid-column: 1 / 3;
+    #firstRow span,
+    #secondRow span {
+        flex-grow: 1;
+        flex-wrap: wrap;
     }
 
-    fieldset div {
-        justify-content: space-around;
+    .main {
+        display: flex;
+        flex-direction: column;
     }
 
     fieldset section {
-        row-gap: 5px;
+        gap: 20px;
     }
 
-    fieldset > section > div:nth-child(5) > label {
+    main > article,
+    main > div {
+
+    }
+
+    .elements {
+        flex-direction: row;
+        align-items: stretch;
+        justify-content: space-between;
         width: 100%;
+        row-gap: 40px;
+        flex-wrap: wrap;
     }
 
+    .elements > nav,
+    .elements > figure {
+        height: 200px;
+    }
+
+    .lists {
+        order: 1;
+    }
+}
+
+@media screen and (width <= 500px) {
+    .lists section {
+        justify-content: center;
+    }
+
+    .lists div {
+        flex-basis: 60%;
+    }
+
+    .lists div:nth-child(3) {
+        flex-basis: 60%;
+    }
+
+    * {
+        font-size: 0.8rem;
+    }
 }
 
 @media print and (orientation: landscape) {
