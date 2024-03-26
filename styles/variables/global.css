@@ -39,3 +39,21 @@
     --font-family-main: "Mystery Quest", "Rubik Broken Fax", serif;
     --transition-all: .5s all;
 }
+
+input,
+textarea,
+select {
+    font-family: inherit;
+}
+
+.body::-webkit-scrollbar {
+    width: 5px;
+}
+
+.body::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+}
+
+.body::-webkit-scrollbar-track {
+    background-color: transparent;
+}

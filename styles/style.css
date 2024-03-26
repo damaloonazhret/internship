@@ -8,38 +8,14 @@
     padding: 20px;
 }
 
-input,
-textarea,
-select {
-    font-family: inherit;
-}
-
-.body::-webkit-scrollbar {
-    width: 5px;
-}
-
-.body::-webkit-scrollbar-thumb {
-    border-radius: 5px;
-}
-
-.body::-webkit-scrollbar-track {
-    background-color: transparent;
-}
-
 .header {
     grid-column: 2 / 3;
-    order: 1;
-    flex-grow: 1;
     height: 100%;
     border: 1px solid yellow;
     padding: 10px;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-}
-
-.header .table {
-    height: 100%;
 }
 
 .header > a > img {
@@ -66,8 +42,8 @@ select {
 
 .table {
     display: flex;
-    border: 1px solid var(--background-color-interaction-dark);
     flex-direction: column;
+    border: 1px solid var(--background-color-interaction-dark);
 }
 
 #firstRow,
@@ -79,7 +55,6 @@ select {
 #firstRow > span,
 #secondRow > span {
     padding: 10px;
-    flex-basis: 5vh;
 }
 
 #firstRow span,
@@ -92,58 +67,49 @@ select {
     justify-content: center;
 }
 
+#firstRow,
+#secondRow {
+     height: 500px;
+}
+
+#firstRow span {
+    height: 150px;
+    background-color: rgba(0, 0, 255, 0.25);
+}
+
+#firstRow span:last-child {
+    flex-shrink: 2;
+}
+
+#firstRow span:first-child {
+    flex-shrink: 4;
+}
+
+#secondRow span {
+    height: 150px;
+    background-color: rgba(0, 255, 0, 0.25);
+}
+
+#secondRow span:first-child {
+    flex-shrink: 3;
+}
+
+#secondRow span:nth-child(3) {
+    flex-shrink: 10;
+}
+
+#secondRow span:last-child {
+    flex-shrink: 4;
+}
+
 #thead,
 #tfoot {
-    flex: 2 1 15vh;
+    flex-basis: 16vh;
 }
 
 #styleTable span {
     cursor: wait;
     transition: var(--transition-all);
-}
-
-#firstRow .bold {
-    font-weight: 800;
-    line-height: 2rem;
-}
-
-#firstRow .strong {
-    font-weight: 100;
-    letter-spacing: 4px;
-}
-
-#firstRow .sup {
-    vertical-align: super;
-    font-size: smaller;
-}
-
-#firstRow .sub {
-    vertical-align: sub;
-    font-size: smaller;
-}
-
-#firstRow .ins {
-    text-decoration: underline;
-}
-
-#secondRow .del {
-    text-decoration: line-through;
-}
-
-#secondRow .small {
-    font-size: 80%;
-}
-
-#secondRow .mark {
-    background-color: rgba(255, 197, 72, 0.44);
-}
-
-#secondRow .i {
-    font-style: italic;
-}
-
-#secondRow .em {
-    font-style: oblique;
 }
 
 .main {
@@ -163,7 +129,7 @@ select {
 }
 
 .data,
-.data fieldset,
+.data .fieldset,
 .data form {
     height: 100%;
 }
@@ -172,7 +138,7 @@ select {
     height: 100%;
 }
 
-fieldset {
+.fieldset {
     margin-inline-start: 0;
     margin-inline-end: 0;
     padding-block-start: 0;
@@ -189,7 +155,7 @@ fieldset {
 }
 
 
-fieldset {
+.fieldset {
     display: flex;
     flex-wrap: wrap;
     height: 100%;
@@ -200,14 +166,14 @@ fieldset {
     gap: 5px;
 }
 
-fieldset div,
-fieldset time,
-fieldset > label {
+.fieldset div,
+.fieldset time,
+.fieldset > label {
     display: flex;
     gap: 10px;
 }
 
-fieldset > * {
+.fieldset > * {
     margin: 5px;
 }
 
@@ -235,12 +201,12 @@ fieldset > * {
     order: -1;
 }
 
-h3 {
-    flex-grow: 1;
-    flex-shrink: 1;
-    flex-basis: 100%;
+.lists h3 {
     order: -2;
-    /*flex: 1 1 100%;*/
+}
+
+h3, h4 {
+    flex-basis: 100%;
 }
 
 .elements {
@@ -259,7 +225,35 @@ h3 {
     display: flex;
     flex-direction: column;
     justify-content: space-around;
-    padding: 25px 0;
+}
+
+.shrink {
+    display: flex;
+    width: 100px;
+}
+
+.shrink div {
+    flex-basis: 40px;
+}
+
+.shrink div:first-child {
+    background-color: red;
+}
+
+.shrink div:nth-child(2) {
+    background-color: green;
+}
+
+.shrink div:last-child {
+    background-color: blue;
+    flex-shrink: 1;
+}
+
+.contact h3,
+.contact h4 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .input-btn input {
@@ -316,7 +310,7 @@ h3 {
 }
 
 .content form,
-.content fieldset {
+.content .fieldset {
     height: 100%;
 }
 

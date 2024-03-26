@@ -13,16 +13,43 @@
         display: none;
     }
 
+    #thead,
+    #tfoot {
+        flex-basis: 8vh;
+    }
+
     #firstRow,
     #secondRow {
         flex-flow: wrap row;
         width: 100%;
+        height: initial;
     }
 
     #firstRow span,
     #secondRow span {
         flex-grow: 1;
         flex-wrap: wrap;
+        height: initial;
+    }
+
+    #firstRow span:nth-child(even) {
+        background-color: rgba(255, 255, 255, 0.5);
+        flex-grow: 2;
+    }
+
+    #firstRow span:nth-child(odd) {
+        background-color: rgba(0, 0, 0, 0.5);
+        flex-grow: 5;
+    }
+
+    #secondRow span:nth-child(even) {
+        background-color: rgba(0, 0, 0, 0.5);
+        flex-grow: 5;
+    }
+
+    #secondRow span:nth-child(odd) {
+        background-color: rgba(255, 255, 255, 0.5);
+        flex-grow: 2;
     }
 
     .main {
@@ -30,13 +57,8 @@
         flex-direction: column;
     }
 
-    fieldset section {
+    .fieldset {
         gap: 20px;
-    }
-
-    main > article,
-    main > div {
-
     }
 
     .elements {
