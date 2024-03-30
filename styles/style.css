@@ -293,3 +293,25 @@ input[type=checkbox] {
         transform: scale(2);
     }
 }
+
+#events {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    gap: 10px;
+    padding-bottom: 10px;
+}
+
+#events span {
+    border: 2px solid red;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.1s ease-in;
+}
+
+#events span:hover {
+    background: hsl(90, 50%, 25%);
+}

@@ -45,7 +45,7 @@
                     }, throttleDelay);
                 }
             });
-	        
+
             const firstRow = document.querySelectorAll('#firstRow div');
             const secondRow = document.querySelectorAll('#secondRow div');
             const allRow = Array.from(firstRow).concat(Array.from(secondRow));
@@ -163,7 +163,6 @@
 		<article class="data content">
 			<form class="data__form" action="./index.html">
 				<fieldset>
-<!--					<legend>User data</legend>-->
 					<label>
 						<label for="firstName">First Name:</label>
 						<input type="text" id="firstName" name="firstName">
@@ -281,6 +280,14 @@
 						<span id="equal">=</span>
 						<span id="solution"></span>
 					</label>
+				</article>
+				<article id="events">
+					<span id="arithmeticOperation">Arithmetic operations</span>
+					<span id="workingWithStrings">Working with strings</span>
+					<span id="variableAssigment">Variable assignment</span>
+					<span id="console">Console.log</span>
+					<span id="logicalOperation">Logical operation</span>
+					<span id="tryCatch">Try catch</span>
 				</article>
 			</footer>
 		</aside>
