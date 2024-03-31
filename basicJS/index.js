@@ -173,6 +173,14 @@ console.log(
             zero <= uno--
         );
 
+        const model = 0;
+        const company = '';
+        const name = 'Username';
+        console.log(model || company || name || 'Unknown');
+        console.log(name && 'Unknown' && model && true)
+        console.log(!model)
+        console.log(!!name)
+
         const isRegister = true;
         const orders = 3;
 
