@@ -165,8 +165,9 @@ body::-webkit-scrollbar-track {
     justify-content: center;
     align-content: center;
     user-select: none;
-    border: 2px solid green;
+    border: 2px solid #27ae60;
     transition: 0.2s ease-in;
+    padding: 10px;
 }
 
 .items article {
@@ -191,7 +192,7 @@ body::-webkit-scrollbar-track {
     padding: 0;
     display: grid;
     align-content: space-around;
-    border: 2px solid #ed1d25;
+    border: 2px solid #27ae60;
 }
 
 .content form, .content fieldset {
@@ -201,6 +202,7 @@ body::-webkit-scrollbar-track {
 .footer {
     display: grid;
     border: 1px solid #ffaec9;
+    padding: 10px;
 }
 
 .footer form {
@@ -303,7 +305,7 @@ input[type=checkbox] {
 }
 
 #events span {
-    border: 2px solid red;
+    border: 2px solid hsl(90, 50%, 35%);
     display: flex;
     justify-content: center;
     align-items: center;
