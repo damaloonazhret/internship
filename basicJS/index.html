@@ -1,28 +1,30 @@
 <!doctype HTML>
 <html lang="en">
 <head>
-    <title>Basic JS</title>
-    <meta charset="UTF-8">
-    <meta name="keywords" content="basic JavaScript">
-    <meta name="description" content="basic JavaScript">
-    <meta name="author" content="Andrey Mironov">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="basic JavaScript">
-    <meta property="og:title" content="basic JavaScript">
-    <meta property="og:description" content="basic JavaScript Tutorial">
-    <meta property="og:url" content="https://damaloonazhret.github.io/internship/basicJS/">
-    <meta property="og:locale" content="ru_RU">
-    <meta property="og:image"
-          content="https://сенла.рф/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/telecommunications.jpg.webp">
-    <meta property="og:image:width" content="968">
-    <meta property="og:image:height" content="504">
-    <link rel="icon" type="image/x-icon" href="./assets/logo.png">
-    <link rel="stylesheet" href="./styles/style.css">
-    <link rel="stylesheet" href="./styles/media/adaptive.css">
-    <script src="./index.js"></script>
-    <script>
-        window.addEventListener('DOMContentLoaded', function() {
+	<title>Basic JS</title>
+	<meta charset="UTF-8">
+	<meta name="keywords" content="basic JavaScript">
+	<meta name="description" content="basic JavaScript">
+	<meta name="author" content="Andrey Mironov">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta property="og:type" content="website">
+	<meta property="og:site_name" content="basic JavaScript">
+	<meta property="og:title" content="basic JavaScript">
+	<meta property="og:description" content="basic JavaScript Tutorial">
+	<meta property="og:url" content="https://damaloonazhret.github.io/internship/baasicJS/">
+	<meta property="og:locale" content="ru_RU">
+	<meta property="og:image"
+	      content="https://www.google.com/url?sa=i&url=https%3A%2F%2Fcyberhoot.com%2Fcybrary%2Fjavascript%2F&psig=AOvVaw05bwxARo8B-5XOX7rmbJHe&ust=1711975249460000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCKiLjo7DnoUDFQAAAAAdAAAAABAE">
+	<meta property="og:image:width" content="968">
+	<meta property="og:image:height" content="504">
+	<link rel="icon" type="image/x-icon" href="./assets/logo.png">
+	<link rel="preconnect" href="https://fonts.googleapis.com">
+	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="./styles/style.css">
+	<script src="./index.js"></script>
+	<script>
+        window.addEventListener('DOMContentLoaded', function () {
             const tHead = document.getElementById('thead');
             tHead.innerText = 'Changed via script in file index.html!';
             tHead.classList.add('animation');
@@ -31,47 +33,50 @@
             tFoot.innerText = 'Please hover over me!';
 
             let throttleTimer;
-            console.log(throttleTimer)
             const throttleDelay = 100;
 
-            tFoot.addEventListener('mousemove', function(event) {
+            tFoot.addEventListener('mousemove', function (event) {
                 if (!throttleTimer) {
                     throttleTimer = setTimeout(() => {
                         throttleTimer = null;
                         const x = event.clientX;
                         const y = event.clientY;
-                        console.log(`Mouse coordinates: x = ${x}, y = ${y}`);
+                        const tfoot = document.querySelector('#tfoot');
+                        tfoot.innerText = `Mouse coordinates: x = ${x}, y = ${y}`
                     }, throttleDelay);
                 }
             });
 
-            const spanAll = document.querySelectorAll('span');
-            spanAll.forEach(function(el) {
+            const firstRow = document.querySelectorAll('#firstRow div');
+            const secondRow = document.querySelectorAll('#secondRow div');
+            const allRow = Array.from(firstRow).concat(Array.from(secondRow));
+            allRow.forEach(function (el) {
                 el.innerText = `Click me ${el.innerText}`
 
-                el.addEventListener('click', function() {
+                el.addEventListener('click', function () {
                     alert(el.innerText)
                 })
             })
 
             const fieldset = document.querySelector('fieldset');
-            const legend = document.createElement('legend');
+            const heading = document.createElement('h1');
             let count = 0;
             fieldset.innerText = `Mouse leave me please!!`;
 
-            legend.innerText = 'YoYoYo, mouse leave me please'
-            fieldset.append(legend);
-            fieldset.addEventListener('mouseleave', function() {
+            heading.innerText = 'YoYoYo, mouse leave me please'
+            fieldset.append(heading);
+            fieldset.addEventListener('mouseleave', function () {
                 count++
-                legend.innerText = `The mouse leave ${count} times`
+                heading.innerText = `The mouse leave ${count} times`
             })
 
-            const inputElements = document.querySelectorAll('input');
+            const inputElements = document.querySelectorAll('.data__form-table-cell input');
 
-            inputElements.forEach(function(el) {
+            inputElements.forEach(function (el) {
                 el.placeholder = 'Focus Me';
                 el.addEventListener('focus', function (e) {
-                    console.log(`Input ${e.target.name || e.target.id} is focused!`);
+                    const h2 = document.querySelector('.data__form-table-cell h2');
+                    h2.innerText = `Input ${e.target.name || e.target.id} is focused!`
                 });
             })
 
@@ -84,190 +89,210 @@
                 const b = Math.floor(Math.random() * 256);
                 return `rgb(${r}, ${g}, ${b})`;
             };
+
             function changeColors() {
                 items.style.backgroundColor = getRandomColor();
                 const colorText = getRandomColor();
+                const borderColor = getRandomColor();
                 items.style.color = colorText;
                 items.innerHTML = colorText;
+                items.style.borderColor = borderColor;
             }
 
-            items.addEventListener('click', function() {
+            items.addEventListener('click', function () {
                 changeColors()
             })
 
             const time = document.getElementById('time');
-            time.addEventListener('click', function(e) {
+            time.addEventListener('click', function (e) {
                 e.preventDefault();
             })
 
         })
-    </script>
+	</script>
 </head>
-<body>
-
-<main class="main">
-    <header class="header">
-        <a href="https://сенла.рф/"
-           target="_blank">
-            <img src="./assets/i.webp" alt="asd">
-        </a>
-
-        <section class="table">
-            <div id="thead">Header for table</div>
-            <div id="firstRow">
-                <div>
-                    <span class="bold">Bold text</span>
-                </div>
-                <div>
-                    <span class="strong">Important text</span>
-                </div>
-                <div>
-                    <span class="sup">Superscript text</span>
-                </div>
-                <div>
-                    <span class="sub">Subscript text</span>
-                </div>
-                <div>
-                    <span class="ins">Inserted text</span>
-                </div>
-            </div>
-            <div id="secondRow">
-                <div>
-                    <span class="del">Deleted text</span>
-                </div>
-                <div>
-                    <span class="small">Smaller text</span>
-                </div>
-                <div>
-                    <span class="mark">Marked text</span>
-                </div>
-                <div>
-                    <span class="i">Italic text</span>
-                </div>
-                <div>
-                    <span class="em">Emphasized text</span>
-                </div>
-            </div>
-            <div id="tfoot">Footer for table</div>
-        </section>
-
-    </header>
-
-    <article class="data content">
-        <form class="data__form" action="./index.html">
-            <fieldset>
-                <legend>User data</legend>
-                <label>
-                    <label for="firstName">First Name:</label>
-                    <input type="text" id="firstName" name="firstName">
-                    <label for="lastName">Last Name:</label>
-                    <input type="text" id="lastName" name="lastName">
-                    <label for="age">Age:</label>
-                    <input type="number" id="age" name="age">
-                </label>
-                <label>
-                    <input class="button-hover" type="submit">
-                    <input class="button-hover" type="reset">
-                </label>
-            </fieldset>
-        </form>
-    </article>
-
-    <aside id="aside">
-        <section class="items">
-            <article class="data check">
-                <form class="data__form" action="./index.html">
-
-                    <label for="dataList">Check:</label>
-                    <input id="dataList" list="language">
-
-                    <datalist id="language">
-                        <option value="TypeScript">
-                        <option value="C++">
-                        <option value="PHP">
-                        <option value="Swift">
-                        <option value="Go">
-                    </datalist>
-
-                    <input class="button-hover" type="submit">
-                </form>
-                <form action="./index.html">
-
-                    <label for="select">Choose:</label>
-
-                    <select name="select" id="select">
-                        <option value="JavaScript">JavaScript</option>
-                        <option value="Java">Java</option>
-                        <option value="Python">Python</option>
-                    </select>
-
-                    <input class="button-hover" type="submit">
-                </form>
-            </article>
-
-            <article class="data">
-                <form id="radio" class="data__form">
-                    <label class="radio">
-                        <input id="vue" type="radio" name="framework" value="Vue">
-                        <label for="vue">Vue</label>
-                    </label>
-                    <label class="radio">
-                        <input id="angular" type="radio" name="framework" value="Angular">
-                        <label for="angular">Angular</label>
-                    </label>
-                    <label class="radio">
-                        <input id="next" type="radio" name="framework" value="Next" checked>
-                        <label for="next">Next.js</label>
-                    </label>
-                    <div>
-                        <input style="border: none" type="checkbox">
-                        <input id="color" style="border: none" type="color">
-                    </div>
-                </form>
-            </article>
-
-            <article class="data send">
-                <form class="data__form" action="./index.html">
-                    <label data-footer-label for="textarea">Send your message:</label>
-                    <textarea class="textarea" name="message" rows="2" cols="20" id="textarea">
+<body class="body">
+	<header class="header">
+		<a href="https://learn.javascript.ru/"
+		   target="_blank">
+			<img src="./assets/logo.avif" alt="asd">
+		</a>
+		
+		<section class="table">
+			<div id="thead">Header for table</div>
+			<div id="firstRow">
+				<div>
+					<span class="bold">Bold text</span>
+				</div>
+				<div>
+					<span class="strong">Important text</span>
+				</div>
+				<div>
+					<span class="sup">Superscript text</span>
+				</div>
+				<div>
+					<span class="sub">Subscript text</span>
+				</div>
+				<div>
+					<span class="ins">Inserted text</span>
+				</div>
+			</div>
+			<div id="secondRow">
+				<div>
+					<span class="del">Deleted text</span>
+				</div>
+				<div>
+					<span class="small">Smaller text</span>
+				</div>
+				<div>
+					<span class="mark">Marked text</span>
+				</div>
+				<div>
+					<span class="i">Italic text</span>
+				</div>
+				<div>
+					<span class="em">Emphasized text</span>
+				</div>
+			</div>
+			<div id="tfoot">Footer for table</div>
+		</section>
+	
+	</header>
+	
+	<main class="main">
+		
+		<article class="data content">
+			<form class="data__form" action="./index.html">
+				<fieldset>
+					<label>
+						<label for="firstName">First Name:</label>
+						<input type="text" id="firstName" name="firstName">
+						<label for="lastName">Last Name:</label>
+						<input type="text" id="lastName" name="lastName">
+						<label for="age">Age:</label>
+						<input type="number" id="age" name="age">
+					</label>
+					<label>
+						<input class="button-hover" type="submit">
+						<input class="button-hover" type="reset">
+					</label>
+				</fieldset>
+			</form>
+		</article>
+		
+		<aside id="aside">
+			<section class="items">
+				<article class="data check">
+					<form class="data__form" action="./index.html">
+						
+						<label for="dataList">Check:</label>
+						<input id="dataList" list="language">
+						
+						<datalist id="language">
+							<option value="TypeScript">
+							<option value="C++">
+							<option value="PHP">
+							<option value="Swift">
+							<option value="Go">
+						</datalist>
+						
+						<input class="button-hover" type="submit">
+					</form>
+					<form action="./index.html">
+						
+						<label for="select">Choose:</label>
+						
+						<select name="select" id="select">
+							<option value="JavaScript">JavaScript</option>
+							<option value="Java">Java</option>
+							<option value="Python">Python</option>
+						</select>
+						
+						<input class="button-hover" type="submit">
+					</form>
+				</article>
+				
+				<article class="data">
+					<form id="radio" class="data__form">
+						<label class="radio">
+							<input id="vue" type="radio" name="framework" value="Vue">
+							<label for="vue">Vue</label>
+						</label>
+						<label class="radio">
+							<input id="angular" type="radio" name="framework" value="Angular">
+							<label for="angular">Angular</label>
+						</label>
+						<label class="radio">
+							<input id="next" type="radio" name="framework" value="Next" checked>
+							<label for="next">Next.js</label>
+						</label>
+						<div>
+							<input style="border: none" type="checkbox">
+							<input id="color" style="border: none" type="color">
+						</div>
+					</form>
+				</article>
+				
+				<article class="data send">
+					<form class="data__form" action="./index.html">
+						<label data-footer-label for="textarea">Send your message:</label>
+						<textarea class="textarea" name="message" rows="2" cols="20" id="textarea">
 
             </textarea>
-                    <input class="button-hover" type="submit">
-                </form>
-            </article>
-        </section>
-
-        <footer class="data footer">
-            <form class="data__form data__form-table-cell">
-                <label class="tr">
-                    <label for="name">Name:</label>
-                    <input type="text" id="name" name="name">
-                </label>
-                <label class="tr">
-                    <label for="password">Password:</label>
-                    <input type="password" id="password">
-                </label>
-                <label class="tr">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email">
-                </label>
-                <label class="tr">
-                    <label for="tel">Telephone:</label>
-                    <input type="tel" id="tel">
-                </label>
-                <label class="tr">
-                    <label for="date">Meeting date:</label>
-                    <input id="date" type="date">
-                </label>
-                <label class="tr">
-                    <label for="time">Meeting time:</label>
-                    <input id="time" value="13:30" type="time">
-                </label>
-            </form>
-        </footer>
-    </aside>
-
-</main>
-
+						<input class="button-hover" type="submit">
+					</form>
+				</article>
+			</section>
+			
+			<footer class="data footer">
+				<form class="data__form data__form-table-cell">
+					<h2>Focus Info</h2>
+					<label class="tr">
+						<label for="name">Name:</label>
+						<input type="text" id="name" name="name">
+					</label>
+					<label class="tr">
+						<label for="password">Password:</label>
+						<input type="password" id="password">
+					</label>
+					<label class="tr">
+						<label for="email">Email:</label>
+						<input type="email" id="email">
+					</label>
+					<label class="tr">
+						<label for="tel">Telephone:</label>
+						<input type="tel" id="tel">
+					</label>
+					<label class="tr">
+						<label for="time">Prevent Default!!!!!!</label>
+						<input id="time" value="13:30" type="time">
+					</label>
+				</form>
+				<article>
+					<label id="arithmetics">
+						<input type="number" max="3">
+						<select id="operators" name="operators">
+							<option value="+">+</option>
+							<option value="-">-</option>
+							<option value="*">*</option>
+							<option value="/">/</option>
+						</select>
+						<input type="number" max="3">
+						<span id="equal">=</span>
+						<span id="solution"></span>
+					</label>
+				</article>
+				<article id="events">
+					<span id="arithmeticOperation">Arithmetic operations</span>
+					<span id="workingWithStrings">Working with strings</span>
+					<span id="variableAssigment">Variable assignment</span>
+					<span id="console">Console.log</span>
+					<span id="logicalOperation">Logical operation</span>
+					<span id="tryCatch">Try catch</span>
+				</article>
+			</footer>
+		</aside>
+	
+	</main>
 </body>
 </html>
