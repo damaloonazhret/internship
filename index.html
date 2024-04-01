@@ -27,46 +27,50 @@
 	<script src="./index.js"></script>
 	<script>
         window.addEventListener('DOMContentLoaded', function () {
-            function elementGenerator(
-                tag,
-                content,
-                className,
-                attribute,
-                type,
-                id,
-                name
-            ) {
-                const element = document.createElement(tag);
-                if (content) element.innerText = content;
-                if (className) element.className = className;
-                if (attribute) element.setAttribute('for', attribute);
-                if (type) element.type = type;
-                if (id) element.id = id;
-                if (name) element.name = name;
-                return element;
-            }
-
-            const tableCell = document.querySelector('.data__form-table-cell');
 
             const inputFields = [
-                { label: 'Name:', type: 'text', id: 'name', name: 'name' },
-                { label: 'Password:', type: 'password', id: 'password', name: 'password' },
-                { label: 'Email:', type: 'email', id: 'email', name: 'email' },
-                { label: 'Telephone:', type: 'tel', id: 'tel', name: 'tel' },
-                { label: 'Prevent Default!!!!!!', type: 'time', id: 'time', name: 'time' }
+                { content: 'Name:', type: 'text', id: 'name', name: 'name' },
+                { content: 'Password:', type: 'password', id: 'password', name: 'password' },
+                { content: 'Email:', type: 'email', id: 'email', name: 'email' },
+                { content: 'Telephone:', type: 'tel', id: 'tel', name: 'tel' },
+                { content: 'Prevent Default!!!!!!', type: 'time', id: 'time', name: 'time' }
             ];
+	        function elementGenerator (tag, attributes) {
+                const element = document.createElement(tag);
+                for (const key in attributes) {
+                    element[key] = attributes[key];
+                }
+                return element;
+	        }
 
+            const tableCell = document.querySelector('.data__form-table-cell');
+	        
             inputFields.forEach(field => {
-                const div = elementGenerator('div', '', 'tr');
-                const label = elementGenerator('label', field.label, '', field.id);
-                const input = elementGenerator('input', '', '', '', field.type, field.id, field.name);
 
+	            const div = elementGenerator('div', {
+                    className: 'tr'
+                });
+                
+	            const label = elementGenerator('label', {
+                    innerText: field.content,
+		            htmlFor: field.id
+	            });
+             
+	            const input = elementGenerator('input', {
+                    type: field.type,
+		            id: field.id,
+		            name: field.name,
+		            placeholder: 'focus me'
+	            });
+                
                 div.appendChild(label);
                 div.appendChild(input);
                 tableCell.appendChild(div);
             });
 
-            const h2 = elementGenerator('h2', 'Focus Info');
+            const h2 = elementGenerator('h2', {
+                innerText: 'Focus Info'
+            });
             tableCell.prepend(h2);
             
             const tHead = document.getElementById('thead');
@@ -122,7 +126,6 @@
             }
 	        
             inputElements.forEach(function(el) {
-                el.placeholder = 'Focus Me';
                 el.addEventListener('focus', focusHandler);
             });
 	        
