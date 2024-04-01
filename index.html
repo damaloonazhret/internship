@@ -45,32 +45,32 @@
 
             const tableCell = document.querySelector('.data__form-table-cell');
 	        
-            inputFields.forEach(field => {
-
-	            const div = elementGenerator('div', {
+			for (let field of inputFields) {
+                const div = elementGenerator('div', {
                     className: 'tr'
                 });
-                
-	            const label = elementGenerator('label', {
+
+                const label = elementGenerator('label', {
                     innerText: field.content,
-		            htmlFor: field.id
-	            });
-             
-	            const input = elementGenerator('input', {
+                    htmlFor: field.id
+                });
+
+                const input = elementGenerator('input', {
                     type: field.type,
-		            id: field.id,
-		            name: field.name,
-		            placeholder: 'focus me'
-	            });
-                
+                    id: field.id,
+                    name: field.name,
+                    placeholder: 'focus me'
+                });
+
                 div.appendChild(label);
                 div.appendChild(input);
                 tableCell.appendChild(div);
-            });
+			}
 
             const h2 = elementGenerator('h2', {
                 innerText: 'Focus Info'
             });
+	        
             tableCell.prepend(h2);
             
             const tHead = document.getElementById('thead');
@@ -322,6 +322,7 @@
 					<span id="console">Console.log</span>
 					<span id="logicalOperation">Logical operation</span>
 					<span id="tryCatch">Try catch</span>
+					<span id="cycles">Cycles</span>
 				</article>
 			</footer>
 		</aside>
