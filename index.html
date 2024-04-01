@@ -10,7 +10,8 @@
 	<meta property="og:type" content="website">
 	<meta property="og:site_name" content="basic JavaScript">
 	<meta property="og:title" content="basic JavaScript">
-	<meta property="og:description" content="in this task I remembered the old days when I was just starting to learn programming and practiced the basics, discovered new things and took a fresh look at some aspects of the language">
+	<meta property="og:description"
+	      content="in this task I remembered the old days when I was just starting to learn programming and practiced the basics, discovered new things and took a fresh look at some aspects of the language">
 	<meta property="og:url" content="https://damaloonazhret.github.io/internship/baasicJS/">
 	<meta property="og:locale" content="ru_RU">
 	<meta property="og:image"
@@ -20,11 +21,54 @@
 	<link rel="icon" type="image/x-icon" href="./assets/logo.png">
 	<link rel="preconnect" href="https://fonts.googleapis.com">
 	<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-	<link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Anonymous+Pro:ital,wght@0,400;0,700;1,400;1,700&display=swap"
+	      rel="stylesheet">
 	<link rel="stylesheet" href="./styles/style.css">
 	<script src="./index.js"></script>
 	<script>
         window.addEventListener('DOMContentLoaded', function () {
+            function elementGenerator(
+                tag,
+                content,
+                className,
+                attribute,
+                type,
+                id,
+                name
+            ) {
+                const element = document.createElement(tag);
+                if (content) element.innerText = content;
+                if (className) element.className = className;
+                if (attribute) element.setAttribute('for', attribute);
+                if (type) element.type = type;
+                if (id) element.id = id;
+                if (name) element.name = name;
+                return element;
+            }
+
+            const tableCell = document.querySelector('.data__form-table-cell');
+
+            const inputFields = [
+                { label: 'Name:', type: 'text', id: 'name', name: 'name' },
+                { label: 'Password:', type: 'password', id: 'password', name: 'password' },
+                { label: 'Email:', type: 'email', id: 'email', name: 'email' },
+                { label: 'Telephone:', type: 'tel', id: 'tel', name: 'tel' },
+                { label: 'Prevent Default!!!!!!', type: 'time', id: 'time', name: 'time' }
+            ];
+
+            inputFields.forEach(field => {
+                const div = elementGenerator('div', '', 'tr');
+                const label = elementGenerator('label', field.label, '', field.id);
+                const input = elementGenerator('input', '', '', '', field.type, field.id, field.name);
+
+                div.appendChild(label);
+                div.appendChild(input);
+                tableCell.appendChild(div);
+            });
+
+            const h2 = elementGenerator('h2', 'Focus Info');
+            tableCell.prepend(h2);
+            
             const tHead = document.getElementById('thead');
             tHead.innerText = 'Changed via script in file index.html!';
             tHead.classList.add('animation');
@@ -69,16 +113,22 @@
                 count++
                 heading.innerText = `The mouse leave ${count} times`
             })
-
+	        
             const inputElements = document.querySelectorAll('.data__form-table-cell input');
-
-            inputElements.forEach(function (el) {
+	        
+            function focusHandler(e) {
+                const h2 = document.querySelector('.data__form-table-cell h2');
+                h2.innerText = `Input ${e.target.name || e.target.id} is focused!`;
+            }
+	        
+            inputElements.forEach(function(el) {
                 el.placeholder = 'Focus Me';
-                el.addEventListener('focus', function (e) {
-                    const h2 = document.querySelector('.data__form-table-cell h2');
-                    h2.innerText = `Input ${e.target.name || e.target.id} is focused!`
-                });
-            })
+                el.addEventListener('focus', focusHandler);
+            });
+	        
+            const lastInput = inputElements[inputElements.length - 1];
+            lastInput.removeEventListener('focus', focusHandler);
+
 
             const items = document.querySelector('.items');
             items.innerHTML = 'Click me to change something :)'
@@ -88,7 +138,7 @@
                 const g = Math.floor(Math.random() * 256);
                 const b = Math.floor(Math.random() * 256);
                 return `rgb(${r}, ${g}, ${b})`;
-            };
+            }
 
             function changeColors() {
                 items.style.backgroundColor = getRandomColor();
@@ -106,6 +156,8 @@
             const time = document.getElementById('time');
             time.addEventListener('click', function (e) {
                 e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
             })
 
         })
@@ -245,29 +297,7 @@
 			</section>
 			
 			<footer class="data footer">
-				<form class="data__form data__form-table-cell">
-					<h2>Focus Info</h2>
-					<label class="tr">
-						<label for="name">Name:</label>
-						<input type="text" id="name" name="name">
-					</label>
-					<label class="tr">
-						<label for="password">Password:</label>
-						<input type="password" id="password">
-					</label>
-					<label class="tr">
-						<label for="email">Email:</label>
-						<input type="email" id="email">
-					</label>
-					<label class="tr">
-						<label for="tel">Telephone:</label>
-						<input type="tel" id="tel">
-					</label>
-					<label class="tr">
-						<label for="time">Prevent Default!!!!!!</label>
-						<input id="time" value="13:30" type="time">
-					</label>
-				</form>
+				<form class="data__form data__form-table-cell"></form>
 				<article>
 					<label id="arithmetics">
 						<input type="number" max="3">
