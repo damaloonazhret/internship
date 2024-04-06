@@ -1,256 +1,99 @@
-window.addEventListener('load', function () {
-    console.log(`
-   ╔══════════════════════╗
-   ║                      ║
-   ║        Senla!        ║
-   ║                      ║
-   ╚══════════════════════╝
-`);
-
-    console.log(`
-    __  __     ____         _       __           __    __
-   / / / /__  / / /___     | |     / /___  _____/ /___/ /
-  / /_/ / _ \\/ / / __ \\    | | /| / / __ \\/ ___/ / __  / 
- / __  /  __/ / / /_/ /    | |/ |/ / /_/ / /  / / /_/ /  
-/_/ /_/\\___/_/_/\\____/     |__/|__/\\____/_/  /_/\\__,_/   
-                                                         
+console.log(`
+      _                  ____            _       _   
+     | | __ ___   ____ _/ ___|  ___ _ __(_)_ __ | |_ 
+  _  | |/ _\` \\ \\ / / _\` \\___ \\ / __| '__| | '_ \\| __|
+ | |_| | (_| |\\ V / (_| |___) | (__| |  | | |_) | |_ 
+  \\___/ \\__,_| \\_/ \\__,_|____/ \\___|_|  |_| .__/ \\__|
+                                          |_|                   
                                                                  `)
+const tHead = document.getElementById('thead');
+tHead.innerText = 'Changed via script in file index.html!';
+tHead.classList.add('animation');
 
-    // Arithmetic operations
+const tFoot = document.getElementById('tfoot');
+tFoot.innerText = 'Please hover over me!';
 
-    const arithmeticObj = {};
+let throttleTimer;
+const throttleDelay = 25;
 
-    let addition = 1 + 2;
-    let subtraction = 3 - 4;
-
-    arithmeticObj['addition'] = addition;
-    arithmeticObj['subtraction'] = subtraction;
-    arithmeticObj['multiplication'] = 5 * 6;
-    arithmeticObj['exponentiation'] = 5 ** 6;
-    arithmeticObj['division'] = 7 / 8;
-    arithmeticObj['remainder of the division'] = 9 % 3;
-    arithmeticObj['increment'] = addition++;
-    arithmeticObj['decrement'] = subtraction--;
-    arithmeticObj['unary plus'] = +true;
-
-    console.log(arithmeticObj)
-
-    // Working with strings
-
-    const stringObj = {};
-
-    const hello = 'Hello'
-
-    stringObj['concat'] = 'And' + 'rey'
-    stringObj['double single'] = 'Hello "world"'
-    stringObj['double double'] = "Hello \"world\""
-    stringObj['concat with const'] = hello + ' ' + 'world'
-    stringObj['template strings'] = `${hello} world`
-
-    // Variable assignment
-
-    const a = 1;
-    let b = 2;
-    var c = 3;
-
-    console.log(`
-variableAssignment:
-const a = 1;
-let b = 2;
-var c = 3;
-    `, a, b, c);
-
-    b = 4;
-    c = 6
-
-    console.log(`b = 4,  c = 6:\n`, b, c)
-
-    const assA = a;
-    const assB = b;
-    const assC = c;
-
-    console.log('const assA = a;\nconst assB = b;\nconst assC = c;\n',
-        assA, assB, assC);
-
-    // Console
-
-    console.group('Group Title');
-    console.log('Message 1');
-    console.log('Message 2');
-    console.groupEnd();
-
-    // Logical operation
-
-    const isRegister = true;
-    const orders = 3;
-
-    if (isRegister === true && orders > 0) {
-        console.log(`const isRegister = true;
-const orders = 3;
-if (isRegister === true && orders > 0) {
-    console.log('Success');
-}`);
-        console.log('Success');
+tFoot.addEventListener('mousemove', function (event) {
+    if (!throttleTimer) {
+        throttleTimer = setTimeout(() => {
+            throttleTimer = null;
+            const x = event.clientX;
+            const y = event.clientY;
+            const tfoot = document.querySelector('#tfoot');
+            tfoot.innerText = `Mouse coordinates: x = ${x}, y = ${y}`
+        }, throttleDelay);
     }
+});
 
-    const html = true;
-    const css = false;
+const firstRow = document.querySelectorAll('#firstRow div');
+const secondRow = document.querySelectorAll('#secondRow div');
+// const allRow = Array.from(firstRow).concat(Array.from(secondRow));
+const allRow = [...firstRow, ...secondRow];
 
-    if (html || css) {
-        console.log(`const html = true;
-const css = false;
-if (html || css) {
-    console.log('JavaScript!')
-}`)
-        console.log('JavaScript!')
-    }
+allRow.forEach(function (el) {
+    el.innerText = `Click me ${el.innerText}`
 
-    const programmer = true;
+    el.addEventListener('click', function () {
+        alert(el.innerText)
+    })
+})
 
-    if (programmer) console.log(`const programmer = true;
-    if (programmer) console.log("You are programmer")`)
-    console.log("You are programmer")
+const fieldset = document.querySelector('fieldset');
+const heading = document.createElement('h1');
+let count = 0;
 
-    // try catch
+fieldset.innerText = `Mouse leave me please!!`;
+heading.innerText = 'YoYoYo, mouse leave me please'
+fieldset.append(heading);
+fieldset.addEventListener('mouseleave', function () {
+    count++
+    heading.innerText = `The mouse leave ${count} times`
+})
 
-    function someFunction() {
-        const randomNumber = Math.random();
-        if (randomNumber < 0.5) {
-            throw new Error("Error: random number is less than 0.5");
-        }
-        return randomNumber;
-    }
+const inputElements = document.querySelectorAll('.data__form-table-cell input');
 
-    try {
-        const result = someFunction();
-        console.log("Result:", result);
-    } catch (error) {
-        console.error("An error has occurred:", error);
-    } finally {
-        console.log("Completing error processing");
-    }
+function focusHandler(e) {
+    const h2 = document.querySelector('.data__form-table-cell h2');
+    h2.innerText = `Input ${e.target.name || e.target.id} is focused!`;
+}
 
-    // Arrow Function, default parameters
+inputElements.forEach(function (el) {
+    el.addEventListener('focus', focusHandler);
+});
 
-    const sum = (a = 2, b = 2) => {
-        return a + b;
-    }
-
-    console.log(sum());
-    console.log(sum(1, 1));
-
-    // Spread
-    (function () {
-        const returnMaxNumber = (arr) => {
-            return Math.max(...arr)
-        }
-
-        const arr = [6, 7, 8, 9, 10, 20, 33, 1, 2, 3, 4, 5,]
-
-        console.log(returnMaxNumber(arr))
-    })()
+const lastInput = inputElements[inputElements.length - 1];
+lastInput.removeEventListener('focus', focusHandler);
 
 
-    const middle = [2, 3];
-    const arr = [1, ...middle, 4]
-    console.log(arr)
+const items = document.querySelector('.items');
+items.innerHTML = 'Click me to change something :)'
 
-    const str = 'Hello'
-    const chars = [...str]
-    console.log(chars)
+function getRandomColor() {
+    const r = Math.floor(Math.random() * 256);
+    const g = Math.floor(Math.random() * 256);
+    const b = Math.floor(Math.random() * 256);
+    return `rgb(${r}, ${g}, ${b})`;
+}
 
-    // Rest
+function changeColors() {
+    items.style.backgroundColor = getRandomColor();
+    const colorText = getRandomColor();
+    const borderColor = getRandomColor();
+    items.style.color = colorText;
+    items.innerHTML = colorText;
+    items.style.borderColor = borderColor;
+}
 
-    const totalSum = (...values) => {
-        let sum = 0;
-        for (let i = 0; i < values.length; i++) {
-            sum += values[i];
-        }
-        return sum;
-    }
+items.addEventListener('click', function () {
+    changeColors()
+})
 
-    console.log(totalSum(1, 2, 3, 4, 5, 6, 7, 8, 9));
-
-
-    (function () {
-        const arr = [1, 2, 3, 4, 5, 6];
-
-        const [first, second, ...rest] = arr;
-        console.log(first, second, rest)
-    })();
-
-    // Class, super
-
-    class Parent {
-        constructor(name) {
-            this.name = name;
-        }
-
-        sayHello() {
-            return `Hello ${this.name}`
-        }
-    }
-
-    const parent = new Parent('John');
-    console.log(parent.sayHello())
-
-    class Child extends Parent {
-        constructor(name) {
-            super(name);
-        }
-
-        sayHello() {
-            return `${super.sayHello()} into the Child class`
-        }
-    }
-
-    const child = new Child('Joanna');
-    console.log(child.sayHello())
-
-    // Object destructuring
-
-    const obj = {
-        name: 'John',
-        surname: 'Doe',
-        age: '28'
-    }
-
-    const {name, surname, age} = obj;
-    console.log(name, surname, age + ` y.o.`);
-
-    const {name: firstName, surname: secondName, age: YO} = obj;
-    console.log(firstName,secondName, YO)
-
-    // Yield
-
-    function* generator() {
-        yield 1;
-        yield 2;
-        yield 3;
-    }
-
-    const gen = generator();
-
-    console.log(gen.next().value);
-    console.log(gen.next().value);
-    console.log(gen.next().value);
-
-    (function() {
-        function* fibonacciSequence() {
-            let prev = 1;
-            let curr = 1;
-            while(true) {
-                yield curr;
-                [prev, curr] = [curr, prev + curr];
-            }
-        }
-
-        const gen = fibonacciSequence();
-
-        for (let i = 0; i <= 10; i++) {
-            console.log(gen.next().value)
-        }
-    })()
-
-
+const time = document.getElementById('time');
+time.addEventListener('click', function (e) {
+    e.preventDefault();
+    e.stopPropagation();
+    e.stopImmediatePropagation();
 })
