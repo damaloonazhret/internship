@@ -2,7 +2,7 @@
 
 const classes = () => {
     console.clear();
-    
+
     class Junior {
         #superPower;
         #booster = false;
@@ -21,11 +21,9 @@ const classes = () => {
         }
 
         study() {
-            if (this.#booster) {
-                this.knowledge += 4;
-            }
-            this.knowledge += 2;
-
+            this.#booster
+                ? this.knowledge += 4
+                : this.knowledge += 2;
         }
 
         boost() {
