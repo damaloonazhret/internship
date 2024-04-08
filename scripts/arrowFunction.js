@@ -35,6 +35,7 @@ const arrowFunction = () => {
 
 const arrowFunctionSpan = document.querySelector('#arrowFunction');
 arrowFunctionSpan.addEventListener('click', () => {
+    console.clear();
     console.log(`
 const arrow = a => a + 3;
 console.log(arrow(3));
