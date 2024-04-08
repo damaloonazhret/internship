@@ -55,7 +55,7 @@ restSpreadSpan.addEventListener('click', () => {
 const sum = (name, age, ...numbers) => {
     let sum = 0;
     for (let param of numbers) sum += param;
-    return \` Name: £{name},\\n age: £{age},\\n number sum = £{sum}. \`;
+    return \` Name: \${name},\\n age: \${age},\\n number sum = \${sum}. \`;
 }
 
 console.log(sum('Webster', '20', 8, 4, 5, 2, 5, 3, 9, 3, 7));
@@ -72,7 +72,7 @@ console.log(arr === arrCopy);
 console.log(arrUnUnique);
 console.log(arrUnique);
 
-console.log(\`£{Math.max(...arr)} is max number of array\`);
+console.log(\`\${Math.max(...arr)} is max number of array\`);
 
 const merge = [123, 567, ...arr];
 console.log(merge);
@@ -81,7 +81,7 @@ const str = 'Hello';
 console.log([...str]);
 
 const mix = (x, y, z, ...rest) => {
-    console.log('£{x} £{y} £{z} - £{rest[0]} £{rest[1]}');
+    console.log('\${x} \${y} \${z} - \${rest[0]} \${rest[1]}');
 }
 
 const cords = [53.777, 52.656, 53.432, 'secret', 'coordinates'];
