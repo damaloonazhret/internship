@@ -1,26 +1,32 @@
 @import "reset.css";
 
-body {
-    background-color: #4b4b4b;
-    color: #22b14c;
+.main {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: 100%;
+    font-family: Consolas, Arial, sans-serif;
+    color: #27ae60;
+    background-color: #1a1a1a;
 }
 
-main {
-    height: 100%;
-    display: grid;
-    align-items: center;
-    justify-items: center;
+button,
+a,
+textarea{
+    background: transparent;
+    color: #27ae60;
+    border: 1px solid blue;
 }
 
 a {
     display: block;
-    color: black;
     font-weight: 900;
-    background-color: #ffffff;
     padding: 10px;
 }
 
-.localStorage, .sessionStorage {
+.localStorage,
+.sessionStorage {
     display: grid;
     align-items: center;
 }

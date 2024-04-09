@@ -1,20 +1,4 @@
-console.log(`
-   ╔══════════════════════╗
-   ║                      ║
-   ║        Senla!        ║
-   ║                      ║
-   ╚══════════════════════╝
-`);
-console.log(`
-    __  __     ____         _       __           __    __
-   / / / /__  / / /___     | |     / /___  _____/ /___/ /
-  / /_/ / _ \\/ / / __ \\    | | /| / / __ \\/ ___/ / __  / 
- / __  /  __/ / / /_/ /    | |/ |/ / /_/ / /  / / /_/ /  
-/_/ /_/\\___/_/_/\\____/     |__/|__/\\____/_/  /_/\\__,_/   
-                                                         
-                                                                 `)
-
-const alertBtn = document.querySelector('#h1 button');
+const alertBtn = document.querySelector('#alert button');
 alertBtn.addEventListener('click', () => {
     alert('Alert!')
 })
