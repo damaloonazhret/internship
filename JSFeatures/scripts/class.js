@@ -130,5 +130,5 @@ property3[2].addEventListener('click', () => {
     updateWorkers(2, arnold);
 })
 property3[3].addEventListener('click', () => {
-    Senior.coffeeBreak ? Senior.coffeeBreak = false : Senior.coffeeBreak = true;
+    Senior.coffeeBreak = !Senior.coffeeBreak;
 })
