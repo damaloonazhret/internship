@@ -1,62 +1,23 @@
-const alertBtn = document.querySelector('#alert button');
-alertBtn.addEventListener('click', () => {
-    alert('Alert!')
-})
+const contents = document.querySelectorAll('.nav p');
 
+window.addEventListener('popstate', () => {
+    const path = window.location.pathname;
+    const paths = ['main', 'info', 'content'];
+    console.log(path)
 
-const localStorageTextarea = document.querySelector('.localStorage textarea')
-const localStorageBtn = document.querySelector('.localStorage button')
-
-const textLocal = localStorage.getItem('text');
-if (textLocal) {
-    localStorageTextarea.value = textLocal;
-}
-localStorageBtn.addEventListener('click', () => {
-    const text = localStorageTextarea.value;
-    localStorage.setItem('text', text)
-})
-
-
-const sessionStorageTextarea = document.querySelector('.sessionStorage textarea')
-const sessionStorageBtn = document.querySelector('.sessionStorage button')
-
-const textSession = sessionStorage.getItem('text');
-if (textSession) {
-    sessionStorageTextarea.value = textSession;
-}
-sessionStorageBtn.addEventListener('click', () => {
-    const text = sessionStorageTextarea.value;
-    sessionStorage.setItem('text', text)
-})
-
-
-const buttonURL = document.getElementById('buttonUrl');
-const spanURL = document.getElementById('spanUrl');
-buttonURL.addEventListener('click', () => {
-    spanURL.innerText = `${window.location.href}`
-})
-
-
-const buttonForward = document.getElementById('goForward');
-const errorForward = document.getElementById('errorForward');
-buttonForward.addEventListener('click', () => {
-    if (window.history.length === 1) {
-        errorForward.innerText = 'Sorry, history length = 1'
-    } else {
-        window.history.forward()
+    const index = paths.indexOf(path.substring(1));
+    if (index !== -1) {
+        contents.forEach(el => el.classList.remove('active'));
+        contents[index].classList.add('active');
     }
-})
+});
 
-
-const pushToState = document.getElementById('push');
-pushToState.addEventListener('click', () => {
-    window.history.pushState({}, '', './heroPage.html')
-    location.reload();
-})
-
-
-const historyLength = document.getElementById('length');
-const historyLengthSpan = document.getElementById('historyLength');
-historyLength.addEventListener('click', () => {
-    historyLengthSpan.innerText = String(window.history.length);
-})
+contents.forEach((content, index) => {
+    content.addEventListener('click', () => {
+        const path = ['main', 'info', 'content'][index];
+        history.pushState({}, path, path);
+        document.title = path;
+        contents.forEach(el => el.classList.remove('active'));
+        content.classList.add('active');
+    });
+});
