@@ -4,7 +4,6 @@ import {rootColors} from "./rootColors.js";
 import {setColors} from "./setColors.js";
 
 function setThemeProperty(property, value) {
-    console.log(themeUser)
     if (themeUser === WHITE) {
         setRootProperty(property, value);
     } else {
