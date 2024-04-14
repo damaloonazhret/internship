@@ -1,5 +1,5 @@
 import {rootColors} from "./rootColors.js";
-import {setThemeColorsAndPosition} from "./helper.js";
+import {setThemeColorsAndPosition} from "./setThemeColors.js";
 import {
     BLACK_ROOT,
     LEFT_SWITCH,
