@@ -17,18 +17,26 @@ export const switcherToggler = document.querySelector('.switcher-toggler');
 const pages = {
     main: {
         title: 'Main Page',
-        about: 'Ultimately, I try to think of my application\'s main codebase as just stringing together various components and code from many sources. It just controls logic and flow. The real nitty-gritty is handled behind the scenes. This is why frameworks like Backbone are so important - they hide a lot of the details in the background and allow you to just focus on the flow and control of your application.'
+        about: 'Ultimately, I try to think of my application\'s main codebase as just stringing together various' +
+            ' components and code from many sources. It just controls logic and flow. The real nitty-gritty is' +
+            ' handled behind the scenes. This is why frameworks like Backbone are so important - they hide a lot' +
+            ' of the details in the background and allow you to just focus on the flow and control of your application.'
     },
     info: {
         title: 'Info Page',
-        about: 'Technically, web browsers can control what users see, and sites using Javascript can overwrite anything coming from the original authors. Browsers heavily utilize Javascript to create an interactive Internet; sites like YouTube, Facebook, and Gmail could be crippled without it.'
+        about: 'Technically, web browsers can control what users see, and sites using Javascript can overwrite' +
+            ' anything coming from the original authors. Browsers heavily utilize Javascript to create an ' +
+            'interactive Internet; sites like YouTube, Facebook, and Gmail could be crippled without it.'
     },
     settings: {
         title: 'Settings Page',
         input: 'color',
         inputTextColorInfo: 'Here you can set your text content color for the page',
         inputBGColorInfo: 'And here you can choose the background color on the site',
-        about: 'A language like Ruby is a toolbox with some really neat little tools that do their job really nicely. JavaScript is a leather sheath with a really really sharp knife inside. That knife can cut anything, and with it you can do anything. You can kill a bear. You can catch fish. You can whittle a piece of wood into a pony. It\'s even a toothpick.'
+        about: 'A language like Ruby is a toolbox with some really neat little tools that do their ' +
+            'job really nicely. JavaScript is a leather sheath with a really really sharp knife inside. ' +
+            'That knife can cut anything, and with it you can do anything. You can kill a bear. ' +
+            'You can catch fish. You can whittle a piece of wood into a pony. It\'s even a toothpick.'
     },
     notFound: {
         title: '404 error',
@@ -111,10 +119,14 @@ function setActiveLink(hash, paths) {
 
 window.addEventListener('popstate', () => {
     const hash = window.location.hash.slice(1);
+    const set = document.querySelector('.settings');
     selectPage(hash);
+    if (set.classList.contains('active')) {
+        customBG()
+    }
 });
 
-function customBG() {
+export function customBG() {
     const bg = document.querySelector('#BG');
     const text = document.querySelector('#text');
     const resetText = document.querySelector('#resetText');
@@ -131,6 +143,9 @@ function customBG() {
 
 function handleNavigation(e) {
     e.preventDefault();
+    if (e.target.classList.contains('active')) {
+        return;
+    }
     const hash = extractHashFromLink(this);
     const capitalizeHash = hash.charAt(0).toUpperCase() + hash.slice(1);
     document.title = capitalizeHash;
