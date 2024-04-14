@@ -14,7 +14,7 @@ import {
 const sessionTextColor = sessionStorage.getItem('text');
 const sessionBGColor = sessionStorage.getItem('bg');
 
-function setRootProperty(color, session) {
+export function setRootProperty(color, session) {
     document.documentElement.style.setProperty(color, session)
 }
 
