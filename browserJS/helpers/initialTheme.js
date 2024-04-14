@@ -11,14 +11,13 @@ import {
     WHITE_ROOT
 } from "../index.js";
 
-const sessionTextColor = sessionStorage.getItem('text');
-const sessionBGColor = sessionStorage.getItem('bg');
-
 export function setRootProperty(color, session) {
     document.documentElement.style.setProperty(color, session)
 }
 
 export function initialTheme() {
+    const sessionTextColor = sessionStorage.getItem(WHITE_ROOT);
+    const sessionBGColor = sessionStorage.getItem(BLACK_ROOT);
     if (themeUser === WHITE) {
         switcherLabel.classList.add(WHITE);
         if (sessionBGColor) setRootProperty(WHITE_ROOT, sessionBGColor);
