@@ -26,18 +26,30 @@
 	<link rel="stylesheet" href="./styles/style.css">
 </head>
 <body class="body">
-	<header class="header">Browser History API</header>
+	<header class="header">
+		<p>History API</p>
+		<p id="url">URL:</p>
+	</header>
 	
 	<aside class="aside">
 		<nav class="nav">
-			<p class="main active">Main</p>
-			<p class="info">Info</p>
-			<p class="content">Content</p>
+			<a href="#main" class="main active">Main</a>
+			<a href="#info" class="info">Info</a>
+			<a href="#settings" class="settings">Settings</a>
 		</nav>
+		<nav class="nav-arrows">
+			<p id="back"><</p>
+			<p id="forward">></p>
+		</nav>
+		<div class="theme-switcher">
+			<input type="checkbox" name="switcher" id="switcher-input" class="switcher-input">
+			<label class="switcher-label" for="switcher-input">
+				<span class="switcher-toggler"></span>
+			</label>
+		</div>
 	</aside>
-	<main class="main-content">
-		<article class="data content">Main content</article>
+	<main class="main-content" id="root">
 	</main>
-	<script src="./index.js"></script>
+	<script type="module" src="./index.js"></script>
 </body>
 </html>
