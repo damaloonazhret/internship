@@ -14,7 +14,6 @@ const contents = document.querySelectorAll('.nav a');
 const root = document.querySelector('#root');
 export const switcherLabel = document.querySelector('.switcher-label');
 export const switcherToggler = document.querySelector('.switcher-toggler');
-export let themeUser = localStorage.getItem('theme');
 const pages = {
     main: {
         title: 'Main Page',
@@ -39,9 +38,10 @@ const pages = {
 export const LEFT_SWITCH = '9%';
 export const RIGHT_SWITCH = '68%';
 export const WHITE = 'white';
-const DARK = 'dark';
+export const DARK = 'dark';
 export const BLACK_ROOT = '--black';
 export const WHITE_ROOT = '--white';
+export let themeUser = localStorage.getItem('theme');
 
 handleHistoryNavigation()
 initialTheme();
@@ -123,10 +123,10 @@ function customBG() {
 
     setColors(black, white);
 
-    resetText.addEventListener('click', (e) => handleResetClick(e, WHITE_ROOT, '#1a1a1a'));
-    resetBG.addEventListener('click', (e) => handleResetClick(e, BLACK_ROOT, '#ffffff'));
-    text.addEventListener('input', (e) => handleInputChange(e, WHITE_ROOT));
-    bg.addEventListener('input', (e) => handleInputChange(e, BLACK_ROOT));
+    resetText.addEventListener('click', (e) => handleResetClick(e, 'text'));
+    resetBG.addEventListener('click', (e) => handleResetClick(e, 'bg'));
+    text.addEventListener('input', (e) => handleInputChange(e, 'text'));
+    bg.addEventListener('input', (e) => handleInputChange(e, 'bg'));
 }
 
 function handleNavigation(e) {

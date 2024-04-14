@@ -1,7 +1,7 @@
 import {rootColors} from "./rootColors.js";
 import {setThemeColorsAndPosition} from "./setThemeColors.js";
 import {
-    BLACK_ROOT,
+    BLACK_ROOT, DARK,
     LEFT_SWITCH,
     RIGHT_SWITCH,
     switcherLabel,
@@ -26,6 +26,7 @@ export function initialTheme() {
         const [white, black] = rootColors();
         setThemeColorsAndPosition(RIGHT_SWITCH, switcherToggler, white, black);
     } else {
+        localStorage.setItem('theme', DARK)
         if (sessionTextColor) setRootProperty(WHITE_ROOT, sessionTextColor);
         if (sessionBGColor) setRootProperty(BLACK_ROOT, sessionBGColor);
         const [white, black] = rootColors();
