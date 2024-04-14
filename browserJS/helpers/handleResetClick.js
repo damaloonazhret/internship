@@ -1,15 +1,20 @@
-import {themeUser} from "../index.js";
+import {BLACK_ROOT, themeUser, WHITE, WHITE_ROOT} from "../index.js";
+import {setRootProperty} from "./initialTheme.js";
+import {rootColors} from "./rootColors.js";
+import {setColors} from "./setColors.js";
 
 function setThemeProperty(property, value) {
-    if (themeUser === 'white') {
-        document.documentElement.style.setProperty(property, value);
+    if (themeUser === WHITE) {
+        setRootProperty(property, value);
     } else {
-        document.documentElement.style.setProperty(property === '--white' ? '--black' : '--white', value);
+        setRootProperty(property === WHITE_ROOT ? BLACK_ROOT : WHITE_ROOT, value);
     }
+    const [white, black] = rootColors();
+    setColors(black, white);
 }
 
 export function handleResetClick(e, property, defaultValue) {
     e.preventDefault();
     setThemeProperty(property, defaultValue);
-    sessionStorage.removeItem(property === '--white' ? 'text' : 'bg');
+    sessionStorage.removeItem(property === WHITE_ROOT ? 'text' : 'bg');
 }

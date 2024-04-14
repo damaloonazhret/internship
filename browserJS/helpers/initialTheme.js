@@ -1,5 +1,5 @@
 import {rootColors} from "./rootColors.js";
-import {setThemeColorsAndPosition} from "./helper.js";
+import {setThemeColorsAndPosition} from "./setThemeColors.js";
 import {
     BLACK_ROOT,
     LEFT_SWITCH,
@@ -14,7 +14,7 @@ import {
 const sessionTextColor = sessionStorage.getItem('text');
 const sessionBGColor = sessionStorage.getItem('bg');
 
-function setRootProperty(color, session) {
+export function setRootProperty(color, session) {
     document.documentElement.style.setProperty(color, session)
 }
 

@@ -14,7 +14,7 @@ const contents = document.querySelectorAll('.nav a');
 const root = document.querySelector('#root');
 export const switcherLabel = document.querySelector('.switcher-label');
 export const switcherToggler = document.querySelector('.switcher-toggler');
-export const themeUser = localStorage.getItem('theme');
+export let themeUser = localStorage.getItem('theme');
 const pages = {
     main: {
         title: 'Main Page',
@@ -51,7 +51,11 @@ switcherLabel.addEventListener('click', themeSwitcher)
 function themeSwitcher() {
     if (switcherLabel.classList.contains(WHITE)) {
         updateTheme(LEFT_SWITCH, 'remove', DARK);
-    } else updateTheme(RIGHT_SWITCH, 'add', WHITE);
+        themeUser = DARK;
+    } else {
+        updateTheme(RIGHT_SWITCH, 'add', WHITE);
+        themeUser = WHITE;
+    }
 }
 
 function updateTheme(percent, param, themeColor) {
