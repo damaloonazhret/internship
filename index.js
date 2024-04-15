@@ -47,8 +47,17 @@ export const LEFT_SWITCH = '9%';
 export const RIGHT_SWITCH = '68%';
 export const WHITE = 'white';
 export const DARK = 'dark';
+export const BG = 'bg';
+export const TEXT = 'text';
+export const ACTIVE = 'active';
+export const DEFAULT_COLOR_GREEN = '#27ae60';
+export const DEFAULT_COLOR_WHITE = '#ffffff';
+export const DEFAULT_COLOR_BLACK = '#1a1a1a';
 export const BLACK_ROOT = '--black';
 export const WHITE_ROOT = '--white';
+export const GREEN_ROOT = '--green';
+export const DEFAULT_TRANSITION = '0.4s all ease-in';
+export const TRANSITION_ALL = '--transition-all';
 export let themeUser = localStorage.getItem('theme');
 
 handleHistoryNavigation()
@@ -77,7 +86,7 @@ function classListSwitcher(styleLeft) {
     setSessionColor(white, black)
     switcherToggler.style.left = styleLeft;
     const settingsLink = document.querySelector('.settings');
-    if (settingsLink.classList.contains('active')) setColors(white, black);
+    if (settingsLink.classList.contains(ACTIVE)) setColors(white, black);
 }
 
 
@@ -91,11 +100,17 @@ function selectPage(hash) {
 }
 
 const urlInfo = document.querySelector('#url');
+const form = document.querySelector('form');
 
 function setUrl() {
     const url = window.location.href;
-    urlInfo.textContent = 'URL: ' + url;
+    urlInfo.value = 'URL: ' + url;
 }
+
+form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    window.location.href = urlInfo.value.substring(5);
+})
 
 function drawPage(page) {
     const pageInstance = new PageCreator(page);
@@ -112,8 +127,8 @@ function appendChild(hash, paths) {
 function setActiveLink(hash, paths) {
     const index = paths.indexOf(hash);
     if (index !== -1) {
-        contents.forEach(el => el.classList.remove('active'));
-        contents[index].classList.add('active');
+        contents.forEach(el => el.classList.remove(ACTIVE));
+        contents[index].classList.add(ACTIVE);
     }
 }
 
@@ -121,7 +136,7 @@ window.addEventListener('popstate', () => {
     const hash = window.location.hash.slice(1);
     const set = document.querySelector('.settings');
     selectPage(hash);
-    if (set.classList.contains('active')) {
+    if (set.classList.contains(ACTIVE)) {
         customBG()
     }
 });
@@ -135,15 +150,15 @@ export function customBG() {
 
     setColors(black, white);
 
-    resetText.addEventListener('click', (e) => handleResetClick(e, 'text'));
-    resetBG.addEventListener('click', (e) => handleResetClick(e, 'bg'));
-    text.addEventListener('input', (e) => handleInputChange(e, 'text'));
-    bg.addEventListener('input', (e) => handleInputChange(e, 'bg'));
+    resetText ? resetText.addEventListener('click', (e) => handleResetClick(e, TEXT)) : null;
+    resetBG ? resetBG.addEventListener('click', (e) => handleResetClick(e, BG)) : null;
+    text ? text.addEventListener('input', (e) => handleInputChange(e, TEXT)) : null;
+    bg ? bg.addEventListener('input', (e) => handleInputChange(e, BG)) : null;
 }
 
 function handleNavigation(e) {
     e.preventDefault();
-    if (e.target.classList.contains('active')) {
+    if (e.target.classList.contains(ACTIVE)) {
         return;
     }
     const hash = extractHashFromLink(this);
