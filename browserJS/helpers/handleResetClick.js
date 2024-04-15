@@ -1,4 +1,15 @@
-import {BLACK_ROOT, DARK, themeUser, WHITE, WHITE_ROOT} from "../index.js";
+import {
+    BG,
+    BLACK_ROOT,
+    DARK, DEFAULT_COLOR_BLACK,
+    DEFAULT_COLOR_GREEN,
+    DEFAULT_COLOR_WHITE,
+    GREEN_ROOT,
+    TEXT,
+    themeUser,
+    WHITE,
+    WHITE_ROOT
+} from "../index.js";
 import {setRootProperty} from "./initialTheme.js";
 import {rootColors} from "./rootColors.js";
 import {setColors} from "./setColors.js";
@@ -11,22 +22,22 @@ function setThemeProperty(property, value) {
 
 export function handleResetClick(e, property) {
     e.preventDefault();
-    if (themeUser === DARK && property === 'text') {
-        setThemeProperty(WHITE_ROOT, '#ffffff')
-        setThemeProperty('--green', '#27ae60')
+    if (themeUser === DARK && property === TEXT) {
+        setThemeProperty(WHITE_ROOT, DEFAULT_COLOR_WHITE)
+        setThemeProperty(GREEN_ROOT, DEFAULT_COLOR_GREEN)
         sessionStorage.removeItem(WHITE_ROOT);
     }
-    if (themeUser === DARK && property === 'bg') {
-        setThemeProperty(BLACK_ROOT, '#1a1a1a')
+    if (themeUser === DARK && property === BG) {
+        setThemeProperty(BLACK_ROOT, DEFAULT_COLOR_BLACK)
         sessionStorage.removeItem(BLACK_ROOT);
     }
-    if (themeUser === WHITE && property === 'text') {
-        setThemeProperty(WHITE_ROOT, '#1a1a1a')
-        setThemeProperty('--green', '#27ae60')
+    if (themeUser === WHITE && property === TEXT) {
+        setThemeProperty(WHITE_ROOT, DEFAULT_COLOR_BLACK)
+        setThemeProperty(GREEN_ROOT, DEFAULT_COLOR_GREEN)
         sessionStorage.removeItem(WHITE_ROOT);
     }
-    if (themeUser === WHITE && property === 'bg') {
-        setThemeProperty(BLACK_ROOT, '#ffffff')
+    if (themeUser === WHITE && property === BG) {
+        setThemeProperty(BLACK_ROOT, DEFAULT_COLOR_WHITE)
         sessionStorage.removeItem(BLACK_ROOT);
     }
 }

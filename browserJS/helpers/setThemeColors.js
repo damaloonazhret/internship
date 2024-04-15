@@ -1,17 +1,18 @@
 import {setRootProperty} from "./initialTheme.js";
+import {BLACK_ROOT, DEFAULT_TRANSITION, TRANSITION_ALL, WHITE_ROOT} from "../index.js";
 
 function disableTransition() {
-    setRootProperty('--transition-all', 'none');
+    setRootProperty(TRANSITION_ALL, 'none');
 }
 
 function enableTransition() {
-    setRootProperty('--transition-all', '0.4s all ease-in');
+    setRootProperty(TRANSITION_ALL, DEFAULT_TRANSITION);
 }
 
 export function setThemeColorsAndPosition(percent, switcherToggler, main, secondary) {
     disableTransition();
-    setRootProperty('--black', main);
-    setRootProperty('--white', secondary);
+    setRootProperty(BLACK_ROOT, main);
+    setRootProperty(WHITE_ROOT, secondary);
     switcherToggler.style.left = percent;
     setTimeout(enableTransition, 0);
 }

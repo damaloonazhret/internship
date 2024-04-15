@@ -9,13 +9,13 @@
     --transition-all: 0.4s all ease-in;
 }
 
-body::-webkit-scrollbar {
-    width: 5px;
-}
-
 ::selection {
     color: var(--white);
     background: var(--green);
+}
+
+body::-webkit-scrollbar {
+    width: 5px;
 }
 
 body::-webkit-scrollbar-thumb {
@@ -42,7 +42,8 @@ label {
 }
 
 #resetText,
-#resetBG {
+#resetBG,
+#submitURL{
     width: 60px;
     height: 20px;
     cursor: pointer;
@@ -67,7 +68,7 @@ label {
     color: var(--black);
 }
 
-.header {
+.header form {
     grid-column: 2 / 3;
     display: flex;
     justify-content: space-between;
@@ -75,11 +76,15 @@ label {
     font-size: 2rem;
     border-bottom: 1px solid #000;
     padding: 0 20px;
+    gap: 10px;
 }
-
 
 #url {
     font-size: 1rem;
+    width: 100%;
+    background-color: transparent;
+    color: var(--white);
+    border: 2px solid var(--white);
 }
 
 .aside {
@@ -158,15 +163,6 @@ a.white {
     height: 100%;
 }
 
-input[type='checkbox'] {
-    opacity: 0;
-    display: none;
-    visibility: hidden;
-    position: absolute;
-    top: 0;
-    left: 0;
-}
-
 .switcher-label {
     cursor: pointer;
     width: 70px;
@@ -208,76 +204,4 @@ input[type='checkbox'] {
     justify-content: center;
     margin-top: auto;
     padding-bottom: 20px;
-}
-
-@media screen and (width <= 600px) {
-
-    .header {
-        flex-wrap: wrap;
-        justify-content: center;
-        padding: 0;
-        /*flex-grow: 1;*/
-    }
-
-    #url {
-        max-width: 90vw;
-        /*min-height: 100%;*/
-        display: inline-block;
-        overflow: auto; /* добавьте это правило */
-        white-space: nowrap; /* чтобы текст не переносился */
-        text-overflow: fade; /* добавить многоточие в конце текста */
-    }
-
-    .body {
-        background-color: var(--black);
-        color: var(--white);
-        font-weight: 800;
-        transition: var(--transition-all);
-        display: flex;
-        flex-direction: column;
-        gap: 30px;
-    }
-
-    .aside {
-        gap: 10px;
-        padding: 0;
-    }
-
-    .nav {
-        flex-direction: row;
-    }
-
-
-    .nav a {
-        justify-content: center;
-    }
-
-    .nav-arrows {
-        position: fixed;
-        bottom: 15px;
-        width: 100vw;
-        gap: 120px;
-    }
-
-    #back {
-        display: flex;
-        padding-left: 20px;
-    }
-
-    #forward {
-        display: flex;
-        justify-content: flex-end;
-        padding-right: 20px;
-    }
-
-    .theme-switcher {
-        padding: 0;
-        position: fixed;
-        bottom: 10px;
-        right: calc(50vw - 50px);
-    }
-
-    .main-content article {
-        gap: 40px;
-    }
 }
