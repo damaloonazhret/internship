@@ -9,6 +9,7 @@ import {handleHistoryNavigation} from "./helpers/handleHistoryNavigation.js";
 import {setColors} from "./helpers/setColors.js";
 import {setSessionColor} from "./helpers/setSessionColor.js";
 import {initialTheme} from "./helpers/initialTheme.js";
+import {resetStorages} from "./helpers/resetStorages.js";
 
 const contents = document.querySelectorAll('.nav a');
 const root = document.querySelector('#root');
@@ -62,6 +63,7 @@ export let themeUser = localStorage.getItem('theme');
 
 handleHistoryNavigation()
 initialTheme();
+resetStorages();
 
 switcherLabel.addEventListener('click', themeSwitcher)
 
@@ -109,7 +111,16 @@ function setUrl() {
 
 form.addEventListener('submit', (e) => {
     e.preventDefault();
-    window.location.href = urlInfo.value.substring(5);
+    const url = window.location.href;
+    const numberOfEntries = history.length;
+    const hash = urlInfo.value.split('#')[1];
+    if (url.toLowerCase() !== urlInfo.value.substring(5).toLowerCase()) {
+        window.location.href = urlInfo.value.substring(5);
+    }
+    if (hash && (numberOfEntries > 1)) {
+        const page = pages[hash] || null;
+        history.replaceState(page, hash, '#' + hash);
+    }
 })
 
 function drawPage(page) {
