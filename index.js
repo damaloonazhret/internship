@@ -1,20 +1,246 @@
-import {rootColors} from "./helpers/rootColors.js";
-import {setLocalTheme} from "./helpers/setLocalTheme.js";
-import {PageCreator} from "./helpers/PageCreator.js";
-import {extractHashFromLink} from "./helpers/extractHashFromLink.js";
-import {getCookie, setCookie} from "./helpers/cookies.js";
-import {handleResetClick} from "./helpers/handleResetClick.js";
-import {handleInputChange} from "./helpers/handleInputChange.js";
-import {handleHistoryNavigation} from "./helpers/handleHistoryNavigation.js";
-import {setColors} from "./helpers/setColors.js";
-import {setSessionColor} from "./helpers/setSessionColor.js";
-import {initialTheme} from "./helpers/initialTheme.js";
-import {resetStorages} from "./helpers/resetStorages.js";
+function convertToFullHexColor(shortHexColor) {
+    if (/^#[0-9A-F]{3}$/i.test(shortHexColor)) {
+        const r = shortHexColor[1];
+        const g = shortHexColor[2];
+        const b = shortHexColor[3];
+        return `#${r}${r}${g}${g}${b}${b}`;
+    }
+    return shortHexColor;
+}
+
+function getCookie(name) {
+    const cookies = document.cookie.split(';');
+    for (let cookie of cookies) {
+        const [cookieName, cookieValue] = cookie.trim().split('=');
+        if (cookieName === name) {
+            return cookieValue;
+        }
+    }
+    return null;
+}
+
+function setCookie(name, value, days) {
+    console.log(name, value, days)
+    const expires = new Date();
+    expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
+    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
+}
+
+function resetCookie() {
+    const cookies = document.cookie.split("; ");
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i];
+        const eqPos = cookie.indexOf("=");
+        const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+        document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+    }
+}
+
+function extractHashFromLink(link) {
+    return link.href.split('#')[1];
+}
+
+function handleHistoryNavigation() {
+    const back = document.querySelector('#back');
+    const forward = document.querySelector('#forward');
+    back.addEventListener('click', () => {
+        history.back();
+    });
+
+    forward.addEventListener('click', () => {
+        history.forward();
+    });
+}
+
+function handleInputChange(e, property) {
+    if (property === TEXT) {
+        setRootProperty(WHITE_ROOT, e.target.value)
+        const invertedColor = invertHexColor(e.target.value);
+        setRootProperty(GREEN_ROOT, invertedColor)
+        sessionStorage.setItem(WHITE_ROOT, e.target.value);
+    }
+    if (property === BG) {
+        setRootProperty(BLACK_ROOT, e.target.value)
+        sessionStorage.setItem(BLACK_ROOT, e.target.value);
+    }
+}
+
+function setThemeProperty(property, value) {
+    setRootProperty(property, value)
+    const [white, black] = rootColors();
+    setColors(black, white);
+}
+
+function handleResetClick(e, property) {
+    e.preventDefault();
+    if (themeUser === DARK && property === TEXT) {
+        setThemeProperty(WHITE_ROOT, DEFAULT_COLOR_WHITE)
+        setThemeProperty(GREEN_ROOT, DEFAULT_COLOR_GREEN)
+        sessionStorage.removeItem(WHITE_ROOT);
+    }
+    if (themeUser === DARK && property === BG) {
+        setThemeProperty(BLACK_ROOT, DEFAULT_COLOR_BLACK)
+        sessionStorage.removeItem(BLACK_ROOT);
+    }
+    if (themeUser === WHITE && property === TEXT) {
+        setThemeProperty(WHITE_ROOT, DEFAULT_COLOR_BLACK)
+        setThemeProperty(GREEN_ROOT, DEFAULT_COLOR_GREEN)
+        sessionStorage.removeItem(WHITE_ROOT);
+    }
+    if (themeUser === WHITE && property === BG) {
+        setThemeProperty(BLACK_ROOT, DEFAULT_COLOR_WHITE)
+        sessionStorage.removeItem(BLACK_ROOT);
+    }
+}
+
+
+function resetStorages() {
+    const resetStorage = document.querySelector('#resetStorage');
+    resetStorage.addEventListener('click', () => {
+        const answer = prompt('Are you sure? A positive answer will reset all local values', 'Yes!');
+        alert(`You answered ${answer}`)
+        const exactAnswer = confirm('You definitely want to reset all values to defaults?');
+        if (exactAnswer) {
+            localStorage.clear();
+            sessionStorage.clear();
+            resetCookie();
+            window.location.reload();
+            alert('All local values were reset');
+        } else {
+            alert('Reset values canceled');
+        }
+    })
+}
+
+class PageCreator {
+    constructor({title, about, input, inputTextColorInfo, inputBGColorInfo}) {
+        this.title = title;
+        this.about = about;
+        this.input = input;
+        this.inputTextColorInfo = inputTextColorInfo;
+        this.inputBGColorInfo = inputBGColorInfo;
+    }
+
+    create() {
+        const article = document.createElement('article');
+        switch (this.input) {
+            case 'color':
+                article.innerHTML = `<h2>${this.title}</h2>
+                                 <div class="setting">
+                                     <label for="text">
+                                     ${this.inputTextColorInfo}
+                                     </label>
+                                     <input id="text" type='color' name="text-color">
+                                     <button id="resetText" type="button">Reset</button>
+                                 </div>
+                                 <div class="setting">
+                                     <label for="BG">
+                                     ${this.inputBGColorInfo}
+                                     </label>
+                                     <input id="BG" type='color' name="background-color">
+                                     <button id="resetBG" type="button">Reset</button>
+                                 </div>
+                                 <p>${this.about}</p>`
+                break
+            default:
+                article.innerHTML = `<h2>${this.title}</h2><p>${this.about}</p>`;
+        }
+        return article;
+    }
+
+    render() {
+        return this.create()
+    }
+}
+
+function invertHexColor(hex) {
+    hex = hex.replace(/^#/, '');
+
+    let r = parseInt(hex.substring(0, 2), 16);
+    let g = parseInt(hex.substring(2, 4), 16);
+    let b = parseInt(hex.substring(4, 6), 16);
+
+    r = 255 - r;
+    g = 255 - g;
+    b = 255 - b;
+
+    r = r.toString(16).padStart(2, '0');
+    g = g.toString(16).padStart(2, '0');
+    b = b.toString(16).padStart(2, '0');
+
+    return `#${r}${g}${b}`;
+}
+
+
+function setRootProperty(color, session) {
+    document.documentElement.style.setProperty(color, session)
+}
+
+function setSessionColor(primary, secondary) {
+    setRootProperty(BLACK_ROOT, primary);
+    setRootProperty(WHITE_ROOT, secondary);
+}
+
+function disableTransition() {
+    setRootProperty(TRANSITION_ALL, 'none');
+}
+
+function enableTransition() {
+    setRootProperty(TRANSITION_ALL, DEFAULT_TRANSITION);
+}
+
+function setThemeColorsAndPosition(percent, switcherToggler, main, secondary) {
+    disableTransition();
+    setRootProperty(BLACK_ROOT, main);
+    setRootProperty(WHITE_ROOT, secondary);
+    switcherToggler.style.left = percent;
+    setTimeout(enableTransition, 0);
+}
+
+function setColors(primary = DEFAULT_COLOR_BLACK, secondary = DEFAULT_COLOR_WHITE) {
+    const bg = document.querySelector('#BG');
+    const text = document.querySelector('#text');
+    bg ? bg.value = convertToFullHexColor(primary) : null;
+    text ? text.value = convertToFullHexColor(secondary) : null;
+}
+
+function setLocalTheme(theme) {
+    const [white, black] = rootColors();
+    localStorage.setItem('theme', theme);
+    sessionStorage.setItem(WHITE_ROOT, convertToFullHexColor(white));
+    sessionStorage.setItem(BLACK_ROOT, convertToFullHexColor(black));
+}
+
+function rootColors() {
+    const rootStyles = getComputedStyle(document.documentElement);
+    const white = rootStyles.getPropertyValue(WHITE_ROOT);
+    const black = rootStyles.getPropertyValue(BLACK_ROOT);
+    return [white, black];
+}
+
+function initialTheme() {
+    const sessionTextColor = sessionStorage.getItem(WHITE_ROOT);
+    const sessionBGColor = sessionStorage.getItem(BLACK_ROOT);
+    if (themeUser === WHITE) {
+        switcherLabel.classList.add(WHITE);
+        if (sessionBGColor) setRootProperty(WHITE_ROOT, sessionBGColor);
+        if (sessionTextColor) setRootProperty(BLACK_ROOT, sessionTextColor);
+        const [white, black] = rootColors();
+        setThemeColorsAndPosition(RIGHT_SWITCH, switcherToggler, white, black);
+    } else {
+        localStorage.setItem('theme', DARK)
+        if (sessionTextColor) setRootProperty(WHITE_ROOT, sessionTextColor);
+        if (sessionBGColor) setRootProperty(BLACK_ROOT, sessionBGColor);
+        const [white, black] = rootColors();
+        setThemeColorsAndPosition(LEFT_SWITCH, switcherToggler, black, white);
+    }
+}
+
 
 const contents = document.querySelectorAll('.nav a');
 const root = document.querySelector('#root');
-export const switcherLabel = document.querySelector('.switcher-label');
-export const switcherToggler = document.querySelector('.switcher-toggler');
+const switcherLabel = document.querySelector('.switcher-label');
+const switcherToggler = document.querySelector('.switcher-toggler');
 const pages = {
     main: {
         title: 'Main Page',
@@ -44,22 +270,22 @@ const pages = {
         about: 'not found'
     }
 }
-export const LEFT_SWITCH = '9%';
-export const RIGHT_SWITCH = '68%';
-export const WHITE = 'white';
-export const DARK = 'dark';
-export const BG = 'bg';
-export const TEXT = 'text';
-export const ACTIVE = 'active';
-export const DEFAULT_COLOR_GREEN = '#27ae60';
-export const DEFAULT_COLOR_WHITE = '#ffffff';
-export const DEFAULT_COLOR_BLACK = '#1a1a1a';
-export const BLACK_ROOT = '--black';
-export const WHITE_ROOT = '--white';
-export const GREEN_ROOT = '--green';
-export const DEFAULT_TRANSITION = '0.4s all ease-in';
-export const TRANSITION_ALL = '--transition-all';
-export let themeUser = localStorage.getItem('theme');
+const LEFT_SWITCH = '9%';
+const RIGHT_SWITCH = '68%';
+const WHITE = 'white';
+const DARK = 'dark';
+const BG = 'bg';
+const TEXT = 'text';
+const ACTIVE = 'active';
+const DEFAULT_COLOR_GREEN = '#27ae60';
+const DEFAULT_COLOR_WHITE = '#ffffff';
+const DEFAULT_COLOR_BLACK = '#1a1a1a';
+const BLACK_ROOT = '--black';
+const WHITE_ROOT = '--white';
+const GREEN_ROOT = '--green';
+const DEFAULT_TRANSITION = '0.4s all ease-in';
+const TRANSITION_ALL = '--transition-all';
+let themeUser = localStorage.getItem('theme');
 
 handleHistoryNavigation()
 initialTheme();
@@ -152,7 +378,7 @@ window.addEventListener('popstate', () => {
     }
 });
 
-export function customBG() {
+function customBG() {
     const bg = document.querySelector('#BG');
     const text = document.querySelector('#text');
     const resetText = document.querySelector('#resetText');
@@ -183,6 +409,7 @@ function handleNavigation(e) {
 contents.forEach((content) => content.addEventListener('click', handleNavigation));
 
 function closing(hashName) {
+    console.log('asd')
     return () => setCookie('hash', hashName, 1);
 }
 
