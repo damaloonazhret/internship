@@ -86,7 +86,7 @@ class PageCreator {
         return `<div class="setting">
                     <label for="${id}">${label}</label>
                     <input id="${id}" type='color' name="${name}">
-                    <button id="reset${id}" type="button">Reset</button>
+                    <button id="reset-${id}" type="button">Reset</button>
                 </div>`;
     }
 
@@ -335,8 +335,8 @@ function handleNavigation(e) {
 function customBG() {
     const bg = document.querySelector('#BG');
     const text = document.querySelector('#text');
-    const resetText = document.querySelector('#resetText');
-    const resetBG = document.querySelector('#resetBG');
+    const resetText = document.querySelector('#reset-text');
+    const resetBG = document.querySelector('#reset-BG');
     const [white, black] = rootColors();
 
     setColors(black, white);
@@ -417,8 +417,8 @@ function popChange() {
 }
 
 switcherLabel.addEventListener('click', themeSwitcher)
-form.addEventListener('submit', (e) => submitChange)
-window.addEventListener('popstate', () => popChange);
+form.addEventListener('submit', submitChange)
+window.addEventListener('popstate', popChange);
 contents.forEach((content) => {
     content.addEventListener('click', handleNavigation)
 });
