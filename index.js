@@ -100,6 +100,12 @@ class PageCreator {
     }
 }
 
+;(() => {
+    const hash = getCookie('hash') || 'main';
+    selectPage(hash);
+    hash === 'settings' && customBG();
+})();
+
 function initialTheme() {
     const sessionTextColor = sessionStorage.getItem(WHITE_ROOT);
     const sessionBGColor = sessionStorage.getItem(BLACK_ROOT);
@@ -416,9 +422,3 @@ window.addEventListener('popstate', () => popChange);
 contents.forEach((content) => {
     content.addEventListener('click', handleNavigation)
 });
-
-;(() => {
-    const hash = getCookie('hash') || 'main';
-    selectPage(hash);
-    hash === 'settings' && customBG();
-})();
