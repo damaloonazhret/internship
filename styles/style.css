@@ -41,8 +41,8 @@ label {
     justify-content: space-around;
 }
 
-#resetText,
-#resetBG,
+#reset-text,
+#reset-BG,
 #submitURL{
     width: 60px;
     height: 20px;
