@@ -1,6 +1,76 @@
+class SkeletCreator {
+    constructor(className, infoHead) {
+        this.className = className;
+        this.infoHead = infoHead;
+    }
+
+    createHeader() {
+        const header = document.createElement("header");
+        const head = this.infoHead.charAt(0).toUpperCase() + this.infoHead.substring(1);
+        header.classList.add('header');
+        if (this.className) {
+            header.classList.add(this.className);
+        }
+
+        const form = document.createElement('form');
+        const p = document.createElement('p');
+        p.id = 'resetStorage';
+        p.textContent = `${head}`;
+        form.appendChild(p);
+
+        const div = document.createElement('div');
+        div.classList.add('search');
+        form.appendChild(div);
+
+        const input = document.createElement('input');
+        input.id = 'url';
+        input.setAttribute('list', 'names');
+        div.appendChild(input);
+
+        const datalist = document.createElement('datalist');
+        datalist.id = 'names';
+        div.appendChild(datalist);
+
+        const button = document.createElement('button');
+        button.id = 'submitURL';
+        button.type = 'submit';
+        button.textContent = 'Search';
+        div.appendChild(button);
+
+        const span = document.createElement('span');
+        span.classList.add('error');
+        div.appendChild(span);
+
+        header.appendChild(form);
+
+        return header;
+    }
+
+    createMain() {
+        const main = document.createElement('main');
+        main.classList.add('main-content');
+        if (this.className) {
+            main.classList.add(this.className);
+        }
+        main.id = 'main';
+        return main;
+    }
+}
+
+const hash = getCookie('hash');
+let header;
+if (hash === 'settings') {
+    header = new SkeletCreator('hidden', 'Settings Page');
+} else {
+    header = new SkeletCreator(null, hash + ' Request');
+}
+const body = document.querySelector("body");
+body.prepend(header.createHeader());
+body.append(header.createMain());
+
 let themeUser = localStorage.getItem('theme');
 const BG = 'bg';
-const root = document.querySelector('#root');
+const main = document.querySelector('#main');
 const DARK = 'dark';
 const TEXT = 'text';
 const form = document.querySelector('form');
@@ -47,6 +117,7 @@ const pages = {
 handleHistoryNavigation()
 initialTheme();
 resetStorages();
+setupOptions();
 
 class PageCreator {
     constructor({title, about, input, inputTextColorInfo, inputBGColorInfo, userInfo, userRepo}) {
@@ -59,57 +130,63 @@ class PageCreator {
         this.userRepo = userRepo;
     }
 
-
     create() {
         const article = document.createElement('article');
         switch (this.title) {
             case 'Settings Page':
-                article.innerHTML = `<h2>${this.title}</h2>
-                                     <div class="setting">
-                                         <label for="text">
-                                         ${this.inputTextColorInfo}
-                                         </label>
-                                         <input id="text" type='color' name="text-color">
-                                         <button id="resetText" type="button">Reset</button>
-                                     </div>
-                                     <div class="setting">
-                                         <label for="BG">
-                                         ${this.inputBGColorInfo}
-                                         </label>
-                                         <input id="BG" type='color' name="background-color">
-                                         <button id="resetBG" type="button">Reset</button>
-                                     </div>
-                                     <p>${this.about}</p>`
+                article.innerHTML = this.createColorArticle();
                 break
-
             case 'Async request Page':
+            case 'Promise request Page':
                 const userInfo = this.userInfo;
                 const userRepo = this.userRepo;
                 if (userInfo && userRepo) {
-                    const userInfoHTML = `
-                                     <div class="user-info">
-                                         <span>${userInfo.name}</span>
-                                         <a href="${userInfo.html_url}" target="_blank">
-                                             <img class="avatar" src="${userInfo.avatar_url}" alt="avatar">
-                                         </a>
-                                         <span>${userInfo.login}</span>
-                                     </div>`;
-                    const reposHTML = userRepo.map(el => `
-                                     <div class="repos">
-                                         <span>${el.full_name}</span>
-                                         <span>${el.language}</span>
-                                         <span>Visibility: ${el.visibility}</span>
-                                         <a href="${el.html_url}" target="_blank">Link to repo</a>
-                                         <span>${el.created_at}</span>
-                                     </div>`).join('');
+                    const userInfoHTML = this.createUserInfoHTML(userInfo);
+                    const reposHTML = this.createReposHTML(userRepo);
                     article.innerHTML = userInfoHTML + reposHTML;
                 }
                 break
-
             default:
                 break
         }
         return article;
+    }
+
+    createReposHTML(userRepo) {
+        return userRepo.map(el =>
+            `<div class="repos">
+                    <span>${el.full_name}</span>
+                    <span>${el.language}</span>
+                    <span>Visibility: ${el.visibility}</span>
+                    <a href="${el.html_url}" target="_blank">Link to repo</a>
+                    <span>${el.created_at}</span>
+                </div>`)
+            .join('');
+    }
+
+    createUserInfoHTML(userInfo) {
+        return `<div class="user-info">
+                    <span>${userInfo.name}</span>
+                    <a href="${userInfo.html_url}" target="_blank">
+                        <img class="avatar" src="${userInfo.avatar_url}" alt="avatar">
+                    </a>
+                    <span>${userInfo.login}</span>
+                </div>`
+    }
+
+    createColorArticle() {
+        return `<h2>${this.title}</h2>
+                ${this.createColorSetting('text', this.inputTextColorInfo, 'text-color')}
+                ${this.createColorSetting('BG', this.inputBGColorInfo, 'background-color')}
+                <p>${this.about}</p>`;
+    }
+
+    createColorSetting(id, label, name) {
+        return `<div class="setting">
+                    <label for="${id}">${label}</label>
+                    <input id="${id}" type='color' name="${name}">
+                    <button id="reset-${id}" type="button">Reset</button>
+                </div>`;
     }
 
     render() {
@@ -120,7 +197,13 @@ class PageCreator {
 ;(() => {
     const hash = getCookie('hash') || 'main';
     selectPage(hash);
-    hash === 'settings' && customBG();
+    if (hash === 'settings') {
+        // setTimeout(() => disableTransition(), 0)
+        const settingsLink = document.querySelector('.settings.active');
+        customBG();
+        if (settingsLink) hiddenHead('add')
+        // setTimeout(() => enableTransition(), 10)
+    }
 })();
 
 function initialTheme() {
@@ -168,11 +251,11 @@ function updateTheme(percent, param, themeColor) {
 }
 
 function setThemeColorsAndPosition(percent, switcherToggler, main, secondary) {
-    disableTransition();
+    // setTimeout(() => disableTransition(), 0)
     setRootProperty(BLACK_ROOT, main);
     setRootProperty(WHITE_ROOT, secondary);
     switcherToggler.style.left = percent;
-    setTimeout(enableTransition, 0);
+    // setTimeout(() => enableTransition(), 10)
 }
 
 function setThemeProperty(property, value) {
@@ -296,7 +379,6 @@ function resetStorages() {
 function hiddenHead(param) {
     const header = document.querySelector('.header');
     const mainContent = document.querySelector('.main-content');
-    console.log(header)
     header.classList[param]('hidden')
     mainContent.classList[param]('hidden')
 }
@@ -395,13 +477,14 @@ function selectPage(hash) {
     setUrl();
     const closingHandler = closing(hash);
     window.addEventListener('unload', closingHandler);
+    headInfoChange();
 }
 
 function drawPage(page) {
     const pageInstance = new PageCreator(page);
     const pageRender = pageInstance.render();
-    root.innerText = '';
-    root.append(pageRender);
+    main.innerText = '';
+    main.append(pageRender);
 }
 
 function closing(hashName) {
@@ -430,30 +513,7 @@ function isValidGitHubUsername(username) {
     return githubUsernameRegex.test(username);
 }
 
-async function asyncRequest(username, span) {
-    try {
-        const responseUser = await fetch(`https://api.github.com/users/${username}`);
-        const responseRepos = await fetch(`https://api.github.com/users/${username}/repos`);
-        const response = {};
-
-        if (!responseRepos && !responseUser) {
-            span.innerText = 'Failed to fetch repositories'
-        }
-        const userInfo = await responseUser.json();
-        const userRepo = await responseRepos.json();
-
-        response.userInfo = userInfo;
-        response.userRepo = userRepo;
-
-        return response;
-    } catch (error) {
-        span.innerHTML = `Error fetching repositories ${error}`;
-        throw new Error(`Error fetching repositories ${error}`);
-    }
-
-}
-
-function slicedData(userInfo, userRepo) {
+function slicedData({userInfo, userRepo}) {
     const userInfoMy = {
         name: userInfo['name'],
         html_url: userInfo['html_url'],
@@ -477,39 +537,156 @@ function setOption(username) {
     datalist.appendChild(option);
 }
 
+function setupUserData(activePage, bio, repo) {
+    const userData = {
+        userInfo: bio,
+        userRepo: repo,
+        title: pages[activePage].title
+    };
+    pages[activePage] = userData;
+    return userData;
+}
+
+function setErrorSpan(message) {
+    const errorSpan = document.querySelector('.error');
+    errorSpan.textContent = message
+}
+
+function setupOptions() {
+    for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.substring(0, 4) === 'user') {
+            setOption(key.substring(5))
+        }
+    }
+}
+
+function promiseRequest(username) {
+    const userInfoPromise = new Promise((resolve, reject) => {
+        let xhrUserInfo = new XMLHttpRequest();
+        xhrUserInfo.open('GET', `https://api.github.com/users/${username}`);
+        xhrUserInfo.onload = function () {
+            if (!(xhrUserInfo.status >= 200 && xhrUserInfo.status <= 299)) {
+                reject(new Error(`User: error ${xhrUserInfo.status}`));
+            } else {
+                resolve(xhrUserInfo.response);
+            }
+        };
+        xhrUserInfo.onerror = function () {
+            console.log(`Connection error`);
+        };
+        xhrUserInfo.send();
+    });
+
+    const userRepoPromise = new Promise((resolve, reject) => {
+        let xhrUserRepo = new XMLHttpRequest();
+        xhrUserRepo.open('GET', `https://api.github.com/users/${username}/repos`);
+        xhrUserRepo.onload = function () {
+            if (!(xhrUserRepo.status >= 200 && xhrUserRepo.status <= 299)) {
+                reject(new Error(`User: error ${xhrUserRepo.status}`));
+            } else {
+                resolve(xhrUserRepo.response);
+            }
+        };
+        xhrUserRepo.onerror = function () {
+            console.log(`Connection error`);
+        };
+        xhrUserRepo.send();
+    })
+
+    return Promise.all([userInfoPromise, userRepoPromise])
+        .then(([userInfo, userRepo]) => {
+            return {userInfo, userRepo}
+        })
+}
+
+async function asyncRequest(username) {
+    try {
+        const requestUser = await fetch(`https://api.github.com/users/${username}`);
+        const requestRepos = await fetch(`https://api.github.com/users/${username}/repos`);
+
+        if (!requestRepos.ok || !requestUser.ok) {
+            throw new Error(`User: error ${requestUser.status}`);
+        }
+        const userInfo = await requestUser.json();
+        const userRepo = await requestRepos.json();
+
+        return {userInfo, userRepo};
+    } catch (error) {
+        throw new Error(`Error fetching data for user ${username} ${error.message}`);
+    }
+}
+
+function promiseRequestUserInfo(username, activePage) {
+    promiseRequest(username)
+        .then(response => {
+            const newUserData = JSON.parse(response['userInfo']);
+            const newRepoData = JSON.parse(response['userRepo']);
+            const {userInfoMy, userRepoMy} = slicedData({userInfo: newUserData, userRepo: newRepoData});
+            const userData = setupUserData(activePage, userInfoMy, userRepoMy)
+            localStorage.setItem(`user:${username}`, JSON.stringify(userData));
+            setErrorSpan('')
+            setOption(username)
+            drawPage(userData)
+        })
+        .catch(error => {
+            setErrorSpan(error)
+        });
+}
+
+async function asyncRequestUserInfo(username, activePage) {
+    try {
+        const newUserData = await asyncRequest(username);
+        const {userInfoMy, userRepoMy} = slicedData(newUserData);
+        const userData = setupUserData(activePage, userInfoMy, userRepoMy)
+        localStorage.setItem(`user:${username}`, JSON.stringify(userData));
+        drawPage(userData);
+        setErrorSpan('')
+        setOption(username)
+    } catch (error) {
+        setErrorSpan(error)
+    }
+}
+
 async function submitChange(e) {
     e.preventDefault();
-    const userData = {};
     const username = urlInfo.value.trim();
-    const errorSpan = document.querySelector('.error');
     const localUsername = localStorage.getItem(`user:${username}`);
-    console.log(username)
-    if (username === '') {
-        errorSpan.innerHTML = 'Empty string';
-    } else if (!isValidGitHubUsername(username)) {
-        errorSpan.innerText = invalidName;
-    } else if (localUsername) {
-        const data = JSON.parse(localUsername);
-        userData.userRepo = data['userRepo']
-        userData.userInfo = data['userInfo']
-        errorSpan.innerText = '';
-    } else {
-        const {userInfo, userRepo} = await asyncRequest(username, errorSpan);
-        const {userInfoMy, userRepoMy} = slicedData(userInfo, userRepo);
-        userData.userInfo = userInfoMy;
-        userData.userRepo = userRepoMy;
-        localStorage.setItem(`user:${username}`, JSON.stringify(userData))
-        setOption(username)
-        errorSpan.innerText = '';
-    }
     const activePage = document.querySelector('.nav a.active').innerText.toLowerCase();
-    userData.title = pages[activePage].title;
-    drawPage(userData)
+
+    if (username === '') {
+        setErrorSpan('Empty string');
+    } else if (!isValidGitHubUsername(username)) {
+        setErrorSpan(invalidName);
+    } else if (localUsername) {
+        const {userInfo, userRepo} = JSON.parse(localUsername);
+        const userData = setupUserData(activePage, userInfo, userRepo);
+        setErrorSpan('');
+        drawPage(userData)
+    } else {
+        switch (activePage) {
+            case 'promise':
+                promiseRequestUserInfo(username, activePage)
+                break
+            case 'async':
+                await asyncRequestUserInfo(username, activePage)
+                break
+            default:
+                break
+        }
+    }
+}
+
+function headInfoChange() {
+    const headInfo = document.querySelector('#resetStorage');
+    const activeLink = document.querySelector('.nav .active');
+    headInfo.innerText = activeLink.textContent + ' Request';
 }
 
 function popChange() {
     const hash = window.location.hash.slice(1);
     const set = document.querySelector('.settings');
+    headInfoChange();
     selectPage(hash);
     if (set.classList.contains(ACTIVE)) {
         hiddenHead('add')
