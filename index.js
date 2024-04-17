@@ -1,92 +1,18 @@
-class SkeletCreator {
-    constructor(className, infoHead) {
-        this.className = className;
-        this.infoHead = infoHead;
-    }
-
-    createHeader() {
-        const header = document.createElement("header");
-        const head = this.infoHead.charAt(0).toUpperCase() + this.infoHead.substring(1);
-        header.classList.add('header');
-        if (this.className) {
-            header.classList.add(this.className);
-        }
-
-        const form = document.createElement('form');
-        const p = document.createElement('p');
-        p.id = 'resetStorage';
-        p.textContent = `${head}`;
-        form.appendChild(p);
-
-        const div = document.createElement('div');
-        div.classList.add('search');
-        form.appendChild(div);
-
-        const input = document.createElement('input');
-        input.id = 'url';
-        input.setAttribute('list', 'names');
-        div.appendChild(input);
-
-        const datalist = document.createElement('datalist');
-        datalist.id = 'names';
-        div.appendChild(datalist);
-
-        const button = document.createElement('button');
-        button.id = 'submitURL';
-        button.type = 'submit';
-        button.textContent = 'Search';
-        div.appendChild(button);
-
-        const span = document.createElement('span');
-        span.classList.add('error');
-        div.appendChild(span);
-
-        header.appendChild(form);
-
-        return header;
-    }
-
-    createMain() {
-        const main = document.createElement('main');
-        main.classList.add('main-content');
-        if (this.className) {
-            main.classList.add(this.className);
-        }
-        main.id = 'main';
-        return main;
-    }
-}
-
-const hash = getCookie('hash');
-let header;
-if (hash === 'settings') {
-    header = new SkeletCreator('hidden', 'Settings Page');
-} else {
-    header = new SkeletCreator(null, hash + ' Request');
-}
-const body = document.querySelector("body");
-body.prepend(header.createHeader());
-body.append(header.createMain());
-
 let themeUser = localStorage.getItem('theme');
+let layout;
+const hash = getCookie('hash');
 const BG = 'bg';
-const main = document.querySelector('#main');
 const DARK = 'dark';
 const TEXT = 'text';
-const form = document.querySelector('form');
+const repos = '/repos';
 const WHITE = 'white';
 const ACTIVE = 'active';
-const urlInfo = document.querySelector('#url');
-const contents = document.querySelectorAll('.nav a');
+const userUrl = 'https://api.github.com/users/';
 const BLACK_ROOT = '--black';
 const WHITE_ROOT = '--white';
 const GREEN_ROOT = '--green';
 const LEFT_SWITCH = '9%';
 const RIGHT_SWITCH = '68%';
-const switcherLabel = document.querySelector('.switcher-label');
-const TRANSITION_ALL = '--transition-all';
-const switcherToggler = document.querySelector('.switcher-toggler');
-const DEFAULT_TRANSITION = '0.4s all ease-in';
 const DEFAULT_COLOR_GREEN = '#27ae60';
 const DEFAULT_COLOR_WHITE = '#ffffff';
 const DEFAULT_COLOR_BLACK = '#1a1a1a';
@@ -114,9 +40,77 @@ const pages = {
     }
 }
 
+class PageLayoutBuilder {
+    constructor(className, infoHead) {
+        this.className = className;
+        this.infoHead = infoHead;
+    }
+
+    createHeader() {
+        const header = document.createElement("header");
+        const head = this.infoHead.charAt(0).toUpperCase() + this.infoHead.substring(1);
+        header.classList.add('header');
+        if (this.className) {
+            header.classList.add(this.className);
+        }
+
+        const form = document.createElement('form');
+        const p = document.createElement('p');
+        p.id = 'head-info';
+        p.textContent = `${head}`;
+        form.appendChild(p);
+
+        const div = document.createElement('div');
+        div.classList.add('search');
+        form.appendChild(div);
+
+        const input = document.createElement('input');
+        input.id = 'url';
+        input.setAttribute('list', 'names');
+        div.appendChild(input);
+
+        const datalist = document.createElement('datalist');
+        datalist.id = 'names';
+        div.appendChild(datalist);
+
+        const span = document.createElement('span');
+        span.classList.add('error');
+        div.appendChild(span);
+
+        header.appendChild(form);
+
+        return header;
+    }
+
+    createMain() {
+        const main = document.createElement('main');
+        main.classList.add('main-content');
+        if (this.className) {
+            main.classList.add(this.className);
+        }
+        main.id = 'main';
+        return main;
+    }
+}
+
+if (hash === 'settings') {
+    layout = new PageLayoutBuilder('hidden', 'Settings Page');
+} else {
+    layout = new PageLayoutBuilder(null, hash + ' Request');
+}
+const body = document.querySelector("body");
+body.prepend(layout.createHeader());
+body.append(layout.createMain());
+
+const main = document.querySelector('#main');
+const form = document.querySelector('form');
+const urlInfo = document.querySelector('#url');
+const contents = document.querySelectorAll('.nav a');
+const switcherLabel = document.querySelector('.switcher-label');
+const switcherToggler = document.querySelector('.switcher-toggler');
+
 handleHistoryNavigation()
 initialTheme();
-resetStorages();
 setupOptions();
 
 class PageCreator {
@@ -166,11 +160,11 @@ class PageCreator {
 
     createUserInfoHTML(userInfo) {
         return `<div class="user-info">
-                    <span>${userInfo.name}</span>
+                    <span>Name:${userInfo.name}</span>
                     <a href="${userInfo.html_url}" target="_blank">
                         <img class="avatar" src="${userInfo.avatar_url}" alt="avatar">
                     </a>
-                    <span>${userInfo.login}</span>
+                    <span>Login:${userInfo.login}</span>
                 </div>`
     }
 
@@ -197,13 +191,7 @@ class PageCreator {
 ;(() => {
     const hash = getCookie('hash') || 'main';
     selectPage(hash);
-    if (hash === 'settings') {
-        // setTimeout(() => disableTransition(), 0)
-        const settingsLink = document.querySelector('.settings.active');
-        customBG();
-        if (settingsLink) hiddenHead('add')
-        // setTimeout(() => enableTransition(), 10)
-    }
+    if (hash === 'settings') customBG();
 })();
 
 function initialTheme() {
@@ -251,11 +239,9 @@ function updateTheme(percent, param, themeColor) {
 }
 
 function setThemeColorsAndPosition(percent, switcherToggler, main, secondary) {
-    // setTimeout(() => disableTransition(), 0)
     setRootProperty(BLACK_ROOT, main);
     setRootProperty(WHITE_ROOT, secondary);
     switcherToggler.style.left = percent;
-    // setTimeout(() => enableTransition(), 10)
 }
 
 function setThemeProperty(property, value) {
@@ -279,7 +265,6 @@ function setColors(primary = DEFAULT_COLOR_BLACK, secondary = DEFAULT_COLOR_WHIT
     if (bg) bg.value = convertToFullHexColor(primary);
     if (text) text.value = convertToFullHexColor(secondary);
 }
-
 
 function rootColors() {
     const rootStyles = getComputedStyle(document.documentElement);
@@ -316,14 +301,6 @@ function convertToFullHexColor(shortHexColor) {
     return shortHexColor;
 }
 
-function disableTransition() {
-    setRootProperty(TRANSITION_ALL, 'none');
-}
-
-function enableTransition() {
-    setRootProperty(TRANSITION_ALL, DEFAULT_TRANSITION);
-}
-
 function extractHashFromLink(link) {
     return link.href.split('#')[1];
 }
@@ -343,37 +320,6 @@ function setCookie(name, value, days) {
     const expires = new Date();
     expires.setTime(expires.getTime() + days * 24 * 60 * 60 * 1000);
     document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
-}
-
-function resetCookie() {
-    const cookies = document.cookie.split(";");
-
-    for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i];
-        const eqPos = cookie.indexOf("=");
-        const name = eqPos > -1 ? cookie.substring(0, eqPos) : cookie;
-        setCookie(name, '', 0)
-    }
-}
-
-function forcedInterrogation() {
-    const answer = prompt('Are you sure? A positive answer will reset all local values', 'Yes!');
-    alert(`You answered ${answer}`)
-    const exactAnswer = confirm('You definitely want to reset all values to defaults?');
-    if (exactAnswer) {
-        localStorage.clear();
-        sessionStorage.clear();
-        resetCookie();
-        window.location.reload();
-        alert('All local values were reset');
-    } else {
-        alert('Reset values canceled');
-    }
-}
-
-function resetStorages() {
-    const resetStorage = document.querySelector('#resetStorage');
-    resetStorage.addEventListener('click', () => forcedInterrogation);
 }
 
 function hiddenHead(param) {
@@ -564,7 +510,7 @@ function setupOptions() {
 function promiseRequest(username) {
     const userInfoPromise = new Promise((resolve, reject) => {
         let xhrUserInfo = new XMLHttpRequest();
-        xhrUserInfo.open('GET', `https://api.github.com/users/${username}`);
+        xhrUserInfo.open('GET', `${userUrl}${username}`);
         xhrUserInfo.onload = function () {
             if (!(xhrUserInfo.status >= 200 && xhrUserInfo.status <= 299)) {
                 reject(new Error(`User: error ${xhrUserInfo.status}`));
@@ -580,7 +526,7 @@ function promiseRequest(username) {
 
     const userRepoPromise = new Promise((resolve, reject) => {
         let xhrUserRepo = new XMLHttpRequest();
-        xhrUserRepo.open('GET', `https://api.github.com/users/${username}/repos`);
+        xhrUserRepo.open('GET', `${userUrl}${username}${repos}`);
         xhrUserRepo.onload = function () {
             if (!(xhrUserRepo.status >= 200 && xhrUserRepo.status <= 299)) {
                 reject(new Error(`User: error ${xhrUserRepo.status}`));
@@ -602,8 +548,8 @@ function promiseRequest(username) {
 
 async function asyncRequest(username) {
     try {
-        const requestUser = await fetch(`https://api.github.com/users/${username}`);
-        const requestRepos = await fetch(`https://api.github.com/users/${username}/repos`);
+        const requestUser = await fetch(`${userUrl}${username}`);
+        const requestRepos = await fetch(`${userUrl}${username}${repos}`);
 
         if (!requestRepos.ok || !requestUser.ok) {
             throw new Error(`User: error ${requestUser.status}`);
@@ -678,7 +624,7 @@ async function submitChange(e) {
 }
 
 function headInfoChange() {
-    const headInfo = document.querySelector('#resetStorage');
+    const headInfo = document.querySelector('#head-info');
     const activeLink = document.querySelector('.nav .active');
     headInfo.innerText = activeLink.textContent + ' Request';
 }

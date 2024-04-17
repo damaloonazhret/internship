@@ -222,21 +222,19 @@ a.white {
 }
 
 .user-info {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
     padding-bottom: 20px;
     padding-top: 20px;
     width: 100%;
+    row-gap: 10px;
 }
 
-.user-info span:first-child {
-    align-self: center;
-    justify-self: start;
-}
-
-.user-info span:last-child {
-    align-self: center;
-    justify-self: end;
+.user-info a {
+    flex-basis: 100%;
+    flex-grow: 1;
+    order: -1;
 }
 
 .main-content p {

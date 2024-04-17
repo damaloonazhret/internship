@@ -41,6 +41,7 @@
         bottom: 15px;
         width: 100vw;
         gap: 120px;
+        z-index: 1;
     }
 
     #back {
@@ -60,6 +61,7 @@
         bottom: 10px;
         right: calc(50vw - 50px);
         left: initial;
+        z-index: 1;
     }
 
     .main-content article {
