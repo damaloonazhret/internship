@@ -821,12 +821,14 @@ async function submitChange(e) {
     }
 }
 
-form.addEventListener('submit', submitChange);
-
 function headInfoChange() {
     const headInfo = document.querySelector('#head-info');
-    const activeLink = document.querySelector('.nav .active');
-    headInfo.innerText = activeLink.textContent + ' Request';
+    const activeLink = document.querySelector('.nav .active').innerText;
+    if (activeLink) {
+        headInfo.innerText = activeLink + ' Request';
+    } else {
+        headInfo.innerText = 'JavaScript Request'
+    }
 }
 
 function popChange() {
@@ -843,6 +845,7 @@ function popChange() {
     }
 }
 
+form.addEventListener('submit', submitChange);
 switcherLabel.addEventListener('click', themeSwitcher)
 form.addEventListener('submit', submitChange)
 window.addEventListener('popstate', popChange);
