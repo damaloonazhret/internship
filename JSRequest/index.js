@@ -186,7 +186,7 @@ class PageLayoutBuilder {
 }
 
 class PageCreator {
-    constructor({ title, about, input, inputTextColorInfo, inputBGColorInfo, userInfo, userRepo }) {
+    constructor({title, about, input, inputTextColorInfo, inputBGColorInfo, userInfo, userRepo}) {
         this.title = title;
         this.about = about;
         this.input = input;
@@ -227,11 +227,11 @@ class PageCreator {
         repoDiv.classList.add('repos');
 
         const elements = [
-            { tagName: 'span', textContent: repoData.full_name },
-            { tagName: 'span', textContent: repoData.language },
-            { tagName: 'span', textContent: `Visibility: ${repoData.visibility}` },
-            { tagName: 'a', href: repoData.html_url, textContent: 'Link to repo', target: '_blank' },
-            { tagName: 'span', textContent: repoData.created_at }
+            {tagName: 'span', textContent: repoData.full_name},
+            {tagName: 'span', textContent: repoData.language},
+            {tagName: 'span', textContent: `Visibility: ${repoData.visibility}`},
+            {tagName: 'a', href: repoData.html_url, textContent: 'Link to repo', target: '_blank'},
+            {tagName: 'span', textContent: repoData.created_at}
         ];
 
         elements.forEach(el => {
@@ -252,11 +252,13 @@ class PageCreator {
         userInfoDiv.classList.add('user-info');
 
         const elements = [
-            { tagName: 'span', textContent: `Name:${userInfo.name}` },
-            { tagName: 'a', href: userInfo.html_url, target: '_blank', children: [
-                    { tagName: 'img', src: userInfo.avatar_url, alt: 'avatar', classList: ['avatar'] }
-                ]},
-            { tagName: 'span', textContent: `Login:${userInfo.login}` }
+            {tagName: 'span', textContent: `Name:${userInfo.name}`},
+            {
+                tagName: 'a', href: userInfo.html_url, target: '_blank', children: [
+                    {tagName: 'img', src: userInfo.avatar_url, alt: 'avatar', classList: ['avatar']}
+                ]
+            },
+            {tagName: 'span', textContent: `Login:${userInfo.login}`}
         ];
 
         elements.forEach(el => {
@@ -368,7 +370,7 @@ setupOptions();
 initialTheme();
 
 ;(() => {
-    const hash = getCookie('hash') || 'main';
+    const hash = getCookie('hash') || 'promise';
     selectPage(hash);
     if (hash === 'settings') customBG();
 })();
@@ -796,7 +798,7 @@ async function submitChange(e) {
         setErrorSpan(invalidName);
         isRequesting = false;
     } else if (localUsername) {
-        const { userInfo, userRepo } = JSON.parse(localUsername);
+        const {userInfo, userRepo} = JSON.parse(localUsername);
         const userData = setupUserData(activePage, userInfo, userRepo);
         setErrorSpan('');
         drawPage(userData);
@@ -824,8 +826,12 @@ form.addEventListener('submit', submitChange);
 
 function headInfoChange() {
     const headInfo = document.querySelector('#head-info');
-    const activeLink = document.querySelector('.nav .active');
-    headInfo.innerText = activeLink.textContent + ' Request';
+    const activeLink = document.querySelector('.nav .active').innerText;
+    if (activeLink) {
+        headInfo.innerText = activeLink + ' Request';
+    } else {
+        headInfo.innerText = 'JavaScript Request'
+    }
 }
 
 function popChange() {
