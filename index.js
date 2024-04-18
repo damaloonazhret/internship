@@ -1,22 +1,18 @@
+let layout;
 let themeUser = localStorage.getItem('theme');
+const body = document.querySelector(".body");
 const BG = 'bg';
-const root = document.querySelector('#root');
 const DARK = 'dark';
 const TEXT = 'text';
-const form = document.querySelector('form');
 const WHITE = 'white';
 const ACTIVE = 'active';
-const urlInfo = document.querySelector('#url');
-const contents = document.querySelectorAll('.nav a');
 const BLACK_ROOT = '--black';
 const WHITE_ROOT = '--white';
 const GREEN_ROOT = '--green';
 const LEFT_SWITCH = '9%';
 const RIGHT_SWITCH = '68%';
-const switcherLabel = document.querySelector('.switcher-label');
 const TRANSITION_ALL = '--transition-all';
-const switcherToggler = document.querySelector('.switcher-toggler');
-const DEFAULT_TRANSITION = '0.4s all ease-in';
+const DEFAULT_TRANSITION_VALUE = '0.4s all ease-in';
 const DEFAULT_COLOR_GREEN = '#27ae60';
 const DEFAULT_COLOR_WHITE = '#ffffff';
 const DEFAULT_COLOR_BLACK = '#1a1a1a';
@@ -49,6 +45,153 @@ const pages = {
         about: 'not found'
     }
 }
+
+class PageLayoutBuilder {
+    constructor(infoHead) {
+        this.infoHead = infoHead;
+    }
+
+    createHeader() {
+        const header = document.createElement("header");
+        const head = this.infoHead;
+        header.classList.add('header');
+        header.appendChild(this.createHeaderForm(head));
+        return header;
+    }
+
+    createHeaderForm(head) {
+        const form = document.createElement('form');
+        const p = document.createElement('p');
+        p.id = 'resetStorage';
+        p.textContent = `${head}`;
+        form.appendChild(p);
+        form.appendChild(this.createSearchDiv());
+        return form;
+    }
+
+    createSearchDiv() {
+        const div = document.createElement('div');
+        div.classList.add('search');
+        div.appendChild(this.createInput());
+        div.appendChild(this.createDatalist());
+        div.appendChild(this.createErrorSpan());
+        return div;
+    }
+
+    createInput() {
+        const input = document.createElement('input');
+        input.id = 'url';
+        input.setAttribute('list', 'names');
+        return input;
+    }
+
+    createDatalist() {
+        const dataList = document.createElement('datalist');
+        dataList.id = 'names';
+        return dataList;
+    }
+
+    createErrorSpan() {
+        const span = document.createElement('span');
+        span.classList.add('error');
+        return span;
+    }
+
+    createMain() {
+        const main = document.createElement('main');
+        main.classList.add('main-content');
+        main.id = 'main';
+        return main;
+    }
+
+    createAside() {
+        const aside = document.createElement('aside');
+        aside.classList.add('aside');
+        aside.appendChild(this.createNav());
+        aside.appendChild(this.createNavArrows());
+        aside.appendChild(this.createThemeSwitcher());
+        return aside;
+    }
+
+    createNav() {
+        const nav = document.createElement('nav');
+        nav.classList.add('nav');
+        nav.appendChild(this.createNavLink('main', 'main', 'Main'));
+        nav.appendChild(this.createNavLink('info', 'info', 'Info'));
+        nav.appendChild(this.createNavLink('settings', 'settings', 'Settings'));
+        return nav;
+    }
+
+    createNavLink(href, className, text) {
+        const link = document.createElement('a');
+        link.href = `#${href}`;
+        link.classList.add(className);
+        link.textContent = text;
+        return link;
+    }
+
+    createNavArrows() {
+        const navArrows = document.createElement('nav');
+        navArrows.classList.add('nav-arrows');
+        navArrows.appendChild(this.createArrowButton('back', '<'));
+        navArrows.appendChild(this.createArrowButton('forward', '>'));
+        return navArrows;
+    }
+
+    createArrowButton(id, text) {
+        const button = document.createElement('p');
+        button.id = id;
+        button.textContent = text;
+        return button;
+    }
+
+    createThemeSwitcher() {
+        const themeSwitcher = document.createElement('div');
+        themeSwitcher.classList.add('theme-switcher');
+        themeSwitcher.appendChild(this.createSwitcherInput());
+        themeSwitcher.appendChild(this.createSwitcherLabel());
+        return themeSwitcher;
+    }
+
+    createSwitcherInput() {
+        const switcherInput = document.createElement('input');
+        switcherInput.classList.add('switcher-input');
+        switcherInput.type = 'checkbox';
+        switcherInput.name = 'switcher';
+        switcherInput.id = 'switcher-input';
+        return switcherInput;
+    }
+
+    createSwitcherLabel() {
+        const switcherLabel = document.createElement('label');
+        switcherLabel.classList.add('switcher-label');
+        switcherLabel.setAttribute('for', 'switcher-input');
+        switcherLabel.appendChild(this.createSwitcherSpan());
+        return switcherLabel;
+    }
+
+    createSwitcherSpan() {
+        const switcherSpan = document.createElement('span');
+        switcherSpan.classList.add('switcher-toggler');
+        return switcherSpan;
+    }
+}
+
+layout = new PageLayoutBuilder('Browser JavaScript');
+body.prepend(layout.createMain());
+body.prepend(layout.createAside());
+body.prepend(layout.createHeader());
+
+window.addEventListener("DOMContentLoaded", (event) => {
+    document.documentElement.style.setProperty(TRANSITION_ALL, DEFAULT_TRANSITION_VALUE);
+});
+
+const main = document.querySelector('#main');
+const form = document.querySelector('form');
+const urlInfo = document.querySelector('#url');
+const contents = document.querySelectorAll('.nav a');
+const switcherLabel = document.querySelector('.switcher-label');
+const switcherToggler = document.querySelector('.switcher-toggler');
 
 handleHistoryNavigation()
 initialTheme();
@@ -192,11 +335,9 @@ function updateTheme(percent, param, themeColor) {
 }
 
 function setThemeColorsAndPosition(percent, switcherToggler, main, secondary) {
-    disableTransition();
     setRootProperty(BLACK_ROOT, main);
     setRootProperty(WHITE_ROOT, secondary);
     switcherToggler.style.left = percent;
-    setTimeout(enableTransition, 0);
 }
 
 function setThemeProperty(property, value) {
@@ -220,7 +361,6 @@ function setColors(primary = DEFAULT_COLOR_BLACK, secondary = DEFAULT_COLOR_WHIT
     if (bg) bg.value = convertToFullHexColor(primary);
     if (text) text.value = convertToFullHexColor(secondary);
 }
-
 
 function rootColors() {
     const rootStyles = getComputedStyle(document.documentElement);
@@ -257,14 +397,6 @@ function convertToFullHexColor(shortHexColor) {
     return shortHexColor;
 }
 
-function disableTransition() {
-    setRootProperty(TRANSITION_ALL, 'none');
-}
-
-function enableTransition() {
-    setRootProperty(TRANSITION_ALL, DEFAULT_TRANSITION);
-}
-
 function extractHashFromLink(link) {
     return link.href.split('#')[1];
 }
@@ -297,6 +429,11 @@ function resetCookie() {
     }
 }
 
+function resetStorages() {
+    const resetStorage = document.querySelector('#resetStorage');
+    resetStorage.addEventListener('click', forcedInterrogation);
+}
+
 function forcedInterrogation() {
     const answer = prompt('Are you sure? A positive answer will reset all local values', 'Yes!');
     alert(`You answered ${answer}`)
@@ -310,11 +447,6 @@ function forcedInterrogation() {
     } else {
         alert('Reset values canceled');
     }
-}
-
-function resetStorages() {
-    const resetStorage = document.querySelector('#resetStorage');
-    resetStorage.addEventListener('click', () => forcedInterrogation);
 }
 
 function handleInputChange(e, property) {
@@ -408,8 +540,8 @@ function selectPage(hash) {
 function drawPage(page) {
     const pageInstance = new PageCreator(page);
     const pageRender = pageInstance.render();
-    root.innerText = '';
-    root.append(pageRender);
+    main.innerText = '';
+    main.append(pageRender);
 }
 
 function closing(hashName) {
