@@ -14,9 +14,11 @@ const WHITE_ROOT = '--white';
 const GREEN_ROOT = '--green';
 const LEFT_SWITCH = '9%';
 const RIGHT_SWITCH = '68%';
+const TRANSITION_ALL = '--transition-all';
 const DEFAULT_COLOR_GREEN = '#27ae60';
 const DEFAULT_COLOR_WHITE = '#ffffff';
 const DEFAULT_COLOR_BLACK = '#1a1a1a';
+const DEFAULT_TRANSITION_VALUE = '0.4s all ease-in';
 const invalidName = 'Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen.';
 const pages = {
     promise: {
@@ -40,6 +42,10 @@ const pages = {
         about: 'not found'
     }
 }
+
+window.addEventListener("DOMContentLoaded", (event) => {
+    document.documentElement.style.setProperty(TRANSITION_ALL, DEFAULT_TRANSITION_VALUE);
+});
 
 class PageLayoutBuilder {
     constructor(className, infoHead) {
@@ -549,6 +555,7 @@ function handleHistoryNavigation() {
 
 function handleNavigation(e) {
     e.preventDefault();
+    setErrorSpan('');
     if (e.target.classList.contains(ACTIVE)) return;
     const hash = extractHashFromLink(this);
     const capitalizeHash = hash.charAt(0).toUpperCase() + hash.slice(1);
@@ -767,34 +774,53 @@ async function asyncRequestUserInfo(username, activePage) {
     }
 }
 
+let isRequesting = false;
+
 async function submitChange(e) {
     e.preventDefault();
+
+    if (isRequesting) {
+        return;
+    }
+
+    isRequesting = true;
+
     const username = urlInfo.value.trim();
     const localUsername = localStorage.getItem(`user:${username}`);
     const activePage = document.querySelector('.nav a.active').innerText.toLowerCase();
 
     if (username === '') {
         setErrorSpan('Empty string');
+        isRequesting = false;
     } else if (!isValidGitHubUsername(username)) {
         setErrorSpan(invalidName);
+        isRequesting = false;
     } else if (localUsername) {
-        const {userInfo, userRepo} = JSON.parse(localUsername);
+        const { userInfo, userRepo } = JSON.parse(localUsername);
         const userData = setupUserData(activePage, userInfo, userRepo);
         setErrorSpan('');
-        drawPage(userData)
+        drawPage(userData);
+        isRequesting = false;
     } else {
-        switch (activePage) {
-            case 'promise':
-                promiseRequestUserInfo(username, activePage)
-                break
-            case 'async':
-                await asyncRequestUserInfo(username, activePage)
-                break
-            default:
-                break
+        try {
+            switch (activePage) {
+                case 'promise':
+                    await promiseRequestUserInfo(username, activePage);
+                    break;
+                case 'async':
+                    await asyncRequestUserInfo(username, activePage);
+                    break;
+                default:
+                    break;
+            }
+        } catch (error) {
+        } finally {
+            isRequesting = false;
         }
     }
 }
+
+form.addEventListener('submit', submitChange);
 
 function headInfoChange() {
     const headInfo = document.querySelector('#head-info');
@@ -805,6 +831,7 @@ function headInfoChange() {
 function popChange() {
     const hash = window.location.hash.slice(1);
     const set = document.querySelector('.settings');
+    setErrorSpan('');
     headInfoChange();
     selectPage(hash);
     if (set.classList.contains(ACTIVE)) {
