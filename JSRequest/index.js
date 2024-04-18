@@ -86,6 +86,7 @@ class PageLayoutBuilder {
     createInput() {
         const input = document.createElement('input');
         input.id = 'url';
+        input.placeholder = 'Write GitHub nickname...'
         input.setAttribute('list', 'names');
         return input;
     }
@@ -182,6 +183,12 @@ class PageLayoutBuilder {
         const switcherSpan = document.createElement('span');
         switcherSpan.classList.add('switcher-toggler');
         return switcherSpan;
+    }
+
+    createPreloader() {
+        const preloader = document.createElement('div');
+        preloader.id = 'preloader';
+        return preloader;
     }
 }
 
@@ -357,6 +364,7 @@ if (hash === 'settings') {
 body.prepend(layout.createMain());
 body.prepend(layout.createAside());
 body.prepend(layout.createHeader());
+body.prepend(layout.createPreloader());
 
 const main = document.querySelector('#main');
 const form = document.querySelector('form');
@@ -728,6 +736,7 @@ function promiseRequest(username) {
         })
 }
 
+
 async function asyncRequest(username) {
     try {
         const requestUser = await fetch(`${userUrl}${username}`);
@@ -756,6 +765,7 @@ function promiseRequestUserInfo(username, activePage) {
             setErrorSpan('')
             setOption(username)
             drawPage(userData)
+            preload('remove')
         })
         .catch(error => {
             setErrorSpan(error)
@@ -771,21 +781,28 @@ async function asyncRequestUserInfo(username, activePage) {
         drawPage(userData);
         setErrorSpan('')
         setOption(username)
+        preload('remove')
     } catch (error) {
         setErrorSpan(error)
     }
 }
 
-let isRequesting = false;
+function preload(param) {
+    const preloader = document.querySelector('#preloader');
+    preloader.classList[param]('loader');
+}
+
+let isLoading = false;
 
 async function submitChange(e) {
+    preload('add')
     e.preventDefault();
 
-    if (isRequesting) {
+    if (isLoading) {
         return;
     }
 
-    isRequesting = true;
+    isLoading = true;
 
     const username = urlInfo.value.trim();
     const localUsername = localStorage.getItem(`user:${username}`);
@@ -793,16 +810,16 @@ async function submitChange(e) {
 
     if (username === '') {
         setErrorSpan('Empty string');
-        isRequesting = false;
+        isLoading = false;
     } else if (!isValidGitHubUsername(username)) {
         setErrorSpan(invalidName);
-        isRequesting = false;
+        isLoading = false;
     } else if (localUsername) {
         const {userInfo, userRepo} = JSON.parse(localUsername);
         const userData = setupUserData(activePage, userInfo, userRepo);
         setErrorSpan('');
         drawPage(userData);
-        isRequesting = false;
+        isLoading = false;
     } else {
         try {
             switch (activePage) {
@@ -817,7 +834,7 @@ async function submitChange(e) {
             }
         } catch (error) {
         } finally {
-            isRequesting = false;
+            isLoading = false;
         }
     }
 }
@@ -826,9 +843,9 @@ form.addEventListener('submit', submitChange);
 
 function headInfoChange() {
     const headInfo = document.querySelector('#head-info');
-    const activeLink = document.querySelector('.nav .active').innerText;
+    const activeLink = document.querySelector('.nav .active');
     if (activeLink) {
-        headInfo.innerText = activeLink + ' Request';
+        headInfo.innerText = activeLink.innerText + ' Request';
     } else {
         headInfo.innerText = 'JavaScript Request'
     }
@@ -848,8 +865,13 @@ function popChange() {
     }
 }
 
+function resetError() {
+    setErrorSpan('')
+}
+
 switcherLabel.addEventListener('click', themeSwitcher)
 form.addEventListener('submit', submitChange)
+urlInfo.addEventListener('input', resetError)
 window.addEventListener('popstate', popChange);
 contents.forEach((content) => {
     content.addEventListener('click', handleNavigation)
