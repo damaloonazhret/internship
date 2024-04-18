@@ -67,32 +67,73 @@ class PageCreator {
         const article = document.createElement('article');
         switch (this.input) {
             case 'color':
-                article.innerHTML = this.createColorArticle();
+                this.createColorArticle(article);
                 break;
             default:
-                article.innerHTML = this.createDefaultArticle();
+                this.createDefaultArticle(article);
         }
         return article;
     }
 
-    createColorArticle() {
-        return `<h2>${this.title}</h2>
-                ${this.createColorSetting('text', this.inputTextColorInfo, 'text-color')}
-                ${this.createColorSetting('BG', this.inputBGColorInfo, 'background-color')}
-                <p>${this.about}</p>`;
+    createColorArticle(article) {
+        const header = document.createElement('h2');
+        header.textContent = this.title;
+        article.appendChild(header);
+
+        article.appendChild(this.createColorSetting('text', this.inputTextColorInfo, 'text-color'));
+        article.appendChild(this.createColorSetting('BG', this.inputBGColorInfo, 'background-color'));
+
+        const paragraph = document.createElement('p');
+        paragraph.textContent = this.about;
+        article.appendChild(paragraph);
     }
 
     createColorSetting(id, label, name) {
-        return `<div class="setting">
-                    <label for="${id}">${label}</label>
-                    <input id="${id}" type='color' name="${name}">
-                    <button id="reset-${id}" type="button">Reset</button>
-                </div>`;
+        const div = document.createElement('div');
+        div.classList.add('setting');
+
+        const labelElement = this.createLabelElement(id, label);
+        const input = this.createInputElement(id);
+        const button = this.createButtonElement(id);
+
+        div.appendChild(labelElement);
+        div.appendChild(input);
+        div.appendChild(button);
+
+        return div;
     }
 
-    createDefaultArticle() {
-        return `<h2>${this.title}</h2>
-                <p>${this.about}</p>`;
+    createLabelElement(id, label) {
+        const labelElement = document.createElement('label');
+        labelElement.setAttribute('for', id);
+        labelElement.textContent = label;
+        return labelElement;
+    }
+
+    createInputElement(id) {
+        const input = document.createElement('input');
+        input.id = id;
+        input.type = 'color';
+        input.name = name;
+        return input;
+    }
+
+    createButtonElement(id) {
+        const button = document.createElement('button');
+        button.id = `reset-${id}`;
+        button.type = 'button';
+        button.textContent = 'Reset';
+        return button;
+    }
+
+    createDefaultArticle(article) {
+        const header = document.createElement('h2');
+        header.textContent = this.title;
+        article.appendChild(header);
+
+        const paragraph = document.createElement('p');
+        paragraph.textContent = this.about;
+        article.appendChild(paragraph);
     }
 
     render() {
