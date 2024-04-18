@@ -6,7 +6,7 @@
     --green: #27ae60;
 
     --font-family-main: "Anonymous Pro", monospace, serif;
-    --transition-all: 0.4s all ease-in;
+    --transition-all: none;
 }
 
 ::selection {
@@ -62,6 +62,7 @@ label {
 
 .header {
     transition: var(--transition-all);
+    padding: 0 20px;
 }
 
 .header.hidden {
@@ -89,15 +90,17 @@ label {
     justify-content: center;
 }
 
-.header span {
+.error {
     font-size: 1.2rem;
     color: #e5534b;
     text-align: left;
+    flex-basis: 100%;
 }
 
 #url {
     font-size: 1rem;
-    width: 80%;
+    /*width: 80%;*/
+    flex-basis: 100%;
     background-color: transparent;
     color: var(--white);
     border: 2px solid var(--white);
