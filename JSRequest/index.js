@@ -1,7 +1,8 @@
 let themeUser = localStorage.getItem('theme');
 let layout;
-const hash = getCookie('hash');
 const BG = 'bg';
+const hash = getCookie('hash');
+const body = document.querySelector("body");
 const DARK = 'dark';
 const TEXT = 'text';
 const repos = '/repos';
@@ -50,36 +51,49 @@ class PageLayoutBuilder {
         const header = document.createElement("header");
         const head = this.infoHead.charAt(0).toUpperCase() + this.infoHead.substring(1);
         header.classList.add('header');
-        if (this.className) {
+        if (this.className === 'hidden') {
             header.classList.add(this.className);
         }
+        header.appendChild(this.createHeaderForm(head));
+        return header;
+    }
 
+    createHeaderForm(head) {
         const form = document.createElement('form');
         const p = document.createElement('p');
         p.id = 'head-info';
         p.textContent = `${head}`;
         form.appendChild(p);
+        form.appendChild(this.createSearchDiv());
+        return form;
+    }
 
+    createSearchDiv() {
         const div = document.createElement('div');
         div.classList.add('search');
-        form.appendChild(div);
+        div.appendChild(this.createInput());
+        div.appendChild(this.createDatalist());
+        div.appendChild(this.createErrorSpan());
+        return div;
+    }
 
+    createInput() {
         const input = document.createElement('input');
         input.id = 'url';
         input.setAttribute('list', 'names');
-        div.appendChild(input);
+        return input;
+    }
 
-        const datalist = document.createElement('datalist');
-        datalist.id = 'names';
-        div.appendChild(datalist);
+    createDatalist() {
+        const dataList = document.createElement('datalist');
+        dataList.id = 'names';
+        return dataList;
+    }
 
+    createErrorSpan() {
         const span = document.createElement('span');
         span.classList.add('error');
-        div.appendChild(span);
-
-        header.appendChild(form);
-
-        return header;
+        return span;
     }
 
     createMain() {
@@ -91,30 +105,82 @@ class PageLayoutBuilder {
         main.id = 'main';
         return main;
     }
+
+    createAside() {
+        const aside = document.createElement('aside');
+        aside.classList.add('aside');
+        aside.appendChild(this.createNav());
+        aside.appendChild(this.createNavArrows());
+        aside.appendChild(this.createThemeSwitcher());
+        return aside;
+    }
+
+    createNav() {
+        const nav = document.createElement('nav');
+        nav.classList.add('nav');
+        nav.appendChild(this.createNavLink('promise', 'main', 'Promise'));
+        nav.appendChild(this.createNavLink('async', 'info', 'Async'));
+        nav.appendChild(this.createNavLink('settings', 'settings', 'Settings'));
+        return nav;
+    }
+
+    createNavLink(href, className, text) {
+        const link = document.createElement('a');
+        link.href = `#${href}`;
+        link.classList.add(className);
+        link.textContent = text;
+        return link;
+    }
+
+    createNavArrows() {
+        const navArrows = document.createElement('nav');
+        navArrows.classList.add('nav-arrows');
+        navArrows.appendChild(this.createArrowButton('back', '<'));
+        navArrows.appendChild(this.createArrowButton('forward', '>'));
+        return navArrows;
+    }
+
+    createArrowButton(id, text) {
+        const button = document.createElement('p');
+        button.id = id;
+        button.textContent = text;
+        return button;
+    }
+
+    createThemeSwitcher() {
+        const themeSwitcher = document.createElement('div');
+        themeSwitcher.classList.add('theme-switcher');
+        themeSwitcher.appendChild(this.createSwitcherInput());
+        themeSwitcher.appendChild(this.createSwitcherLabel());
+        return themeSwitcher;
+    }
+
+    createSwitcherInput() {
+        const switcherInput = document.createElement('input');
+        switcherInput.classList.add('switcher-input');
+        switcherInput.type = 'checkbox';
+        switcherInput.name = 'switcher';
+        switcherInput.id = 'switcher-input';
+        return switcherInput;
+    }
+
+    createSwitcherLabel() {
+        const switcherLabel = document.createElement('label');
+        switcherLabel.classList.add('switcher-label');
+        switcherLabel.setAttribute('for', 'switcher-input');
+        switcherLabel.appendChild(this.createSwitcherSpan());
+        return switcherLabel;
+    }
+
+    createSwitcherSpan() {
+        const switcherSpan = document.createElement('span');
+        switcherSpan.classList.add('switcher-toggler');
+        return switcherSpan;
+    }
 }
-
-if (hash === 'settings') {
-    layout = new PageLayoutBuilder('hidden', 'Settings Page');
-} else {
-    layout = new PageLayoutBuilder(null, hash + ' Request');
-}
-const body = document.querySelector("body");
-body.prepend(layout.createHeader());
-body.append(layout.createMain());
-
-const main = document.querySelector('#main');
-const form = document.querySelector('form');
-const urlInfo = document.querySelector('#url');
-const contents = document.querySelectorAll('.nav a');
-const switcherLabel = document.querySelector('.switcher-label');
-const switcherToggler = document.querySelector('.switcher-toggler');
-
-handleHistoryNavigation()
-initialTheme();
-setupOptions();
 
 class PageCreator {
-    constructor({title, about, input, inputTextColorInfo, inputBGColorInfo, userInfo, userRepo}) {
+    constructor({ title, about, input, inputTextColorInfo, inputBGColorInfo, userInfo, userRepo }) {
         this.title = title;
         this.about = about;
         this.input = input;
@@ -128,65 +194,172 @@ class PageCreator {
         const article = document.createElement('article');
         switch (this.title) {
             case 'Settings Page':
-                article.innerHTML = this.createColorArticle();
-                break
+                article.appendChild(this.createColorArticle());
+                break;
             case 'Async request Page':
             case 'Promise request Page':
-                const userInfo = this.userInfo;
-                const userRepo = this.userRepo;
-                if (userInfo && userRepo) {
-                    const userInfoHTML = this.createUserInfoHTML(userInfo);
-                    const reposHTML = this.createReposHTML(userRepo);
-                    article.innerHTML = userInfoHTML + reposHTML;
+                if (this.userInfo && this.userRepo) {
+                    article.appendChild(this.createUserInfoHTML(this.userInfo));
+                    this.appendReposHTML(article, this.userRepo);
                 }
-                break
+                break;
             default:
-                break
+                break;
         }
         return article;
     }
 
-    createReposHTML(userRepo) {
-        return userRepo.map(el =>
-            `<div class="repos">
-                    <span>${el.full_name}</span>
-                    <span>${el.language}</span>
-                    <span>Visibility: ${el.visibility}</span>
-                    <a href="${el.html_url}" target="_blank">Link to repo</a>
-                    <span>${el.created_at}</span>
-                </div>`)
-            .join('');
+    appendReposHTML(parent, userRepo) {
+        userRepo.forEach(el => {
+            const repoDiv = this.createRepoDiv(el);
+            parent.appendChild(repoDiv);
+        });
+    }
+
+    createRepoDiv(repoData) {
+        const repoDiv = document.createElement('div');
+        repoDiv.classList.add('repos');
+
+        const elements = [
+            { tagName: 'span', textContent: repoData.full_name },
+            { tagName: 'span', textContent: repoData.language },
+            { tagName: 'span', textContent: `Visibility: ${repoData.visibility}` },
+            { tagName: 'a', href: repoData.html_url, textContent: 'Link to repo', target: '_blank' },
+            { tagName: 'span', textContent: repoData.created_at }
+        ];
+
+        elements.forEach(el => {
+            const element = document.createElement(el.tagName);
+            for (const prop in el) {
+                if (prop !== 'tagName') {
+                    element[prop] = el[prop];
+                }
+            }
+            repoDiv.appendChild(element);
+        });
+
+        return repoDiv;
     }
 
     createUserInfoHTML(userInfo) {
-        return `<div class="user-info">
-                    <span>Name:${userInfo.name}</span>
-                    <a href="${userInfo.html_url}" target="_blank">
-                        <img class="avatar" src="${userInfo.avatar_url}" alt="avatar">
-                    </a>
-                    <span>Login:${userInfo.login}</span>
-                </div>`
+        const userInfoDiv = document.createElement('div');
+        userInfoDiv.classList.add('user-info');
+
+        const elements = [
+            { tagName: 'span', textContent: `Name:${userInfo.name}` },
+            { tagName: 'a', href: userInfo.html_url, target: '_blank', children: [
+                    { tagName: 'img', src: userInfo.avatar_url, alt: 'avatar', classList: ['avatar'] }
+                ]},
+            { tagName: 'span', textContent: `Login:${userInfo.login}` }
+        ];
+
+        elements.forEach(el => {
+            const element = document.createElement(el.tagName);
+            for (const prop in el) {
+                if (prop !== 'tagName' && prop !== 'children') {
+                    element[prop] = el[prop];
+                } else if (prop === 'children') {
+                    el.children.forEach(child => {
+                        const childElement = document.createElement(child.tagName);
+                        for (const childProp in child) {
+                            if (childProp !== 'tagName') {
+                                childElement[childProp] = child[childProp];
+                            }
+                        }
+                        element.appendChild(childElement);
+                    });
+                }
+            }
+            userInfoDiv.appendChild(element);
+        });
+
+        return userInfoDiv;
     }
 
     createColorArticle() {
-        return `<h2>${this.title}</h2>
-                ${this.createColorSetting('text', this.inputTextColorInfo, 'text-color')}
-                ${this.createColorSetting('BG', this.inputBGColorInfo, 'background-color')}
-                <p>${this.about}</p>`;
+        const colorArticle = document.createDocumentFragment();
+        const h2Title = document.createElement('h2');
+        const pAbout = document.createElement('p');
+
+        h2Title.classList.add('settings-title');
+        h2Title.textContent = this.title;
+        pAbout.textContent = this.about;
+        colorArticle.appendChild(h2Title);
+        colorArticle.appendChild(this.createColorSetting('text', this.inputTextColorInfo, 'text-color'));
+        colorArticle.appendChild(this.createColorSetting('BG', this.inputBGColorInfo, 'background-color'));
+        colorArticle.appendChild(pAbout);
+
+        return colorArticle;
     }
 
     createColorSetting(id, label, name) {
-        return `<div class="setting">
-                    <label for="${id}">${label}</label>
-                    <input id="${id}" type='color' name="${name}">
-                    <button id="reset-${id}" type="button">Reset</button>
-                </div>`;
+        const settingDiv = document.createElement('div');
+        const labelFor = this.createLabelFor(id, label);
+        const inputColor = this.createInput(id);
+        const buttonReset = this.createButton(id);
+
+        settingDiv.classList.add('setting');
+        settingDiv.appendChild(labelFor);
+        settingDiv.appendChild(inputColor);
+        settingDiv.appendChild(buttonReset);
+
+        return settingDiv;
+    }
+
+    createButton(id) {
+        const buttonReset = document.createElement('button');
+
+        buttonReset.id = `reset-${id}`;
+        buttonReset.type = 'button';
+        buttonReset.textContent = 'Reset';
+
+        return buttonReset;
+    }
+
+    createInput(id) {
+        const inputColor = document.createElement('input');
+
+        inputColor.id = id;
+        inputColor.type = 'color';
+        inputColor.name = name;
+
+        return inputColor;
+    }
+
+    createLabelFor(id, label) {
+        const labelFor = document.createElement('label');
+
+        labelFor.setAttribute('for', id);
+        labelFor.textContent = label;
+
+        return labelFor;
     }
 
     render() {
-        return this.create()
+        return this.create();
     }
 }
+
+if (hash === 'settings') {
+    layout = new PageLayoutBuilder('hidden', 'Settings Page');
+} else {
+    layout = new PageLayoutBuilder(null, hash + ' Request');
+}
+
+body.prepend(layout.createMain());
+body.prepend(layout.createAside());
+body.prepend(layout.createHeader());
+
+const main = document.querySelector('#main');
+const form = document.querySelector('form');
+const urlInfo = document.querySelector('#url');
+const contents = document.querySelectorAll('.nav a');
+const switcherLabel = document.querySelector('.switcher-label');
+const switcherToggler = document.querySelector('.switcher-toggler');
+
+handleHistoryNavigation()
+setupOptions();
+initialTheme();
 
 ;(() => {
     const hash = getCookie('hash') || 'main';

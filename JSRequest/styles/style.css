@@ -295,3 +295,8 @@ a.white {
     box-shadow: 0 0 10px var(--white);
     width: 80px;
 }
+
+.settings-title {
+    flex-basis: 100%;
+    flex-grow: 1;
+}
