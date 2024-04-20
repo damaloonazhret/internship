@@ -44,7 +44,7 @@ const pages = {
     }
 }
 
-window.addEventListener("DOMContentLoaded", (event) => {
+window.addEventListener("DOMContentLoaded", () => {
     document.documentElement.style.setProperty(TRANSITION_ALL, DEFAULT_TRANSITION_VALUE);
 });
 
@@ -369,7 +369,7 @@ setupOptions();
 initialTheme();
 
 ;(() => {
-    const hash = getCookie('hash') || 'main';
+    const hash = getCookie('hash') || 'promise';
     selectPage(hash);
     if (hash === 'settings') customBG();
 })();
@@ -823,9 +823,9 @@ async function submitChange(e) {
 
 function headInfoChange() {
     const headInfo = document.querySelector('#head-info');
-    const activeLink = document.querySelector('.nav .active').innerText;
+    const activeLink = document.querySelector('.nav .active');
     if (activeLink) {
-        headInfo.innerText = activeLink + ' Request';
+        headInfo.innerText = activeLink.innerText + ' Request';
     } else {
         headInfo.innerText = 'JavaScript Request'
     }
