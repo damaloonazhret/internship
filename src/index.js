@@ -1,3 +1,4 @@
+import 'react-app-polyfill/ie9';
 import './index.css'
 let themeUser = localStorage.getItem('theme');
 let layout;
