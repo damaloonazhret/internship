@@ -41,8 +41,8 @@ const pages = {
     },
     notFound: {
         title: '404 error',
-        about: 'not found'
-    }
+        about: 'not found',
+    },
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -79,6 +79,7 @@ class PageLayoutBuilder {
     createSearchDiv() {
         const div = document.createElement('div');
         const searchInfo = {
+            tagName: 'input',
             id: 'url',
             placeholder: INPUT_PLACEHOLDER,
             name: 'url',
@@ -86,36 +87,39 @@ class PageLayoutBuilder {
             list: 'names',
         }
         div.classList.add('search');
-        div.appendChild(this.createElement(searchInfo, 'input'));
+        div.appendChild(this.createElement(searchInfo));
         div.appendChild(this.createDatalist());
         div.appendChild(this.createErrorSpan());
         return div;
     }
 
-    createElement(info, type) {
-        const input = document.createElement(type);
+    createElement(info) {
+        const input = document.createElement(info.tagName);
         for (const attr in info) {
             if (attr === 'textContent') {
-                input[attr] = info[attr]
+                input[attr] = info[attr];
                 continue
             }
-            input.setAttribute(attr, info[attr]);
+            if (attr !== 'tagName') {
+                input.setAttribute(attr, info[attr]);
+            }
         }
         return input;
     }
 
     createDatalist() {
-        return this.createElement({id: 'names'}, 'datalist')
+        return this.createElement({tagName: 'datalist', id: 'names'});
     }
 
     createErrorSpan() {
-        return this.createElement({class: 'error'}, 'span')
+        return this.createElement({tagName: 'span', class: 'error'});
     }
 
     createMain() {
-        const main =this.createElement({
+        const main = this.createElement({
+            tagName: 'main',
             class: 'main-content',
-        }, 'main');
+        });
         if (this.className) {
             main.classList.add(this.className);
         }
@@ -124,19 +128,24 @@ class PageLayoutBuilder {
     }
 
     createAside() {
-        const aside =this.createElement({
+        const aside = this.createElement({
+            tagName: 'aside',
             class: 'aside',
-        }, 'aside');
+        });
+
         aside.appendChild(this.createNav());
         aside.appendChild(this.createNavArrows());
         aside.appendChild(this.createThemeSwitcher());
+
         return aside;
     }
 
     createNav() {
-        const nav =this.createElement({
+        const nav = this.createElement({
+            tagName: 'nav',
             class: 'nav',
-        }, 'nav');
+        });
+
         nav.appendChild(this.createNavLink('promise', 'main', 'Promise'));
         nav.appendChild(this.createNavLink('async', 'info', 'Async'));
         nav.appendChild(this.createNavLink('settings', 'settings', 'Settings'));
@@ -145,29 +154,36 @@ class PageLayoutBuilder {
 
     createNavLink(href, className, text) {
         return this.createElement({
+            tagName: 'a',
             href: `#${href}`,
             class: className,
-            textContent: text
-        }, 'a')
+            textContent: text,
+        })
     }
 
     createNavArrows() {
-        const navArrows =this.createElement({
+        const navArrows = this.createElement({
+            tagName: 'nav',
             class: 'nav-arrows',
-        }, 'nav');
+        });
         navArrows.appendChild(this.createArrowButton('back', '<'));
         navArrows.appendChild(this.createArrowButton('forward', '>'));
         return navArrows;
     }
 
     createArrowButton(id, text) {
-        return this.createElement({id: id, textContent: text}, 'p')
+        return this.createElement({
+            tagName: 'p',
+            id,
+            textContent: text,
+        })
     }
 
     createThemeSwitcher() {
         const themeSwitcher = this.createElement({
+            tagName: 'div',
             class: 'theme-switcher',
-        }, 'div');
+        });
         themeSwitcher.appendChild(this.createSwitcherInput());
         themeSwitcher.appendChild(this.createSwitcherLabel());
         return themeSwitcher;
@@ -175,28 +191,36 @@ class PageLayoutBuilder {
 
     createSwitcherInput() {
         return this.createElement({
+            tagName: 'input',
             type: 'checkbox',
             name: 'switcher',
             id: 'switcher-input',
-            class: 'switcher-input'
-        }, 'input');
+            class: 'switcher-input',
+        });
     }
 
     createSwitcherLabel() {
         const switcherLabel = this.createElement({
+            tagName: 'label',
             class: 'switcher-label',
-            for: 'switcher-input'
-        }, 'label');
+            for: 'switcher-input',
+        });
         switcherLabel.appendChild(this.createSwitcherSpan());
         return switcherLabel;
     }
 
     createSwitcherSpan() {
-        return this.createElement({class: 'switcher-toggler'}, 'span');
+        return this.createElement({
+            tagName: 'span',
+            class: 'switcher-toggler',
+        });
     }
 
     createPreloader() {
-        return this.createElement({id: 'preloader'}, 'div');
+        return this.createElement({
+            tagName: 'div',
+            id: 'preloader',
+        });
     }
 }
 
@@ -239,24 +263,21 @@ class PageCreator extends PageLayoutBuilder {
     }
 
     createRepoDiv(repoData) {
-        const repoDiv = document.createElement('div');
-        repoDiv.classList.add('repos');
+        const repoDiv = super.createElement({
+            tagName: 'div',
+            class: 'repos',
+        });
 
         const elements = [
             {tagName: 'span', textContent: repoData.full_name},
             {tagName: 'span', textContent: repoData.language},
             {tagName: 'span', textContent: `Visibility: ${repoData.visibility}`},
             {tagName: 'a', href: repoData.html_url, textContent: 'Link to repo', target: '_blank'},
-            {tagName: 'span', textContent: repoData.created_at}
+            {tagName: 'span', textContent: repoData.created_at},
         ];
 
         elements.forEach(el => {
-            const element = document.createElement(el.tagName);
-            for (const prop in el) {
-                if (prop !== 'tagName') {
-                    element[prop] = el[prop];
-                }
-            }
+            const element = super.createElement(el);
             repoDiv.appendChild(element);
         });
 
@@ -264,17 +285,24 @@ class PageCreator extends PageLayoutBuilder {
     }
 
     createUserInfoHTML(userInfo) {
-        const userInfoDiv = document.createElement('div');
-        userInfoDiv.classList.add('user-info');
+        const userInfoDiv = super.createElement({
+            tagName: 'div',
+            class: 'user-info',
+        });
+
+        const children = [
+            {
+                tagName: 'img',
+                src: userInfo.avatar_url,
+                alt: 'avatar',
+                classList: ['avatar'],
+            }
+        ];
 
         const elements = [
             {tagName: 'span', textContent: `Name:${userInfo.name}`},
-            {
-                tagName: 'a', href: userInfo.html_url, target: '_blank', children: [
-                    {tagName: 'img', src: userInfo.avatar_url, alt: 'avatar', classList: ['avatar']}
-                ]
-            },
-            {tagName: 'span', textContent: `Login:${userInfo.login}`}
+            {tagName: 'a', href: userInfo.html_url, target: '_blank', children},
+            {tagName: 'span', textContent: `Login:${userInfo.login}`},
         ];
 
         elements.forEach(el => {
@@ -302,24 +330,31 @@ class PageCreator extends PageLayoutBuilder {
 
     createColorArticle() {
         const colorArticle = document.createDocumentFragment();
-        const h2Title = document.createElement('h2');
-        const pAbout = document.createElement('p');
+        const h2Title = super.createElement({
+            tagName: 'h2',
+            class: 'settings-title',
+            textContent: this.title,
+        });
+        const pAbout = super.createElement({
+            tagName: 'p',
+            textContent: this.about,
+        });
+
         const textInfo = {
+            tagName: 'input',
             id: 'text',
             placeholder: '',
             name: 'color',
-            type: 'color'
+            type: 'color',
         }
         const BGInfo = {
+            tagName: 'input',
             id: 'BG',
             placeholder: '',
             name: 'color',
-            type: 'color'
+            type: 'color',
         }
 
-        h2Title.classList.add('settings-title');
-        h2Title.textContent = this.title;
-        pAbout.textContent = this.about;
         colorArticle.appendChild(h2Title);
         colorArticle.appendChild(this.createColorSetting('reset-text', this.inputTextColorInfo, textInfo));
         colorArticle.appendChild(this.createColorSetting('reset-BG', this.inputBGColorInfo, BGInfo));
@@ -331,7 +366,7 @@ class PageCreator extends PageLayoutBuilder {
     createColorSetting(id, label, obj) {
         const settingDiv = document.createElement('div');
         const labelFor = this.createLabelFor(id, label);
-        const inputColor = this.createInput(obj, 'input');
+        const inputColor = this.createInput(obj);
         const buttonReset = this.createButton(id);
 
         settingDiv.classList.add('setting');
@@ -343,15 +378,24 @@ class PageCreator extends PageLayoutBuilder {
     }
 
     createButton(id) {
-        return super.createElement({id: id, type: 'button', textContent: 'Reset'}, 'button');
+        return super.createElement({
+            tagName: 'button',
+            id,
+            type: 'button',
+            textContent: 'Reset',
+        });
     }
 
-    createInput(info, type) {
-        return super.createElement(info, type);
+    createInput(info) {
+        return super.createElement(info);
     }
 
     createLabelFor(id, label) {
-        return super.createElement({for: id, textContent: label}, 'label');
+        return super.createElement({
+            tagName: 'label',
+            for: id,
+            textContent: label,
+        });
     }
 
     render() {
@@ -438,13 +482,13 @@ function setThemeColorsAndPosition(percent, switcherToggler, main, secondary) {
 }
 
 function setThemeProperty(property, value) {
-    setRootProperty(property, value)
+    setRootProperty(property, value);
     const [white, black] = rootColors();
     setColors(black, white);
 }
 
 function setRootProperty(color, session) {
-    document.documentElement.style.setProperty(color, session)
+    document.documentElement.style.setProperty(color, session);
 }
 
 function setSessionColor(primary, secondary) {
@@ -518,20 +562,20 @@ function setCookie(name, value, days) {
 function hiddenHead(param) {
     const header = document.querySelector('.header');
     const mainContent = document.querySelector('.main-content');
-    header.classList[param]('hidden')
-    mainContent.classList[param]('hidden')
+    header.classList[param]('hidden');
+    mainContent.classList[param]('hidden');
 }
 
 function handleInputChange(e, property) {
     if (property === TEXT) {
-        setRootProperty(WHITE_ROOT, e.target.value)
+        setRootProperty(WHITE_ROOT, e.target.value);
         const invertedColor = invertHexColor(e.target.value);
-        setRootProperty(GREEN_ROOT, invertedColor)
+        setRootProperty(GREEN_ROOT, invertedColor);
         sessionStorage.setItem(WHITE_ROOT, e.target.value);
         sessionStorage.setItem(GREEN_ROOT, invertedColor);
     }
     if (property === BG) {
-        setRootProperty(BLACK_ROOT, e.target.value)
+        setRootProperty(BLACK_ROOT, e.target.value);
         sessionStorage.setItem(BLACK_ROOT, e.target.value);
     }
 }
@@ -539,23 +583,23 @@ function handleInputChange(e, property) {
 function handleResetClick(e, property) {
     e.preventDefault();
     if (themeUser === DARK && property === TEXT) {
-        setThemeProperty(WHITE_ROOT, DEFAULT_COLOR_WHITE)
-        setThemeProperty(GREEN_ROOT, DEFAULT_COLOR_GREEN)
+        setThemeProperty(WHITE_ROOT, DEFAULT_COLOR_WHITE);
+        setThemeProperty(GREEN_ROOT, DEFAULT_COLOR_GREEN);
         sessionStorage.removeItem(WHITE_ROOT);
         sessionStorage.removeItem(GREEN_ROOT);
     }
     if (themeUser === DARK && property === BG) {
-        setThemeProperty(BLACK_ROOT, DEFAULT_COLOR_BLACK)
+        setThemeProperty(BLACK_ROOT, DEFAULT_COLOR_BLACK);
         sessionStorage.removeItem(BLACK_ROOT);
     }
     if (themeUser === WHITE && property === TEXT) {
-        setThemeProperty(WHITE_ROOT, DEFAULT_COLOR_BLACK)
-        setThemeProperty(GREEN_ROOT, DEFAULT_COLOR_GREEN)
+        setThemeProperty(WHITE_ROOT, DEFAULT_COLOR_BLACK);
+        setThemeProperty(GREEN_ROOT, DEFAULT_COLOR_GREEN);
         sessionStorage.removeItem(WHITE_ROOT);
         sessionStorage.removeItem(GREEN_ROOT);
     }
     if (themeUser === WHITE && property === BG) {
-        setThemeProperty(BLACK_ROOT, DEFAULT_COLOR_WHITE)
+        setThemeProperty(BLACK_ROOT, DEFAULT_COLOR_WHITE);
         sessionStorage.removeItem(BLACK_ROOT);
     }
 }
@@ -578,9 +622,9 @@ function handleNavigation(e) {
     selectPage(hash);
     if (e.target.textContent === "Settings") {
         hiddenHead('add')
-        customBG()
+        customBG();
     } else {
-        hiddenHead('remove')
+        hiddenHead('remove');
     }
 }
 
@@ -601,11 +645,11 @@ function customBG() {
 
 function classListSwitcher(styleLeft) {
     const [white, black] = rootColors();
-    setSessionColor(white, black)
+    setSessionColor(white, black);
     switcherToggler.style.left = styleLeft;
     const settingsLink = document.querySelector('.settings');
     if (settingsLink.classList.contains(ACTIVE)) {
-        setColors(white, black)
+        setColors(white, black);
         hiddenHead('add');
     }
 }
@@ -645,7 +689,7 @@ function setActiveLink(hash, paths) {
 
 function appendChild(hash, paths) {
     const page = pages[hash];
-    paths.includes(hash) ? drawPage(page) : drawPage(pages['notFound'])
+    paths.includes(hash) ? drawPage(page) : drawPage(pages['notFound']);
 }
 
 function isValidGitHubUsername(username) {
@@ -681,7 +725,7 @@ function setupUserData(activePage, bio, repo) {
     const userData = {
         userInfo: bio,
         userRepo: repo,
-        title: pages[activePage].title
+        title: pages[activePage].title,
     };
     pages[activePage] = userData;
     return userData;
@@ -689,14 +733,14 @@ function setupUserData(activePage, bio, repo) {
 
 function setErrorSpan(message) {
     const errorSpan = document.querySelector('.error');
-    errorSpan.textContent = message
+    errorSpan.textContent = message;
 }
 
 function setupOptions() {
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key.substring(0, 4) === 'user') {
-            setOption(key.substring(5))
+            setOption(key.substring(5));
         }
     }
 }
@@ -741,9 +785,20 @@ function promiseRequest(username) {
 }
 
 async function asyncRequest(username) {
+    const methods = {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+    }
     try {
-        const requestUser = await fetch(`${userUrl}${username}`);
-        const requestRepos = await fetch(`${userUrl}${username}${repos}`);
+        const requestUser = await fetch(`${userUrl}${username}`, methods);
+        const requestRepos = await fetch(`${userUrl}${username}${repos}`, methods);
 
         if (!requestRepos.ok || !requestUser.ok) {
             throw new Error(`User: error ${requestUser.status}`);
@@ -763,15 +818,15 @@ function promiseRequestUserInfo(username, activePage) {
             const newUserData = JSON.parse(response['userInfo']);
             const newRepoData = JSON.parse(response['userRepo']);
             const {userInfoMy, userRepoMy} = slicedData({userInfo: newUserData, userRepo: newRepoData});
-            const userData = setupUserData(activePage, userInfoMy, userRepoMy)
+            const userData = setupUserData(activePage, userInfoMy, userRepoMy);
             localStorage.setItem(`user:${username}`, JSON.stringify(userData));
-            setErrorSpan('')
-            setOption(username)
-            drawPage(userData)
-            preload('remove')
+            setErrorSpan('');
+            setOption(username);
+            drawPage(userData);
+            preload('remove');
         })
         .catch(error => {
-            setErrorSpan(error)
+            setErrorSpan(error);
         });
 }
 
@@ -779,14 +834,14 @@ async function asyncRequestUserInfo(username, activePage) {
     try {
         const newUserData = await asyncRequest(username);
         const {userInfoMy, userRepoMy} = slicedData(newUserData);
-        const userData = setupUserData(activePage, userInfoMy, userRepoMy)
+        const userData = setupUserData(activePage, userInfoMy, userRepoMy);
         localStorage.setItem(`user:${username}`, JSON.stringify(userData));
         drawPage(userData);
-        setErrorSpan('')
-        setOption(username)
-        preload('remove')
+        setErrorSpan('');
+        setOption(username);
+        preload('remove');
     } catch (error) {
-        setErrorSpan(error)
+        setErrorSpan(error);
     }
 }
 
@@ -796,7 +851,7 @@ function preload(param) {
 }
 
 async function submitChange(e) {
-    preload('add')
+    preload('add');
     e.preventDefault();
 
     if (isLoading) {
@@ -838,7 +893,7 @@ async function submitChange(e) {
             isLoading = false;
         }
     }
-    preload('remove')
+    preload('remove');
 }
 
 function headInfoChange() {
@@ -847,7 +902,7 @@ function headInfoChange() {
     if (activeLink) {
         headInfo.innerText = activeLink.innerText + ' Request';
     } else {
-        headInfo.innerText = 'JavaScript Request'
+        headInfo.innerText = 'JavaScript Request';
     }
 }
 
@@ -858,15 +913,15 @@ function popChange() {
     headInfoChange();
     selectPage(hash);
     if (set.classList.contains(ACTIVE)) {
-        hiddenHead('add')
-        customBG()
+        hiddenHead('add');
+        customBG();
     } else {
-        hiddenHead('remove')
+        hiddenHead('remove');
     }
 }
 
 function resetError() {
-    setErrorSpan('')
+    setErrorSpan('');
 }
 
 function isFocusIn(e) {
