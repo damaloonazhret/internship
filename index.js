@@ -1,5 +1,6 @@
-let themeUser = localStorage.getItem('theme');
 let layout;
+let isLoading = false;
+let themeUser = localStorage.getItem('theme');
 const BG = 'bg';
 const hash = getCookie('hash');
 const body = document.querySelector("body");
@@ -15,6 +16,7 @@ const GREEN_ROOT = '--green';
 const LEFT_SWITCH = '9%';
 const RIGHT_SWITCH = '68%';
 const TRANSITION_ALL = '--transition-all';
+const INPUT_PLACEHOLDER = 'Write GitHub NickName...';
 const DEFAULT_COLOR_GREEN = '#27ae60';
 const DEFAULT_COLOR_WHITE = '#ffffff';
 const DEFAULT_COLOR_BLACK = '#1a1a1a';
@@ -43,7 +45,7 @@ const pages = {
     }
 }
 
-window.addEventListener("DOMContentLoaded", (event) => {
+window.addEventListener("DOMContentLoaded", () => {
     document.documentElement.style.setProperty(TRANSITION_ALL, DEFAULT_TRANSITION_VALUE);
 });
 
@@ -53,14 +55,14 @@ class PageLayoutBuilder {
         this.infoHead = infoHead;
     }
 
-    createHeader() {
+    createHeader(obj) {
         const header = document.createElement("header");
         const head = this.infoHead.charAt(0).toUpperCase() + this.infoHead.substring(1);
         header.classList.add('header');
         if (this.className === 'hidden') {
             header.classList.add(this.className);
         }
-        header.appendChild(this.createHeaderForm(head));
+        header.appendChild(this.createHeaderForm(head, obj));
         return header;
     }
 
@@ -76,36 +78,44 @@ class PageLayoutBuilder {
 
     createSearchDiv() {
         const div = document.createElement('div');
+        const searchInfo = {
+            id: 'url',
+            placeholder: INPUT_PLACEHOLDER,
+            name: 'url',
+            type: 'search',
+            list: 'names',
+        }
         div.classList.add('search');
-        div.appendChild(this.createInput());
+        div.appendChild(this.createElement(searchInfo, 'input'));
         div.appendChild(this.createDatalist());
         div.appendChild(this.createErrorSpan());
         return div;
     }
 
-    createInput() {
-        const input = document.createElement('input');
-        input.id = 'url';
-        input.placeholder = 'Write GitHub nickname...'
-        input.setAttribute('list', 'names');
+    createElement(info, type) {
+        const input = document.createElement(type);
+        for (const attr in info) {
+            if (attr === 'textContent') {
+                input[attr] = info[attr]
+                continue
+            }
+            input.setAttribute(attr, info[attr]);
+        }
         return input;
     }
 
     createDatalist() {
-        const dataList = document.createElement('datalist');
-        dataList.id = 'names';
-        return dataList;
+        return this.createElement({id: 'names'}, 'datalist')
     }
 
     createErrorSpan() {
-        const span = document.createElement('span');
-        span.classList.add('error');
-        return span;
+        return this.createElement({class: 'error'}, 'span')
     }
 
     createMain() {
-        const main = document.createElement('main');
-        main.classList.add('main-content');
+        const main =this.createElement({
+            class: 'main-content',
+        }, 'main');
         if (this.className) {
             main.classList.add(this.className);
         }
@@ -114,8 +124,9 @@ class PageLayoutBuilder {
     }
 
     createAside() {
-        const aside = document.createElement('aside');
-        aside.classList.add('aside');
+        const aside =this.createElement({
+            class: 'aside',
+        }, 'aside');
         aside.appendChild(this.createNav());
         aside.appendChild(this.createNavArrows());
         aside.appendChild(this.createThemeSwitcher());
@@ -123,8 +134,9 @@ class PageLayoutBuilder {
     }
 
     createNav() {
-        const nav = document.createElement('nav');
-        nav.classList.add('nav');
+        const nav =this.createElement({
+            class: 'nav',
+        }, 'nav');
         nav.appendChild(this.createNavLink('promise', 'main', 'Promise'));
         nav.appendChild(this.createNavLink('async', 'info', 'Async'));
         nav.appendChild(this.createNavLink('settings', 'settings', 'Settings'));
@@ -132,68 +144,65 @@ class PageLayoutBuilder {
     }
 
     createNavLink(href, className, text) {
-        const link = document.createElement('a');
-        link.href = `#${href}`;
-        link.classList.add(className);
-        link.textContent = text;
-        return link;
+        return this.createElement({
+            href: `#${href}`,
+            class: className,
+            textContent: text
+        }, 'a')
     }
 
     createNavArrows() {
-        const navArrows = document.createElement('nav');
-        navArrows.classList.add('nav-arrows');
+        const navArrows =this.createElement({
+            class: 'nav-arrows',
+        }, 'nav');
         navArrows.appendChild(this.createArrowButton('back', '<'));
         navArrows.appendChild(this.createArrowButton('forward', '>'));
         return navArrows;
     }
 
     createArrowButton(id, text) {
-        const button = document.createElement('p');
-        button.id = id;
-        button.textContent = text;
-        return button;
+        return this.createElement({id: id, textContent: text}, 'p')
     }
 
     createThemeSwitcher() {
-        const themeSwitcher = document.createElement('div');
-        themeSwitcher.classList.add('theme-switcher');
+        const themeSwitcher = this.createElement({
+            class: 'theme-switcher',
+        }, 'div');
         themeSwitcher.appendChild(this.createSwitcherInput());
         themeSwitcher.appendChild(this.createSwitcherLabel());
         return themeSwitcher;
     }
 
     createSwitcherInput() {
-        const switcherInput = document.createElement('input');
-        switcherInput.classList.add('switcher-input');
-        switcherInput.type = 'checkbox';
-        switcherInput.name = 'switcher';
-        switcherInput.id = 'switcher-input';
-        return switcherInput;
+        return this.createElement({
+            type: 'checkbox',
+            name: 'switcher',
+            id: 'switcher-input',
+            class: 'switcher-input'
+        }, 'input');
     }
 
     createSwitcherLabel() {
-        const switcherLabel = document.createElement('label');
-        switcherLabel.classList.add('switcher-label');
-        switcherLabel.setAttribute('for', 'switcher-input');
+        const switcherLabel = this.createElement({
+            class: 'switcher-label',
+            for: 'switcher-input'
+        }, 'label');
         switcherLabel.appendChild(this.createSwitcherSpan());
         return switcherLabel;
     }
 
     createSwitcherSpan() {
-        const switcherSpan = document.createElement('span');
-        switcherSpan.classList.add('switcher-toggler');
-        return switcherSpan;
+        return this.createElement({class: 'switcher-toggler'}, 'span');
     }
 
     createPreloader() {
-        const preloader = document.createElement('div');
-        preloader.id = 'preloader';
-        return preloader;
+        return this.createElement({id: 'preloader'}, 'div');
     }
 }
 
-class PageCreator {
+class PageCreator extends PageLayoutBuilder {
     constructor({title, about, input, inputTextColorInfo, inputBGColorInfo, userInfo, userRepo}) {
+        super();
         this.title = title;
         this.about = about;
         this.input = input;
@@ -295,22 +304,34 @@ class PageCreator {
         const colorArticle = document.createDocumentFragment();
         const h2Title = document.createElement('h2');
         const pAbout = document.createElement('p');
+        const textInfo = {
+            id: 'text',
+            placeholder: '',
+            name: 'color',
+            type: 'color'
+        }
+        const BGInfo = {
+            id: 'BG',
+            placeholder: '',
+            name: 'color',
+            type: 'color'
+        }
 
         h2Title.classList.add('settings-title');
         h2Title.textContent = this.title;
         pAbout.textContent = this.about;
         colorArticle.appendChild(h2Title);
-        colorArticle.appendChild(this.createColorSetting('text', this.inputTextColorInfo, 'text-color'));
-        colorArticle.appendChild(this.createColorSetting('BG', this.inputBGColorInfo, 'background-color'));
+        colorArticle.appendChild(this.createColorSetting('reset-text', this.inputTextColorInfo, textInfo));
+        colorArticle.appendChild(this.createColorSetting('reset-BG', this.inputBGColorInfo, BGInfo));
         colorArticle.appendChild(pAbout);
 
         return colorArticle;
     }
 
-    createColorSetting(id, label, name) {
+    createColorSetting(id, label, obj) {
         const settingDiv = document.createElement('div');
         const labelFor = this.createLabelFor(id, label);
-        const inputColor = this.createInput(id);
+        const inputColor = this.createInput(obj, 'input');
         const buttonReset = this.createButton(id);
 
         settingDiv.classList.add('setting');
@@ -322,32 +343,15 @@ class PageCreator {
     }
 
     createButton(id) {
-        const buttonReset = document.createElement('button');
-
-        buttonReset.id = `reset-${id}`;
-        buttonReset.type = 'button';
-        buttonReset.textContent = 'Reset';
-
-        return buttonReset;
+        return super.createElement({id: id, type: 'button', textContent: 'Reset'}, 'button');
     }
 
-    createInput(id) {
-        const inputColor = document.createElement('input');
-
-        inputColor.id = id;
-        inputColor.type = 'color';
-        inputColor.name = name;
-
-        return inputColor;
+    createInput(info, type) {
+        return super.createElement(info, type);
     }
 
     createLabelFor(id, label) {
-        const labelFor = document.createElement('label');
-
-        labelFor.setAttribute('for', id);
-        labelFor.textContent = label;
-
-        return labelFor;
+        return super.createElement({for: id, textContent: label}, 'label');
     }
 
     render() {
@@ -736,7 +740,6 @@ function promiseRequest(username) {
         })
 }
 
-
 async function asyncRequest(username) {
     try {
         const requestUser = await fetch(`${userUrl}${username}`);
@@ -792,8 +795,6 @@ function preload(param) {
     preloader.classList[param]('loader');
 }
 
-let isLoading = false;
-
 async function submitChange(e) {
     preload('add')
     e.preventDefault();
@@ -837,9 +838,8 @@ async function submitChange(e) {
             isLoading = false;
         }
     }
+    preload('remove')
 }
-
-form.addEventListener('submit', submitChange);
 
 function headInfoChange() {
     const headInfo = document.querySelector('#head-info');
@@ -869,10 +869,20 @@ function resetError() {
     setErrorSpan('')
 }
 
-switcherLabel.addEventListener('click', themeSwitcher)
-form.addEventListener('submit', submitChange)
-urlInfo.addEventListener('input', resetError)
+function isFocusIn(e) {
+    e.target.placeholder = '';
+}
+
+function isFocusOut(e) {
+    e.target.placeholder = INPUT_PLACEHOLDER;
+}
+
+form.addEventListener('submit', submitChange);
+urlInfo.addEventListener('input', resetError);
+urlInfo.addEventListener('focusin', isFocusIn);
+urlInfo.addEventListener('focusout', isFocusOut);
 window.addEventListener('popstate', popChange);
+switcherLabel.addEventListener('click', themeSwitcher);
 contents.forEach((content) => {
     content.addEventListener('click', handleNavigation)
 });
