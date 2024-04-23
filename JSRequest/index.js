@@ -21,7 +21,7 @@ const DEFAULT_COLOR_GREEN = '#27ae60';
 const DEFAULT_COLOR_WHITE = '#ffffff';
 const DEFAULT_COLOR_BLACK = '#1a1a1a';
 const DEFAULT_TRANSITION_VALUE = '0.4s all ease-in';
-const invalidName = 'Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen.';
+const invalidUsernameMessage = 'Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen.';
 const pages = {
     promise: {
         title: 'Promise request Page',
@@ -428,7 +428,7 @@ initialTheme();
 ;(() => {
     const hash = getCookie('hash') || 'promise';
     selectPage(hash);
-    if (hash === 'settings') customBG();
+    if (hash === 'settings') setupCustomColors();
 })();
 
 function initialTheme() {
@@ -559,7 +559,7 @@ function setCookie(name, value, days) {
     document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
 }
 
-function hiddenHead(param) {
+function toggleHidden(param) {
     const header = document.querySelector('.header');
     const mainContent = document.querySelector('.main-content');
     header.classList[param]('hidden');
@@ -621,14 +621,14 @@ function handleNavigation(e) {
     history.pushState(pages[hash], hash, '#' + hash);
     selectPage(hash);
     if (e.target.textContent === "Settings") {
-        hiddenHead('add')
-        customBG();
+        toggleHidden('add')
+        setupCustomColors();
     } else {
-        hiddenHead('remove');
+        toggleHidden('remove');
     }
 }
 
-function customBG() {
+function setupCustomColors() {
     const bg = document.querySelector('#BG');
     const text = document.querySelector('#text');
     const resetText = document.querySelector('#reset-text');
@@ -650,7 +650,7 @@ function classListSwitcher(styleLeft) {
     const settingsLink = document.querySelector('.settings');
     if (settingsLink.classList.contains(ACTIVE)) {
         setColors(white, black);
-        hiddenHead('add');
+        toggleHidden('add');
     }
 }
 
@@ -697,14 +697,22 @@ function isValidGitHubUsername(username) {
     return githubUsernameRegex.test(username);
 }
 
-function slicedData({userInfo, userRepo}) {
+function extractUserData({userInfo, userRepo}) {
     const userInfoMy = {
         name: userInfo['name'],
         html_url: userInfo['html_url'],
         avatar_url: userInfo['avatar_url'],
         login: userInfo['login'],
     }
-    const userRepoMy = userRepo.map(({full_name, language, visibility, html_url, created_at}) => ({
+    const userRepoMy = userRepo.map((
+        {
+            full_name,
+            language,
+            visibility,
+            html_url,
+            created_at
+        }
+    ) => ({
         full_name,
         language,
         visibility,
@@ -791,7 +799,7 @@ async function asyncRequest(username) {
         cache: 'no-cache',
         credentials: 'same-origin',
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
         },
         redirect: 'follow',
         referrerPolicy: 'no-referrer',
@@ -812,88 +820,85 @@ async function asyncRequest(username) {
     }
 }
 
-function promiseRequestUserInfo(username, activePage) {
+function getUserInfo(username, activePage) {
     promiseRequest(username)
         .then(response => {
             const newUserData = JSON.parse(response['userInfo']);
             const newRepoData = JSON.parse(response['userRepo']);
-            const {userInfoMy, userRepoMy} = slicedData({userInfo: newUserData, userRepo: newRepoData});
+            const {userInfoMy, userRepoMy} = extractUserData({
+                userInfo: newUserData,
+                userRepo: newRepoData
+            });
             const userData = setupUserData(activePage, userInfoMy, userRepoMy);
             localStorage.setItem(`user:${username}`, JSON.stringify(userData));
             setErrorSpan('');
             setOption(username);
             drawPage(userData);
-            preload('remove');
         })
         .catch(error => {
             setErrorSpan(error);
         });
 }
 
-async function asyncRequestUserInfo(username, activePage) {
+async function getUserInfoAsync(username, activePage) {
     try {
         const newUserData = await asyncRequest(username);
-        const {userInfoMy, userRepoMy} = slicedData(newUserData);
+        const {userInfoMy, userRepoMy} = extractUserData(newUserData);
         const userData = setupUserData(activePage, userInfoMy, userRepoMy);
         localStorage.setItem(`user:${username}`, JSON.stringify(userData));
         drawPage(userData);
         setErrorSpan('');
         setOption(username);
-        preload('remove');
     } catch (error) {
         setErrorSpan(error);
     }
 }
 
-function preload(param) {
+function togglePreloader(param) {
     const preloader = document.querySelector('#preloader');
     preloader.classList[param]('loader');
 }
 
+function setLoadingState(param, bool) {
+    togglePreloader(param);
+    isLoading = bool;
+}
+
 async function submitChange(e) {
-    preload('add');
     e.preventDefault();
 
     if (isLoading) {
         return;
     }
 
-    isLoading = true;
-
     const username = urlInfo.value.trim();
     const localUsername = localStorage.getItem(`user:${username}`);
-    const activePage = document.querySelector('.nav a.active').innerText.toLowerCase();
+    const activePage = document.querySelector('.nav a.active');
+    const activePageText = activePage.innerText.toLowerCase();
 
     if (username === '') {
         setErrorSpan('Empty string');
-        isLoading = false;
     } else if (!isValidGitHubUsername(username)) {
-        setErrorSpan(invalidName);
-        isLoading = false;
+        setErrorSpan(invalidUsernameMessage);
     } else if (localUsername) {
         const {userInfo, userRepo} = JSON.parse(localUsername);
-        const userData = setupUserData(activePage, userInfo, userRepo);
+        const userData = setupUserData(activePageText, userInfo, userRepo);
         setErrorSpan('');
         drawPage(userData);
-        isLoading = false;
     } else {
-        try {
-            switch (activePage) {
-                case 'promise':
-                    await promiseRequestUserInfo(username, activePage);
-                    break;
-                case 'async':
-                    await asyncRequestUserInfo(username, activePage);
-                    break;
-                default:
-                    break;
-            }
-        } catch (error) {
-        } finally {
-            isLoading = false;
+        setLoadingState('add', true)
+        switch (activePageText) {
+            case 'promise':
+                await getUserInfo(username, activePageText);
+                break;
+            case 'async':
+                await getUserInfoAsync(username, activePageText);
+                break;
+            default:
+                break;
         }
+        setLoadingState('remove', false)
     }
-    preload('remove');
 }
 
 function headInfoChange() {
@@ -913,10 +918,10 @@ function popChange() {
     headInfoChange();
     selectPage(hash);
     if (set.classList.contains(ACTIVE)) {
-        hiddenHead('add');
-        customBG();
+        toggleHidden('add');
+        setupCustomColors();
     } else {
-        hiddenHead('remove');
+        toggleHidden('remove');
     }
 }
 
@@ -924,18 +929,18 @@ function resetError() {
     setErrorSpan('');
 }
 
-function isFocusIn(e) {
+function clearInputPlaceholder(e) {
     e.target.placeholder = '';
 }
 
-function isFocusOut(e) {
+function restoreInputPlaceholder(e) {
     e.target.placeholder = INPUT_PLACEHOLDER;
 }
 
 form.addEventListener('submit', submitChange);
 urlInfo.addEventListener('input', resetError);
-urlInfo.addEventListener('focusin', isFocusIn);
-urlInfo.addEventListener('focusout', isFocusOut);
+urlInfo.addEventListener('focusin', clearInputPlaceholder);
+urlInfo.addEventListener('focusout', restoreInputPlaceholder);
 window.addEventListener('popstate', popChange);
 switcherLabel.addEventListener('click', themeSwitcher);
 contents.forEach((content) => {
