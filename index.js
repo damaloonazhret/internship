@@ -793,7 +793,7 @@ function promiseRequest(username) {
 }
 
 async function asyncRequest(username) {
-    const methods = {
+    const options = {
         method: 'GET',
         mode: 'cors',
         cache: 'no-cache',
@@ -805,8 +805,8 @@ async function asyncRequest(username) {
         referrerPolicy: 'no-referrer',
     }
     try {
-        const requestUser = await fetch(`${userUrl}${username}`, methods);
-        const requestRepos = await fetch(`${userUrl}${username}${repos}`, methods);
+        const requestUser = await fetch(`${userUrl}${username}`, options);
+        const requestRepos = await fetch(`${userUrl}${username}${repos}`, options);
 
         if (!requestRepos.ok || !requestUser.ok) {
             throw new Error(`User: error ${requestUser.status}`);
