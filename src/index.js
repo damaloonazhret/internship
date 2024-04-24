@@ -1,8 +1,10 @@
 import 'react-app-polyfill/ie9';
 import 'react-app-polyfill/stable';
-import './index.css'
-let themeUser = localStorage.getItem('theme');
+import './index.scss'
+import defaultHash from './assets/hash.txt'
 let layout;
+let isLoading = false;
+let themeUser = localStorage.getItem('theme');
 const BG = 'bg';
 const hash = getCookie('hash');
 const body = document.querySelector("body");
@@ -18,11 +20,12 @@ const GREEN_ROOT = '--green';
 const LEFT_SWITCH = '9%';
 const RIGHT_SWITCH = '68%';
 const TRANSITION_ALL = '--transition-all';
+const INPUT_PLACEHOLDER = 'Write GitHub NickName...';
 const DEFAULT_COLOR_GREEN = '#27ae60';
 const DEFAULT_COLOR_WHITE = '#ffffff';
 const DEFAULT_COLOR_BLACK = '#1a1a1a';
 const DEFAULT_TRANSITION_VALUE = '0.4s all ease-in';
-const invalidName = 'Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen.';
+const invalidUsernameMessage = 'Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen.';
 const pages = {
     promise: {
         title: 'Promise request Page',
@@ -42,8 +45,8 @@ const pages = {
     },
     notFound: {
         title: '404 error',
-        about: 'not found'
-    }
+        about: 'not found',
+    },
 }
 
 window.addEventListener("DOMContentLoaded", () => {
@@ -56,14 +59,14 @@ class PageLayoutBuilder {
         this.infoHead = infoHead;
     }
 
-    createHeader() {
+    createHeader(obj) {
         const header = document.createElement("header");
         const head = this.infoHead.charAt(0).toUpperCase() + this.infoHead.substring(1);
         header.classList.add('header');
         if (this.className === 'hidden') {
             header.classList.add(this.className);
         }
-        header.appendChild(this.createHeaderForm(head));
+        header.appendChild(this.createHeaderForm(head, obj));
         return header;
     }
 
@@ -79,35 +82,48 @@ class PageLayoutBuilder {
 
     createSearchDiv() {
         const div = document.createElement('div');
+        const searchInfo = {
+            tagName: 'input',
+            id: 'url',
+            placeholder: INPUT_PLACEHOLDER,
+            name: 'url',
+            type: 'search',
+            list: 'names',
+        }
         div.classList.add('search');
-        div.appendChild(this.createInput());
+        div.appendChild(this.createElement(searchInfo));
         div.appendChild(this.createDatalist());
         div.appendChild(this.createErrorSpan());
         return div;
     }
 
-    createInput() {
-        const input = document.createElement('input');
-        input.id = 'url';
-        input.setAttribute('list', 'names');
+    createElement(info) {
+        const input = document.createElement(info.tagName);
+        for (const attr in info) {
+            if (attr === 'textContent') {
+                input[attr] = info[attr];
+                continue
+            }
+            if (attr !== 'tagName') {
+                input.setAttribute(attr, info[attr]);
+            }
+        }
         return input;
     }
 
     createDatalist() {
-        const dataList = document.createElement('datalist');
-        dataList.id = 'names';
-        return dataList;
+        return this.createElement({tagName: 'datalist', id: 'names'});
     }
 
     createErrorSpan() {
-        const span = document.createElement('span');
-        span.classList.add('error');
-        return span;
+        return this.createElement({tagName: 'span', class: 'error'});
     }
 
     createMain() {
-        const main = document.createElement('main');
-        main.classList.add('main-content');
+        const main = this.createElement({
+            tagName: 'main',
+            class: 'main-content',
+        });
         if (this.className) {
             main.classList.add(this.className);
         }
@@ -116,17 +132,24 @@ class PageLayoutBuilder {
     }
 
     createAside() {
-        const aside = document.createElement('aside');
-        aside.classList.add('aside');
+        const aside = this.createElement({
+            tagName: 'aside',
+            class: 'aside',
+        });
+
         aside.appendChild(this.createNav());
         aside.appendChild(this.createNavArrows());
         aside.appendChild(this.createThemeSwitcher());
+
         return aside;
     }
 
     createNav() {
-        const nav = document.createElement('nav');
-        nav.classList.add('nav');
+        const nav = this.createElement({
+            tagName: 'nav',
+            class: 'nav',
+        });
+
         nav.appendChild(this.createNavLink('promise', 'main', 'Promise'));
         nav.appendChild(this.createNavLink('async', 'info', 'Async'));
         nav.appendChild(this.createNavLink('settings', 'settings', 'Settings'));
@@ -134,62 +157,80 @@ class PageLayoutBuilder {
     }
 
     createNavLink(href, className, text) {
-        const link = document.createElement('a');
-        link.href = `#${href}`;
-        link.classList.add(className);
-        link.textContent = text;
-        return link;
+        return this.createElement({
+            tagName: 'a',
+            href: `#${href}`,
+            class: className,
+            textContent: text,
+        })
     }
 
     createNavArrows() {
-        const navArrows = document.createElement('nav');
-        navArrows.classList.add('nav-arrows');
+        const navArrows = this.createElement({
+            tagName: 'nav',
+            class: 'nav-arrows',
+        });
         navArrows.appendChild(this.createArrowButton('back', '<'));
         navArrows.appendChild(this.createArrowButton('forward', '>'));
         return navArrows;
     }
 
     createArrowButton(id, text) {
-        const button = document.createElement('p');
-        button.id = id;
-        button.textContent = text;
-        return button;
+        return this.createElement({
+            tagName: 'p',
+            id,
+            textContent: text,
+        })
     }
 
     createThemeSwitcher() {
-        const themeSwitcher = document.createElement('div');
-        themeSwitcher.classList.add('theme-switcher');
+        const themeSwitcher = this.createElement({
+            tagName: 'div',
+            class: 'theme-switcher',
+        });
         themeSwitcher.appendChild(this.createSwitcherInput());
         themeSwitcher.appendChild(this.createSwitcherLabel());
         return themeSwitcher;
     }
 
     createSwitcherInput() {
-        const switcherInput = document.createElement('input');
-        switcherInput.classList.add('switcher-input');
-        switcherInput.type = 'checkbox';
-        switcherInput.name = 'switcher';
-        switcherInput.id = 'switcher-input';
-        return switcherInput;
+        return this.createElement({
+            tagName: 'input',
+            type: 'checkbox',
+            name: 'switcher',
+            id: 'switcher-input',
+            class: 'switcher-input',
+        });
     }
 
     createSwitcherLabel() {
-        const switcherLabel = document.createElement('label');
-        switcherLabel.classList.add('switcher-label');
-        switcherLabel.setAttribute('for', 'switcher-input');
+        const switcherLabel = this.createElement({
+            tagName: 'label',
+            class: 'switcher-label',
+            for: 'switcher-input',
+        });
         switcherLabel.appendChild(this.createSwitcherSpan());
         return switcherLabel;
     }
 
     createSwitcherSpan() {
-        const switcherSpan = document.createElement('span');
-        switcherSpan.classList.add('switcher-toggler');
-        return switcherSpan;
+        return this.createElement({
+            tagName: 'span',
+            class: 'switcher-toggler',
+        });
+    }
+
+    createPreloader() {
+        return this.createElement({
+            tagName: 'div',
+            id: 'preloader',
+        });
     }
 }
 
-class PageCreator {
-    constructor({ title, about, input, inputTextColorInfo, inputBGColorInfo, userInfo, userRepo }) {
+class PageCreator extends PageLayoutBuilder {
+    constructor({title, about, input, inputTextColorInfo, inputBGColorInfo, userInfo, userRepo}) {
+        super();
         this.title = title;
         this.about = about;
         this.input = input;
@@ -226,24 +267,21 @@ class PageCreator {
     }
 
     createRepoDiv(repoData) {
-        const repoDiv = document.createElement('div');
-        repoDiv.classList.add('repos');
+        const repoDiv = super.createElement({
+            tagName: 'div',
+            class: 'repos',
+        });
 
         const elements = [
-            { tagName: 'span', textContent: repoData.full_name },
-            { tagName: 'span', textContent: repoData.language },
-            { tagName: 'span', textContent: `Visibility: ${repoData.visibility}` },
-            { tagName: 'a', href: repoData.html_url, textContent: 'Link to repo', target: '_blank' },
-            { tagName: 'span', textContent: repoData.created_at }
+            {tagName: 'span', textContent: repoData.full_name},
+            {tagName: 'span', textContent: repoData.language},
+            {tagName: 'span', textContent: `Visibility: ${repoData.visibility}`},
+            {tagName: 'a', href: repoData.html_url, textContent: 'Link to repo', target: '_blank'},
+            {tagName: 'span', textContent: repoData.created_at},
         ];
 
         elements.forEach(el => {
-            const element = document.createElement(el.tagName);
-            for (const prop in el) {
-                if (prop !== 'tagName') {
-                    element[prop] = el[prop];
-                }
-            }
+            const element = super.createElement(el);
             repoDiv.appendChild(element);
         });
 
@@ -251,15 +289,24 @@ class PageCreator {
     }
 
     createUserInfoHTML(userInfo) {
-        const userInfoDiv = document.createElement('div');
-        userInfoDiv.classList.add('user-info');
+        const userInfoDiv = super.createElement({
+            tagName: 'div',
+            class: 'user-info',
+        });
+
+        const children = [
+            {
+                tagName: 'img',
+                src: userInfo.avatar_url,
+                alt: 'avatar',
+                classList: ['avatar'],
+            }
+        ];
 
         const elements = [
-            { tagName: 'span', textContent: `Name:${userInfo.name}` },
-            { tagName: 'a', href: userInfo.html_url, target: '_blank', children: [
-                    { tagName: 'img', src: userInfo.avatar_url, alt: 'avatar', classList: ['avatar'] }
-                ]},
-            { tagName: 'span', textContent: `Login:${userInfo.login}` }
+            {tagName: 'span', textContent: `Name:${userInfo.name}`},
+            {tagName: 'a', href: userInfo.html_url, target: '_blank', children},
+            {tagName: 'span', textContent: `Login:${userInfo.login}`},
         ];
 
         elements.forEach(el => {
@@ -287,24 +334,43 @@ class PageCreator {
 
     createColorArticle() {
         const colorArticle = document.createDocumentFragment();
-        const h2Title = document.createElement('h2');
-        const pAbout = document.createElement('p');
+        const h2Title = super.createElement({
+            tagName: 'h2',
+            class: 'settings-title',
+            textContent: this.title,
+        });
+        const pAbout = super.createElement({
+            tagName: 'p',
+            textContent: this.about,
+        });
 
-        h2Title.classList.add('settings-title');
-        h2Title.textContent = this.title;
-        pAbout.textContent = this.about;
+        const textInfo = {
+            tagName: 'input',
+            id: 'text',
+            placeholder: '',
+            name: 'color',
+            type: 'color',
+        }
+        const BGInfo = {
+            tagName: 'input',
+            id: 'BG',
+            placeholder: '',
+            name: 'color',
+            type: 'color',
+        }
+
         colorArticle.appendChild(h2Title);
-        colorArticle.appendChild(this.createColorSetting('text', this.inputTextColorInfo, 'text-color'));
-        colorArticle.appendChild(this.createColorSetting('BG', this.inputBGColorInfo, 'background-color'));
+        colorArticle.appendChild(this.createColorSetting('reset-text', this.inputTextColorInfo, textInfo));
+        colorArticle.appendChild(this.createColorSetting('reset-BG', this.inputBGColorInfo, BGInfo));
         colorArticle.appendChild(pAbout);
 
         return colorArticle;
     }
 
-    createColorSetting(id, label, name) {
+    createColorSetting(id, label, obj) {
         const settingDiv = document.createElement('div');
         const labelFor = this.createLabelFor(id, label);
-        const inputColor = this.createInput(id, name);
+        const inputColor = this.createInput(obj);
         const buttonReset = this.createButton(id);
 
         settingDiv.classList.add('setting');
@@ -316,32 +382,24 @@ class PageCreator {
     }
 
     createButton(id) {
-        const buttonReset = document.createElement('button');
-
-        buttonReset.id = `reset-${id}`;
-        buttonReset.type = 'button';
-        buttonReset.textContent = 'Reset';
-
-        return buttonReset;
+        return super.createElement({
+            tagName: 'button',
+            id,
+            type: 'button',
+            textContent: 'Reset',
+        });
     }
 
-    createInput(id, name) {
-        const inputColor = document.createElement('input');
-
-        inputColor.id = id;
-        inputColor.type = 'color';
-        inputColor.name = name;
-
-        return inputColor;
+    createInput(info) {
+        return super.createElement(info);
     }
 
     createLabelFor(id, label) {
-        const labelFor = document.createElement('label');
-
-        labelFor.setAttribute('for', id);
-        labelFor.textContent = label;
-
-        return labelFor;
+        return super.createElement({
+            tagName: 'label',
+            for: id,
+            textContent: label,
+        });
     }
 
     render() {
@@ -358,6 +416,7 @@ if (hash === 'settings') {
 body.prepend(layout.createMain());
 body.prepend(layout.createAside());
 body.prepend(layout.createHeader());
+body.prepend(layout.createPreloader());
 
 const main = document.querySelector('#main');
 const form = document.querySelector('form');
@@ -371,9 +430,9 @@ setupOptions();
 initialTheme();
 
 ;(() => {
-    const hash = getCookie('hash') || 'promise';
+    const hash = getCookie('hash') || defaultHash;
     selectPage(hash);
-    if (hash === 'settings') customBG();
+    if (hash === 'settings') setupCustomColors();
 })();
 
 function initialTheme() {
@@ -427,13 +486,13 @@ function setThemeColorsAndPosition(percent, switcherToggler, main, secondary) {
 }
 
 function setThemeProperty(property, value) {
-    setRootProperty(property, value)
+    setRootProperty(property, value);
     const [white, black] = rootColors();
     setColors(black, white);
 }
 
 function setRootProperty(color, session) {
-    document.documentElement.style.setProperty(color, session)
+    document.documentElement.style.setProperty(color, session);
 }
 
 function setSessionColor(primary, secondary) {
@@ -504,23 +563,23 @@ function setCookie(name, value, days) {
     document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
 }
 
-function hiddenHead(param) {
+function toggleHidden(param) {
     const header = document.querySelector('.header');
     const mainContent = document.querySelector('.main-content');
-    header.classList[param]('hidden')
-    mainContent.classList[param]('hidden')
+    header.classList[param]('hidden');
+    mainContent.classList[param]('hidden');
 }
 
 function handleInputChange(e, property) {
     if (property === TEXT) {
-        setRootProperty(WHITE_ROOT, e.target.value)
+        setRootProperty(WHITE_ROOT, e.target.value);
         const invertedColor = invertHexColor(e.target.value);
-        setRootProperty(GREEN_ROOT, invertedColor)
+        setRootProperty(GREEN_ROOT, invertedColor);
         sessionStorage.setItem(WHITE_ROOT, e.target.value);
         sessionStorage.setItem(GREEN_ROOT, invertedColor);
     }
     if (property === BG) {
-        setRootProperty(BLACK_ROOT, e.target.value)
+        setRootProperty(BLACK_ROOT, e.target.value);
         sessionStorage.setItem(BLACK_ROOT, e.target.value);
     }
 }
@@ -528,23 +587,23 @@ function handleInputChange(e, property) {
 function handleResetClick(e, property) {
     e.preventDefault();
     if (themeUser === DARK && property === TEXT) {
-        setThemeProperty(WHITE_ROOT, DEFAULT_COLOR_WHITE)
-        setThemeProperty(GREEN_ROOT, DEFAULT_COLOR_GREEN)
+        setThemeProperty(WHITE_ROOT, DEFAULT_COLOR_WHITE);
+        setThemeProperty(GREEN_ROOT, DEFAULT_COLOR_GREEN);
         sessionStorage.removeItem(WHITE_ROOT);
         sessionStorage.removeItem(GREEN_ROOT);
     }
     if (themeUser === DARK && property === BG) {
-        setThemeProperty(BLACK_ROOT, DEFAULT_COLOR_BLACK)
+        setThemeProperty(BLACK_ROOT, DEFAULT_COLOR_BLACK);
         sessionStorage.removeItem(BLACK_ROOT);
     }
     if (themeUser === WHITE && property === TEXT) {
-        setThemeProperty(WHITE_ROOT, DEFAULT_COLOR_BLACK)
-        setThemeProperty(GREEN_ROOT, DEFAULT_COLOR_GREEN)
+        setThemeProperty(WHITE_ROOT, DEFAULT_COLOR_BLACK);
+        setThemeProperty(GREEN_ROOT, DEFAULT_COLOR_GREEN);
         sessionStorage.removeItem(WHITE_ROOT);
         sessionStorage.removeItem(GREEN_ROOT);
     }
     if (themeUser === WHITE && property === BG) {
-        setThemeProperty(BLACK_ROOT, DEFAULT_COLOR_WHITE)
+        setThemeProperty(BLACK_ROOT, DEFAULT_COLOR_WHITE);
         sessionStorage.removeItem(BLACK_ROOT);
     }
 }
@@ -566,14 +625,14 @@ function handleNavigation(e) {
     window.history.pushState(pages[hash], hash, '#' + hash);
     selectPage(hash);
     if (e.target.textContent === "Settings") {
-        hiddenHead('add')
-        customBG()
+        toggleHidden('add')
+        setupCustomColors();
     } else {
-        hiddenHead('remove')
+        toggleHidden('remove');
     }
 }
 
-function customBG() {
+function setupCustomColors() {
     const bg = document.querySelector('#BG');
     const text = document.querySelector('#text');
     const resetText = document.querySelector('#reset-text');
@@ -590,12 +649,12 @@ function customBG() {
 
 function classListSwitcher(styleLeft) {
     const [white, black] = rootColors();
-    setSessionColor(white, black)
+    setSessionColor(white, black);
     switcherToggler.style.left = styleLeft;
     const settingsLink = document.querySelector('.settings');
     if (settingsLink.classList.contains(ACTIVE)) {
-        setColors(white, black)
-        hiddenHead('add');
+        setColors(white, black);
+        toggleHidden('add');
     }
 }
 
@@ -634,7 +693,7 @@ function setActiveLink(hash, paths) {
 
 function appendChild(hash, paths) {
     const page = pages[hash];
-    paths.includes(hash) ? drawPage(page) : drawPage(pages['notFound'])
+    paths.includes(hash) ? drawPage(page) : drawPage(pages['notFound']);
 }
 
 function isValidGitHubUsername(username) {
@@ -642,14 +701,22 @@ function isValidGitHubUsername(username) {
     return githubUsernameRegex.test(username);
 }
 
-function slicedData({userInfo, userRepo}) {
+function extractUserData({userInfo, userRepo}) {
     const userInfoMy = {
         name: userInfo['name'],
         html_url: userInfo['html_url'],
         avatar_url: userInfo['avatar_url'],
         login: userInfo['login'],
     }
-    const userRepoMy = userRepo.map(({full_name, language, visibility, html_url, created_at}) => ({
+    const userRepoMy = userRepo.map((
+        {
+            full_name,
+            language,
+            visibility,
+            html_url,
+            created_at
+        }
+    ) => ({
         full_name,
         language,
         visibility,
@@ -670,7 +737,7 @@ function setupUserData(activePage, bio, repo) {
     const userData = {
         userInfo: bio,
         userRepo: repo,
-        title: pages[activePage].title
+        title: pages[activePage].title,
     };
     pages[activePage] = userData;
     return userData;
@@ -678,14 +745,14 @@ function setupUserData(activePage, bio, repo) {
 
 function setErrorSpan(message) {
     const errorSpan = document.querySelector('.error');
-    errorSpan.textContent = message
+    errorSpan.textContent = message;
 }
 
 function setupOptions() {
     for (let i = 0; i < localStorage.length; i++) {
         const key = localStorage.key(i);
         if (key.substring(0, 4) === 'user') {
-            setOption(key.substring(5))
+            setOption(key.substring(5));
         }
     }
 }
@@ -730,9 +797,20 @@ function promiseRequest(username) {
 }
 
 async function asyncRequest(username) {
+    const options = {
+        method: 'GET',
+        mode: 'cors',
+        cache: 'no-cache',
+        credentials: 'same-origin',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        redirect: 'follow',
+        referrerPolicy: 'no-referrer',
+    }
     try {
-        const requestUser = await fetch(`${userUrl}${username}`);
-        const requestRepos = await fetch(`${userUrl}${username}${repos}`);
+        const requestUser = await fetch(`${userUrl}${username}`, options);
+        const requestRepos = await fetch(`${userUrl}${username}${repos}`, options);
 
         if (!requestRepos.ok || !requestUser.ok) {
             throw new Error(`User: error ${requestUser.status}`);
@@ -746,80 +824,84 @@ async function asyncRequest(username) {
     }
 }
 
-function promiseRequestUserInfo(username, activePage) {
+function getUserInfo(username, activePage) {
     promiseRequest(username)
         .then(response => {
             const newUserData = JSON.parse(response['userInfo']);
             const newRepoData = JSON.parse(response['userRepo']);
-            const {userInfoMy, userRepoMy} = slicedData({userInfo: newUserData, userRepo: newRepoData});
-            const userData = setupUserData(activePage, userInfoMy, userRepoMy)
+            const {userInfoMy, userRepoMy} = extractUserData({
+                userInfo: newUserData,
+                userRepo: newRepoData
+            });
+            const userData = setupUserData(activePage, userInfoMy, userRepoMy);
             localStorage.setItem(`user:${username}`, JSON.stringify(userData));
-            setErrorSpan('')
-            setOption(username)
-            drawPage(userData)
+            setErrorSpan('');
+            setOption(username);
+            drawPage(userData);
         })
         .catch(error => {
-            setErrorSpan(error)
+            setErrorSpan(error);
         });
 }
 
-async function asyncRequestUserInfo(username, activePage) {
+async function getUserInfoAsync(username, activePage) {
     try {
         const newUserData = await asyncRequest(username);
-        const {userInfoMy, userRepoMy} = slicedData(newUserData);
-        const userData = setupUserData(activePage, userInfoMy, userRepoMy)
+        const {userInfoMy, userRepoMy} = extractUserData(newUserData);
+        const userData = setupUserData(activePage, userInfoMy, userRepoMy);
         localStorage.setItem(`user:${username}`, JSON.stringify(userData));
         drawPage(userData);
-        setErrorSpan('')
-        setOption(username)
+        setErrorSpan('');
+        setOption(username);
     } catch (error) {
-        setErrorSpan(error)
+        setErrorSpan(error);
     }
 }
 
-let isRequesting = false;
+function togglePreloader(param) {
+    const preloader = document.querySelector('#preloader');
+    preloader.classList[param]('loader');
+}
+
+function setLoadingState(param, bool) {
+    togglePreloader(param);
+    isLoading = bool;
+}
 
 async function submitChange(e) {
     e.preventDefault();
 
-    if (isRequesting) {
+    if (isLoading) {
         return;
     }
 
-    isRequesting = true;
-
     const username = urlInfo.value.trim();
     const localUsername = localStorage.getItem(`user:${username}`);
-    const activePage = document.querySelector('.nav a.active').innerText.toLowerCase();
+    const activePage = document.querySelector('.nav a.active');
+    const activePageText = activePage.innerText.toLowerCase();
 
     if (username === '') {
         setErrorSpan('Empty string');
-        isRequesting = false;
     } else if (!isValidGitHubUsername(username)) {
-        setErrorSpan(invalidName);
-        isRequesting = false;
+        setErrorSpan(invalidUsernameMessage);
     } else if (localUsername) {
-        const { userInfo, userRepo } = JSON.parse(localUsername);
-        const userData = setupUserData(activePage, userInfo, userRepo);
+        const {userInfo, userRepo} = JSON.parse(localUsername);
+        const userData = setupUserData(activePageText, userInfo, userRepo);
         setErrorSpan('');
         drawPage(userData);
-        isRequesting = false;
     } else {
-        try {
-            switch (activePage) {
-                case 'promise':
-                    await promiseRequestUserInfo(username, activePage);
-                    break;
-                case 'async':
-                    await asyncRequestUserInfo(username, activePage);
-                    break;
-                default:
-                    break;
-            }
-        } catch (error) {
-        } finally {
-            isRequesting = false;
+        setLoadingState('add', true)
+        switch (activePageText) {
+            case 'promise':
+                await getUserInfo(username, activePageText);
+                break;
+            case 'async':
+                await getUserInfoAsync(username, activePageText);
+                break;
+            default:
+                break;
         }
+        setLoadingState('remove', false)
     }
 }
 
@@ -829,7 +911,7 @@ function headInfoChange() {
     if (activeLink) {
         headInfo.innerText = activeLink.innerText + ' Request';
     } else {
-        headInfo.innerText = 'JavaScript Request'
+        headInfo.innerText = 'JavaScript Request';
     }
 }
 
@@ -840,17 +922,31 @@ function popChange() {
     headInfoChange();
     selectPage(hash);
     if (set.classList.contains(ACTIVE)) {
-        hiddenHead('add')
-        customBG()
+        toggleHidden('add');
+        setupCustomColors();
     } else {
-        hiddenHead('remove')
+        toggleHidden('remove');
     }
 }
 
+function resetError() {
+    setErrorSpan('');
+}
+
+function clearInputPlaceholder(e) {
+    e.target.placeholder = '';
+}
+
+function restoreInputPlaceholder(e) {
+    e.target.placeholder = INPUT_PLACEHOLDER;
+}
+
 form.addEventListener('submit', submitChange);
-switcherLabel.addEventListener('click', themeSwitcher)
-form.addEventListener('submit', submitChange)
+urlInfo.addEventListener('input', resetError);
+urlInfo.addEventListener('focusin', clearInputPlaceholder);
+urlInfo.addEventListener('focusout', restoreInputPlaceholder);
 window.addEventListener('popstate', popChange);
+switcherLabel.addEventListener('click', themeSwitcher);
 contents.forEach((content) => {
     content.addEventListener('click', handleNavigation)
 });
