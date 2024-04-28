@@ -9,5 +9,5 @@
 - [Iteration 6: browser JS](https://damaloonazhret.github.io/internship/browserJS)
 - [Iteration 7: Async/promise](https://damaloonazhret.github.io/internship/JSRequest)
 - [Iteration 8: Create React App](https://damaloonazhret.github.io/internship/CRA)
-- [Iteration 9: Classes components](https://damaloonazhret.github.io/internship/classesComponent)
+- [Iteration 9: Classes components](https://damaloonazhret.github.io/internship/classesComponents)
 
