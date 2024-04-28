@@ -24,13 +24,13 @@ class PromisePage extends Component {
     if (info && repo)
       return (
         <>
-          {createElement(Header, { props: props })}
+          {createElement(Header, { props: props, name: 'Promise' })}
           {props.create("", info, repo)}
         </>
       );
     return (
       <>
-        {createElement(Header, { props: props })}
+        {createElement(Header, { props: props, name: 'Promise' })}
         {props.create("Promise Page Request")}
       </>
     );
@@ -46,13 +46,13 @@ class AsyncPage extends Component {
     if (info && repo)
       return (
         <>
-          {createElement(Header, { props: props })}
+          {createElement(Header, { props: props, name: 'Async' })}
           {props.create("", info, repo)}
         </>
       );
     return (
       <>
-        {createElement(Header, { props: props })}
+        {createElement(Header, { props: props, name: 'Async' })}
         {props.create("Async Page Request")}
       </>
     );
@@ -207,16 +207,20 @@ class Header extends Component {
     if (hash === "/fetch") {
       const value = this.props.props.asyncInputValue;
       if (checkValidate(value)) {
+        this.props.props.setIsLoading(true)
         const asyncState = await this.getUserInfoAsync(value);
         this.props.props.setAsyncState(asyncState);
+        this.props.props.setIsLoading(false)
       }
 
     }
     if (hash === "/promise") {
       const value = this.props.props.promiseInputValue;
       if (checkValidate(value)) {
+        this.props.props.setIsLoading(true)
         const promiseState = await this.getUserInfo(value);
         this.props.props.setPromiseState(promiseState);
+        this.props.props.setIsLoading(false)
       }
     }
   }
@@ -242,7 +246,7 @@ class Header extends Component {
         "form",
         { onSubmit: (e) => this.setRepos(e) },
 
-        createElement("p", { id: "head-info" }, "Promise Request"),
+        createElement("p", { id: "head-info" }, `${this.props.name} Request`),
         createElement(
           "div",
           { className: "search" },
@@ -384,6 +388,7 @@ class Main extends Component {
                 setAsyncInputValue: this.props.setAsyncInputValue,
                 asyncInputValue: this.props.state.asyncInputValue,
                 setAsyncState: this.props.setAsyncState,
+                setIsLoading: this.props.setIsLoading,
               }),
           }),
           createElement(Route, {
@@ -399,6 +404,7 @@ class Main extends Component {
                 setPromiseInputValue: this.props.setPromiseInputValue,
                 promiseInputValue: this.props.state.promiseInputValue,
                 setPromiseState: this.props.setPromiseState,
+                setIsLoading: this.props.setIsLoading,
               }),
           }),
         )}
@@ -416,6 +422,7 @@ class App extends Component {
       asyncInputValue: "",
       promise: {},
       promiseInputValue: "",
+      isLoading: false
     };
   }
 
@@ -430,8 +437,8 @@ class App extends Component {
     if (!userInfoMy || !userRepoMy) return null;
 
     return (
-      <main className="mainContent">
-        <article>
+      <main key={userInfoMy ? userInfoMy.html_url : null} className="mainContent">
+        <article key={userInfoMy ? userInfoMy.html_url : null}>
           {this.createUserInfoHTML(userInfoMy)}
           {this.createReposHTML(userRepoMy)}
         </article>
@@ -443,13 +450,13 @@ class App extends Component {
     return userRepo.map((repoData) => {
       return (
         <div key={repoData.id} className="repos">
-          <span>{repoData.full_name}</span>
-          <span>{repoData.language}</span>
-          <span>Visibility: {repoData.visibility}</span>
-          <a href={repoData.html_url} target="_blank">
+          <span key={repoData.full_name}>{repoData.full_name}</span>
+          <span key={repoData.language}>{repoData.language}</span>
+          <span key={repoData.visibility}>Visibility: {repoData.visibility}</span>
+          <a key={repoData.html_url} rel="noreferrer" href={repoData.html_url} target="_blank">
             Link to repo
           </a>
-          <span>{repoData.created_at}</span>
+          <span key={repoData.created_at}>{repoData.created_at}</span>
         </div>
       );
     });
@@ -457,12 +464,12 @@ class App extends Component {
 
   createUserInfoHTML(userInfo) {
     return (
-      <div className="user-info">
-        <a href={userInfo.html_url} target="_blank">
-          <img src={userInfo.avatar_url} alt="avatar" className="avatar" />
+      <div key={userInfo ? userInfo.html_url : null} className="user-info">
+        <a key={userInfo.html_url} href={userInfo.html_url} rel="noreferrer" target="_blank">
+          <img key={userInfo.avatar_url} src={userInfo.avatar_url} alt="avatar" className="avatar" />
         </a>
-        <span>Name: {userInfo.name}</span>
-        <span>{userInfo.login}</span>
+        <span key={userInfo.name}>Name: {userInfo.name}</span>
+        <span key={userInfo.login}>{userInfo.login}</span>
       </div>
     );
   }
@@ -471,6 +478,12 @@ class App extends Component {
     return createElement(
       Router,
       null,
+      createElement('div', {
+        id: 'preloader',
+        className: this.state.isLoading
+          ? 'loader'
+          : null
+      }),
       createElement(Aside),
       createElement(Main, {
         create: (title, userInfoMy, userRepoMy) =>
@@ -482,6 +495,7 @@ class App extends Component {
         setPromiseState: (newState) => this.setState({ promise: newState }),
         setPromiseInputValue: (newValue) =>
           this.setState({ promiseInputValue: newValue }),
+        setIsLoading: (boolean) => this.setState({isLoading: boolean}),
       }),
     );
   }
