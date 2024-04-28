@@ -12,6 +12,8 @@ const DARK = "dark";
 const WHITE = "white";
 const repos = "/repos";
 const userUrl = "https://api.github.com/users/";
+const invalidUsernameMessage =
+  "Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen.";
 
 class PromisePage extends Component {
   render() {
@@ -62,6 +64,7 @@ class Header extends Component {
     super(props);
     this.state = {
       name: "",
+      error: "",
     };
   }
 
@@ -169,30 +172,46 @@ class Header extends Component {
   };
 
   getUserInfoAsync = async (username) => {
-    // try {
     const newUserData = await this.asyncRequest(username);
-    const asyncState = this.extractUserData(newUserData);
-    return asyncState;
-    // const userData = setupUserData(activePage, userInfoMy, userRepoMy);
-    // localStorage.setItem(`user:${username}`, JSON.stringify(userData));
-    // drawPage(userData);
-    // setErrorSpan("");
-    // setOption(username);
-    // } catch (error) {
-    //   setErrorSpan(error);
-    // }
+    return this.extractUserData(newUserData);
+  };
+
+  isValidGitHubUsername = (username) => {
+    const githubUsernameRegex =
+      /^[a-zA-Z\d](?:[a-zA-Z\d]|-(?=[a-zA-Z\d])){0,38}$/;
+    return githubUsernameRegex.test(username);
   };
 
   async setRepos(e) {
     e.preventDefault();
     const hash = window.location.pathname;
+
+    const checkValidate = (value) => {
+      if (value === "") {
+        this.setState({ error: "Empty string" });
+        return false;
+      } else if (!this.isValidGitHubUsername(value)) {
+        this.setState({ error: invalidUsernameMessage });
+        return false;
+      } else {
+        return true
+      }
+    };
+
     if (hash === "/fetch") {
-      const asyncState = await this.getUserInfoAsync(this.state.name);
-      this.props.props.setAsyncState(asyncState);
+      const value = this.props.props.asyncInputValue;
+      if (checkValidate(value)) {
+        const asyncState = await this.getUserInfoAsync(value);
+        this.props.props.setAsyncState(asyncState);
+      }
+
     }
     if (hash === "/promise") {
-      const promiseState = await this.getUserInfo(this.state.name);
-      this.props.setPromiseState(promiseState);
+      const value = this.props.props.promiseInputValue;
+      if (checkValidate(value)) {
+        const promiseState = await this.getUserInfo(value);
+        this.props.setPromiseState(promiseState);
+      }
     }
   }
 
@@ -228,13 +247,14 @@ class Header extends Component {
             name: "url",
             type: "search",
             list: "names",
-            value: (hash === '/fetch')
-              ? this.props.props.asyncInputValue
-              : this.props.props.promiseInputValue,
+            value:
+              hash === "/fetch"
+                ? this.props.props.asyncInputValue
+                : this.props.props.promiseInputValue,
             onChange: this.setName,
           }),
           createElement("datalist", { id: "names" }),
-          createElement("span", { className: "error" }),
+          createElement("span", { className: "error" }, this.state.error),
         ),
       ),
     );
@@ -365,12 +385,13 @@ class Main extends Component {
           }),
           createElement(Route, {
             path: "/promise",
-            render: () => createElement(PromisePage, {
-              state: this.props.state,
-              create: this.props.create,
-              setPromiseInputValue: this.props.setPromiseInputValue,
-              promiseInputValue: this.props.state.promiseInputValue,
-            }),
+            render: () =>
+              createElement(PromisePage, {
+                state: this.props.state,
+                create: this.props.create,
+                setPromiseInputValue: this.props.setPromiseInputValue,
+                promiseInputValue: this.props.state.promiseInputValue,
+              }),
           }),
         )}
       </>
