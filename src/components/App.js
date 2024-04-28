@@ -15,23 +15,39 @@ const userUrl = "https://api.github.com/users/";
 
 class PromisePage extends Component {
   render() {
-    const props = this.props.props;
-    const promiseInfo = this.props.props.state.promise;
+    const props = this.props;
+    const promiseInfo = this.props.state.promise;
     const info = promiseInfo.userInfoMy;
     const repo = promiseInfo.userRepoMy;
     if (info && repo) return props.create("", info, repo);
-    return this.props.props.create("Promise Page Request");
+    return (
+      <>
+        {createElement(Header, { props: props })}
+        {props.create("Promise Page Request")}
+      </>
+    );
   }
 }
 
 class AsyncPage extends Component {
   render() {
-    const props = this.props.props;
-    const asyncInfo = this.props.props.state.async;
+    const props = this.props;
+    const asyncInfo = props.state.async;
     const info = asyncInfo.userInfoMy;
     const repo = asyncInfo.userRepoMy;
-    if (info && repo) return props.create("", info, repo);
-    return props.create("Async Page Request");
+    if (info && repo)
+      return (
+        <>
+          {createElement(Header, { props: props })}
+          {props.create("", info, repo)}
+        </>
+      );
+    return (
+      <>
+        {createElement(Header, { props: props })}
+        {props.create("Async Page Request")}
+      </>
+    );
   }
 }
 
@@ -45,8 +61,7 @@ class Header extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      nameAsync: "",
-      namePromise: "",
+      name: "",
     };
   }
 
@@ -172,11 +187,11 @@ class Header extends Component {
     e.preventDefault();
     const hash = window.location.pathname;
     if (hash === "/fetch") {
-      const asyncState = await this.getUserInfoAsync(this.state.nameAsync);
-      this.props.setAsyncState(asyncState);
+      const asyncState = await this.getUserInfoAsync(this.state.name);
+      this.props.props.setAsyncState(asyncState);
     }
     if (hash === "/promise") {
-      const promiseState = await this.getUserInfo(this.state.namePromise);
+      const promiseState = await this.getUserInfo(this.state.name);
       this.props.setPromiseState(promiseState);
     }
   }
@@ -185,13 +200,12 @@ class Header extends Component {
     const newName = e.target.value;
     const hash = window.location.pathname;
     if (hash === "/fetch") {
-      console.log(newName)
-      this.setState({ nameAsync: newName });
+      this.props.props.setAsyncInputValue(newName);
     }
     if (hash === "/promise") {
-      console.log(newName)
-      this.setState({ namePromise: newName });
+      this.props.props.setPromiseInputValue(newName);
     }
+    this.setState({ name: newName });
   };
 
   render() {
@@ -214,7 +228,9 @@ class Header extends Component {
             name: "url",
             type: "search",
             list: "names",
-            value: (hash === '/fetch') ? this.state.nameAsync : this.state.namePromise,
+            value: (hash === '/fetch')
+              ? this.props.props.asyncInputValue
+              : this.props.props.promiseInputValue,
             onChange: this.setName,
           }),
           createElement("datalist", { id: "names" }),
@@ -328,18 +344,20 @@ class ThemeSwitcher extends Component {
 
 class Main extends Component {
   render() {
-    return createElement(
-      "main",
-      { className: "mainContent", id: "main" },
-      createElement(
-        "article",
-        null,
-        createElement(
+    return (
+      <>
+        {createElement(
           Switch,
           null,
           createElement(Route, {
             path: "/fetch",
-            render: () => createElement(AsyncPage, { props: this.props }),
+            render: () =>
+              createElement(AsyncPage, {
+                state: this.props.state,
+                create: this.props.create,
+                setAsyncInputValue: this.props.setAsyncInputValue,
+                asyncInputValue: this.props.state.asyncInputValue,
+              }),
           }),
           createElement(Route, {
             path: "/home",
@@ -347,10 +365,15 @@ class Main extends Component {
           }),
           createElement(Route, {
             path: "/promise",
-            render: () => createElement(PromisePage, { props: this.props }),
+            render: () => createElement(PromisePage, {
+              state: this.props.state,
+              create: this.props.create,
+              setPromiseInputValue: this.props.setPromiseInputValue,
+              promiseInputValue: this.props.state.promiseInputValue,
+            }),
           }),
-        ),
-      ),
+        )}
+      </>
     );
   }
 }
@@ -361,20 +384,29 @@ class App extends Component {
 
     this.state = {
       async: {},
+      asyncInputValue: "",
       promise: {},
+      promiseInputValue: "",
     };
   }
 
   create(title, userInfoMy, userRepoMy) {
-    if (title) return createElement("p", {}, title);
+    if (title)
+      return createElement(
+        "main",
+        { className: "mainContent" },
+        createElement("div", {}, title),
+      );
 
     if (!userInfoMy || !userRepoMy) return null;
 
     return (
-      <>
-        {this.createUserInfoHTML(userInfoMy)}
-        {this.createReposHTML(userRepoMy)}
-      </>
+      <main className="mainContent">
+        <article>
+          {this.createUserInfoHTML(userInfoMy)}
+          {this.createReposHTML(userRepoMy)}
+        </article>
+      </main>
     );
   }
 
@@ -407,20 +439,20 @@ class App extends Component {
   }
 
   render() {
-    const { async, promise } = this.state;
-    console.log(this.state.async);
     return createElement(
       Router,
       null,
       createElement(Aside),
-      createElement(Header, {
-        setAsyncState: (newState) => this.setState({ async: newState }),
-        setPromiseState: (newState) => this.setState({ promise: newState }),
-      }),
       createElement(Main, {
         create: (title, userInfoMy, userRepoMy) =>
           this.create(title, userInfoMy, userRepoMy),
         state: this.state,
+        setAsyncState: (newState) => this.setState({ async: newState }),
+        setAsyncInputValue: (newValue) =>
+          this.setState({ asyncInputValue: newValue }),
+        setPromiseState: (newState) => this.setState({ promise: newState }),
+        setPromiseInputValue: (newValue) =>
+          this.setState({ promiseInputValue: newValue }),
       }),
     );
   }
