@@ -21,7 +21,13 @@ class PromisePage extends Component {
     const promiseInfo = this.props.state.promise;
     const info = promiseInfo.userInfoMy;
     const repo = promiseInfo.userRepoMy;
-    if (info && repo) return props.create("", info, repo);
+    if (info && repo)
+      return (
+        <>
+          {createElement(Header, { props: props })}
+          {props.create("", info, repo)}
+        </>
+      );
     return (
       <>
         {createElement(Header, { props: props })}
@@ -210,7 +216,7 @@ class Header extends Component {
       const value = this.props.props.promiseInputValue;
       if (checkValidate(value)) {
         const promiseState = await this.getUserInfo(value);
-        this.props.setPromiseState(promiseState);
+        this.props.props.setPromiseState(promiseState);
       }
     }
   }
@@ -377,6 +383,7 @@ class Main extends Component {
                 create: this.props.create,
                 setAsyncInputValue: this.props.setAsyncInputValue,
                 asyncInputValue: this.props.state.asyncInputValue,
+                setAsyncState: this.props.setAsyncState,
               }),
           }),
           createElement(Route, {
@@ -391,6 +398,7 @@ class Main extends Component {
                 create: this.props.create,
                 setPromiseInputValue: this.props.setPromiseInputValue,
                 promiseInputValue: this.props.state.promiseInputValue,
+                setPromiseState: this.props.setPromiseState,
               }),
           }),
         )}
