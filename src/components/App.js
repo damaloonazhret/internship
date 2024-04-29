@@ -1,7 +1,8 @@
 import { Component, createElement } from "react";
 import {
   BrowserRouter as Router,
-  NavLink, Redirect,
+  NavLink,
+  Redirect,
   Route,
   Switch,
   withRouter,
@@ -126,7 +127,7 @@ class Header extends Component {
       } catch (err) {
         this.setState({ error: err.message });
       } finally {
-        this.setState({ isLoading: false, error: ''});
+        this.setState({ isLoading: false, error: "" });
       }
     } else {
       this.setState({ error: isChecked.message });
@@ -231,8 +232,8 @@ class Arrows extends Component {
 }
 
 class ThemeSwitcher extends Component {
-  static DARK = 'dark'
-  static WHITE = 'white'
+  static DARK = "dark";
+  static WHITE = "white";
 
   constructor(props) {
     super(props);
@@ -244,7 +245,10 @@ class ThemeSwitcher extends Component {
 
   themeSwitcher = () => {
     this.setState((prevState) => ({
-      theme: prevState.theme === ThemeSwitcher.WHITE ? ThemeSwitcher.DARK : ThemeSwitcher.WHITE,
+      theme:
+        prevState.theme === ThemeSwitcher.WHITE
+          ? ThemeSwitcher.DARK
+          : ThemeSwitcher.WHITE,
     }));
   };
 
@@ -325,8 +329,8 @@ class Main extends Component {
         "article",
         { key: userInfo ? userInfo.html_url : null },
         this.createUserInfoHTML(userInfo),
-        this.createReposHTML(userRepo)
-      )
+        this.createReposHTML(userRepo),
+      ),
     );
   }
 
@@ -340,7 +344,7 @@ class Main extends Component {
         createElement(
           "span",
           { key: repoData.visibility },
-          `Visibility: ${repoData.visibility}`
+          `Visibility: ${repoData.visibility}`,
         ),
         createElement(
           "a",
@@ -350,10 +354,14 @@ class Main extends Component {
             href: repoData.html_url,
             target: "_blank",
           },
-          "Link to repo"
+          "Link to repo",
         ),
-        createElement("span", { key: repoData.created_at }, repoData.created_at)
-      )
+        createElement(
+          "span",
+          { key: repoData.created_at },
+          repoData.created_at,
+        ),
+      ),
     );
   }
 
@@ -374,13 +382,12 @@ class Main extends Component {
           src: userInfo.avatar_url,
           alt: "avatar",
           className: "avatar",
-        })
+        }),
       ),
       createElement("span", { key: userInfo.name }, `Name: ${userInfo.name}`),
-      createElement("span", { key: userInfo.login }, userInfo.login)
+      createElement("span", { key: userInfo.login }, userInfo.login),
     );
   }
-
 
   render() {
     return (
@@ -402,7 +409,11 @@ class Main extends Component {
                 pathname: this.props.location.pathname,
               }),
           }),
-          createElement(Route, {exact: true, path: '/', render: () => <Redirect to="/promise" />}),
+          createElement(Route, {
+            exact: true,
+            path: "/",
+            render: () => <Redirect to="/promise" />,
+          }),
           createElement(Route, {
             path: "/promise",
             render: () =>

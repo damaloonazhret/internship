@@ -7,7 +7,6 @@
     <list default="true" id="0c830352-c0f4-4574-a1ff-b7b57137849d" name="Changes" comment="refactor: migration of user query and name verification methods">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/oldJS.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -25,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="pull-request" />
+        <entry key="$PROJECT_DIR$" value="gh-pages" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -201,6 +200,7 @@
     <MESSAGE value="fix: input value props" />
     <MESSAGE value="feat: error handling" />
     <MESSAGE value="refactor: migration of user query and name verification methods" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactor: migration of user query and name verification methods" />
+    <MESSAGE value="update: ReactClasses" />
+    <option name="LAST_COMMIT_MESSAGE" value="update: ReactClasses" />
   </component>
 </project>
