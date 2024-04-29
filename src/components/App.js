@@ -17,21 +17,32 @@ const invalidUsernameMessage =
 
 class PromisePage extends Component {
   render() {
-    const props = this.props;
-    const promiseInfo = this.props.state.promise;
-    const info = promiseInfo.userInfoMy;
-    const repo = promiseInfo.userRepoMy;
+    const promiseState = this.props.promiseState;
+    const info = promiseState.userInfoMy;
+    const repo = promiseState.userRepoMy;
     if (info && repo)
       return (
         <>
-          {createElement(Header, { props: props, name: 'Promise' })}
-          {props.create("", info, repo)}
+          {createElement(Header, {
+            setIsLoading: this.props.setIsLoading,
+            setPromiseState: this.props.setPromiseState,
+            promiseInputValue: this.props.promiseInputValue,
+            setPromiseInputValue: this.props.setPromiseInputValue,
+            name: 'Promise'
+          })}
+          {this.props.create("", info, repo)}
         </>
       );
     return (
       <>
-        {createElement(Header, { props: props, name: 'Promise' })}
-        {props.create("Promise Page Request")}
+        {createElement(Header, {
+          setIsLoading: this.props.setIsLoading,
+          setPromiseState: this.props.setPromiseState,
+          promiseInputValue: this.props.promiseInputValue,
+          setPromiseInputValue: this.props.setPromiseInputValue,
+          name: 'Promise'
+        })}
+        {this.props.create("Promise Page Request")}
       </>
     );
   }
@@ -39,21 +50,32 @@ class PromisePage extends Component {
 
 class AsyncPage extends Component {
   render() {
-    const props = this.props;
-    const asyncInfo = props.state.async;
-    const info = asyncInfo.userInfoMy;
-    const repo = asyncInfo.userRepoMy;
+    const asyncState = this.props.asyncState;
+    const info = asyncState.userInfoMy;
+    const repo = asyncState.userRepoMy;
     if (info && repo)
       return (
         <>
-          {createElement(Header, { props: props, name: 'Async' })}
-          {props.create("", info, repo)}
+          {createElement(Header, {
+            setIsLoading: this.props.setIsLoading,
+            setAsyncState: this.props.setAsyncState,
+            asyncInputValue: this.props.asyncInputValue,
+            setAsyncInputValue: this.props.setAsyncInputValue,
+            name: 'Async'
+          })}
+          {this.props.create("", info, repo)}
         </>
       );
     return (
       <>
-        {createElement(Header, { props: props, name: 'Async' })}
-        {props.create("Async Page Request")}
+        {createElement(Header, {
+          setIsLoading: this.props.setIsLoading,
+          setAsyncState: this.props.setAsyncState,
+          asyncInputValue: this.props.asyncInputValue,
+          setAsyncInputValue: this.props.setAsyncInputValue,
+          name: 'Async'
+        })}
+        {this.props.create("Async Page Request")}
       </>
     );
   }
@@ -188,39 +210,39 @@ class Header extends Component {
     return githubUsernameRegex.test(username);
   };
 
+  checkValidate = (value) => {
+    if (value === "") {
+      this.setState({ error: "Empty string" });
+      return false;
+    } else if (!this.isValidGitHubUsername(value)) {
+      this.setState({ error: invalidUsernameMessage });
+      return false;
+    } else {
+      return true
+    }
+  };
+
   async setRepos(e) {
     e.preventDefault();
     const hash = window.location.pathname;
 
-    const checkValidate = (value) => {
-      if (value === "") {
-        this.setState({ error: "Empty string" });
-        return false;
-      } else if (!this.isValidGitHubUsername(value)) {
-        this.setState({ error: invalidUsernameMessage });
-        return false;
-      } else {
-        return true
-      }
-    };
-
     if (hash === "/fetch") {
       const value = this.props.props.asyncInputValue;
-      if (checkValidate(value)) {
-        this.props.props.setIsLoading(true)
+      if (this.checkValidate(value)) {
+        this.props.setIsLoading(true)
         const asyncState = await this.getUserInfoAsync(value);
-        this.props.props.setAsyncState(asyncState);
-        this.props.props.setIsLoading(false)
+        this.props.setAsyncState(asyncState);
+        this.props.setIsLoading(false)
       }
 
     }
     if (hash === "/promise") {
       const value = this.props.props.promiseInputValue;
-      if (checkValidate(value)) {
-        this.props.props.setIsLoading(true)
+      if (this.checkValidate(value)) {
+        this.props.setIsLoading(true)
         const promiseState = await this.getUserInfo(value);
-        this.props.props.setPromiseState(promiseState);
-        this.props.props.setIsLoading(false)
+        this.props.setPromiseState(promiseState);
+        this.props.setIsLoading(false)
       }
     }
   }
@@ -229,10 +251,10 @@ class Header extends Component {
     const newName = e.target.value;
     const hash = window.location.pathname;
     if (hash === "/fetch") {
-      this.props.props.setAsyncInputValue(newName);
+      this.props.setAsyncInputValue(newName);
     }
     if (hash === "/promise") {
-      this.props.props.setPromiseInputValue(newName);
+      this.props.setPromiseInputValue(newName);
     }
     this.setState({ name: newName });
   };
@@ -259,8 +281,8 @@ class Header extends Component {
             list: "names",
             value:
               hash === "/fetch"
-                ? this.props.props.asyncInputValue
-                : this.props.props.promiseInputValue,
+                ? this.props.asyncInputValue
+                : this.props.promiseInputValue,
             onChange: this.setName,
           }),
           createElement("datalist", { id: "names" }),
@@ -373,47 +395,6 @@ class ThemeSwitcher extends Component {
 }
 
 class Main extends Component {
-  render() {
-    return (
-      <>
-        {createElement(
-          Switch,
-          null,
-          createElement(Route, {
-            path: "/fetch",
-            render: () =>
-              createElement(AsyncPage, {
-                state: this.props.state,
-                create: this.props.create,
-                setAsyncInputValue: this.props.setAsyncInputValue,
-                asyncInputValue: this.props.state.asyncInputValue,
-                setAsyncState: this.props.setAsyncState,
-                setIsLoading: this.props.setIsLoading,
-              }),
-          }),
-          createElement(Route, {
-            path: "/home",
-            component: HomePage,
-          }),
-          createElement(Route, {
-            path: "/promise",
-            render: () =>
-              createElement(PromisePage, {
-                state: this.props.state,
-                create: this.props.create,
-                setPromiseInputValue: this.props.setPromiseInputValue,
-                promiseInputValue: this.props.state.promiseInputValue,
-                setPromiseState: this.props.setPromiseState,
-                setIsLoading: this.props.setIsLoading,
-              }),
-          }),
-        )}
-      </>
-    );
-  }
-}
-
-class App extends Component {
   constructor(props) {
     super(props);
 
@@ -422,7 +403,6 @@ class App extends Component {
       asyncInputValue: "",
       promise: {},
       promiseInputValue: "",
-      isLoading: false
     };
   }
 
@@ -475,6 +455,59 @@ class App extends Component {
   }
 
   render() {
+    return (
+      <>
+        {createElement(
+          Switch,
+          null,
+          createElement(Route, {
+            path: "/fetch",
+            render: () =>
+              createElement(AsyncPage, {
+                create: (title, userInfoMy, userRepoMy) =>
+                  this.create(title, userInfoMy, userRepoMy),
+                setAsyncInputValue: (newValue) =>
+                  this.setState({ asyncInputValue: newValue }),
+                setAsyncState: (newState) => this.setState({ async: newState }),
+                asyncState: this.state.async,
+                setIsLoading: this.props.setIsLoading,
+                asyncInputValue: this.state.asyncInputValue,
+              }),
+          }),
+          createElement(Route, {
+            path: "/promise",
+            render: () =>
+              createElement(PromisePage, {
+                create: (title, userInfoMy, userRepoMy) =>
+                  this.create(title, userInfoMy, userRepoMy),
+                setPromiseInputValue: (newValue) =>
+                  this.setState({ promiseInputValue: newValue }),
+                setPromiseState: (newState) => this.setState({ promise: newState }),
+                promiseState: this.state.promise,
+                setIsLoading: this.props.setIsLoading,
+                promiseInputValue: this.state.promiseInputValue,
+              }),
+          }),
+          createElement(Route, {
+            path: "/home",
+            component: HomePage,
+          }),
+        )}
+      </>
+    );
+  }
+}
+
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      isLoading: false
+    };
+  }
+
+  render() {
     return createElement(
       Router,
       null,
@@ -486,15 +519,6 @@ class App extends Component {
       }),
       createElement(Aside),
       createElement(Main, {
-        create: (title, userInfoMy, userRepoMy) =>
-          this.create(title, userInfoMy, userRepoMy),
-        state: this.state,
-        setAsyncState: (newState) => this.setState({ async: newState }),
-        setAsyncInputValue: (newValue) =>
-          this.setState({ asyncInputValue: newValue }),
-        setPromiseState: (newState) => this.setState({ promise: newState }),
-        setPromiseInputValue: (newValue) =>
-          this.setState({ promiseInputValue: newValue }),
         setIsLoading: (boolean) => this.setState({isLoading: boolean}),
       }),
     );
