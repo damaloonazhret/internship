@@ -7,17 +7,15 @@ import {
   withRouter,
 } from "react-router-dom";
 import "./index.scss";
+import { getUserInfo, getUserInfoAsync } from "../services/getData";
+import { checkValidate } from "../services/validate";
 
 const DARK = "dark";
 const WHITE = "white";
-const repos = "/repos";
-const userUrl = "https://api.github.com/users/";
 const BLACK_ROOT = "--black";
 const WHITE_ROOT = "--white";
 const DEFAULT_COLOR_WHITE = "#ffffff";
 const DEFAULT_COLOR_BLACK = "#1a1a1a";
-const invalidUsernameMessage =
-  "Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen.";
 
 class PromisePage extends Component {
   render() {
@@ -106,150 +104,26 @@ class Header extends Component {
     };
   }
 
-  promiseRequest = (username) => {
-    const userInfoPromise = new Promise((resolve, reject) => {
-      let xhrUserInfo = new XMLHttpRequest();
-      xhrUserInfo.open("GET", `${userUrl}${username}`);
-      xhrUserInfo.onload = function () {
-        if (!(xhrUserInfo.status >= 200 && xhrUserInfo.status <= 299)) {
-          reject(new Error(`User: error ${xhrUserInfo.status}`));
-        } else {
-          resolve(xhrUserInfo.response);
-        }
-      };
-      xhrUserInfo.onerror = function (error) {
-        resolve(error);
-      };
-      xhrUserInfo.send();
-    });
-
-    const userRepoPromise = new Promise((resolve, reject) => {
-      let xhrUserRepo = new XMLHttpRequest();
-      xhrUserRepo.open("GET", `${userUrl}${username}${repos}`);
-      xhrUserRepo.onload = function () {
-        if (!(xhrUserRepo.status >= 200 && xhrUserRepo.status <= 299)) {
-          reject(new Error(`User: error ${xhrUserRepo.status}`));
-        } else {
-          resolve(xhrUserRepo.response);
-        }
-      };
-      xhrUserRepo.onerror = function (error) {
-        resolve(error);
-      };
-      xhrUserRepo.send();
-    });
-
-    return Promise.all([userInfoPromise, userRepoPromise]).then(
-      ([userInfo, userRepo]) => {
-        return { userInfo, userRepo };
-      },
-    );
-  };
-
-  getUserInfo = (username) => {
-    return this.promiseRequest(username).then((response) => {
-      const newUserData = JSON.parse(response["userInfo"]);
-      const newRepoData = JSON.parse(response["userRepo"]);
-      return this.extractUserData({
-        userInfo: newUserData,
-        userRepo: newRepoData,
-      });
-    });
-  };
-
-  asyncRequest = async (username) => {
-    const options = {
-      method: "GET",
-      mode: "cors",
-      cache: "no-cache",
-      credentials: "same-origin",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      redirect: "follow",
-      referrerPolicy: "no-referrer",
-    };
-    try {
-      const requestUser = await fetch(`${userUrl}${username}`, options);
-      const requestRepos = await fetch(
-        `${userUrl}${username}${repos}`,
-        options,
-      );
-
-      if (!requestRepos.ok || !requestUser.ok) {
-        await Promise.reject(`User: error ${requestUser.status}`);
-      }
-      const userInfo = await requestUser.json();
-      const userRepo = await requestRepos.json();
-
-      return { userInfo, userRepo };
-    } catch (error) {
-      throw new Error(
-        `Error fetching data for user ${username} ${error.message}`,
-      );
-    }
-  };
-
-  extractUserData = ({ userInfo, userRepo }) => {
-    const userInfoMy = {
-      name: userInfo["name"],
-      html_url: userInfo["html_url"],
-      avatar_url: userInfo["avatar_url"],
-      login: userInfo["login"],
-    };
-    const userRepoMy = userRepo.map(
-      ({ full_name, language, visibility, html_url, created_at }) => ({
-        full_name,
-        language,
-        visibility,
-        html_url,
-        created_at,
-      }),
-    );
-    return { userInfoMy, userRepoMy };
-  };
-
-  getUserInfoAsync = async (username) => {
-    const newUserData = await this.asyncRequest(username);
-    return this.extractUserData(newUserData);
-  };
-
-  isValidGitHubUsername = (username) => {
-    const githubUsernameRegex =
-      /^[a-zA-Z\d](?:[a-zA-Z\d]|-(?=[a-zA-Z\d])){0,38}$/;
-    return githubUsernameRegex.test(username);
-  };
-
-  checkValidate = (value) => {
-    if (value === "") {
-      this.setState({ error: "Empty string" });
-      return false;
-    } else if (!this.isValidGitHubUsername(value)) {
-      this.setState({ error: invalidUsernameMessage });
-      return false;
-    } else {
-      return true;
-    }
-  };
-
   async setRepos(e) {
     e.preventDefault();
+
     const path = this.props.pathname;
     const value = this.props.inputValue;
+    const isChecked = checkValidate(value);
 
-    if (this.checkValidate(value)) {
+    if (isChecked.check) {
       this.setState({ isLoading: true });
 
       try {
         let data;
         switch (path) {
           case "/fetch":
-            data = await this.getUserInfoAsync(value);
+            data = await getUserInfoAsync(value);
             this.props.setAsyncState(data);
             break;
 
           case "/promise":
-            data = await this.getUserInfo(value);
+            data = await getUserInfo(value);
             this.props.setPromiseState(data);
             break;
 
@@ -259,11 +133,12 @@ class Header extends Component {
       } catch (err) {
         this.setState({ error: err.message });
       } finally {
-        this.setState({ isLoading: false });
+        this.setState({ isLoading: false, error: ''});
       }
+    } else {
+      this.setState({ error: isChecked.message });
     }
   }
-
 
   setName = (e) => {
     const newName = e.target.value;
