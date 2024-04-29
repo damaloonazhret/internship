@@ -33,7 +33,7 @@ class PromisePage extends Component {
             inputValue: this.props.promiseInputValue,
             setPromiseInputValue: this.props.setPromiseInputValue,
             pathname: this.props.pathname,
-            name: 'Promise'
+            name: "Promise",
           })}
           {this.props.create("", info, repo)}
         </>
@@ -46,7 +46,7 @@ class PromisePage extends Component {
           inputValue: this.props.promiseInputValue,
           setPromiseInputValue: this.props.setPromiseInputValue,
           pathname: this.props.pathname,
-          name: 'Promise'
+          name: "Promise",
         })}
         {this.props.create("Promise Page Request")}
       </>
@@ -68,7 +68,7 @@ class AsyncPage extends Component {
             inputValue: this.props.asyncInputValue,
             setAsyncInputValue: this.props.setAsyncInputValue,
             pathname: this.props.pathname,
-            name: 'Async'
+            name: "Async",
           })}
           {this.props.create("", info, repo)}
         </>
@@ -81,7 +81,7 @@ class AsyncPage extends Component {
           inputValue: this.props.asyncInputValue,
           setAsyncInputValue: this.props.setAsyncInputValue,
           pathname: this.props.pathname,
-          name: 'Async'
+          name: "Async",
         })}
         {this.props.create("Async Page Request")}
       </>
@@ -102,6 +102,7 @@ class Header extends Component {
     this.state = {
       name: "",
       error: "",
+      isLoading: false,
     };
   }
 
@@ -116,8 +117,8 @@ class Header extends Component {
           resolve(xhrUserInfo.response);
         }
       };
-      xhrUserInfo.onerror = function () {
-        console.log(`Connection error`);
+      xhrUserInfo.onerror = function (error) {
+        resolve(error);
       };
       xhrUserInfo.send();
     });
@@ -132,8 +133,8 @@ class Header extends Component {
           resolve(xhrUserRepo.response);
         }
       };
-      xhrUserRepo.onerror = function () {
-        console.log(`Connection error`);
+      xhrUserRepo.onerror = function (error) {
+        resolve(error);
       };
       xhrUserRepo.send();
     });
@@ -176,7 +177,7 @@ class Header extends Component {
       );
 
       if (!requestRepos.ok || !requestUser.ok) {
-        throw new Error(`User: error ${requestUser.status}`);
+        await Promise.reject(`User: error ${requestUser.status}`);
       }
       const userInfo = await requestUser.json();
       const userRepo = await requestRepos.json();
@@ -227,34 +228,42 @@ class Header extends Component {
       this.setState({ error: invalidUsernameMessage });
       return false;
     } else {
-      return true
+      return true;
     }
   };
 
   async setRepos(e) {
     e.preventDefault();
     const path = this.props.pathname;
+    const value = this.props.inputValue;
 
-    if (path === "/fetch") {
-      const value = this.props.inputValue;
-      if (this.checkValidate(value)) {
-        this.props.setIsLoading(true)
-        const asyncState = await this.getUserInfoAsync(value);
-        this.props.setAsyncState(asyncState);
-        this.props.setIsLoading(false)
-      }
+    if (this.checkValidate(value)) {
+      this.setState({ isLoading: true });
 
-    }
-    if (path === "/promise") {
-      const value = this.props.inputValue;
-      if (this.checkValidate(value)) {
-        this.props.setIsLoading(true)
-        const promiseState = await this.getUserInfo(value);
-        this.props.setPromiseState(promiseState);
-        this.props.setIsLoading(false)
+      try {
+        let data;
+        switch (path) {
+          case "/fetch":
+            data = await this.getUserInfoAsync(value);
+            this.props.setAsyncState(data);
+            break;
+
+          case "/promise":
+            data = await this.getUserInfo(value);
+            this.props.setPromiseState(data);
+            break;
+
+          default:
+            break;
+        }
+      } catch (err) {
+        this.setState({ error: err.message });
+      } finally {
+        this.setState({ isLoading: false });
       }
     }
   }
+
 
   setName = (e) => {
     const newName = e.target.value;
@@ -269,7 +278,6 @@ class Header extends Component {
   };
 
   render() {
-    const path = this.props.pathname;
     return createElement(
       "header",
       { className: "header" },
@@ -293,6 +301,10 @@ class Header extends Component {
           }),
           createElement("datalist", { id: "names" }),
           createElement("span", { className: "error" }, this.state.error),
+          createElement("div", {
+            id: "preloader",
+            className: this.state.isLoading ? "loader" : null,
+          }),
         ),
       ),
     );
@@ -373,13 +385,13 @@ class ThemeSwitcher extends Component {
     const theme = this.state.theme;
 
     if (theme === WHITE) {
-      this.setProperty(BLACK_ROOT, DEFAULT_COLOR_WHITE)
-      this.setProperty(WHITE_ROOT, DEFAULT_COLOR_BLACK)
+      this.setProperty(BLACK_ROOT, DEFAULT_COLOR_WHITE);
+      this.setProperty(WHITE_ROOT, DEFAULT_COLOR_BLACK);
     }
 
     if (theme === DARK) {
-      this.setProperty(BLACK_ROOT, DEFAULT_COLOR_BLACK)
-      this.setProperty(WHITE_ROOT, DEFAULT_COLOR_WHITE)
+      this.setProperty(BLACK_ROOT, DEFAULT_COLOR_BLACK);
+      this.setProperty(WHITE_ROOT, DEFAULT_COLOR_WHITE);
     }
   }
 
@@ -447,8 +459,15 @@ class Main extends Component {
         <div key={repoData.id} className="repos">
           <span key={repoData.full_name}>{repoData.full_name}</span>
           <span key={repoData.language}>{repoData.language}</span>
-          <span key={repoData.visibility}>Visibility: {repoData.visibility}</span>
-          <a key={repoData.html_url} rel="noreferrer" href={repoData.html_url} target="_blank">
+          <span key={repoData.visibility}>
+            Visibility: {repoData.visibility}
+          </span>
+          <a
+            key={repoData.html_url}
+            rel="noreferrer"
+            href={repoData.html_url}
+            target="_blank"
+          >
             Link to repo
           </a>
           <span key={repoData.created_at}>{repoData.created_at}</span>
@@ -460,8 +479,18 @@ class Main extends Component {
   createUserInfoHTML(userInfo) {
     return (
       <div key={userInfo ? userInfo.html_url : null} className="user-info">
-        <a key={userInfo.html_url} href={userInfo.html_url} rel="noreferrer" target="_blank">
-          <img key={userInfo.avatar_url} src={userInfo.avatar_url} alt="avatar" className="avatar" />
+        <a
+          key={userInfo.html_url}
+          href={userInfo.html_url}
+          rel="noreferrer"
+          target="_blank"
+        >
+          <img
+            key={userInfo.avatar_url}
+            src={userInfo.avatar_url}
+            alt="avatar"
+            className="avatar"
+          />
         </a>
         <span key={userInfo.name}>Name: {userInfo.name}</span>
         <span key={userInfo.login}>{userInfo.login}</span>
@@ -485,7 +514,6 @@ class Main extends Component {
                 setAsyncInputValue: (newValue) =>
                   this.setState({ asyncInputValue: newValue }),
                 asyncState: this.state.async,
-                setIsLoading: this.props.setIsLoading,
                 asyncInputValue: this.state.asyncInputValue,
                 pathname: this.props.location.pathname,
               }),
@@ -496,11 +524,11 @@ class Main extends Component {
               createElement(PromisePage, {
                 create: (title, userInfo, userRepo) =>
                   this.create(title, userInfo, userRepo),
-                setPromiseState: (newState) => this.setState({ promise: newState }),
+                setPromiseState: (newState) =>
+                  this.setState({ promise: newState }),
                 setPromiseInputValue: (newValue) =>
                   this.setState({ promiseInputValue: newValue }),
                 promiseState: this.state.promise,
-                setIsLoading: this.props.setIsLoading,
                 promiseInputValue: this.state.promiseInputValue,
                 pathname: this.props.location.pathname,
               }),
@@ -516,27 +544,13 @@ class Main extends Component {
 }
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      isLoading: false
-    };
-  }
-
   render() {
     return createElement(
       Router,
       null,
-      createElement('div', {
-        id: 'preloader',
-        className: this.state.isLoading
-          ? 'loader'
-          : null
-      }),
       createElement(Aside),
       createElement(withRouter(Main), {
-        setIsLoading: (boolean) => this.setState({isLoading: boolean}),
+        setIsLoading: (boolean) => this.setState({ isLoading: boolean }),
       }),
     );
   }
