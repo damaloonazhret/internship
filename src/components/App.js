@@ -1,7 +1,7 @@
 import { Component, createElement } from "react";
 import {
   BrowserRouter as Router,
-  NavLink,
+  NavLink, Redirect,
   Route,
   Switch,
   withRouter,
@@ -9,13 +9,6 @@ import {
 import "./index.scss";
 import { getUserInfo, getUserInfoAsync } from "../services/getData";
 import { checkValidate } from "../services/validate";
-
-const DARK = "dark";
-const WHITE = "white";
-const BLACK_ROOT = "--black";
-const WHITE_ROOT = "--white";
-const DEFAULT_COLOR_WHITE = "#ffffff";
-const DEFAULT_COLOR_BLACK = "#1a1a1a";
 
 class PromisePage extends Component {
   render() {
@@ -238,17 +231,20 @@ class Arrows extends Component {
 }
 
 class ThemeSwitcher extends Component {
+  static DARK = 'dark'
+  static WHITE = 'white'
+
   constructor(props) {
     super(props);
 
     this.state = {
-      theme: DARK,
+      theme: ThemeSwitcher.DARK,
     };
   }
 
   themeSwitcher = () => {
     this.setState((prevState) => ({
-      theme: prevState.theme === WHITE ? DARK : WHITE,
+      theme: prevState.theme === ThemeSwitcher.WHITE ? ThemeSwitcher.DARK : ThemeSwitcher.WHITE,
     }));
   };
 
@@ -258,13 +254,17 @@ class ThemeSwitcher extends Component {
 
   globalTheme() {
     const theme = this.state.theme;
+    const BLACK_ROOT = "--black";
+    const WHITE_ROOT = "--white";
+    const DEFAULT_COLOR_WHITE = "#ffffff";
+    const DEFAULT_COLOR_BLACK = "#1a1a1a";
 
-    if (theme === WHITE) {
+    if (theme === ThemeSwitcher.WHITE) {
       this.setProperty(BLACK_ROOT, DEFAULT_COLOR_WHITE);
       this.setProperty(WHITE_ROOT, DEFAULT_COLOR_BLACK);
     }
 
-    if (theme === DARK) {
+    if (theme === ThemeSwitcher.DARK) {
       this.setProperty(BLACK_ROOT, DEFAULT_COLOR_BLACK);
       this.setProperty(WHITE_ROOT, DEFAULT_COLOR_WHITE);
     }
@@ -284,12 +284,12 @@ class ThemeSwitcher extends Component {
       createElement(
         "label",
         {
-          className: `switcherLabel ${this.state.theme === WHITE ? "white" : ""}`,
+          className: `switcherLabel ${this.state.theme === ThemeSwitcher.WHITE ? "white" : ""}`,
           htmlFor: "switcher-input",
           onClick: () => this.themeSwitcher(),
         },
         createElement("span", {
-          className: `switcherToggler ${this.state.theme === WHITE ? "white" : ""}`,
+          className: `switcherToggler ${this.state.theme === ThemeSwitcher.WHITE ? "white" : ""}`,
         }),
       ),
     );
@@ -318,60 +318,69 @@ class Main extends Component {
 
     if (!userInfo || !userRepo) return null;
 
-    return (
-      <main key={userInfo ? userInfo.html_url : null} className="mainContent">
-        <article key={userInfo ? userInfo.html_url : null}>
-          {this.createUserInfoHTML(userInfo)}
-          {this.createReposHTML(userRepo)}
-        </article>
-      </main>
+    return createElement(
+      "main",
+      { key: userInfo ? userInfo.html_url : null, className: "mainContent" },
+      createElement(
+        "article",
+        { key: userInfo ? userInfo.html_url : null },
+        this.createUserInfoHTML(userInfo),
+        this.createReposHTML(userRepo)
+      )
     );
   }
 
   createReposHTML(userRepo) {
-    return userRepo.map((repoData) => {
-      return (
-        <div key={repoData.id} className="repos">
-          <span key={repoData.full_name}>{repoData.full_name}</span>
-          <span key={repoData.language}>{repoData.language}</span>
-          <span key={repoData.visibility}>
-            Visibility: {repoData.visibility}
-          </span>
-          <a
-            key={repoData.html_url}
-            rel="noreferrer"
-            href={repoData.html_url}
-            target="_blank"
-          >
-            Link to repo
-          </a>
-          <span key={repoData.created_at}>{repoData.created_at}</span>
-        </div>
-      );
-    });
+    return userRepo.map((repoData, index) =>
+      createElement(
+        "div",
+        { key: index, className: "repos" },
+        createElement("span", { key: repoData.full_name }, repoData.full_name),
+        createElement("span", { key: repoData.language }, repoData.language),
+        createElement(
+          "span",
+          { key: repoData.visibility },
+          `Visibility: ${repoData.visibility}`
+        ),
+        createElement(
+          "a",
+          {
+            key: repoData.html_url,
+            rel: "noreferrer",
+            href: repoData.html_url,
+            target: "_blank",
+          },
+          "Link to repo"
+        ),
+        createElement("span", { key: repoData.created_at }, repoData.created_at)
+      )
+    );
   }
 
   createUserInfoHTML(userInfo) {
-    return (
-      <div key={userInfo ? userInfo.html_url : null} className="user-info">
-        <a
-          key={userInfo.html_url}
-          href={userInfo.html_url}
-          rel="noreferrer"
-          target="_blank"
-        >
-          <img
-            key={userInfo.avatar_url}
-            src={userInfo.avatar_url}
-            alt="avatar"
-            className="avatar"
-          />
-        </a>
-        <span key={userInfo.name}>Name: {userInfo.name}</span>
-        <span key={userInfo.login}>{userInfo.login}</span>
-      </div>
+    return createElement(
+      "div",
+      { key: userInfo ? userInfo.html_url : null, className: "user-info" },
+      createElement(
+        "a",
+        {
+          key: userInfo.html_url,
+          href: userInfo.html_url,
+          rel: "noreferrer",
+          target: "_blank",
+        },
+        createElement("img", {
+          key: userInfo.avatar_url,
+          src: userInfo.avatar_url,
+          alt: "avatar",
+          className: "avatar",
+        })
+      ),
+      createElement("span", { key: userInfo.name }, `Name: ${userInfo.name}`),
+      createElement("span", { key: userInfo.login }, userInfo.login)
     );
   }
+
 
   render() {
     return (
@@ -393,6 +402,7 @@ class Main extends Component {
                 pathname: this.props.location.pathname,
               }),
           }),
+          createElement(Route, {exact: true, path: '/', render: () => <Redirect to="/promise" />}),
           createElement(Route, {
             path: "/promise",
             render: () =>
