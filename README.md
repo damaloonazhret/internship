@@ -25,4 +25,4 @@
 
 - [Iteration 8: Create React App](https://damaloonazhret.github.io/internship/CRA) — [Branch](https://github.com/damaloonazhret/internship/tree/CRA) — [ZIP](https://github.com/damaloonazhret/internship/archive/refs/heads/CRA.zip) — [Pull Request](https://github.com/damaloonazhret/internship/pull/10)
 
-- [Iteration 9: Classes components](https://damaloonazhret.github.io/internship/classesComponents) — [Branch](https://github.com/damaloonazhret/internship/tree/ReactClasses) — [ZIP](https://github.com/damaloonazhret/internship/archive/refs/heads/ReactClasses.zip) — [Pull Request](https://github.com/damaloonazhret/internship/pull/11)
+- [Iteration 9: Classes components](https://damaloonazhret.github.io/internship/ReactClasses) — [Branch](https://github.com/damaloonazhret/internship/tree/ReactClasses) — [ZIP](https://github.com/damaloonazhret/internship/archive/refs/heads/ReactClasses.zip) — [Pull Request](https://github.com/damaloonazhret/internship/pull/11)
