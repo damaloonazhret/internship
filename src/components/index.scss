@@ -69,10 +69,10 @@ select:focus {
   text-align: center;
   height: 100%;
 
-  &.white {
-    --black: #fff;
-    --white: #1a1a1a;
-  }
+  //&.white {
+  //  --black: #fff;
+  //  --white: #1a1a1a;
+  //}
 
   &::-webkit-scrollbar {
     width: 0;

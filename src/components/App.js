@@ -12,6 +12,10 @@ const DARK = "dark";
 const WHITE = "white";
 const repos = "/repos";
 const userUrl = "https://api.github.com/users/";
+const BLACK_ROOT = "--black";
+const WHITE_ROOT = "--white";
+const DEFAULT_COLOR_WHITE = "#ffffff";
+const DEFAULT_COLOR_BLACK = "#1a1a1a";
 const invalidUsernameMessage =
   "Username may only contain alphanumeric characters or single hyphens, and cannot begin or end with a hyphen.";
 
@@ -347,6 +351,7 @@ class Arrows extends Component {
 class ThemeSwitcher extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       theme: DARK,
     };
@@ -358,13 +363,21 @@ class ThemeSwitcher extends Component {
     }));
   };
 
+  setProperty(root, color) {
+    document.documentElement.style.setProperty(root, color);
+  }
+
   globalTheme() {
-    const body = document.querySelector(".body");
-    if (this.state.theme === WHITE) {
-      body.classList.add(WHITE);
+    const theme = this.state.theme;
+
+    if (theme === WHITE) {
+      this.setProperty(BLACK_ROOT, DEFAULT_COLOR_WHITE)
+      this.setProperty(WHITE_ROOT, DEFAULT_COLOR_BLACK)
     }
-    if (this.state.theme === DARK) {
-      body.classList.remove(WHITE);
+
+    if (theme === DARK) {
+      this.setProperty(BLACK_ROOT, DEFAULT_COLOR_BLACK)
+      this.setProperty(WHITE_ROOT, DEFAULT_COLOR_WHITE)
     }
   }
 
@@ -406,7 +419,7 @@ class Main extends Component {
     };
   }
 
-  create(title, userInfoMy, userRepoMy) {
+  create(title, userInfo, userRepo) {
     if (title)
       return createElement(
         "main",
@@ -414,13 +427,13 @@ class Main extends Component {
         createElement("div", {}, title),
       );
 
-    if (!userInfoMy || !userRepoMy) return null;
+    if (!userInfo || !userRepo) return null;
 
     return (
-      <main key={userInfoMy ? userInfoMy.html_url : null} className="mainContent">
-        <article key={userInfoMy ? userInfoMy.html_url : null}>
-          {this.createUserInfoHTML(userInfoMy)}
-          {this.createReposHTML(userRepoMy)}
+      <main key={userInfo ? userInfo.html_url : null} className="mainContent">
+        <article key={userInfo ? userInfo.html_url : null}>
+          {this.createUserInfoHTML(userInfo)}
+          {this.createReposHTML(userRepo)}
         </article>
       </main>
     );
@@ -464,11 +477,11 @@ class Main extends Component {
             path: "/fetch",
             render: () =>
               createElement(AsyncPage, {
-                create: (title, userInfoMy, userRepoMy) =>
-                  this.create(title, userInfoMy, userRepoMy),
+                create: (title, userInfo, userRepo) =>
+                  this.create(title, userInfo, userRepo),
+                setAsyncState: (newState) => this.setState({ async: newState }),
                 setAsyncInputValue: (newValue) =>
                   this.setState({ asyncInputValue: newValue }),
-                setAsyncState: (newState) => this.setState({ async: newState }),
                 asyncState: this.state.async,
                 setIsLoading: this.props.setIsLoading,
                 asyncInputValue: this.state.asyncInputValue,
@@ -478,11 +491,11 @@ class Main extends Component {
             path: "/promise",
             render: () =>
               createElement(PromisePage, {
-                create: (title, userInfoMy, userRepoMy) =>
-                  this.create(title, userInfoMy, userRepoMy),
+                create: (title, userInfo, userRepo) =>
+                  this.create(title, userInfo, userRepo),
+                setPromiseState: (newState) => this.setState({ promise: newState }),
                 setPromiseInputValue: (newValue) =>
                   this.setState({ promiseInputValue: newValue }),
-                setPromiseState: (newState) => this.setState({ promise: newState }),
                 promiseState: this.state.promise,
                 setIsLoading: this.props.setIsLoading,
                 promiseInputValue: this.state.promiseInputValue,
