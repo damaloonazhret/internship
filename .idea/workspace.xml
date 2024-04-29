@@ -4,9 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c830352-c0f4-4574-a1ff-b7b57137849d" name="Changes" comment="update: JS Features branch">
+    <list default="true" id="0c830352-c0f4-4574-a1ff-b7b57137849d" name="Changes" comment="refactor: migration of user query and name verification methods">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/reportWebVitals.js" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -16,8 +17,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="JavaScript File" />
         <option value="JSX File" />
+        <option value="JavaScript File" />
       </list>
     </option>
   </component>
@@ -58,11 +59,11 @@
       <recent name="C:\Study\internship\src\components\Aside\Nav" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Study\internship\src\services" />
       <recent name="C:\Study\internship\src\components" />
       <recent name="C:\Study\internship\src" />
       <recent name="C:\Study\internship\src\components\Aside" />
       <recent name="C:\Study\internship\src\components\Main" />
-      <recent name="C:\Study\internship\src\components\Header" />
     </key>
   </component>
   <component name="SharedIndexes">
@@ -83,7 +84,7 @@
       <workItem from="1714204465710" duration="1053000" />
       <workItem from="1714210829179" duration="22854000" />
       <workItem from="1714300791160" duration="27716000" />
-      <workItem from="1714380511392" duration="2985000" />
+      <workItem from="1714380511392" duration="13591000" />
     </task>
     <task id="LOCAL-00001" summary="refactor: layout on createElement and splitting the project into modules">
       <option name="closed" value="true" />
@@ -125,7 +126,47 @@
       <option name="project" value="LOCAL" />
       <updated>1714332286788</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="feat: move state from App to Main, fix: props naming">
+      <option name="closed" value="true" />
+      <created>1714383598753</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1714383598753</updated>
+    </task>
+    <task id="LOCAL-00007" summary="refactor: theme switcher">
+      <option name="closed" value="true" />
+      <created>1714384805555</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1714384805555</updated>
+    </task>
+    <task id="LOCAL-00008" summary="fix: input value props">
+      <option name="closed" value="true" />
+      <created>1714386408043</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1714386408043</updated>
+    </task>
+    <task id="LOCAL-00009" summary="feat: error handling">
+      <option name="closed" value="true" />
+      <created>1714392131527</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1714392131527</updated>
+    </task>
+    <task id="LOCAL-00010" summary="refactor: migration of user query and name verification methods">
+      <option name="closed" value="true" />
+      <created>1714394713497</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1714394713497</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -150,6 +191,11 @@
     <MESSAGE value="feat: validate input value" />
     <MESSAGE value="fix: repos request" />
     <MESSAGE value="update: JS Features branch" />
-    <option name="LAST_COMMIT_MESSAGE" value="update: JS Features branch" />
+    <MESSAGE value="feat: move state from App to Main, fix: props naming" />
+    <MESSAGE value="refactor: theme switcher" />
+    <MESSAGE value="fix: input value props" />
+    <MESSAGE value="feat: error handling" />
+    <MESSAGE value="refactor: migration of user query and name verification methods" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactor: migration of user query and name verification methods" />
   </component>
 </project>
