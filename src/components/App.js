@@ -30,8 +30,9 @@ class PromisePage extends Component {
           {createElement(Header, {
             setIsLoading: this.props.setIsLoading,
             setPromiseState: this.props.setPromiseState,
-            promiseInputValue: this.props.promiseInputValue,
+            inputValue: this.props.promiseInputValue,
             setPromiseInputValue: this.props.setPromiseInputValue,
+            pathname: this.props.pathname,
             name: 'Promise'
           })}
           {this.props.create("", info, repo)}
@@ -42,8 +43,9 @@ class PromisePage extends Component {
         {createElement(Header, {
           setIsLoading: this.props.setIsLoading,
           setPromiseState: this.props.setPromiseState,
-          promiseInputValue: this.props.promiseInputValue,
+          inputValue: this.props.promiseInputValue,
           setPromiseInputValue: this.props.setPromiseInputValue,
+          pathname: this.props.pathname,
           name: 'Promise'
         })}
         {this.props.create("Promise Page Request")}
@@ -63,8 +65,9 @@ class AsyncPage extends Component {
           {createElement(Header, {
             setIsLoading: this.props.setIsLoading,
             setAsyncState: this.props.setAsyncState,
-            asyncInputValue: this.props.asyncInputValue,
+            inputValue: this.props.asyncInputValue,
             setAsyncInputValue: this.props.setAsyncInputValue,
+            pathname: this.props.pathname,
             name: 'Async'
           })}
           {this.props.create("", info, repo)}
@@ -75,8 +78,9 @@ class AsyncPage extends Component {
         {createElement(Header, {
           setIsLoading: this.props.setIsLoading,
           setAsyncState: this.props.setAsyncState,
-          asyncInputValue: this.props.asyncInputValue,
+          inputValue: this.props.asyncInputValue,
           setAsyncInputValue: this.props.setAsyncInputValue,
+          pathname: this.props.pathname,
           name: 'Async'
         })}
         {this.props.create("Async Page Request")}
@@ -94,6 +98,7 @@ class HomePage extends Component {
 class Header extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       name: "",
       error: "",
@@ -228,10 +233,10 @@ class Header extends Component {
 
   async setRepos(e) {
     e.preventDefault();
-    const hash = window.location.pathname;
+    const path = this.props.pathname;
 
-    if (hash === "/fetch") {
-      const value = this.props.props.asyncInputValue;
+    if (path === "/fetch") {
+      const value = this.props.inputValue;
       if (this.checkValidate(value)) {
         this.props.setIsLoading(true)
         const asyncState = await this.getUserInfoAsync(value);
@@ -240,8 +245,8 @@ class Header extends Component {
       }
 
     }
-    if (hash === "/promise") {
-      const value = this.props.props.promiseInputValue;
+    if (path === "/promise") {
+      const value = this.props.inputValue;
       if (this.checkValidate(value)) {
         this.props.setIsLoading(true)
         const promiseState = await this.getUserInfo(value);
@@ -253,18 +258,18 @@ class Header extends Component {
 
   setName = (e) => {
     const newName = e.target.value;
-    const hash = window.location.pathname;
-    if (hash === "/fetch") {
+    const path = this.props.pathname;
+    if (path === "/fetch") {
       this.props.setAsyncInputValue(newName);
     }
-    if (hash === "/promise") {
+    if (path === "/promise") {
       this.props.setPromiseInputValue(newName);
     }
-    this.setState({ name: newName });
+    this.setState({ name: this.props.inputValue });
   };
 
   render() {
-    const hash = window.location.pathname;
+    const path = this.props.pathname;
     return createElement(
       "header",
       { className: "header" },
@@ -283,10 +288,7 @@ class Header extends Component {
             name: "url",
             type: "search",
             list: "names",
-            value:
-              hash === "/fetch"
-                ? this.props.asyncInputValue
-                : this.props.promiseInputValue,
+            value: this.props.inputValue,
             onChange: this.setName,
           }),
           createElement("datalist", { id: "names" }),
@@ -485,6 +487,7 @@ class Main extends Component {
                 asyncState: this.state.async,
                 setIsLoading: this.props.setIsLoading,
                 asyncInputValue: this.state.asyncInputValue,
+                pathname: this.props.location.pathname,
               }),
           }),
           createElement(Route, {
@@ -499,6 +502,7 @@ class Main extends Component {
                 promiseState: this.state.promise,
                 setIsLoading: this.props.setIsLoading,
                 promiseInputValue: this.state.promiseInputValue,
+                pathname: this.props.location.pathname,
               }),
           }),
           createElement(Route, {
@@ -531,7 +535,7 @@ class App extends Component {
           : null
       }),
       createElement(Aside),
-      createElement(Main, {
+      createElement(withRouter(Main), {
         setIsLoading: (boolean) => this.setState({isLoading: boolean}),
       }),
     );
