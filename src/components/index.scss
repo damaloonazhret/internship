@@ -1,0 +1,58 @@
+:root {
+  --black: #1a1a1a;
+  --white: #fff;
+  --green: #27ae60;
+
+  --font-family-main: "Anonymous Pro", monospace, serif;
+  --transition-all: 0.3s;
+}
+
+::selection {
+  color: var(--white);
+  background: var(--green);
+}
+
+html, body {
+  height: 100%;
+}
+
+.body {
+  background-color: var(--black);
+  color: var(--white);
+  font-weight: 800;
+  transition: var(--transition-all);
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: var(--font-family-main), serif;
+  text-align: center;
+  height: 100%;
+
+  &::-webkit-scrollbar {
+    width: 0;
+  }
+}
+
+#app {
+  display: grid;
+  grid-template-columns: 150px auto;
+  grid-template-rows: 129px auto;
+  min-height: 100%;
+}
+
+@media screen and (width <= 600px) {
+  .body {
+    background-color: var(--black);
+    color: var(--white);
+    font-weight: 800;
+    transition: var(--transition-all);
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+  }
+}
+
+
+[class*="switcherToggler"].white {
+  left: 68%!important;
+}
