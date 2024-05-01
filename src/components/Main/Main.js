@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
-import HomePage from "./HomePage/HomePage";
 import style from "./main.module.scss";
-import {AsyncPg} from "./AsyncPage";
-import {PromisePg} from "./PromisePage";
+import { AsyncPg } from "./AsyncPage";
+import { PromisePg } from "./PromisePage";
+import { HomePg } from "./HomePage";
 
 const Main = (props) => {
   const [async, setAsync] = useState({});
@@ -113,7 +113,7 @@ const Main = (props) => {
           />
         )}
       />
-      <Route path="/home" component={HomePage} />
+      <Route path="/home" component={HomePg} />
     </Switch>
   );
 };
