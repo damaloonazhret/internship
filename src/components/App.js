@@ -6,6 +6,7 @@ import { Suspense } from "react";
 import Loader from "./Preloaders/Loader";
 
 function App() {
+  throw new Error("Testing ErrorBoundary");
   return (
     <Suspense fallback={<Loader/>}>
       <Router>

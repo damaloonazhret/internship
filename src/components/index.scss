@@ -43,6 +43,18 @@ html, body {
     grid-row: 1 / 3;
     place-self: center;
   }
+
+  & .somethingWrong {
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    place-self: center;
+  }
+
+  & .somethingWrongInfo {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    place-self: center;
+  }
 }
 
 @media screen and (width <= 600px) {

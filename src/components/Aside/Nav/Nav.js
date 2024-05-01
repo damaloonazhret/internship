@@ -5,13 +5,13 @@ import style from './nav.module.scss'
 const Nav = () => {
   return (
     <nav className={style.nav}>
-      <NavLink to="/promise" activeClassName={style.active}>
+      <NavLink to="/promise" activeClassName={style.activeLink}>
         Promise
       </NavLink>
-      <NavLink to="/fetch" activeClassName={style.active}>
+      <NavLink to="/fetch" activeClassName={style.activeLink}>
         Async
       </NavLink>
-      <NavLink to="/home" activeClassName={style.active}>
+      <NavLink to="/home" activeClassName={style.activeLink}>
         Home
       </NavLink>
     </nav>

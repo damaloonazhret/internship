@@ -4,10 +4,9 @@
   justify-content: space-around;
   align-items: center;
   flex-direction: column;
-}
-
-.active {
-  color: var(--green)!important;
+  & .activeLink {
+    color: var(--green);
+  }
 }
 
 @media screen and (width <= 600px) {
