@@ -2,13 +2,17 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "./index.scss";
 import Main from "./Main/Main";
 import Aside from "./Aside/Aside";
+import { Suspense } from "react";
+import Loader from "./Preloaders/Loader";
 
 function App() {
   return (
-    <Router>
-      <Aside />
-      <Main />
-    </Router>
+    <Suspense fallback={<Loader/>}>
+      <Router>
+        <Aside />
+        <Main />
+      </Router>
+    </Suspense>
   );
 }
 

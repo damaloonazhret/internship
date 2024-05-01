@@ -1,21 +1,22 @@
 import { withRouter } from "react-router-dom";
 import style from './arrows.module.scss'
+import {useCallback} from "react";
 
 const Arrows = (props) => {
-  const goBack = () => {
+  const goBack = useCallback (() => {
     props.history.goBack();
-  };
+  }, [props.history]);
 
-  const goForward = () => {
+  const goForward = useCallback( () => {
     props.history.goForward();
-  };
+  }, [props.history]);
 
   return (
     <nav className={style.navArrows}>
-      <p id="back" className={style.back} onClick={goBack}>
+      <p className={style.back} onClick={goBack}>
         {"<"}
       </p>
-      <p id="forward" className={style.forward} onClick={goForward}>
+      <p className={style.forward} onClick={goForward}>
         {">"}
       </p>
     </nav>

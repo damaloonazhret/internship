@@ -53,10 +53,10 @@ input[type = checkbox] {
   left: 9%;
   top: 12%;
   transition: var(--transition-all);
+}
 
-  &.white {
-    left: 68%;
-  }
+.switcherTogglerWhite {
+  left: 68%;
 }
 
 @media screen and (width <= 600px) {

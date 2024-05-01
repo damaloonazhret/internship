@@ -1,15 +1,20 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import HomePage from "./HomePage/HomePage";
-import PromisePage from "./PromisePage/PromisePage";
-import AsyncPage from "./AsyncPage/AsyncPage";
-import style from './main.module.scss'
+import style from "./main.module.scss";
+import {AsyncPg} from "./AsyncPage";
+import {PromisePg} from "./PromisePage";
 
 const Main = (props) => {
   const [async, setAsync] = useState({});
   const [promise, setPromise] = useState({});
   const [asyncInputValue, setAsyncInputValue] = useState("");
   const [promiseInputValue, setPromiseInputValue] = useState("");
+
+  useEffect(() => {
+    const pathName = props.location.pathname;
+    document.title = `${pathName.charAt(1).toUpperCase()}${pathName.slice(2)} page`;
+  }, [props.location.pathname]);
 
   const create = (title, userInfo, userRepo) => {
     if (title)
@@ -22,7 +27,10 @@ const Main = (props) => {
     if (!userInfo || !userRepo) return null;
 
     return (
-      <main key={userInfo ? userInfo.html_url : null} className={style.mainContent}>
+      <main
+        key={userInfo ? userInfo.html_url : null}
+        className={style.mainContent}
+      >
         <article key={userInfo ? userInfo.html_url : null}>
           {createUserInfoHTML(userInfo)}
           {createReposHTML(userRepo)}
@@ -77,7 +85,7 @@ const Main = (props) => {
       <Route
         path="/fetch"
         render={() => (
-          <AsyncPage
+          <AsyncPg
             create={(title, userInfo, userRepo) =>
               create(title, userInfo, userRepo)
             }
@@ -93,7 +101,7 @@ const Main = (props) => {
       <Route
         path="/promise"
         render={() => (
-          <PromisePage
+          <PromisePg
             create={(title, userInfo, userRepo) =>
               create(title, userInfo, userRepo)
             }

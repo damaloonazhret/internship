@@ -1,11 +1,21 @@
-import { useState } from "react";
+import {useEffect, useState} from "react";
 import { checkValidate } from "../../services/validate";
 import { getUserInfo, getUserInfoAsync } from "../../services/getData";
-import style from './header.module.scss'
+import style from "./header.module.scss";
+import Preloader from "../Preloaders/Preloader";
 
 const Header = (props) => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    return () => {
+      // const path = props.pathname;
+      setError('')
+      // if (path === "/fetch") props.setAsyncInputValue('Fetch');
+      // if (path === "/promise") props.setPromiseInputValue('Promise');
+    }
+  }, [props]);
 
   const setRepos = async (e) => {
     e.preventDefault();
@@ -47,12 +57,9 @@ const Header = (props) => {
   const setName = (e) => {
     const newName = e.target.value;
     const path = props.pathname;
-    if (path === "/fetch") {
-      props.setAsyncInputValue(newName);
-    }
-    if (path === "/promise") {
-      props.setPromiseInputValue(newName);
-    }
+
+    if (path === "/fetch") props.setAsyncInputValue(newName);
+    if (path === "/promise") props.setPromiseInputValue(newName);
   };
 
   return (
@@ -72,7 +79,7 @@ const Header = (props) => {
           />
           <datalist id="names"></datalist>
           <span className={style.error}>{error}</span>
-          <div  className={`${style.preloader} ${isLoading ? "loader" : null}`}></div>
+          <Preloader isLoading={isLoading}/>
         </div>
       </form>
     </header>

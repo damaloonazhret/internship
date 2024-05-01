@@ -63,9 +63,10 @@
   top: 50%;
   display: none;
 
-  &.loader {
-    display: block;
-  }
+}
+
+.preloaderActive {
+  display: block;
 }
 
 @keyframes spin {

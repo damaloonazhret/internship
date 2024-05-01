@@ -4,7 +4,7 @@
   --green: #27ae60;
 
   --font-family-main: "Anonymous Pro", monospace, serif;
-  --transition-all: 0.3s;
+  --transition-all: none;
 }
 
 ::selection {
@@ -38,6 +38,11 @@ html, body {
   grid-template-columns: 150px auto;
   grid-template-rows: 129px auto;
   min-height: 100%;
+  & .loading {
+    grid-column: 1 / 3;
+    grid-row: 1 / 3;
+    place-self: center;
+  }
 }
 
 @media screen and (width <= 600px) {
@@ -50,9 +55,4 @@ html, body {
     flex-direction: column;
     gap: 30px;
   }
-}
-
-
-[class*="switcherToggler"].white {
-  left: 68%!important;
 }

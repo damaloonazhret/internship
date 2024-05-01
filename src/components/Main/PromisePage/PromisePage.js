@@ -16,13 +16,15 @@ const PromisePage = (props) => {
     />
   );
 
-  if (info && repo)
+  if (info && repo) {
     return (
       <>
         {headerComponent}
         {props.create("", info, repo)}
       </>
-    );
+    )
+  }
+
   return (
     <>
       {headerComponent}
