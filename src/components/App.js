@@ -83,7 +83,7 @@ class AsyncPage extends Component {
 
 class HomePage extends Component {
   render() {
-    return <h2>Home Page</h2>;
+    return <h2 className='HomePage'>Home Page</h2>;
   }
 }
 
@@ -197,9 +197,9 @@ class Nav extends Component {
     return createElement(
       "nav",
       { className: "nav" },
-      createElement(NavLink, { className: "main", to: "/promise" }, "Promise"),
-      createElement(NavLink, { className: "info", to: "/fetch" }, "Async"),
-      createElement(NavLink, { className: "settings", to: "/home" }, "Home"),
+      createElement(NavLink, {to: "/promise" }, "Promise"),
+      createElement(NavLink, {to: "/fetch" }, "Async"),
+      createElement(NavLink, {to: "/home" }, "Home"),
     );
   }
 }
@@ -317,7 +317,7 @@ class Main extends Component {
       return createElement(
         "main",
         { className: "mainContent" },
-        createElement("div", {}, title),
+        createElement("h2", {}, title),
       );
 
     if (!userInfo || !userRepo) return null;
