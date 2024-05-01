@@ -20,7 +20,7 @@ const Main = (props) => {
     if (title)
       return (
         <main className={style.mainContent}>
-          <div>{title}</div>
+          <h2>{title}</h2>
         </main>
       );
 

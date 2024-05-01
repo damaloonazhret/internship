@@ -20,8 +20,8 @@ class ErrorBoundary extends Component {
       return (
         <>
           <Aside />
-          <h2 className="somethingWrong">It seems something went wrong...</h2>
-          <div className="somethingWrongInfo">{this.state.error && this.state.error.toString()}</div>
+          <h3 className="somethingWrong">It seems something went wrong...</h3>
+          <span className="somethingWrongInfo">{this.state.error && this.state.error.toString()}</span>
         </>
       );
     }
