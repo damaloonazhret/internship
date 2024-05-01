@@ -1,71 +1,76 @@
-import {useEffect, useState} from "react";
+import { useEffect } from "react";
 import { checkValidate } from "../../services/validate";
-import { getUserInfo, getUserInfoAsync } from "../../services/getData";
 import style from "./header.module.scss";
 import Preloader from "../Preloaders/Preloader";
+import { useAsyncRequest } from "../hooks/useAsyncRequest";
+import { getUserInfo, getUserInfoAsync } from "../../services/getData";
 
-const Header = (props) => {
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
+const Header = ({
+  name,
+  pathname,
+  inputValue,
+  setAsyncInputValue,
+  setPromiseInputValue,
+  setAsyncState,
+  setPromiseState,
+}) => {
+  const { isLoading, error, data, setError, fetchData } = useAsyncRequest();
 
   useEffect(() => {
-    return () => {
-      // const path = props.pathname;
-      setError('')
-      // if (path === "/fetch") props.setAsyncInputValue('Fetch');
-      // if (path === "/promise") props.setPromiseInputValue('Promise');
+    setError("");
+  }, [inputValue, setError]);
+
+  useEffect(() => {
+    if (data && data.userInfoMy && data.userRepoMy) {
+      switch (pathname) {
+        case "/fetch":
+          setAsyncState(data);
+          break;
+        case "/promise":
+          setPromiseState(data);
+          break;
+        default:
+          break;
+      }
     }
-  }, [props]);
+  }, [data, pathname, setAsyncState, setPromiseState]);
 
   const setRepos = async (e) => {
     e.preventDefault();
 
-    const path = props.pathname;
-    const value = props.inputValue;
+    const path = pathname;
+    const value = inputValue;
     const isChecked = checkValidate(value);
 
     if (isChecked.check) {
-      setIsLoading(true);
-
       try {
-        let data;
-        switch (path) {
-          case "/fetch":
-            data = await getUserInfoAsync(value);
-            props.setAsyncState(data);
-            break;
-
-          case "/promise":
-            data = await getUserInfo(value);
-            props.setPromiseState(data);
-            break;
-
-          default:
-            break;
-        }
+        await fetchData(
+          path === "/fetch" ? getUserInfoAsync : getUserInfo,
+          value,
+        );
       } catch (err) {
         setError(err.message);
-      } finally {
-        setError("");
-        setIsLoading(false);
       }
     } else {
       setError(isChecked.message);
     }
   };
 
+
+  console.log(error)
+
   const setName = (e) => {
     const newName = e.target.value;
-    const path = props.pathname;
+    const path = pathname;
 
-    if (path === "/fetch") props.setAsyncInputValue(newName);
-    if (path === "/promise") props.setPromiseInputValue(newName);
+    if (path === "/fetch") setAsyncInputValue(newName);
+    if (path === "/promise") setPromiseInputValue(newName);
   };
 
   return (
     <header className={style.header}>
       <form onSubmit={(e) => setRepos(e)}>
-        <p id="head-info">{`${props.name} Request`}</p>
+        <p id="head-info">{`${name} Request`}</p>
         <div className={style.search}>
           <input
             id="url"
@@ -74,12 +79,12 @@ const Header = (props) => {
             name="url"
             type="search"
             list="names"
-            value={props.inputValue}
+            value={inputValue}
             onChange={setName}
           />
           <datalist id="names"></datalist>
-          <span className={style.error}>{error}</span>
-          <Preloader isLoading={isLoading}/>
+          {error && <span className={style.error}>{error.message}</span>}
+          <Preloader isLoading={isLoading} />
         </div>
       </form>
     </header>
