@@ -2,6 +2,9 @@ import "react-app-polyfill/ie9";
 import "react-app-polyfill/stable";
 import "./index.scss";
 import defaultHash from "./assets/hash.txt";
+import imgContent from "./assets/image.avif";
+import gifContent from "./assets/gif.gif";
+
 let layout;
 let isLoading = false;
 let themeUser = localStorage.getItem("theme");
@@ -147,6 +150,7 @@ class PageLayoutBuilder {
     aside.appendChild(this.createNav());
     aside.appendChild(this.createNavArrows());
     aside.appendChild(this.createThemeSwitcher());
+    aside.appendChild(this.createContent());
 
     return aside;
   }
@@ -198,6 +202,58 @@ class PageLayoutBuilder {
     themeSwitcher.appendChild(this.createSwitcherInput());
     themeSwitcher.appendChild(this.createSwitcherLabel());
     return themeSwitcher;
+  }
+
+  createContent() {
+    const contentContainer = this.createElement({
+      tagName: "div",
+      class: "content",
+    });
+
+    const imageContainer = this.createElement({
+      tagName: "div",
+      class: "content__image-container",
+    });
+
+    const gifContainer = this.createElement({
+      tagName: "div",
+      class: "content__gif-container",
+    });
+
+    const imageLink = this.createElement({
+      tagName: "a",
+      href: "https://mobile-review.com/pda/review/sony-psp.shtml",
+      class: "content__image-link",
+      target: "_blank",
+    });
+
+    const gifLink = this.createElement({
+      tagName: "a",
+      href: "https://dribbble.com/shots/7897570-Fast-and-Furious/attachments/496539?mode=media",
+      class: "content__gif-link",
+      target: "_blank",
+    });
+
+    const image = this.createElement({
+      tagName: "img",
+      src: imgContent,
+      class: "content__image",
+    });
+
+    const gif = this.createElement({
+      tagName: "img",
+      src: gifContent,
+      class: "content__gif",
+    });
+
+    imageLink.appendChild(image);
+    gifLink.appendChild(gif);
+    imageContainer.appendChild(imageLink);
+    gifContainer.appendChild(gifLink);
+    contentContainer.appendChild(imageContainer);
+    contentContainer.appendChild(gifContainer);
+
+    return contentContainer;
   }
 
   createSwitcherInput() {

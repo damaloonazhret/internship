@@ -228,6 +228,25 @@ label {
   }
 }
 
+.content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  height: 50%;
+  padding: 0 10px;
+  & a {
+    padding: 0;
+    transition: var(--transition-all);
+    &:hover{
+      transform: scale(0.9);
+    }
+  }
+  & img {
+    width: 100%;
+    box-shadow: 0 0 9px var(--white);
+  }
+}
+
 a.white {
   color: var(--black);
 }
