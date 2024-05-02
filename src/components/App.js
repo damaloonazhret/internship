@@ -65,7 +65,7 @@ class AsyncPage extends Component {
 
 class HomePage extends Component {
   render() {
-    return <h2 className="HomePage">Home Page</h2>;
+    return createElement('h2', {className: 'HomePage'}, "Home Page")
   }
 }
 
