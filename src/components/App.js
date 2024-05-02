@@ -13,34 +13,25 @@ import { checkValidate } from "../services/validate";
 
 class PromisePage extends Component {
   render() {
+    const headerProps = {
+      setIsLoading: this.props.setIsLoading,
+      setPromiseState: this.props.setPromiseState,
+      inputValue: this.props.promiseInputValue,
+      setPromiseInputValue: this.props.setPromiseInputValue,
+      pathname: this.props.pathname,
+      name: "Promise",
+    };
+
     const promiseState = this.props.promiseState;
     const info = promiseState.userInfoMy;
     const repo = promiseState.userRepoMy;
-    if (info && repo)
-      return (
-        <>
-          {createElement(Header, {
-            setIsLoading: this.props.setIsLoading,
-            setPromiseState: this.props.setPromiseState,
-            inputValue: this.props.promiseInputValue,
-            setPromiseInputValue: this.props.setPromiseInputValue,
-            pathname: this.props.pathname,
-            name: "Promise",
-          })}
-          {this.props.create("", info, repo)}
-        </>
-      );
+
     return (
       <>
-        {createElement(Header, {
-          setIsLoading: this.props.setIsLoading,
-          setPromiseState: this.props.setPromiseState,
-          inputValue: this.props.promiseInputValue,
-          setPromiseInputValue: this.props.setPromiseInputValue,
-          pathname: this.props.pathname,
-          name: "Promise",
-        })}
-        {this.props.create("Promise Page Request")}
+        {createElement(Header, headerProps)}
+        {info && repo
+          ? this.props.create("", info, repo)
+          : this.props.create("Promise Page Request")}
       </>
     );
   }
@@ -48,34 +39,25 @@ class PromisePage extends Component {
 
 class AsyncPage extends Component {
   render() {
+    const headerProps = {
+      setIsLoading: this.props.setIsLoading,
+      setAsyncState: this.props.setAsyncState,
+      inputValue: this.props.asyncInputValue,
+      setAsyncInputValue: this.props.setAsyncInputValue,
+      pathname: this.props.pathname,
+      name: "Async",
+    };
+
     const asyncState = this.props.asyncState;
     const info = asyncState.userInfoMy;
     const repo = asyncState.userRepoMy;
-    if (info && repo)
-      return (
-        <>
-          {createElement(Header, {
-            setIsLoading: this.props.setIsLoading,
-            setAsyncState: this.props.setAsyncState,
-            inputValue: this.props.asyncInputValue,
-            setAsyncInputValue: this.props.setAsyncInputValue,
-            pathname: this.props.pathname,
-            name: "Async",
-          })}
-          {this.props.create("", info, repo)}
-        </>
-      );
+
     return (
       <>
-        {createElement(Header, {
-          setIsLoading: this.props.setIsLoading,
-          setAsyncState: this.props.setAsyncState,
-          inputValue: this.props.asyncInputValue,
-          setAsyncInputValue: this.props.setAsyncInputValue,
-          pathname: this.props.pathname,
-          name: "Async",
-        })}
-        {this.props.create("Async Page Request")}
+        {createElement(Header, headerProps)}
+        {info && repo
+          ? this.props.create("", info, repo)
+          : this.props.create("Async Page Request")}
       </>
     );
   }
@@ -83,7 +65,7 @@ class AsyncPage extends Component {
 
 class HomePage extends Component {
   render() {
-    return <h2 className='HomePage'>Home Page</h2>;
+    return <h2 className="HomePage">Home Page</h2>;
   }
 }
 
@@ -197,9 +179,9 @@ class Nav extends Component {
     return createElement(
       "nav",
       { className: "nav" },
-      createElement(NavLink, {to: "/promise" }, "Promise"),
-      createElement(NavLink, {to: "/fetch" }, "Async"),
-      createElement(NavLink, {to: "/home" }, "Home"),
+      createElement(NavLink, { to: "/promise" }, "Promise"),
+      createElement(NavLink, { to: "/fetch" }, "Async"),
+      createElement(NavLink, { to: "/home" }, "Home"),
     );
   }
 }
