@@ -5,6 +5,8 @@ import Preloader from "../Preloaders/Preloader";
 import { useAsyncRequest } from "../hooks/useAsyncRequest";
 import { getUserInfo, getUserInfoAsync } from "../../services/getData";
 
+console.log(process.env)
+
 const Header = ({
   name,
   pathname,
@@ -55,9 +57,6 @@ const Header = ({
       setError(isChecked.message);
     }
   };
-
-
-  console.log(error)
 
   const setName = (e) => {
     const newName = e.target.value;
