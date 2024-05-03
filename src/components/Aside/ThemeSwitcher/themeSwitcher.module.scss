@@ -19,7 +19,7 @@ input[type = checkbox] {
   padding-bottom: 20px;
   position: fixed;
   bottom: 0;
-  left: 27px;
+  left: 30px;
 }
 
 .switcherLabel {
@@ -55,12 +55,12 @@ input[type = checkbox] {
 }
 
 @media screen and (width <= 600px) {
-  .theme-switcher {
+  .themeSwitcher {
     padding: 0;
     position: fixed;
     bottom: 10px;
-    right: calc(50vw - 50px);
-    left: initial;
+    left: 50%;
+    transform: translateX(-50%);
     z-index: 1;
   }
 }

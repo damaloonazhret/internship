@@ -59,10 +59,9 @@
   height: 100px;
   animation: spin 2s linear infinite;
   position: fixed;
-  left: calc(50% - 50px);
+  left: 50%;
   top: 50%;
   display: none;
-
 }
 
 .preloaderActive {
@@ -85,10 +84,23 @@
     padding: 0;
   }
 
+  .preloader {
+    left: 34%;
+    top: 50%;
+  }
+
   #url {
     max-width: 90vw;
     overflow: auto;
     white-space: nowrap;
     text-overflow: fade;
+  }
+}
+
+@media screen and (width <= 400px) {
+  .header {
+    form {
+      flex-wrap: wrap;
+    }
   }
 }

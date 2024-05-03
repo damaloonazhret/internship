@@ -18,4 +18,17 @@
       justify-content: center;
     }
   }
+
+  .nav {
+    flex-direction: column;
+    z-index: 1;
+    right: 0;
+    position: fixed;
+    bottom: 50px;
+    width: 80px;
+
+    & a {
+      justify-content: center;
+    }
+  }
 }
