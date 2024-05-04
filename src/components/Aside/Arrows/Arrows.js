@@ -2,7 +2,7 @@ import style from "./arrows.module.scss";
 import { useHistory } from "react-router-dom";
 import { useCallback } from "react";
 
-const Arrows = (props) => {
+const Arrows = () => {
   const history = useHistory();
 
   const goBack = useCallback(() => {

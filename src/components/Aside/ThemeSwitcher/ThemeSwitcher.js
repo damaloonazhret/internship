@@ -1,9 +1,9 @@
 import { useEffect } from "react";
 import style from "./themeSwitcher.module.scss";
 import { setProperty } from "../../../services/setProperty";
+import {DARK} from "../../App";
 
 const ThemeSwitcher = (props) => {
-  const DARK = "dark";
   const WHITE = "white";
   const BLACK_ROOT = "--black";
   const WHITE_ROOT = "--white";

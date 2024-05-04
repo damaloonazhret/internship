@@ -4,8 +4,10 @@ import Main from "./Main/Main";
 import Aside from "./Aside/Aside";
 import { useState } from "react";
 
+export const DARK = "dark";
+
 function App() {
-  const DARK = "dark";
+
 
   const [colors, setColors] = useState({
     primary: "#1a1a1a",
