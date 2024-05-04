@@ -8,7 +8,6 @@ export const DARK = "dark";
 
 function App() {
 
-
   const [colors, setColors] = useState({
     primary: "#1a1a1a",
     secondary: "#ffffff",
