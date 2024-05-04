@@ -2,17 +2,36 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "./index.scss";
 import Main from "./Main/Main";
 import Aside from "./Aside/Aside";
-import { Suspense } from "react";
-import Loader from "./Preloaders/Loader";
+import { useState } from "react";
 
 function App() {
+  const DARK = "dark";
+
+  const [colors, setColors] = useState({
+    primary: "#1a1a1a",
+    secondary: "#ffffff",
+  });
+
+  const [theme, setTheme] = useState(() => {
+    const themeColor = localStorage.getItem("theme");
+    return themeColor || DARK;
+  });
+
   return (
-    <Suspense fallback={<Loader/>}>
-      <Router>
-        <Aside />
-        <Main />
-      </Router>
-    </Suspense>
+    <Router>
+      <Aside
+        colors={colors}
+        setColors={setColors}
+        theme={theme}
+        setTheme={setTheme}
+      />
+      <Main
+        colors={colors}
+        setColors={setColors}
+        theme={theme}
+        setTheme={setTheme}
+      />
+    </Router>
   );
 }
 

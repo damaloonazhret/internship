@@ -1,0 +1,38 @@
+article {
+    align-items: center;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+    height: 50%;
+    justify-content: space-around;
+    grid-row: 1 / 3;
+}
+
+input[type='color'] {
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}
+
+#reset-text,
+#reset-BG {
+    width: 60px;
+    height: 20px;
+    cursor: pointer;
+    background-color: var(--black);
+    border: 2px solid var(--white);
+    border-radius: 5%;
+    color: var(--white);
+}
+
+.settings-title {
+    flex-basis: 100%;
+    flex-grow: 1;
+}
+
+.setting {
+    align-items: center;
+    display: flex;
+    justify-content: space-around;
+}

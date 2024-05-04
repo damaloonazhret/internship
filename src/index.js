@@ -12,10 +12,8 @@ if (!container) {
 const root = createRoot(container);
 root.render(
   <StrictMode>
-    <BrowserRouter>
-      <ErrorBoundary>
+    <ErrorBoundary>
         <App />
-      </ErrorBoundary>
-    </BrowserRouter>
+    </ErrorBoundary>
   </StrictMode>,
 );

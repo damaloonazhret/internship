@@ -1,9 +1,10 @@
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import style from "./main.module.scss";
+import Loader from "../Preloaders/Loader";
+import { HomePg } from "./HomePage";
 import { AsyncPg } from "./AsyncPage";
 import { PromisePg } from "./PromisePage";
-import { HomePg } from "./HomePage";
 
 const Main = (props) => {
   const [async, setAsync] = useState({});
@@ -82,38 +83,52 @@ const Main = (props) => {
 
   return (
     <Switch>
-      <Route
-        path="/fetch"
-        render={() => (
-          <AsyncPg
-            create={(title, userInfo, userRepo) =>
-              create(title, userInfo, userRepo)
-            }
-            setAsyncState={(newState) => setAsync(newState)}
-            setAsyncInputValue={(newValue) => setAsyncInputValue(newValue)}
-            asyncState={async}
-            asyncInputValue={asyncInputValue}
-            pathname={props.location.pathname}
-          />
-        )}
-      />
-      <Route exact path="/" render={() => <Redirect to="/promise" />} />
-      <Route
-        path="/promise"
-        render={() => (
-          <PromisePg
-            create={(title, userInfo, userRepo) =>
-              create(title, userInfo, userRepo)
-            }
-            setPromiseState={(newState) => setPromise(newState)}
-            setPromiseInputValue={(newValue) => setPromiseInputValue(newValue)}
-            promiseState={promise}
-            promiseInputValue={promiseInputValue}
-            pathname={props.location.pathname}
-          />
-        )}
-      />
-      <Route path="/home" component={HomePg} />
+      <Suspense fallback={<Loader />}>
+        <Route
+          path="/fetch"
+          render={() => (
+            <AsyncPg
+              create={(title, userInfo, userRepo) =>
+                create(title, userInfo, userRepo)
+              }
+              setAsyncState={(newState) => setAsync(newState)}
+              setAsyncInputValue={(newValue) => setAsyncInputValue(newValue)}
+              asyncState={async}
+              asyncInputValue={asyncInputValue}
+              pathname={props.location.pathname}
+            />
+          )}
+        />
+        <Route exact path="/" render={() => <Redirect to="/promise" />} />
+        <Route
+          path="/promise"
+          render={() => (
+            <PromisePg
+              create={(title, userInfo, userRepo) =>
+                create(title, userInfo, userRepo)
+              }
+              setPromiseState={(newState) => setPromise(newState)}
+              setPromiseInputValue={(newValue) =>
+                setPromiseInputValue(newValue)
+              }
+              promiseState={promise}
+              promiseInputValue={promiseInputValue}
+              pathname={props.location.pathname}
+            />
+          )}
+        />
+        <Route
+          path="/home"
+          render={() => (
+            <HomePg
+              colors={props.colors}
+              setColors={props.setColors}
+              theme={props.theme}
+              setTheme={props.setTheme}
+            />
+          )}
+        />
+      </Suspense>
     </Switch>
   );
 };
