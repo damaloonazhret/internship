@@ -2,6 +2,7 @@ import Arrows from "./Arrows/Arrows";
 import ThemeSwitcher from "./ThemeSwitcher/ThemeSwitcher";
 import Nav from "./Nav/Nav";
 import style from "./aside.module.scss";
+import {memo} from "react";
 
 const Aside = (props) => {
   return (
@@ -18,4 +19,4 @@ const Aside = (props) => {
   );
 };
 
-export default Aside;
+export default memo(Aside);

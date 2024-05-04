@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 import style from "./themeSwitcher.module.scss";
 import { setProperty } from "../../../services/setProperty";
-import {DARK} from "../../App";
+import { DARK } from "../../App";
 
 const ThemeSwitcher = (props) => {
   const WHITE = "white";
@@ -10,8 +10,13 @@ const ThemeSwitcher = (props) => {
   const TRANSITION_ALL = "--transition-all";
   const TRANSITION_VALUE = "0.4s all ease-in";
 
-  useEffect(() => {
-    setProperty(TRANSITION_ALL, TRANSITION_VALUE);
+  // useEffect(() => {
+  //   setProperty(TRANSITION_ALL, TRANSITION_VALUE);
+  // }, []);
+  useLayoutEffect(() => {
+    setTimeout(() => {
+      setProperty(TRANSITION_ALL, TRANSITION_VALUE);
+    }, 0);
   }, []);
 
   const themeSwitcher = () => {

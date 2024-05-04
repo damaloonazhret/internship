@@ -1,6 +1,6 @@
 import "./index.css";
-import { useReducer, useRef } from "react";
-import { DARK } from "../../App";
+import {memo, useReducer, useRef} from "react";
+import {DARK} from "../../App";
 
 const HomePage = (props) => {
   const primaryColorRef = useRef(null);
@@ -146,4 +146,4 @@ const HomePage = (props) => {
   );
 };
 
-export default HomePage;
+export default memo(HomePage);

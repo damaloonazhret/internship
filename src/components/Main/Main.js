@@ -1,5 +1,5 @@
-import { Suspense, useEffect, useState } from "react";
-import { Redirect, Route, Switch, withRouter } from "react-router-dom";
+import {memo, Suspense, useEffect, useState} from "react";
+import {Redirect, Route, Switch, useLocation} from "react-router-dom";
 import style from "./main.module.scss";
 import Loader from "../Preloaders/Loader";
 import { HomePg } from "./HomePage";
@@ -12,10 +12,11 @@ const Main = (props) => {
   const [asyncInputValue, setAsyncInputValue] = useState("");
   const [promiseInputValue, setPromiseInputValue] = useState("");
 
+    const location = useLocation()
   useEffect(() => {
-    const pathName = props.location.pathname;
+    const pathName = location.pathname;
     document.title = `${pathName.charAt(1).toUpperCase()}${pathName.slice(2)} page`;
-  }, [props.location.pathname]);
+  }, [location.pathname]);
 
   const create = (title, userInfo, userRepo) => {
     if (title)
@@ -95,7 +96,7 @@ const Main = (props) => {
               setAsyncInputValue={(newValue) => setAsyncInputValue(newValue)}
               asyncState={async}
               asyncInputValue={asyncInputValue}
-              pathname={props.location.pathname}
+              pathname={location.pathname}
             />
           )}
         />
@@ -113,7 +114,7 @@ const Main = (props) => {
               }
               promiseState={promise}
               promiseInputValue={promiseInputValue}
-              pathname={props.location.pathname}
+              pathname={location.pathname}
             />
           )}
         />
@@ -125,6 +126,8 @@ const Main = (props) => {
               setColors={props.setColors}
               theme={props.theme}
               setTheme={props.setTheme}
+              a={props.a}
+              b={props.b}
             />
           )}
         />
@@ -133,4 +136,4 @@ const Main = (props) => {
   );
 };
 
-export default withRouter(Main);
+export default memo(Main);
