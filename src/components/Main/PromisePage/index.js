@@ -1,1 +1,1 @@
-export {PromiseLazy as PromisePg} from './PromisePage.lazy';
+export {PromiseLazy as PromisePage} from './PromisePage.lazy';

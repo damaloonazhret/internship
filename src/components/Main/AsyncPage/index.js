@@ -1,1 +1,1 @@
-export {AsyncLazy as AsyncPg} from './AsyncPage.lazy';
+export {AsyncLazy as AsyncPage} from './AsyncPage.lazy';

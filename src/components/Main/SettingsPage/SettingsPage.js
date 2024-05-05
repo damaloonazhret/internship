@@ -1,11 +1,11 @@
 import "./index.css";
-import { memo, useReducer, useRef } from "react";
+import { useCallback, useReducer, useRef } from "react";
 import { SettingsFont } from "./SettingsFont/SettingsFont";
 import { SettingsTxt } from "./SettingsTxt/SettingsTxt";
 import { SettingsBg } from "./SettingsBg/SettingsBg";
-import {fontReducer} from "../../../services/Reducers/fontReducer";
+import { fontReducer } from "../../../services/Reducers/fontReducer";
 
-const HomePage = (props) => {
+const SettingsPage = (props) => {
   const primaryColorRef = useRef(null);
   const secondaryColorRef = useRef(null);
 
@@ -52,17 +52,17 @@ const HomePage = (props) => {
 
   const [count, dispatch] = useReducer(fontReducer, initialState, undefined);
 
-  const increment = () => {
+  const increment = useCallback(() => {
     dispatch({ type: "INCREMENT", payload: 0.5 });
-  };
+  }, []);
 
-  const decrement = () => {
+  const decrement = useCallback(() => {
     dispatch({ type: "DECREMENT", payload: 0.5 });
-  };
+  }, []);
 
-  const reset = () => {
+  const reset = useCallback(() => {
     dispatch({ type: "RESET", payload: 16 });
-  };
+  }, []);
 
   return (
     <article className="settings">
@@ -98,4 +98,4 @@ const HomePage = (props) => {
   );
 };
 
-export default memo(HomePage);
+export default SettingsPage;

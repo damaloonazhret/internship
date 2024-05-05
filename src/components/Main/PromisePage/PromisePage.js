@@ -1,4 +1,5 @@
 import Header from "../../Header/Header";
+import {memo} from "react";
 
 const PromisePage = (props) => {
   const promiseState = props.promiseState;
@@ -24,4 +25,4 @@ const PromisePage = (props) => {
   );
 };
 
-export default PromisePage;
+export default memo(PromisePage);

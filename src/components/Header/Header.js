@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import {memo, useEffect} from "react";
 import { checkValidate } from "../../services/validate";
 import style from "./header.module.scss";
 import Preloader from "../Preloaders/Preloader";
@@ -58,10 +58,9 @@ const Header = ({
 
   const setName = (e) => {
     const newName = e.target.value;
-    const path = pathname;
 
-    if (path === "/fetch") setAsyncInputValue(newName);
-    if (path === "/promise") setPromiseInputValue(newName);
+    if (pathname === "/fetch") setAsyncInputValue(newName);
+    if (pathname === "/promise") setPromiseInputValue(newName);
   };
 
   return (
@@ -88,4 +87,4 @@ const Header = ({
   );
 };
 
-export default Header;
+export default memo(Header);

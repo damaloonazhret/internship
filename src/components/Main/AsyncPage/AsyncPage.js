@@ -1,4 +1,5 @@
 import Header from "../../Header/Header";
+import {memo} from "react";
 
 const AsyncPage = (props) => {
   const asyncState = props.asyncState;
@@ -24,4 +25,4 @@ const AsyncPage = (props) => {
   );
 };
 
-export default AsyncPage;
+export default memo(AsyncPage);

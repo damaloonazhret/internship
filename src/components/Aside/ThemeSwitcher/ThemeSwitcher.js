@@ -1,18 +1,19 @@
-import { useEffect, useLayoutEffect } from "react";
+import {useEffect, useLayoutEffect} from "react";
 import style from "./themeSwitcher.module.scss";
 import { setProperty } from "../../../services/setProperty";
 import { DARK } from "../../App";
+import {setFontSize} from "../../../services/setFontSize";
+import {setGlobalTheme} from "../../../services/setGlobalTheme";
+export const WHITE = "white";
 
 const ThemeSwitcher = (props) => {
-  const WHITE = "white";
-  const BLACK_ROOT = "--black";
-  const WHITE_ROOT = "--white";
   const TRANSITION_ALL = "--transition-all";
   const TRANSITION_VALUE = "0.4s all ease-in";
   const colorS = localStorage.getItem("secondary");
   const colorP = localStorage.getItem("primary");
+  const { colors, setColors } = props;
 
-  globalTheme(props.theme);
+  setGlobalTheme(props.theme, props.colors);
   setFontSize();
 
   useEffect(() => {
@@ -22,38 +23,28 @@ const ThemeSwitcher = (props) => {
   }, []);
 
   useLayoutEffect(() => {
-    const newColors = { ...props.colors };
+    const newColors = { ...colors };
 
-    if (colorP) newColors.primary = colorP;
-    if (colorS) newColors.secondary = colorS;
+    if (colorP && colors.primary !== colorP) newColors.primary = colorP;
+    if (colorS && colors.secondary !== colorS) newColors.secondary = colorS;
 
-    props.setColors((prevColors) => ({
-      ...prevColors,
-      ...newColors,
-    }));
-  }, [colorP, colorS]);
+    if (
+      newColors.primary !== colors.primary ||
+      newColors.secondary !== colors.secondary
+    ) {
+      setColors((prevColors) => ({
+        ...prevColors,
+        ...newColors,
+      }));
+    }
+  }, [colorP, colorS, colors, setColors]);
 
   const themeSwitcher = () => {
     const newTheme = props.theme === WHITE ? DARK : WHITE;
     props.setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
-    globalTheme(newTheme);
+    setGlobalTheme(newTheme, props.colors);
   };
-
-  function globalTheme (currentTheme) {
-    if (currentTheme === WHITE) {
-      setProperty(BLACK_ROOT, props.colors.secondary);
-      setProperty(WHITE_ROOT, props.colors.primary);
-    } else {
-      setProperty(BLACK_ROOT, props.colors.primary);
-      setProperty(WHITE_ROOT, props.colors.secondary);
-    }
-  }
-
-  function setFontSize () {
-    const FS = Number(localStorage.getItem("FS"));
-    if (FS) document.documentElement.style.fontSize = `${FS}px`;
-  }
 
   return (
     <div className={style.themeSwitcher}>

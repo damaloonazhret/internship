@@ -1,18 +1,20 @@
-import {memo, Suspense, useEffect, useState} from "react";
-import {Redirect, Route, Switch, useLocation} from "react-router-dom";
 import style from "./main.module.scss";
+import { Suspense, useEffect, useState } from "react";
+import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import Loader from "../Preloaders/Loader";
-import { HomePg } from "./HomePage";
-import { AsyncPg } from "./AsyncPage";
-import { PromisePg } from "./PromisePage";
+import { AsyncPage } from "./AsyncPage";
+import { SettingsPage } from "./SettingsPage/";
+import { PromisePage } from "./PromisePage";
+import { HeavyCalcPage } from "./HeavyCalculation";
 
 const Main = (props) => {
   const [async, setAsync] = useState({});
   const [promise, setPromise] = useState({});
   const [asyncInputValue, setAsyncInputValue] = useState("");
   const [promiseInputValue, setPromiseInputValue] = useState("");
+  const [big] = useState(7000000);
 
-    const location = useLocation()
+  const location = useLocation();
   useEffect(() => {
     const pathName = location.pathname;
     document.title = `${pathName.charAt(1).toUpperCase()}${pathName.slice(2)} page`;
@@ -81,14 +83,13 @@ const Main = (props) => {
       </div>
     );
   };
-
   return (
     <Switch>
       <Suspense fallback={<Loader />}>
         <Route
           path="/fetch"
           render={() => (
-            <AsyncPg
+            <AsyncPage
               create={(title, userInfo, userRepo) =>
                 create(title, userInfo, userRepo)
               }
@@ -104,7 +105,7 @@ const Main = (props) => {
         <Route
           path="/promise"
           render={() => (
-            <PromisePg
+            <PromisePage
               create={(title, userInfo, userRepo) =>
                 create(title, userInfo, userRepo)
               }
@@ -119,21 +120,20 @@ const Main = (props) => {
           )}
         />
         <Route
-          path="/home"
+          path="/settings"
           render={() => (
-            <HomePg
+            <SettingsPage
               colors={props.colors}
               setColors={props.setColors}
               theme={props.theme}
               setTheme={props.setTheme}
-              a={props.a}
-              b={props.b}
             />
           )}
         />
+        <Route path="/heavyMath" render={() => <HeavyCalcPage big={big} />} />
       </Suspense>
     </Switch>
   );
 };
 
-export default memo(Main);
+export default Main;

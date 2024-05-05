@@ -1,8 +1,8 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import "./index.scss";
-import Main from "./Main/Main";
-import Aside from "./Aside/Aside";
 import {useState} from "react";
+import Aside from "./Aside/Aside";
+import Main from "./Main/Main";
 
 export const DARK = "dark";
 

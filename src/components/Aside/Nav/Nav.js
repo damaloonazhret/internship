@@ -11,8 +11,11 @@ const Nav = () => {
       <NavLink to="/fetch" activeClassName={style.activeLink}>
         Async
       </NavLink>
-      <NavLink to="/home" activeClassName={style.activeLink}>
-        Home
+      <NavLink to="/settings" activeClassName={style.activeLink}>
+        Settings
+      </NavLink>
+      <NavLink to="/heavyMath" activeClassName={style.activeLink}>
+        Heavy Math
       </NavLink>
     </nav>
   );
