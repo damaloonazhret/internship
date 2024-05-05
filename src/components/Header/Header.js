@@ -5,8 +5,6 @@ import Preloader from "../Preloaders/Preloader";
 import { useAsyncRequest } from "../hooks/useAsyncRequest";
 import { getUserInfo, getUserInfoAsync } from "../../services/getData";
 
-console.log(process.env)
-
 const Header = ({
   name,
   pathname,
@@ -82,7 +80,7 @@ const Header = ({
             onChange={setName}
           />
           <datalist id="names"></datalist>
-          {error && <span className={style.error}>{error.message}</span>}
+          {error && <span className={style.error}>{error}</span>}
           <Preloader isLoading={isLoading} />
         </div>
       </form>
