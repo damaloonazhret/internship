@@ -1,4 +1,4 @@
-import {Suspense, useEffect, useState} from "react";
+import { Suspense, useEffect, useState } from "react";
 import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import style from "./main.module.scss";
 import { AsyncPg } from "./AsyncPage";

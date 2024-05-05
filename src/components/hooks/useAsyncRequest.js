@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState } from "react";
 
 export function useAsyncRequest() {
   const [isLoading, setLoading] = useState(false);
@@ -11,7 +11,7 @@ export function useAsyncRequest() {
       const responseData = await requestFunction(value);
       setData(responseData);
     } catch (error) {
-      throw new Error(error)
+      throw new Error(error);
     } finally {
       setLoading(false);
     }
