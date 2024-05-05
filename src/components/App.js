@@ -2,38 +2,48 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "./index.scss";
 import Main from "./Main/Main";
 import Aside from "./Aside/Aside";
-import { useState } from "react";
+import {Component} from "react";
 
 export const DARK = "dark";
 
-function App() {
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      colors: {
+        primary: "#1a1a1a",
+        secondary: "#ffffff",
+      },
+      theme: localStorage.getItem("theme") || DARK,
+    };
+  }
 
-  const [colors, setColors] = useState({
-    primary: "#1a1a1a",
-    secondary: "#ffffff",
-  });
+  setColors = (newColors) => {
+    this.setState({ colors: newColors });
+  };
 
-  const [theme, setTheme] = useState(() => {
-    const themeColor = localStorage.getItem("theme");
-    return themeColor || DARK;
-  });
+  setTheme = (newTheme) => {
+    this.setState({ theme: newTheme });
+  };
 
-  return (
-    <Router>
-      <Aside
-        colors={colors}
-        setColors={setColors}
-        theme={theme}
-        setTheme={setTheme}
-      />
-      <Main
-        colors={colors}
-        setColors={setColors}
-        theme={theme}
-        setTheme={setTheme}
-      />
-    </Router>
-  );
+  render() {
+    const { colors, theme } = this.state;
+    return (
+      <Router>
+        <Aside
+          colors={colors}
+          setColors={this.setColors}
+          theme={theme}
+          setTheme={this.setTheme}
+        />
+        <Main
+          colors={colors}
+          setColors={this.setColors}
+          theme={theme}
+          setTheme={this.setTheme}
+        />
+      </Router>
+    );
+  }
 }
-
 export default App;

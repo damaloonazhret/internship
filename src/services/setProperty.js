@@ -1,3 +1,3 @@
-export const setProperty = (root, color) => {
+export function setProperty (root, color) {
   document.documentElement.style.setProperty(root, color);
-};
+}

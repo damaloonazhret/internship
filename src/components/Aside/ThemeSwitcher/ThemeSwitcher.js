@@ -1,62 +1,70 @@
-import { useLayoutEffect } from "react";
+import { Component } from "react";
 import style from "./themeSwitcher.module.scss";
-import { setProperty } from "../../../services/setProperty";
 import { DARK } from "../../App";
 
-const ThemeSwitcher = (props) => {
-  const WHITE = "white";
-  const BLACK_ROOT = "--black";
-  const WHITE_ROOT = "--white";
-  const TRANSITION_ALL = "--transition-all";
-  const TRANSITION_VALUE = "0.4s all ease-in";
+class ThemeSwitcher extends Component {
+  WHITE = "white";
+  BLACK_ROOT = "--black";
+  WHITE_ROOT = "--white";
+  TRANSITION_ALL = "--transition-all";
+  TRANSITION_VALUE = "0.4s all ease-in";
 
-  // useEffect(() => {
-  //   setProperty(TRANSITION_ALL, TRANSITION_VALUE);
-  // }, []);
-  useLayoutEffect(() => {
-    setTimeout(() => {
-      setProperty(TRANSITION_ALL, TRANSITION_VALUE);
-    }, 0);
-  }, []);
+  componentDidUpdate(prevProps) {
+    if (prevProps.theme !== this.props.theme) {
+      this.setProperty(this.TRANSITION_ALL, this.TRANSITION_VALUE);
+    }
+    if(prevProps.colors !== this.props.colors) {
+      this.setProperty(this.BLACK_ROOT, this.props.colors.secondary)
+      this.setProperty(this.WHITE_ROOT, this.props.colors.primary)
+    }
+  }
 
-  const themeSwitcher = () => {
-    const newTheme = props.theme === WHITE ? DARK : WHITE;
-    props.setTheme(newTheme);
+  componentDidMount() {
+    this.globalTheme(this.props.theme);
+  }
+
+  themeSwitcher = () => {
+    const newTheme = this.props.theme === this.WHITE ? DARK : this.WHITE;
+    this.props.setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
-    globalTheme(newTheme);
+    this.globalTheme(newTheme);
   };
 
-  const globalTheme = (currentTheme) => {
-    if (currentTheme === WHITE) {
-      setProperty(BLACK_ROOT, props.colors.secondary);
-      setProperty(WHITE_ROOT, props.colors.primary);
+  globalTheme = (currentTheme) => {
+    if (currentTheme === this.WHITE) {
+      this.setProperty(this.BLACK_ROOT, this.props.colors.secondary);
+      this.setProperty(this.WHITE_ROOT, this.props.colors.primary);
     } else {
-      setProperty(BLACK_ROOT, props.colors.primary);
-      setProperty(WHITE_ROOT, props.colors.secondary);
+      this.setProperty(this.BLACK_ROOT, this.props.colors.primary);
+      this.setProperty(this.WHITE_ROOT, this.props.colors.secondary);
     }
   };
 
-  globalTheme(props.theme);
+  setProperty = (property, value) => {
+    document.documentElement.style.setProperty(property, value);
+  };
 
-  return (
-    <div className={style.themeSwitcher}>
-      <input
-        type="checkbox"
-        name="switcher"
-        id="switcher-input"
-        className="switcher-input"
-        checked={props.theme === WHITE}
-        onChange={themeSwitcher}
-      />
-      <label htmlFor="switcher-input" className={`${style.switcherLabel}`}>
-        <span
-          className={`${style.switcherToggler} ${
-            props.theme === WHITE ? style.switcherTogglerWhite : ""
-          }`}
-        ></span>
-      </label>
-    </div>
-  );
-};
+  render() {
+    return (
+      <div className={style.themeSwitcher}>
+        <input
+          type="checkbox"
+          name="switcher"
+          id="switcher-input"
+          className="switcher-input"
+          checked={this.props.theme === this.WHITE}
+          onChange={this.themeSwitcher}
+        />
+        <label htmlFor="switcher-input" className={`${style.switcherLabel}`}>
+          <span
+            className={`${style.switcherToggler} ${
+              this.props.theme === this.WHITE ? style.switcherTogglerWhite : ""
+            }`}
+          ></span>
+        </label>
+      </div>
+    );
+  }
+}
 
 export default ThemeSwitcher;

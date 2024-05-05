@@ -1,24 +1,32 @@
-import {memo, Suspense, useEffect, useState} from "react";
-import {Redirect, Route, Switch, useLocation} from "react-router-dom";
+import React, {Component, Suspense} from "react";
+import { Redirect, Route, Switch, withRouter } from "react-router-dom";
 import style from "./main.module.scss";
-import Loader from "../Preloaders/Loader";
 import { HomePg } from "./HomePage";
 import { AsyncPg } from "./AsyncPage";
 import { PromisePg } from "./PromisePage";
+import Loader from "../Preloaders/Loader";
 
-const Main = (props) => {
-  const [async, setAsync] = useState({});
-  const [promise, setPromise] = useState({});
-  const [asyncInputValue, setAsyncInputValue] = useState("");
-  const [promiseInputValue, setPromiseInputValue] = useState("");
+class Main extends Component {
+  state = {
+    async: {},
+    promise: {},
+    asyncInputValue: "",
+    promiseInputValue: "",
+  };
 
-    const location = useLocation()
-  useEffect(() => {
-    const pathName = location.pathname;
+  componentDidMount() {
+    const pathName = this.props.location.pathname;
     document.title = `${pathName.charAt(1).toUpperCase()}${pathName.slice(2)} page`;
-  }, [location.pathname]);
+  }
 
-  const create = (title, userInfo, userRepo) => {
+  componentDidUpdate(prevProps) {
+    if (prevProps.location.pathname !== this.props.location.pathname) {
+      const pathName = this.props.location.pathname;
+      document.title = `${pathName.charAt(1).toUpperCase()}${pathName.slice(2)} page`;
+    }
+  }
+
+  create = (title, userInfo, userRepo) => {
     if (title)
       return (
         <main className={style.mainContent}>
@@ -34,14 +42,14 @@ const Main = (props) => {
         className={style.mainContent}
       >
         <article key={userInfo ? userInfo.html_url : null}>
-          {createUserInfoHTML(userInfo)}
-          {createReposHTML(userRepo)}
+          {this.createUserInfoHTML(userInfo)}
+          {this.createReposHTML(userRepo)}
         </article>
       </main>
     );
   };
 
-  const createReposHTML = (userRepo) => {
+  createReposHTML = (userRepo) => {
     return userRepo.map((repoData, index) => (
       <div key={index} className={style.repos}>
         <span key={repoData.full_name}>{repoData.full_name}</span>
@@ -60,7 +68,7 @@ const Main = (props) => {
     ));
   };
 
-  const createUserInfoHTML = (userInfo) => {
+  createUserInfoHTML = (userInfo) => {
     return (
       <div key={userInfo ? userInfo.html_url : null} className={style.userInfo}>
         <a
@@ -82,58 +90,62 @@ const Main = (props) => {
     );
   };
 
-  return (
-    <Switch>
-      <Suspense fallback={<Loader />}>
-        <Route
-          path="/fetch"
-          render={() => (
-            <AsyncPg
-              create={(title, userInfo, userRepo) =>
-                create(title, userInfo, userRepo)
-              }
-              setAsyncState={(newState) => setAsync(newState)}
-              setAsyncInputValue={(newValue) => setAsyncInputValue(newValue)}
-              asyncState={async}
-              asyncInputValue={asyncInputValue}
-              pathname={location.pathname}
-            />
-          )}
-        />
-        <Route exact path="/" render={() => <Redirect to="/promise" />} />
-        <Route
-          path="/promise"
-          render={() => (
-            <PromisePg
-              create={(title, userInfo, userRepo) =>
-                create(title, userInfo, userRepo)
-              }
-              setPromiseState={(newState) => setPromise(newState)}
-              setPromiseInputValue={(newValue) =>
-                setPromiseInputValue(newValue)
-              }
-              promiseState={promise}
-              promiseInputValue={promiseInputValue}
-              pathname={location.pathname}
-            />
-          )}
-        />
-        <Route
-          path="/home"
-          render={() => (
-            <HomePg
-              colors={props.colors}
-              setColors={props.setColors}
-              theme={props.theme}
-              setTheme={props.setTheme}
-              a={props.a}
-              b={props.b}
-            />
-          )}
-        />
-      </Suspense>
-    </Switch>
-  );
-};
+  render() {
+    return (
+      <Switch>
+        <Suspense fallback={<Loader />}>
+          <Route
+            path="/fetch"
+            render={() => (
+              <AsyncPg
+                create={(title, userInfo, userRepo) =>
+                  this.create(title, userInfo, userRepo)
+                }
+                setAsyncState={(newState) => this.setState({ async: newState })}
+                setAsyncInputValue={(newValue) =>
+                  this.setState({ asyncInputValue: newValue })
+                }
+                asyncState={this.state.async}
+                asyncInputValue={this.state.asyncInputValue}
+                pathname={this.props.location.pathname}
+              />
+            )}
+          />
+          <Route exact path="/" render={() => <Redirect to="/promise" />} />
+          <Route
+            path="/promise"
+            render={() => (
+              <PromisePg
+                create={(title, userInfo, userRepo) =>
+                  this.create(title, userInfo, userRepo)
+                }
+                setPromiseState={(newState) =>
+                  this.setState({ promise: newState })
+                }
+                setPromiseInputValue={(newValue) =>
+                  this.setState({ promiseInputValue: newValue })
+                }
+                promiseState={this.state.promise}
+                promiseInputValue={this.state.promiseInputValue}
+                pathname={this.props.location.pathname}
+              />
+            )}
+          />
+          <Route
+            path="/home"
+            render={() => (
+              <HomePg
+                colors={this.props.colors}
+                setColors={this.props.setColors}
+                theme={this.props.theme}
+                setTheme={this.props.setTheme}
+              />
+            )}
+          />
+        </Suspense>
+      </Switch>
+    );
+  }
+}
 
-export default memo(Main);
+export default withRouter(Main);

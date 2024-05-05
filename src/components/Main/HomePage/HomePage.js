@@ -1,149 +1,151 @@
-import "./index.css";
-import {memo, useReducer, useRef} from "react";
-import {DARK} from "../../App";
+import React, { Component } from "react";
+import { memo } from "react";
+import { DARK } from "../../App";
+import './index.css'
 
-const HomePage = (props) => {
-  const primaryColorRef = useRef(null);
-  const secondaryColorRef = useRef(null);
+class HomePage extends Component {
+  constructor(props) {
+    super(props);
 
-  const DEFAULT_COLOR_WHITE = "#ffffff";
-  const DEFAULT_COLOR_BLACK = "#1a1a1a";
+    this.primaryColorRef = React.createRef();
+    this.secondaryColorRef = React.createRef();
 
-  const resetPrimaryColor = () => {
-    props.setColors({
-      ...props.colors,
-      primary: DEFAULT_COLOR_BLACK,
+    this.DEFAULT_COLOR_WHITE = "#ffffff";
+    this.DEFAULT_COLOR_BLACK = "#1a1a1a";
+
+    this.state = {
+      count: {
+        fontSize: 16,
+      },
+    };
+  }
+
+  resetPrimaryColor = () => {
+    this.props.setColors({
+      ...this.props.colors,
+      primary: this.DEFAULT_COLOR_BLACK,
     });
   };
-  const resetSecondaryColor = () => {
-    props.setColors({
-      ...props.colors,
-      secondary: DEFAULT_COLOR_WHITE,
+
+  resetSecondaryColor = () => {
+    this.props.setColors({
+      ...this.props.colors,
+      secondary: this.DEFAULT_COLOR_WHITE,
     });
   };
 
-  const changePrimaryColor = () => {
-    const newPrimaryColor = primaryColorRef.current.value;
-    props.setColors({
-      ...props.colors,
+  changePrimaryColor = () => {
+    const newPrimaryColor = this.primaryColorRef.current.value;
+    this.props.setColors({
+      ...this.props.colors,
       primary: newPrimaryColor,
     });
   };
 
-  const changeSecondaryColor = () => {
-    const newSecondaryColor = secondaryColorRef.current.value;
-    props.setColors({
-      ...props.colors,
+  changeSecondaryColor = () => {
+    const newSecondaryColor = this.secondaryColorRef.current.value;
+    this.props.setColors({
+      ...this.props.colors,
       secondary: newSecondaryColor,
     });
   };
 
-  const initialState = {
-    fontSize: 16,
+  increment = () => {
+    const { count } = this.state;
+    this.setState({
+      count: { ...count, fontSize: count.fontSize + 0.5 },
+    });
   };
 
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "INCREMENT":
-        document.documentElement.style.fontSize = `${state.fontSize + action.payload}px`;
-        return { ...state, fontSize: state.fontSize + action.payload };
-      case "DECREMENT":
-        document.documentElement.style.fontSize = `${state.fontSize - action.payload}px`;
-        return { ...state, fontSize: state.fontSize - action.payload };
-      case "RESET":
-        document.documentElement.style.fontSize = `${action.payload}px`;
-        return { ...state, fontSize: action.payload };
-      default:
-        return state;
-    }
+  decrement = () => {
+    const { count } = this.state;
+    this.setState({
+      count: { ...count, fontSize: count.fontSize - 0.5 },
+    });
   };
 
-  const [count, dispatch] = useReducer(reducer, initialState, undefined);
-
-  const increment = () => {
-    dispatch({ type: "INCREMENT", payload: 0.5 });
+  reset = () => {
+    this.setState({
+      count: { fontSize: 16 },
+    });
   };
 
-  const decrement = () => {
-    dispatch({ type: "DECREMENT", payload: 0.5 });
-  };
-
-  const reset = () => {
-    dispatch({ type: "RESET", payload: 16 });
-  };
-
-  return (
-    <article className="settings">
-      <h2 className="settings__title">Settings Page</h2>
-      <div className="settings__bg">
-        <label htmlFor="text">
-          And here you can choose the background color on the site
-        </label>
-        <input
-          id="text"
-          value={
-            props.theme === DARK ? props.colors.primary : props.colors.secondary
-          }
-          placeholder=""
-          name="color"
-          type="color"
-          ref={props.theme === DARK ? primaryColorRef : secondaryColorRef}
-          onChange={
-            props.theme === DARK ? changePrimaryColor : changeSecondaryColor
-          }
-        />
-        <button
-          className="btn"
-          type="button"
-          onClick={
-            props.theme === DARK ? resetPrimaryColor : resetSecondaryColor
-          }
-        >
-          Reset
-        </button>
-      </div>
-      <div className="settings__txt">
-        <label htmlFor="text">
-          Here you can set your text content color for the page
-        </label>
-        <input
-          id="text"
-          value={
-            props.theme === DARK ? props.colors.secondary : props.colors.primary
-          }
-          placeholder=""
-          name="color"
-          type="color"
-          ref={props.theme === DARK ? secondaryColorRef : primaryColorRef}
-          onChange={
-            props.theme === DARK ? changeSecondaryColor : changePrimaryColor
-          }
-        />
-        <button
-          className="btn"
-          type="button"
-          onClick={
-            props.theme === DARK ? resetSecondaryColor : resetPrimaryColor
-          }
-        >
-          Reset
-        </button>
-      </div>
-      <div className="settings__font">
-        <p>Value: {count.fontSize}px </p>
-        <p>Here you can set a custom font size for the entire page</p>
-        <button className="btn" onClick={decrement}>
-          decrease
-        </button>
-        <button className="btn" onClick={reset}>
-          reset
-        </button>
-        <button className="btn" onClick={increment}>
-          increase
-        </button>
-      </div>
-    </article>
-  );
-};
+  render() {
+    const { colors, theme } = this.props;
+    const { count } = this.state;
+    return (
+      <article className="settings">
+        <h2 className="settings__title">Settings Page</h2>
+        <div className="settings__bg">
+          <label htmlFor="text">
+            And here you can choose the background color on the site
+          </label>
+          <input
+            id="text"
+            value={theme === DARK ? colors.primary : colors.secondary}
+            placeholder=""
+            name="color"
+            type="color"
+            ref={theme === DARK ? this.primaryColorRef : this.secondaryColorRef}
+            onChange={
+              theme === DARK ? this.changePrimaryColor : this.changeSecondaryColor
+            }
+          />
+          <button
+            className="btn"
+            type="button"
+            onClick={
+              theme === DARK
+                ? this.resetPrimaryColor
+                : this.resetSecondaryColor
+            }
+          >
+            Reset
+          </button>
+        </div>
+        <div className="settings__txt">
+          <label htmlFor="text">
+            Here you can set your text content color for the page
+          </label>
+          <input
+            id="text"
+            value={theme === DARK ? colors.secondary : colors.primary}
+            placeholder=""
+            name="color"
+            type="color"
+            ref={theme === DARK ? this.secondaryColorRef : this.primaryColorRef}
+            onChange={
+              theme === DARK ? this.changeSecondaryColor : this.changePrimaryColor
+            }
+          />
+          <button
+            className="btn"
+            type="button"
+            onClick={
+              theme === DARK
+                ? this.resetSecondaryColor
+                : this.resetPrimaryColor
+            }
+          >
+            Reset
+          </button>
+        </div>
+        <div className="settings__font">
+          <p>Value: {count.fontSize}px </p>
+          <p>Here you can set a custom font size for the entire page</p>
+          <button className="btn" onClick={this.decrement}>
+            decrease
+          </button>
+          <button className="btn" onClick={this.reset}>
+            reset
+          </button>
+          <button className="btn" onClick={this.increment}>
+            increase
+          </button>
+        </div>
+      </article>
+    );
+  }
+}
 
 export default memo(HomePage);
