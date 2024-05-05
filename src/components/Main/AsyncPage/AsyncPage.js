@@ -1,36 +1,32 @@
 import Header from "../../Header/Header";
+import { Component } from "react";
 
-const AsyncPage = (props) => {
-  const asyncState = props.asyncState;
-  const info = asyncState.userInfoMy;
-  const repo = asyncState.userRepoMy;
+class AsyncPage extends Component {
+  constructor(props) {
+    super(props);
+    this.info = this.props.asyncState.userInfoMy;
+    this.repo = this.props.asyncState.userRepoMy;
+  }
 
-  const headerComponent = (
-    <Header
-      setIsLoading={props.setIsLoading}
-      setAsyncState={props.setAsyncState}
-      inputValue={props.asyncInputValue}
-      setAsyncInputValue={props.setAsyncInputValue}
-      pathname={props.pathname}
-      name={"Async"}
-    />
-  );
-
-  if (info && repo) {
+  render() {
     return (
       <>
-        {headerComponent}
-        {props.create("", info, repo)}
+        {
+          <Header
+            setIsLoading={this.props.setIsLoading}
+            setAsyncState={this.props.setAsyncState}
+            inputValue={this.props.asyncInputValue}
+            setAsyncInputValue={this.props.setAsyncInputValue}
+            pathname={this.props.pathname}
+            name={"Async"}
+          />
+        }
+        {this.info && this.repo
+          ? this.props.create("", this.info, this.repo)
+          : this.props.create("Async Page Request")}
       </>
     );
   }
-
-  return (
-    <>
-      {headerComponent}
-      {props.create("Async Page Request")}
-    </>
-  );
-};
+}
 
 export default AsyncPage;

@@ -11,7 +11,7 @@ export function useAsyncRequest() {
       const responseData = await requestFunction(...args);
       setData(responseData);
     } catch (error) {
-      setError(error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }

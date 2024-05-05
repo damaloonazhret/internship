@@ -80,7 +80,7 @@ const Header = ({
             onChange={setName}
           />
           <datalist id="names"></datalist>
-          {error && <span className={style.error}>{error.message}</span>}
+          {error && <span className={style.error}>{error}</span>}
           <Preloader isLoading={isLoading} />
         </div>
       </form>
