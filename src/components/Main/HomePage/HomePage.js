@@ -1,6 +1,9 @@
 import "./index.css";
-import {memo, useReducer, useRef} from "react";
-import {DARK} from "../../App";
+import { memo, useReducer, useRef } from "react";
+import { SettingsFont } from "./SettingsFont/SettingsFont";
+import { SettingsTxt } from "./SettingsTxt/SettingsTxt";
+import { SettingsBg } from "./SettingsBg/SettingsBg";
+import {fontReducer} from "../../../services/Reducers/fontReducer";
 
 const HomePage = (props) => {
   const primaryColorRef = useRef(null);
@@ -8,18 +11,21 @@ const HomePage = (props) => {
 
   const DEFAULT_COLOR_WHITE = "#ffffff";
   const DEFAULT_COLOR_BLACK = "#1a1a1a";
+  const FS = Number(localStorage.getItem("FS"));
 
   const resetPrimaryColor = () => {
     props.setColors({
       ...props.colors,
       primary: DEFAULT_COLOR_BLACK,
     });
+    localStorage.removeItem("primary");
   };
   const resetSecondaryColor = () => {
     props.setColors({
       ...props.colors,
       secondary: DEFAULT_COLOR_WHITE,
     });
+    localStorage.removeItem("secondary");
   };
 
   const changePrimaryColor = () => {
@@ -28,6 +34,7 @@ const HomePage = (props) => {
       ...props.colors,
       primary: newPrimaryColor,
     });
+    localStorage.setItem("primary", newPrimaryColor);
   };
 
   const changeSecondaryColor = () => {
@@ -36,29 +43,14 @@ const HomePage = (props) => {
       ...props.colors,
       secondary: newSecondaryColor,
     });
+    localStorage.setItem("secondary", newSecondaryColor);
   };
 
   const initialState = {
-    fontSize: 16,
+    fontSize: FS ? FS : 16,
   };
 
-  const reducer = (state, action) => {
-    switch (action.type) {
-      case "INCREMENT":
-        document.documentElement.style.fontSize = `${state.fontSize + action.payload}px`;
-        return { ...state, fontSize: state.fontSize + action.payload };
-      case "DECREMENT":
-        document.documentElement.style.fontSize = `${state.fontSize - action.payload}px`;
-        return { ...state, fontSize: state.fontSize - action.payload };
-      case "RESET":
-        document.documentElement.style.fontSize = `${action.payload}px`;
-        return { ...state, fontSize: action.payload };
-      default:
-        return state;
-    }
-  };
-
-  const [count, dispatch] = useReducer(reducer, initialState, undefined);
+  const [count, dispatch] = useReducer(fontReducer, initialState, undefined);
 
   const increment = () => {
     dispatch({ type: "INCREMENT", payload: 0.5 });
@@ -75,73 +67,33 @@ const HomePage = (props) => {
   return (
     <article className="settings">
       <h2 className="settings__title">Settings Page</h2>
-      <div className="settings__bg">
-        <label htmlFor="text">
-          And here you can choose the background color on the site
-        </label>
-        <input
-          id="text"
-          value={
-            props.theme === DARK ? props.colors.primary : props.colors.secondary
-          }
-          placeholder=""
-          name="color"
-          type="color"
-          ref={props.theme === DARK ? primaryColorRef : secondaryColorRef}
-          onChange={
-            props.theme === DARK ? changePrimaryColor : changeSecondaryColor
-          }
-        />
-        <button
-          className="btn"
-          type="button"
-          onClick={
-            props.theme === DARK ? resetPrimaryColor : resetSecondaryColor
-          }
-        >
-          Reset
-        </button>
-      </div>
-      <div className="settings__txt">
-        <label htmlFor="text">
-          Here you can set your text content color for the page
-        </label>
-        <input
-          id="text"
-          value={
-            props.theme === DARK ? props.colors.secondary : props.colors.primary
-          }
-          placeholder=""
-          name="color"
-          type="color"
-          ref={props.theme === DARK ? secondaryColorRef : primaryColorRef}
-          onChange={
-            props.theme === DARK ? changeSecondaryColor : changePrimaryColor
-          }
-        />
-        <button
-          className="btn"
-          type="button"
-          onClick={
-            props.theme === DARK ? resetSecondaryColor : resetPrimaryColor
-          }
-        >
-          Reset
-        </button>
-      </div>
-      <div className="settings__font">
-        <p>Value: {count.fontSize}px </p>
-        <p>Here you can set a custom font size for the entire page</p>
-        <button className="btn" onClick={decrement}>
-          decrease
-        </button>
-        <button className="btn" onClick={reset}>
-          reset
-        </button>
-        <button className="btn" onClick={increment}>
-          increase
-        </button>
-      </div>
+      <SettingsBg
+        primaryColorRef={primaryColorRef}
+        secondaryColorRef={secondaryColorRef}
+        changePrimaryColor={changePrimaryColor}
+        changeSecondaryColor={changeSecondaryColor}
+        resetPrimaryColor={resetPrimaryColor}
+        resetSecondaryColor={resetSecondaryColor}
+        theme={props.theme}
+        colors={props.colors}
+      />
+      <SettingsTxt
+        primaryColorRef={primaryColorRef}
+        secondaryColorRef={secondaryColorRef}
+        changePrimaryColor={changePrimaryColor}
+        changeSecondaryColor={changeSecondaryColor}
+        resetPrimaryColor={resetPrimaryColor}
+        resetSecondaryColor={resetSecondaryColor}
+        theme={props.theme}
+        colors={props.colors}
+      />
+      <SettingsFont
+        increment={increment}
+        decrement={decrement}
+        reset={reset}
+        count={count}
+        FS={FS}
+      />
     </article>
   );
 };

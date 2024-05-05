@@ -5,30 +5,21 @@ const AsyncPage = (props) => {
   const info = asyncState.userInfoMy;
   const repo = asyncState.userRepoMy;
 
-  const headerComponent = (
-    <Header
-      setIsLoading={props.setIsLoading}
-      setAsyncState={props.setAsyncState}
-      inputValue={props.asyncInputValue}
-      setAsyncInputValue={props.setAsyncInputValue}
-      pathname={props.pathname}
-      name={"Async"}
-    />
-  );
-
-  if (info && repo) {
-    return (
-      <>
-        {headerComponent}
-        {props.create("", info, repo)}
-      </>
-    );
-  }
-
   return (
     <>
-      {headerComponent}
-      {props.create("Async Page Request")}
+      {
+        <Header
+          setIsLoading={props.setIsLoading}
+          setAsyncState={props.setAsyncState}
+          inputValue={props.asyncInputValue}
+          setAsyncInputValue={props.setAsyncInputValue}
+          pathname={props.pathname}
+          name={"Async"}
+        />
+      }
+      {info && repo
+        ? props.create("", info, repo)
+        : props.create("Async Page Request")}
     </>
   );
 };

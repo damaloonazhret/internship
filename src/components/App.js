@@ -2,13 +2,11 @@ import { BrowserRouter as Router } from "react-router-dom";
 import "./index.scss";
 import Main from "./Main/Main";
 import Aside from "./Aside/Aside";
-import { useState } from "react";
+import {useState} from "react";
 
 export const DARK = "dark";
 
 function App() {
-
-
   const [colors, setColors] = useState({
     primary: "#1a1a1a",
     secondary: "#ffffff",
