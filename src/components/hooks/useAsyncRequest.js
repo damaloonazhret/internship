@@ -5,13 +5,13 @@ export function useAsyncRequest() {
   const [error, setError] = useState(null);
   const [data, setData] = useState({});
 
-  const fetchData = async (requestFunction, ...args) => {
+  const fetchData = async (requestFunction, value) => {
     try {
       setLoading(true);
-      const responseData = await requestFunction(...args);
+      const responseData = await requestFunction(value);
       setData(responseData);
     } catch (error) {
-      setError(error);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
