@@ -28,8 +28,8 @@ export function promiseRequest(username) {
         resolve(xhrUserRepo.response);
       }
     };
-    xhrUserRepo.onerror = function (error) {
-      resolve(error);
+    xhrUserRepo.onerror = (error) => {
+      reject(error);
     };
     xhrUserRepo.send();
   });
