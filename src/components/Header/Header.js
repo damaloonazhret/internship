@@ -1,51 +1,59 @@
-import {memo, useEffect} from "react";
+import { memo, useEffect } from "react";
 import { checkValidate } from "../../services/validate";
 import style from "./header.module.scss";
 import Preloader from "../Preloaders/Preloader";
 import { useAsyncRequest } from "../hooks/useAsyncRequest";
 import { getUserInfo, getUserInfoAsync } from "../../services/getData";
+import { useLocation } from "react-router-dom";
 
 const Header = ({
-  name,
-  pathname,
-  inputValue,
+  asyncInputValue,
+  promiseInputValue,
   setAsyncInputValue,
   setPromiseInputValue,
-  setAsyncState,
-  setPromiseState,
+  setAsync,
+  setPromise,
 }) => {
   const { isLoading, error, data, setError, fetchData } = useAsyncRequest();
 
+  const location = useLocation();
+  const pathname = location.pathname;
+  const name = pathname.charAt(1).toUpperCase() + pathname.slice(2);
+
   useEffect(() => {
     setError("");
-  }, [inputValue, setError]);
+  }, [asyncInputValue, promiseInputValue, setError]);
 
   useEffect(() => {
     if (data && data.userInfoMy && data.userRepoMy) {
       switch (pathname) {
         case "/fetch":
-          setAsyncState(data);
+          setAsync(data);
           break;
         case "/promise":
-          setPromiseState(data);
+          setPromise(data);
           break;
         default:
           break;
       }
     }
-  }, [data, pathname, setAsyncState, setPromiseState]);
+  }, [data, pathname, setAsync, setPromise]);
 
   const setRepos = async (e) => {
     e.preventDefault();
 
-    const path = pathname;
-    const value = inputValue;
+    let value;
+    pathname === "/fetch"
+      ? (value = asyncInputValue)
+      : (value = promiseInputValue);
+    console.log(value)
+    console.log(asyncInputValue)
     const isChecked = checkValidate(value);
 
     if (isChecked.check) {
       try {
         await fetchData(
-          path === "/fetch" ? getUserInfoAsync : getUserInfo,
+          pathname === "/fetch" ? getUserInfoAsync : getUserInfo,
           value,
         );
       } catch (err) {
@@ -75,7 +83,7 @@ const Header = ({
             name="url"
             type="search"
             list="names"
-            value={inputValue}
+            value={pathname === "/fetch" ? asyncInputValue : promiseInputValue}
             onChange={setName}
           />
           <datalist id="names"></datalist>

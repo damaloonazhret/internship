@@ -1,4 +1,3 @@
-import Header from "../../Header/Header";
 import {memo} from "react";
 
 const PromisePage = (props) => {
@@ -8,16 +7,6 @@ const PromisePage = (props) => {
 
   return (
     <>
-      {
-        <Header
-          setIsLoading={props.setIsLoading}
-          setPromiseState={props.setPromiseState}
-          inputValue={props.promiseInputValue}
-          setPromiseInputValue={props.setPromiseInputValue}
-          pathname={props.pathname}
-          name={"Promise"}
-        />
-      }
       {info && repo
         ? props.create("", info, repo)
         : props.create("Promise Page Request")}

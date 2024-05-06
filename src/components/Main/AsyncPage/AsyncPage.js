@@ -1,4 +1,3 @@
-import Header from "../../Header/Header";
 import {memo} from "react";
 
 const AsyncPage = (props) => {
@@ -8,16 +7,6 @@ const AsyncPage = (props) => {
 
   return (
     <>
-      {
-        <Header
-          setIsLoading={props.setIsLoading}
-          setAsyncState={props.setAsyncState}
-          inputValue={props.asyncInputValue}
-          setAsyncInputValue={props.setAsyncInputValue}
-          pathname={props.pathname}
-          name={"Async"}
-        />
-      }
       {info && repo
         ? props.create("", info, repo)
         : props.create("Async Page Request")}

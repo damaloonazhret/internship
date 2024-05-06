@@ -1,6 +1,7 @@
 import { NavLink} from "react-router-dom";
 
 import style from "./nav.module.scss";
+import {memo} from "react";
 
 const Nav = () => {
   return (
@@ -21,4 +22,4 @@ const Nav = () => {
   );
 };
 
-export default Nav;
+export default memo(Nav);

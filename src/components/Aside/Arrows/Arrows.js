@@ -1,6 +1,6 @@
 import style from "./arrows.module.scss";
 import { useHistory } from "react-router-dom";
-import { useCallback } from "react";
+import {memo, useCallback} from "react";
 
 const Arrows = () => {
   const history = useHistory();
@@ -25,4 +25,4 @@ const Arrows = () => {
   );
 };
 
-export default Arrows;
+export default memo(Arrows);

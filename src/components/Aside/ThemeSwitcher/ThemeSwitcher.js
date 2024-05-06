@@ -1,4 +1,4 @@
-import {useEffect, useLayoutEffect} from "react";
+import {memo, useEffect, useLayoutEffect} from "react";
 import style from "./themeSwitcher.module.scss";
 import { setProperty } from "../../../services/setProperty";
 import { DARK } from "../../App";
@@ -67,4 +67,4 @@ const ThemeSwitcher = (props) => {
   );
 };
 
-export default ThemeSwitcher;
+export default memo(ThemeSwitcher);

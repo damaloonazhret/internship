@@ -1,5 +1,5 @@
 import style from "./main.module.scss";
-import { Suspense, useEffect, useState } from "react";
+import { memo, Suspense, useCallback, useEffect, useState } from "react";
 import { Redirect, Route, Switch, useLocation } from "react-router-dom";
 import Loader from "../Preloaders/Loader";
 import { AsyncPage } from "./AsyncPage";
@@ -8,10 +8,6 @@ import { PromisePage } from "./PromisePage";
 import { HeavyCalcPage } from "./HeavyCalculation";
 
 const Main = (props) => {
-  const [async, setAsync] = useState({});
-  const [promise, setPromise] = useState({});
-  const [asyncInputValue, setAsyncInputValue] = useState("");
-  const [promiseInputValue, setPromiseInputValue] = useState("");
   const [big] = useState(7000000);
 
   const location = useLocation();
@@ -20,7 +16,7 @@ const Main = (props) => {
     document.title = `${pathName.charAt(1).toUpperCase()}${pathName.slice(2)} page`;
   }, [location.pathname]);
 
-  const create = (title, userInfo, userRepo) => {
+  const create = useCallback((title, userInfo, userRepo) => {
     if (title)
       return (
         <main className={style.mainContent}>
@@ -41,7 +37,7 @@ const Main = (props) => {
         </article>
       </main>
     );
-  };
+  }, []);
 
   const createReposHTML = (userRepo) => {
     return userRepo.map((repoData, index) => (
@@ -83,6 +79,7 @@ const Main = (props) => {
       </div>
     );
   };
+
   return (
     <Switch>
       <Suspense fallback={<Loader />}>
@@ -93,11 +90,7 @@ const Main = (props) => {
               create={(title, userInfo, userRepo) =>
                 create(title, userInfo, userRepo)
               }
-              setAsyncState={(newState) => setAsync(newState)}
-              setAsyncInputValue={(newValue) => setAsyncInputValue(newValue)}
-              asyncState={async}
-              asyncInputValue={asyncInputValue}
-              pathname={location.pathname}
+              asyncState={props.async}
             />
           )}
         />
@@ -109,13 +102,7 @@ const Main = (props) => {
               create={(title, userInfo, userRepo) =>
                 create(title, userInfo, userRepo)
               }
-              setPromiseState={(newState) => setPromise(newState)}
-              setPromiseInputValue={(newValue) =>
-                setPromiseInputValue(newValue)
-              }
-              promiseState={promise}
-              promiseInputValue={promiseInputValue}
-              pathname={location.pathname}
+              promiseState={props.promise}
             />
           )}
         />
@@ -136,4 +123,4 @@ const Main = (props) => {
   );
 };
 
-export default Main;
+export default memo(Main);
