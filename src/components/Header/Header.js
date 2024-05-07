@@ -75,7 +75,11 @@ class Header extends Component {
           <p id="head-info">{`${this.name} Request`}</p>
           <div className="search">
             <datalist id="names" />
-            <Search inputValue={this.props.inputValue} setName={this.setName} error={this.state.error}/>
+            <Search
+              inputValue={this.props.inputValue}
+              setName={this.setName}
+              error={this.state.error}
+            />
             <div
               id="preloader"
               className={this.state.isLoading ? "loader" : null}

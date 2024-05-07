@@ -9,18 +9,21 @@ export class ValidatePage extends Component {
     this.state = {
       password: 1234 << 5,
       userPass: "",
+      error: "",
     };
   }
 
   checkPass = (e) => {
     e.preventDefault();
-    if (Number(this.state.userPass) === this.state.password) {
-      this.props.setAuth(true);
-    }
+    const passCheck = Number(this.state.userPass) === this.state.password;
+    passCheck
+      ? this.props.setAuth(true)
+      : this.setState({ error: "invalid password" });
   };
 
   setPass = (e) => {
     this.setState({ userPass: e.target.value });
+    if (this.state.error) this.setState({ error: "" });
   };
 
   render() {
@@ -38,6 +41,7 @@ export class ValidatePage extends Component {
           type="password"
           onChange={this.setPass}
         />
+        <Span className="error" text={this.state.error} />
       </form>
     );
   }
