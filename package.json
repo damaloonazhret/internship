@@ -70,8 +70,8 @@
     ]
   },
   "scripts": {
-    "start": "node scripts/start.js",
-    "build": "set \"PUBLIC_URL=.\" &&  node scripts/build.js",
+    "start": "set \"PORT=3000\" && set \"https=true\" && node scripts/start.js",
+    "build": "set \"PUBLIC_URL=.\" && node scripts/build.js",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {
