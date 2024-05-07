@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { BrowserRouter as Router } from "react-router-dom";
-import "./index.scss";
+import "../index.scss";
 import { Aside } from "./Aside/Aside";
 import Main from "./Main/Main";
 

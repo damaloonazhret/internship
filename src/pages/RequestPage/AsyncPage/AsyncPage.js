@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { RequestPage } from "../RequestPage/RequestPage";
+import RequestPage from "../RequestPage";
 
 export class AsyncPage extends Component {
   render() {

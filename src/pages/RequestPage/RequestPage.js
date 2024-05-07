@@ -1,15 +1,19 @@
 import React, { Component } from "react";
 import Header from "../../components/Header/Header";
+import { withRouter } from "react-router-dom";
 
-export class RequestPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.info = this.props.state.userInfoMy;
-    this.repo = this.props.state.userRepoMy;
-  }
-
+class RequestPage extends Component {
   render() {
+    let info = null;
+    let repo = null;
+    const query = this.props.location.search.slice(7);
+    const name = this.props.inputValue;
+
+    if (query === name) {
+      info = this.props.state.userInfoMy;
+      repo = this.props.state.userRepoMy;
+    }
+
     return (
       <>
         <Header
@@ -18,10 +22,12 @@ export class RequestPage extends Component {
           inputValue={this.props.inputValue}
           setInputValue={this.props.setInputValue}
         />
-        {this.info && this.repo
-          ? this.props.create("", this.info, this.repo)
+        {info && repo
+          ? this.props.create("", info, repo)
           : this.props.create(this.props.title)}
       </>
     );
   }
 }
+
+export default withRouter(RequestPage);

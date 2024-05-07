@@ -32,15 +32,22 @@ class Header extends Component {
         switch (this.path) {
           case "/async":
             data = await getUserInfoAsync(value);
+            this.props.setState(data);
             break;
           case "/promise":
             data = await getUserInfo(value);
+            this.props.setState(data);
             break;
           default:
             break;
         }
-        this.props.setState(data);
         this.setState({ error: "" });
+        const params = new URLSearchParams();
+        params.append("query", value);
+        this.props.history.push({
+          pathname: this.props.location.pathname,
+          search: params.toString(),
+        });
       } catch (err) {
         this.setState({ error: err.message || "An error occurred" });
       } finally {
@@ -68,8 +75,7 @@ class Header extends Component {
           <p id="head-info">{`${this.name} Request`}</p>
           <div className="search">
             <datalist id="names" />
-            <Search inputValue={this.props.inputValue} setName={this.setName} />
-            <span className="error">{this.state.error}</span>
+            <Search inputValue={this.props.inputValue} setName={this.setName} error={this.state.error}/>
             <div
               id="preloader"
               className={this.state.isLoading ? "loader" : null}

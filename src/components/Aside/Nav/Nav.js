@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { NavLink } from "react-router-dom";
+import {NavLink} from "react-router-dom";
 
 export class Nav extends Component {
   render() {
@@ -7,7 +7,7 @@ export class Nav extends Component {
       <nav className="nav">
         <NavLink to="/promise">Promise</NavLink>
         <NavLink to="/async">Async</NavLink>
-        <NavLink to="/home">Home</NavLink>
+        <NavLink to="/settings">Settings</NavLink>
       </nav>
     );
   }
