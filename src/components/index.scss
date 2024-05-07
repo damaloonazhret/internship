@@ -196,7 +196,9 @@ label {
   }
 
   & a:active,
-  & a:hover {
+  & a:hover,
+  & p:active,
+  & p:hover{
     color: var(--green);
   }
 }

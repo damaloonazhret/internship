@@ -4,26 +4,20 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0c830352-c0f4-4574-a1ff-b7b57137849d" name="Changes" comment="feat: transferring the header component to the app, formatting package.json">
-      <change afterPath="$PROJECT_DIR$/src/components/Aside/Arrows/Arrows.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Aside/Aside.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Aside/Nav/Nav.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Aside/ThemeSwitcher/ThemeSwitcher.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Header/Header.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/components/Main/Main.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/AsyncPage/AsyncPage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/HomePage/HomePage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/pages/PromisePage/PromisePage.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/createCards.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/services/setProperty.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="0c830352-c0f4-4574-a1ff-b7b57137849d" name="Changes" comment="feat: env package json">
+      <change afterPath="$PROJECT_DIR$/src/components/Aside/Arrows/Arrow/Arrow.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/components/Header/Search/Search.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/RequestPage/RequestPage.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/public/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Aside/Arrows/Arrows.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Aside/Arrows/Arrows.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Aside/Aside.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Aside/Aside.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Aside/ThemeSwitcher/ThemeSwitcher.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Aside/ThemeSwitcher/ThemeSwitcher.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header/Header.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/index.scss" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/index.scss" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/api.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/api.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/getData.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/getData.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/services/validate.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/services/validate.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/AsyncPage/AsyncPage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/AsyncPage/AsyncPage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/HomePage/HomePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/HomePage/HomePage.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/pages/PromisePage/PromisePage.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/PromisePage/PromisePage.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -220,6 +214,7 @@
     <MESSAGE value="update: ReactClasses" />
     <MESSAGE value="fix: remove console.log" />
     <MESSAGE value="feat: transferring the header component to the app, formatting package.json" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: transferring the header component to the app, formatting package.json" />
+    <MESSAGE value="feat: env package json" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: env package json" />
   </component>
 </project>

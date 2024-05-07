@@ -9,7 +9,14 @@ export class Aside extends Component {
       <aside className="aside">
         <Nav />
         <Arrows />
-        <ThemeSwitcher />
+        <ThemeSwitcher
+          BLACK_ROOT={this.props.BLACK_ROOT}
+          WHITE_ROOT={this.props.WHITE_ROOT}
+          DARK={this.props.DARK}
+          WHITE={this.props.WHITE}
+          DEFAULT_COLOR_WHITE={this.props.DEFAULT_COLOR_WHITE}
+          DEFAULT_COLOR_BLACK={this.props.DEFAULT_COLOR_BLACK}
+        />
       </aside>
     );
   }

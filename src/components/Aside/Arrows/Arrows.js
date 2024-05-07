@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { withRouter } from "react-router-dom";
+import {Arrow} from "./Arrow/Arrow";
 
 class Arrows extends Component {
   goBack = () => {
@@ -13,12 +14,8 @@ class Arrows extends Component {
   render() {
     return (
       <nav className="navArrows">
-        <p id="back" className="back" onClick={this.goBack}>
-          {"<"}
-        </p>
-        <p id="forward" className="forward" onClick={this.goForward}>
-          {">"}
-        </p>
+        <Arrow className='back' handleClick={this.goBack} content={"<"}/>
+        <Arrow className='forward' handleClick={this.goForward} content={">"}/>
       </nav>
     );
   }

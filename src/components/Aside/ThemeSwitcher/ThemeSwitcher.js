@@ -1,42 +1,35 @@
 import { Component } from "react";
-import {setProperty} from "../../../services/setProperty";
+import { setProperty } from "../../../services/setProperty";
 
 export class ThemeSwitcher extends Component {
-  static DARK = "dark";
-  static WHITE = "white";
-
   constructor(props) {
     super(props);
 
     this.state = {
-      theme: ThemeSwitcher.DARK,
+      theme: this.props.DARK,
     };
   }
 
   themeSwitcher = () => {
     this.setState((prevState) => ({
       theme:
-        prevState.theme === ThemeSwitcher.WHITE
-          ? ThemeSwitcher.DARK
-          : ThemeSwitcher.WHITE,
+        prevState.theme === this.props.WHITE
+          ? this.props.DARK
+          : this.props.WHITE,
     }));
   };
 
   globalTheme() {
     const theme = this.state.theme;
-    const BLACK_ROOT = "--black";
-    const WHITE_ROOT = "--white";
-    const DEFAULT_COLOR_WHITE = "#ffffff";
-    const DEFAULT_COLOR_BLACK = "#1a1a1a";
 
-    if (theme === ThemeSwitcher.WHITE) {
-      setProperty(BLACK_ROOT, DEFAULT_COLOR_WHITE);
-      setProperty(WHITE_ROOT, DEFAULT_COLOR_BLACK);
+    if (theme === this.props.WHITE) {
+      setProperty(this.props.BLACK_ROOT, this.props.DEFAULT_COLOR_WHITE);
+      setProperty(this.props.WHITE_ROOT, this.props.DEFAULT_COLOR_BLACK);
     }
 
-    if (theme === ThemeSwitcher.DARK) {
-      setProperty(BLACK_ROOT, DEFAULT_COLOR_BLACK);
-      setProperty(WHITE_ROOT, DEFAULT_COLOR_WHITE);
+    if (theme === this.props.DARK) {
+      setProperty(this.props.BLACK_ROOT, this.props.DEFAULT_COLOR_BLACK);
+      setProperty(this.props.WHITE_ROOT, this.props.DEFAULT_COLOR_WHITE);
     }
   }
 
@@ -51,12 +44,12 @@ export class ThemeSwitcher extends Component {
           onChange={() => this.globalTheme()}
         />
         <label
-          className={`switcherLabel ${this.state.theme === ThemeSwitcher.WHITE ? "white" : ""}`}
+          className={`switcherLabel ${this.state.theme === this.props.WHITE ? "white" : ""}`}
           htmlFor="switcher-input"
           onClick={() => this.themeSwitcher()}
         >
           <span
-            className={`switcherToggler ${this.state.theme === ThemeSwitcher.WHITE ? "white" : ""}`}
+            className={`switcherToggler ${this.state.theme === this.props.WHITE ? "white" : ""}`}
           />
         </label>
       </div>
