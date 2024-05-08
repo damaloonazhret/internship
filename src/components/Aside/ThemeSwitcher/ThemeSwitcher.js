@@ -1,5 +1,6 @@
 import { Component } from "react";
 import { setProperty } from "../../../services/setProperty";
+import { Text } from "../../common/Text";
 
 export class ThemeSwitcher extends Component {
   constructor(props) {
@@ -48,7 +49,7 @@ export class ThemeSwitcher extends Component {
           htmlFor="switcher-input"
           onClick={() => this.themeSwitcher()}
         >
-          <span
+          <Text
             className={`switcherToggler ${this.state.theme === this.props.WHITE ? "white" : ""}`}
           />
         </label>

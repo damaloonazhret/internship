@@ -1,6 +1,6 @@
 import { Text } from "../../components/common/Text";
 
-const NotFoundPage = () => {
+const NotFound = () => {
   return (
     <article className="article">
       <h2>404 Not Found</h2>
@@ -9,4 +9,4 @@ const NotFoundPage = () => {
   );
 };
 
-export default NotFoundPage;
+export default NotFound;

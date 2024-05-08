@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Header from "../../components/Header/Header";
 import { withRouter } from "react-router-dom";
 
-class RequestPage extends Component {
+class Request extends Component {
   render() {
     let info = this.props.state.userInfoMy;
     let repo = this.props.state.userRepoMy;
@@ -21,4 +21,4 @@ class RequestPage extends Component {
   }
 }
 
-export default withRouter(RequestPage);
+export default withRouter(Request);

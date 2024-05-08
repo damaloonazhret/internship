@@ -1,7 +1,7 @@
 import { Component } from "react";
-import RequestPage from "../RequestPage";
+import RequestPage from "./Request";
 
-export class AsyncPage extends Component {
+export class Async extends Component {
   render() {
     return (
       <RequestPage

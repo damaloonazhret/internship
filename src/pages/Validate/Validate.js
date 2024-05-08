@@ -2,7 +2,7 @@ import { Component } from "react";
 import { Text } from "../../components/common/Text";
 import { InputWithError } from "../../components/common/InputWithError";
 
-export class ValidatePage extends Component {
+export class Validate extends Component {
   constructor(props) {
     super(props);
 
@@ -41,6 +41,7 @@ export class ValidatePage extends Component {
           type="password"
           onChange={(value) => this.setPass(value)}
           error={this.state.error}
+          value={this.state.userPass}
         />
       </form>
     );

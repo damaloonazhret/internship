@@ -1,7 +1,7 @@
 import { Component } from "react";
-import RequestPage from "../RequestPage";
+import RequestPage from "./Request";
 
-export class PromisePage extends Component {
+export class Promise extends Component {
   render() {
     return (
       <RequestPage

@@ -77,9 +77,9 @@ class Header extends Component {
               name="url"
               type="search"
               list="names"
+              onChange={(value) => this.setName(value)}
               error={this.state.error}
               value={this.state.name}
-              onChange={(value) => this.setName(value)}
             />
             <div
               id="preloader"

@@ -1,13 +1,13 @@
 import { Component } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
-import { AsyncPage } from "../../pages/RequestPage/AsyncPage/AsyncPage";
-import { PromisePage } from "../../pages/RequestPage/PromisePage/PromisePage";
-import SettingsPage from "../../pages/SettingsPage/SettingsPage";
+import { Async } from "../../pages/Request/Async";
+import { Promise } from "../../pages/Request/Promise";
+import Settings from "../../pages/Settings/Settings";
 import { createCards } from "../../services/createCards";
 import { PublicRoute } from "../../routes/PublicRoute";
 import { PrivateRoute } from "../../routes/PrivateRoute";
-import { ValidatePage } from "../../pages/ValidatePage/ValidatePage";
-import NotFoundPage from "../../pages/NotFoundPage/NotFoundPage";
+import { Validate } from "../../pages/Validate/Validate";
+import NotFound from "../../pages/NotFound/NotFound";
 
 class Main extends Component {
   constructor(props) {
@@ -27,7 +27,7 @@ class Main extends Component {
           <Route
             path="/async"
             render={() => (
-              <AsyncPage
+              <Async
                 create={createCards}
                 setAsyncState={(newState) => this.setState({ async: newState })}
                 asyncState={this.state.async}
@@ -40,7 +40,7 @@ class Main extends Component {
           <Route
             path="/promise"
             render={() => (
-              <PromisePage
+              <Promise
                 create={createCards}
                 setPromiseState={(newState) =>
                   this.setState({ promise: newState })
@@ -51,16 +51,16 @@ class Main extends Component {
           />
           <PrivateRoute
             path="/settings"
-            component={SettingsPage}
+            component={Settings}
             isAuth={this.state.isAuth}
           />
           <PublicRoute
             path="/login"
-            component={ValidatePage}
+            component={Validate}
             isAuth={this.state.isAuth}
             setAuth={(auth) => this.setState({ isAuth: auth })}
           />
-          <Route component={NotFoundPage} />
+          <Route component={NotFound} />
         </Switch>
       </>
     );

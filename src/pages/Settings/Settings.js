@@ -1,9 +1,9 @@
 import { Component } from "react";
 import { Link, Switch } from "react-router-dom";
-import { SettingPage } from "./SettingPage/SettingPage";
+import { ComputedStyle } from "./ComputedStyle/ComputedStyle";
 import { PrivateRoute } from "../../routes/PrivateRoute";
 
-class SettingsPage extends Component {
+class Settings extends Component {
   render() {
     const { url } = this.props.computedMatch;
     return (
@@ -23,7 +23,7 @@ class SettingsPage extends Component {
           <PrivateRoute
             isAuth={this.props.isAuth}
             path={`${url}/:settingsId`}
-            component={SettingPage}
+            component={ComputedStyle}
           />
         </Switch>
       </>
@@ -31,4 +31,4 @@ class SettingsPage extends Component {
   }
 }
 
-export default SettingsPage;
+export default Settings;
