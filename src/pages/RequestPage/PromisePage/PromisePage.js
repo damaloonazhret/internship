@@ -7,8 +7,6 @@ export class PromisePage extends Component {
       <RequestPage
         setIsLoading={this.props.setIsLoading}
         setState={this.props.setPromiseState}
-        inputValue={this.props.promiseInputValue}
-        setInputValue={this.props.setPromiseInputValue}
         create={this.props.create}
         state={this.props.promiseState}
         title="Promise Page Request"

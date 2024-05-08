@@ -1,10 +1,10 @@
-import { Span } from "../../components/common/Span";
+import { Text } from "../../components/common/Text";
 
 const NotFoundPage = () => {
   return (
     <article className="article">
       <h2>404 Not Found</h2>
-      <Span text="Sorry, the page you are looking for does not exist." />
+      <Text text="Sorry, the page you are looking for does not exist." />
     </article>
   );
 };

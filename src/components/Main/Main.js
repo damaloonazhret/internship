@@ -15,9 +15,7 @@ class Main extends Component {
 
     this.state = {
       async: {},
-      asyncInputValue: "",
       promise: {},
-      promiseInputValue: "",
       isAuth: false,
     };
   }
@@ -32,11 +30,7 @@ class Main extends Component {
               <AsyncPage
                 create={createCards}
                 setAsyncState={(newState) => this.setState({ async: newState })}
-                setAsyncInputValue={(newValue) =>
-                  this.setState({ asyncInputValue: newValue })
-                }
                 asyncState={this.state.async}
-                asyncInputValue={this.state.asyncInputValue}
               />
             )}
           />
@@ -51,11 +45,7 @@ class Main extends Component {
                 setPromiseState={(newState) =>
                   this.setState({ promise: newState })
                 }
-                setPromiseInputValue={(newValue) =>
-                  this.setState({ promiseInputValue: newValue })
-                }
                 promiseState={this.state.promise}
-                promiseInputValue={this.state.promiseInputValue}
               />
             )}
           />

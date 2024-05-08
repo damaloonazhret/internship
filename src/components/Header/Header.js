@@ -2,7 +2,7 @@ import { Component } from "react";
 import { checkValidate } from "../../services/validate";
 import { getUserInfo, getUserInfoAsync } from "../../services/getData";
 import { withRouter } from "react-router-dom";
-import { Search } from "./Search/Search";
+import { InputWithError } from "../common/InputWithError";
 
 class Header extends Component {
   constructor(props) {
@@ -21,8 +21,8 @@ class Header extends Component {
   async setRepos(e) {
     e.preventDefault();
 
-    const value = this.props.inputValue;
-    const isChecked = checkValidate(value);
+    const name = this.state.name;
+    const isChecked = checkValidate(name);
 
     if (isChecked.check) {
       this.setState({ isLoading: true });
@@ -31,11 +31,11 @@ class Header extends Component {
         let data;
         switch (this.path) {
           case "/async":
-            data = await getUserInfoAsync(value);
+            data = await getUserInfoAsync(name);
             this.props.setState(data);
             break;
           case "/promise":
-            data = await getUserInfo(value);
+            data = await getUserInfo(name);
             this.props.setState(data);
             break;
           default:
@@ -43,7 +43,7 @@ class Header extends Component {
         }
         this.setState({ error: "" });
         const params = new URLSearchParams();
-        params.append("query", value);
+        params.append("query", name);
         this.props.history.push({
           pathname: this.props.location.pathname,
           search: params.toString(),
@@ -58,14 +58,9 @@ class Header extends Component {
     }
   }
 
-  setName = (e) => {
-    const newName = e.target.value;
-
+  setName = (value) => {
     if (this.state.error) this.setState({ error: "" });
-
-    this.props.setInputValue(newName);
-
-    this.setState({ name: this.props.inputValue });
+    this.setState({ name: value });
   };
 
   render() {
@@ -75,10 +70,16 @@ class Header extends Component {
           <p id="head-info">{`${this.name} Request`}</p>
           <div className="search">
             <datalist id="names" />
-            <Search
-              inputValue={this.props.inputValue}
-              setName={this.setName}
+            <InputWithError
+              id="url"
+              className="url"
+              placeholder="Write GitHub NickName..."
+              name="url"
+              type="search"
+              list="names"
               error={this.state.error}
+              value={this.state.name}
+              onChange={(value) => this.setName(value)}
             />
             <div
               id="preloader"
