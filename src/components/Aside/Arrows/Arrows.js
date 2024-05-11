@@ -1,26 +1,22 @@
-import { withRouter } from "react-router-dom";
-import style from './arrows.module.scss'
-import {useCallback} from "react";
+import { Arrow } from "./Arrow/Arrow";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { useCallback } from "react";
 
-const Arrows = (props) => {
-  const goBack = useCallback (() => {
-    props.history.goBack();
-  }, [props.history]);
+export const Arrows = () => {
+  const history = useHistory();
 
-  const goForward = useCallback( () => {
-    props.history.goForward();
-  }, [props.history]);
+  const goBack = useCallback(() => {
+    history.goBack();
+  }, [history]);
+
+  const goForward = useCallback(() => {
+    history.goForward();
+  }, [history]);
 
   return (
-    <nav className={style.navArrows}>
-      <p className={style.back} onClick={goBack}>
-        {"<"}
-      </p>
-      <p className={style.forward} onClick={goForward}>
-        {">"}
-      </p>
+    <nav className="navArrows">
+      <Arrow className="back" handleClick={goBack} content={"<"} />
+      <Arrow className="forward" handleClick={goForward} content={">"} />
     </nav>
   );
 };
-
-export default withRouter(Arrows);

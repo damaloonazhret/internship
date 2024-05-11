@@ -1,16 +1,13 @@
-import Arrows from "./Arrows/Arrows";
-import ThemeSwitcher from "./ThemeSwitcher/ThemeSwitcher";
-import Nav from "./Nav/Nav";
-import style from './aside.module.scss'
+import { ThemeSwitcher } from "./ThemeSwitcher/ThemeSwitcher";
+import { Nav } from "./Nav/Nav";
+import { Arrows } from "./Arrows/Arrows";
 
-const Aside = () => {
+export const Aside = (props) => {
   return (
-    <aside className={style.aside}>
+    <aside className="aside">
       <Nav />
       <Arrows />
-      <ThemeSwitcher />
+      <ThemeSwitcher {...props} />
     </aside>
   );
 };
-
-export default Aside;

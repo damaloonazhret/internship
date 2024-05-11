@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function useAsyncRequest() {
+export const useAsyncRequest = () => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [data, setData] = useState({});
@@ -18,4 +18,4 @@ export function useAsyncRequest() {
   };
 
   return { isLoading, error, data, setError, fetchData };
-}
+};

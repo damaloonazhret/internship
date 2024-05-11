@@ -1,126 +1,74 @@
-import { Suspense, useEffect, useState } from "react";
-import { Redirect, Route, Switch, withRouter } from "react-router-dom";
-import style from "./main.module.scss";
-import { AsyncPg } from "./AsyncPage";
-import { PromisePg } from "./PromisePage";
-import { HomePg } from "./HomePage";
-import Loader from "../Preloaders/Loader";
+import { Redirect, Route, Switch } from "react-router-dom";
+import { Async } from "../../pages/Request/Async";
+import { Promises } from "../../pages/Request/Promise";
+import { Settings } from "../../pages/Settings/Settings";
+import { createCards } from "../../services/createCards";
+import { PublicRoute } from "../../routes/PublicRoute";
+import { PrivateRoute } from "../../routes/PrivateRoute";
+import { Validate } from "../../pages/Validate/Validate";
+import { NotFound } from "../../pages/NotFound/NotFound";
+import { useEffect, useState } from "react";
+import { HeaderInfo } from "../common/HeaderInfo";
+import { getCookie } from "../../services/cookie/getCookie";
+import { MainLoader } from "../common/MainLoader";
 
-const Main = (props) => {
+export const Main = () => {
   const [async, setAsync] = useState({});
   const [promise, setPromise] = useState({});
-  const [asyncInputValue, setAsyncInputValue] = useState("");
-  const [promiseInputValue, setPromiseInputValue] = useState("");
+  const [isAuth, setIsAuth] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const pathName = props.location.pathname;
-    document.title = `${pathName.charAt(1).toUpperCase()}${pathName.slice(2)} page`;
-  }, [props.location.pathname]);
+    const auth = getCookie("admin");
+    if (auth) setIsAuth(true);
+    setLoading(false);
+  }, []);
 
-  const create = (title, userInfo, userRepo) => {
-    if (title)
-      return (
-        <main className={style.mainContent}>
-          <h2>{title}</h2>
-        </main>
-      );
+  if (loading) {
+    return <MainLoader />;
+  }
 
-    if (!userInfo || !userRepo) return null;
-
-    return (
-      <main
-        key={userInfo ? userInfo.html_url : null}
-        className={style.mainContent}
-      >
-        <article key={userInfo ? userInfo.html_url : null}>
-          {createUserInfoHTML(userInfo)}
-          {createReposHTML(userRepo)}
-        </article>
-      </main>
-    );
-  };
-
-  const createReposHTML = (userRepo) => {
-    return userRepo.map((repoData, index) => (
-      <div key={index} className={style.repos}>
-        <span key={repoData.full_name}>{repoData.full_name}</span>
-        <span key={repoData.language}>{repoData.language}</span>
-        <span key={repoData.visibility}>Visibility: {repoData.visibility}</span>
-        <a
-          key={repoData.html_url}
-          rel="noreferrer"
-          href={repoData.html_url}
-          target="_blank"
-        >
-          Link to repo
-        </a>
-        <span key={repoData.created_at}>{repoData.created_at}</span>
-      </div>
-    ));
-  };
-
-  const createUserInfoHTML = (userInfo) => {
-    return (
-      <div key={userInfo ? userInfo.html_url : null} className={style.userInfo}>
-        <a
-          key={userInfo.html_url}
-          href={userInfo.html_url}
-          rel="noreferrer"
-          target="_blank"
-        >
-          <img
-            key={userInfo.avatar_url}
-            src={userInfo.avatar_url}
-            alt="avatar"
-            className={style.avatar}
-          />
-        </a>
-        <span key={userInfo.name}>Name: {userInfo.name}</span>
-        <span key={userInfo.login}>{userInfo.login}</span>
-      </div>
-    );
+  const headerInfo = (pageName) => {
+    return <HeaderInfo pageName={pageName} />;
   };
 
   return (
-    <Switch>
-      <Suspense fallback={<Loader />}>
+    <>
+      <Switch>
         <Route
-          path="/fetch"
+          path="/async"
           render={() => (
-            <AsyncPg
-              create={(title, userInfo, userRepo) =>
-                create(title, userInfo, userRepo)
-              }
+            <Async
+              create={createCards}
               setAsyncState={(newState) => setAsync(newState)}
-              setAsyncInputValue={(newValue) => setAsyncInputValue(newValue)}
               asyncState={async}
-              asyncInputValue={asyncInputValue}
-              pathname={props.location.pathname}
+              render={headerInfo}
             />
           )}
         />
-        <Route exact path="/" render={() => <Redirect to="/promise" />} />
+        <Route exact path="/">
+          <Redirect to="/promise" />
+        </Route>
         <Route
           path="/promise"
           render={() => (
-            <PromisePg
-              create={(title, userInfo, userRepo) =>
-                create(title, userInfo, userRepo)
-              }
+            <Promises
+              create={createCards}
               setPromiseState={(newState) => setPromise(newState)}
-              setPromiseInputValue={(newValue) =>
-                setPromiseInputValue(newValue)
-              }
               promiseState={promise}
-              promiseInputValue={promiseInputValue}
-              pathname={props.location.pathname}
+              render={headerInfo}
             />
           )}
         />
-        <Route path="/home" component={HomePg} />
-      </Suspense>
-    </Switch>
+        <PrivateRoute path="/settings" component={Settings} isAuth={isAuth} />
+        <PublicRoute
+          path="/login"
+          component={Validate}
+          isAuth={isAuth}
+          setAuth={(auth) => setIsAuth({ auth })}
+        />
+        <Route component={NotFound} />
+      </Switch>
+    </>
   );
 };
-
-export default withRouter(Main);

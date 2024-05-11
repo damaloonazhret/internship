@@ -1,53 +1,59 @@
-import { useEffect } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { checkValidate } from "../../services/validate";
-import style from "./header.module.scss";
-import Preloader from "../Preloaders/Preloader";
-import { useAsyncRequest } from "../hooks/useAsyncRequest";
 import { getUserInfo, getUserInfoAsync } from "../../services/getData";
+import { InputWithError } from "../common/InputWithError";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
+import { useAsyncRequest } from "../../services/hooks/useAsyncRequest";
 
-const Header = ({
-  name,
-  pathname,
-  inputValue,
-  setAsyncInputValue,
-  setPromiseInputValue,
-  setAsyncState,
-  setPromiseState,
-}) => {
+export const Header = ({ setState, render }) => {
+  const history = useHistory();
+  const location = useLocation();
+  const pathName = location.pathname;
+  const pageName = pathName.charAt(1).toUpperCase() + pathName.slice(2);
+  const userNameRef = useRef("");
+  const [userName, setUserName] = useState("");
   const { isLoading, error, data, setError, fetchData } = useAsyncRequest();
 
   useEffect(() => {
-    setError("");
-  }, [inputValue, setError]);
-
-  useEffect(() => {
     if (data && data.userInfoMy && data.userRepoMy) {
-      switch (pathname) {
-        case "/fetch":
-          setAsyncState(data);
+      switch (pathName) {
+        case "/async":
+          setState(data);
           break;
         case "/promise":
-          setPromiseState(data);
+          setState(data);
           break;
         default:
           break;
       }
     }
-  }, [data, pathname, setAsyncState, setPromiseState]);
+  }, [data, pathName, setState]);
+
+  useEffect(() => {
+    const clearError = setTimeout(() => {
+      setError("");
+    }, 7000);
+
+    return () => clearTimeout(clearError);
+  }, [error, setError]);
 
   const setRepos = async (e) => {
     e.preventDefault();
-
-    const path = pathname;
-    const value = inputValue;
-    const isChecked = checkValidate(value);
+    const currentUserName = userNameRef.current;
+    const isChecked = checkValidate(currentUserName);
 
     if (isChecked.check) {
       try {
         await fetchData(
-          path === "/fetch" ? getUserInfoAsync : getUserInfo,
-          value,
+          pathName === "/async" ? getUserInfoAsync : getUserInfo,
+          currentUserName,
         );
+        const params = new URLSearchParams();
+        params.append("query", currentUserName);
+        history.push({
+          pathname: pathName,
+          search: params.toString(),
+        });
       } catch (err) {
         setError(err.message);
       }
@@ -56,36 +62,32 @@ const Header = ({
     }
   };
 
-  const setName = (e) => {
-    const newName = e.target.value;
-    const path = pathname;
-
-    if (path === "/fetch") setAsyncInputValue(newName);
-    if (path === "/promise") setPromiseInputValue(newName);
-  };
+  const setNameValue = useCallback((value) => {
+    setUserName(value);
+  }, []);
 
   return (
-    <header className={style.header}>
+    <header className="header">
       <form onSubmit={(e) => setRepos(e)}>
-        <p id="head-info">{`${name} Request`}</p>
-        <div className={style.search}>
-          <input
+        {render(pageName)}
+        <div className="search">
+          <datalist id="names" />
+          <InputWithError
             id="url"
-            className={style.url}
+            className="url"
             placeholder="Write GitHub NickName..."
             name="url"
             type="search"
             list="names"
-            value={inputValue}
-            onChange={setName}
+            error={error}
+            value={userName}
+            setRef={(value) => (userNameRef.current = value)}
+            onChange={(value) => setNameValue(value)}
+            debounceTime={300}
           />
-          <datalist id="names"></datalist>
-          {error && <span className={style.error}>{error}</span>}
-          <Preloader isLoading={isLoading} />
+          <div id="preloader" className={isLoading ? "loader" : null} />
         </div>
       </form>
     </header>
   );
 };
-
-export default Header;

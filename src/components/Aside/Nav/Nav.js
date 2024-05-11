@@ -1,21 +1,11 @@
-import {NavLink} from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
-import style from './nav.module.scss'
-
-const Nav = () => {
+export const Nav = () => {
   return (
-    <nav className={style.nav}>
-      <NavLink to="/promise" activeClassName={style.activeLink}>
-        Promise
-      </NavLink>
-      <NavLink to="/fetch" activeClassName={style.activeLink}>
-        Async
-      </NavLink>
-      <NavLink to="/home" activeClassName={style.activeLink}>
-        Home
-      </NavLink>
+    <nav className="nav">
+      <NavLink to="/promise">Promise</NavLink>
+      <NavLink to="/async">Async</NavLink>
+      <NavLink to="/settings">Settings</NavLink>
     </nav>
   );
 };
-
-export default Nav;

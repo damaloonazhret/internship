@@ -1,6 +1,6 @@
 import { asyncRequest, promiseRequest } from "./api";
 
-function extractUserData({ userInfo, userRepo }) {
+const extractUserData = ({ userInfo, userRepo }) => {
   const userInfoMy = {
     name: userInfo["name"],
     html_url: userInfo["html_url"],
@@ -17,9 +17,9 @@ function extractUserData({ userInfo, userRepo }) {
     }),
   );
   return { userInfoMy, userRepoMy };
-}
+};
 
-export function getUserInfo(username) {
+export const getUserInfo = (username) => {
   return promiseRequest(username).then((response) => {
     const newUserData = JSON.parse(response["userInfo"]);
     const newRepoData = JSON.parse(response["userRepo"]);
@@ -28,9 +28,9 @@ export function getUserInfo(username) {
       userRepo: newRepoData,
     });
   });
-}
+};
 
-export async function getUserInfoAsync(username) {
+export const getUserInfoAsync = async (username) => {
   const newUserData = await asyncRequest(username);
   return extractUserData(newUserData);
-}
+};

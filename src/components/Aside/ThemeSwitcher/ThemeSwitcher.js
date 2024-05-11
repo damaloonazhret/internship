@@ -1,67 +1,61 @@
-import { useEffect, useState } from "react";
-import style from "./themeSwitcher.module.scss";
 import { setProperty } from "../../../services/setProperty";
+import { Text } from "../../common/Text";
+import { useEffect, useState } from "react";
+import {
+  BLACK_ROOT,
+  DARK,
+  DEFAULT_COLOR_BLACK,
+  DEFAULT_COLOR_WHITE,
+  TRANSITION,
+  TRANSITION_ROOT,
+  WHITE,
+  WHITE_ROOT,
+} from "../../common/constants/constants";
 
-const ThemeSwitcher = () => {
-  const DARK = "dark";
-  const WHITE = "white";
-  const BLACK_ROOT = "--black";
-  const WHITE_ROOT = "--white";
-  const TRANSITION_ALL = "--transition-all";
-  const DEFAULT_COLOR_WHITE = "#ffffff";
-  const DEFAULT_COLOR_BLACK = "#1a1a1a";
-  const TRANSITION_VALUE = "0.4s all ease-in";
-
-  const [theme, setTheme] = useState(() => {
-    const themeColor = localStorage.getItem("theme");
-    return themeColor || DARK;
-  });
+export const ThemeSwitcher = (props) => {
+  const [theme, setTheme] = useState(props.userTheme || "dark");
 
   useEffect(() => {
-    setProperty(TRANSITION_ALL, TRANSITION_VALUE);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  useEffect(() => {
+    setProperty(TRANSITION_ROOT, TRANSITION);
   }, []);
 
   const themeSwitcher = () => {
-    const newTheme = theme === WHITE ? DARK : WHITE;
-    setTheme(newTheme);
-    localStorage.setItem("theme", newTheme);
-    globalTheme(newTheme);
+    setTheme((prevTheme) => (prevTheme === WHITE ? DARK : WHITE));
   };
 
-  const globalTheme = (currentTheme) => {
-    if (currentTheme === WHITE) {
+  const globalTheme = () => {
+    if (theme === WHITE) {
       setProperty(BLACK_ROOT, DEFAULT_COLOR_WHITE);
       setProperty(WHITE_ROOT, DEFAULT_COLOR_BLACK);
-    } else {
+    }
+
+    if (theme === DARK) {
       setProperty(BLACK_ROOT, DEFAULT_COLOR_BLACK);
       setProperty(WHITE_ROOT, DEFAULT_COLOR_WHITE);
     }
   };
-
-  globalTheme(theme);
+  globalTheme();
 
   return (
-    <div className={style.themeSwitcher}>
+    <div className="themeSwitcher">
       <input
         type="checkbox"
         name="switcher"
         id="switcher-input"
         className="switcher-input"
-        checked={theme === WHITE}
-        onChange={themeSwitcher}
+        onChange={() => globalTheme()}
       />
       <label
+        className={`switcherLabel ${theme === WHITE ? "white" : ""}`}
         htmlFor="switcher-input"
-        className={`${style.switcherLabel}`}
+        onClick={() => themeSwitcher()}
       >
-        <span
-          className={`${style.switcherToggler} ${
-            theme === WHITE ? style.switcherTogglerWhite : ""
-          }`}
-        ></span>
+        <Text className={`switcherToggler ${theme === WHITE ? "white" : ""}`} />
       </label>
     </div>
   );
 };
-
-export default ThemeSwitcher;

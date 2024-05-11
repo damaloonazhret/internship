@@ -1,18 +1,18 @@
 const repos = "/repos";
 const userUrl = "https://api.github.com/users/";
 
-export function promiseRequest(username) {
+export const promiseRequest = (username) => {
   const userInfoPromise = new Promise((resolve, reject) => {
     let xhrUserInfo = new XMLHttpRequest();
     xhrUserInfo.open("GET", `${userUrl}${username}`);
-    xhrUserInfo.onload = function () {
+    xhrUserInfo.onload = () => {
       if (!(xhrUserInfo.status >= 200 && xhrUserInfo.status <= 299)) {
         reject(new Error(`User: error ${xhrUserInfo.status}`));
       } else {
         resolve(xhrUserInfo.response);
       }
     };
-    xhrUserInfo.onerror = function (error) {
+    xhrUserInfo.onerror = (error) => {
       resolve(error);
     };
     xhrUserInfo.send();
@@ -21,15 +21,15 @@ export function promiseRequest(username) {
   const userRepoPromise = new Promise((resolve, reject) => {
     let xhrUserRepo = new XMLHttpRequest();
     xhrUserRepo.open("GET", `${userUrl}${username}${repos}`);
-    xhrUserRepo.onload = function () {
+    xhrUserRepo.onload = () => {
       if (!(xhrUserRepo.status >= 200 && xhrUserRepo.status <= 299)) {
         reject(new Error(`User: error ${xhrUserRepo.status}`));
       } else {
         resolve(xhrUserRepo.response);
       }
     };
-    xhrUserRepo.onerror = function (error) {
-      resolve(error);
+    xhrUserRepo.onerror = (error) => {
+      reject(error);
     };
     xhrUserRepo.send();
   });
@@ -39,9 +39,9 @@ export function promiseRequest(username) {
       return { userInfo, userRepo };
     },
   );
-}
+};
 
-export async function asyncRequest(username) {
+export const asyncRequest = async (username) => {
   const options = {
     method: "GET",
     mode: "cors",
@@ -69,4 +69,4 @@ export async function asyncRequest(username) {
       `Error fetching data for user ${username} ${error.message}`,
     );
   }
-}
+};

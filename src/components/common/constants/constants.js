@@ -1,0 +1,8 @@
+export const BLACK_ROOT = "--black";
+export const WHITE_ROOT = "--white";
+export const TRANSITION_ROOT = "--transition-all";
+export const DARK = "dark";
+export const WHITE = "white";
+export const TRANSITION = "0.2s ease-in";
+export const DEFAULT_COLOR_WHITE = "#ffffff";
+export const DEFAULT_COLOR_BLACK = "#1a1a1a";
