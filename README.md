@@ -26,3 +26,5 @@
 - [Iteration 8: Create React App](https://damaloonazhret.github.io/internship/CRA) — [Branch](https://github.com/damaloonazhret/internship/tree/CRA) — [ZIP](https://github.com/damaloonazhret/internship/archive/refs/heads/CRA.zip) — [Pull Request](https://github.com/damaloonazhret/internship/pull/10)
 
 - [Iteration 9: Classes components](https://cute-tulumba-255b06.netlify.app) — [Branch](https://github.com/damaloonazhret/internship/tree/ReactClasses) — [ZIP](https://github.com/damaloonazhret/internship/archive/refs/heads/ReactClasses.zip) — [Pull Request](https://github.com/damaloonazhret/internship/pull/11)
+
+- [Iteration 10: Functions components](https://effortless-douhua-013ec2.netlify.app) — [Branch](https://github.com/damaloonazhret/internship/tree/ReactFunctions) — [ZIP](https://github.com/damaloonazhret/internship/archive/refs/heads/ReactFunctions.zip)
