@@ -2,7 +2,6 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import { Async } from "../../pages/Request/Async";
 import { Promises } from "../../pages/Request/Promise";
 import { Settings } from "../../pages/Settings/Settings";
-import { createCards } from "../../services/createCards";
 import { PublicRoute } from "../../routes/PublicRoute";
 import { PrivateRoute } from "../../routes/PrivateRoute";
 import { Validate } from "../../pages/Validate/Validate";
@@ -39,7 +38,6 @@ export const Main = () => {
           path="/async"
           render={() => (
             <Async
-              create={createCards}
               setAsyncState={(newState) => setAsync(newState)}
               asyncState={async}
               render={headerInfo}
@@ -53,7 +51,6 @@ export const Main = () => {
           path="/promise"
           render={() => (
             <Promises
-              create={createCards}
               setPromiseState={(newState) => setPromise(newState)}
               promiseState={promise}
               render={headerInfo}
@@ -65,7 +62,7 @@ export const Main = () => {
           path="/login"
           component={Validate}
           isAuth={isAuth}
-          setAuth={(auth) => setIsAuth({ auth })}
+          setAuth={(auth) => setIsAuth(auth)}
         />
         <Route component={NotFound} />
       </Switch>

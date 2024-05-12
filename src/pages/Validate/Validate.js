@@ -2,9 +2,10 @@ import { useCallback, useRef, useState } from "react";
 import { Text } from "../../components/common/Text";
 import { InputWithError } from "../../components/common/InputWithError";
 import { setCookie } from "../../services/cookie/setCookie";
+import {checkUserPass} from "../../services/validate/checkUserPass";
+import {DEBOUNCE_DELAY} from "../../components/common/constants/constants";
 
 export const Validate = (props) => {
-  const password = 1234;
   const passwordRef = useRef("");
   const [error, setError] = useState("");
   const [userPass, setUserPass] = useState("");
@@ -12,12 +13,12 @@ export const Validate = (props) => {
   const checkPass = (e) => {
     e.preventDefault();
     const currentPassword = passwordRef.current;
-    const passCheck = Number(currentPassword) === password;
-    if (passCheck) {
+    const passCheck = checkUserPass(currentPassword);
+    if (passCheck.validate) {
       props.setAuth(true);
       setCookie("admin", "true", 1);
     } else {
-      setError("invalid password");
+      setError(passCheck.error);
     }
   };
 
@@ -40,7 +41,7 @@ export const Validate = (props) => {
         onChange={(value) => setPass(value)}
         error={error}
         value={userPass}
-        debounceTime={300}
+        debounceTime={DEBOUNCE_DELAY}
         setRef={(value) => (passwordRef.current = value)}
       />
     </form>

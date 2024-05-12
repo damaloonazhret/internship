@@ -1,9 +1,10 @@
 import { useCallback, useEffect, useRef, useState } from "react";
-import { checkValidate } from "../../services/validate";
+import { checkValidate } from "../../services/validate/checkUserName";
 import { getUserInfo, getUserInfoAsync } from "../../services/getData";
 import { InputWithError } from "../common/InputWithError";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
 import { useAsyncRequest } from "../../services/hooks/useAsyncRequest";
+import {DEBOUNCE_DELAY} from "../common/constants/constants";
 
 export const Header = ({ setState, render }) => {
   const history = useHistory();
@@ -83,7 +84,7 @@ export const Header = ({ setState, render }) => {
             value={userName}
             setRef={(value) => (userNameRef.current = value)}
             onChange={(value) => setNameValue(value)}
-            debounceTime={300}
+            debounceTime={DEBOUNCE_DELAY}
           />
           <div id="preloader" className={isLoading ? "loader" : null} />
         </div>
