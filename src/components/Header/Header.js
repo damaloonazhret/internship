@@ -1,61 +1,59 @@
-import { memo, useEffect } from "react";
-import { checkValidate } from "../../services/validate";
-import style from "./header.module.scss";
-import Preloader from "../Preloaders/Preloader";
-import { useAsyncRequest } from "../hooks/useAsyncRequest";
-import { getUserInfo, getUserInfoAsync } from "../../services/getData";
-import { useLocation } from "react-router-dom";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { InputWithError } from "../common/InputWithError";
+import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
+import {useAsyncRequest} from "../../services/hooks/useAsyncRequest";
+import {checkUserName} from "../../services/validate/userName";
+import {getUserInfo, getUserInfoAsync} from "../../services/api/getData";
 
-const Header = ({
-  asyncInputValue,
-  promiseInputValue,
-  setAsyncInputValue,
-  setPromiseInputValue,
-  setAsync,
-  setPromise,
-}) => {
-  const { isLoading, error, data, setError, fetchData } = useAsyncRequest();
-
+export const Header = ({ setState, render }) => {
+  const history = useHistory();
   const location = useLocation();
-  const pathname = location.pathname;
-  const name = pathname.charAt(1).toUpperCase() + pathname.slice(2);
-
-  useEffect(() => {
-    setError("");
-  }, [asyncInputValue, promiseInputValue, setError]);
+  const pathName = location.pathname;
+  const pageName = pathName.charAt(1).toUpperCase() + pathName.slice(2);
+  const userNameRef = useRef("");
+  const [userName, setUserName] = useState("");
+  const { isLoading, error, data, setError, fetchData } = useAsyncRequest();
 
   useEffect(() => {
     if (data && data.userInfoMy && data.userRepoMy) {
-      switch (pathname) {
-        case "/fetch":
-          setAsync(data);
+      switch (pathName) {
+        case "/async":
+          setState(data);
           break;
         case "/promise":
-          setPromise(data);
+          setState(data);
           break;
         default:
           break;
       }
     }
-  }, [data, pathname, setAsync, setPromise]);
+  }, [data, pathName, setState]);
+
+  useEffect(() => {
+    const clearError = setTimeout(() => {
+      setError("");
+    }, 7000);
+
+    return () => clearTimeout(clearError);
+  }, [error, setError]);
 
   const setRepos = async (e) => {
     e.preventDefault();
-
-    let value;
-    pathname === "/fetch"
-      ? (value = asyncInputValue)
-      : (value = promiseInputValue);
-    console.log(value)
-    console.log(asyncInputValue)
-    const isChecked = checkValidate(value);
+    const currentUserName = userNameRef.current;
+    const isChecked = checkUserName(currentUserName);
 
     if (isChecked.check) {
       try {
         await fetchData(
-          pathname === "/fetch" ? getUserInfoAsync : getUserInfo,
-          value,
+          pathName === "/async" ? getUserInfoAsync : getUserInfo,
+          currentUserName,
         );
+        const params = new URLSearchParams();
+        params.append("query", currentUserName);
+        history.push({
+          pathname: pathName,
+          search: params.toString(),
+        });
       } catch (err) {
         setError(err.message);
       }
@@ -64,35 +62,32 @@ const Header = ({
     }
   };
 
-  const setName = (e) => {
-    const newName = e.target.value;
-
-    if (pathname === "/fetch") setAsyncInputValue(newName);
-    if (pathname === "/promise") setPromiseInputValue(newName);
-  };
+  const setNameValue = useCallback((value) => {
+    setUserName(value);
+  }, []);
 
   return (
-    <header className={style.header}>
+    <header className="header">
       <form onSubmit={(e) => setRepos(e)}>
-        <p id="head-info">{`${name} Request`}</p>
-        <div className={style.search}>
-          <input
+        {render(pageName)}
+        <div className="search">
+          <datalist id="names" />
+          <InputWithError
             id="url"
-            className={style.url}
+            className="url"
             placeholder="Write GitHub NickName..."
             name="url"
             type="search"
             list="names"
-            value={pathname === "/fetch" ? asyncInputValue : promiseInputValue}
-            onChange={setName}
+            error={error}
+            value={userName}
+            setRef={(value) => (userNameRef.current = value)}
+            onChange={(value) => setNameValue(value)}
+            debounceTime={300}
           />
-          <datalist id="names"></datalist>
-          {error && <span className={style.error}>{error}</span>}
-          <Preloader isLoading={isLoading} />
+          <div id="preloader" className={isLoading ? "loader" : null} />
         </div>
       </form>
     </header>
   );
 };
-
-export default memo(Header);

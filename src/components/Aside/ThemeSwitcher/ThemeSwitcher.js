@@ -1,25 +1,24 @@
-import {memo, useEffect, useLayoutEffect} from "react";
-import style from "./themeSwitcher.module.scss";
-import { setProperty } from "../../../services/setProperty";
-import { DARK } from "../../App";
-import {setFontSize} from "../../../services/setFontSize";
-import {setGlobalTheme} from "../../../services/setGlobalTheme";
-export const WHITE = "white";
+import { Text } from "../../common/Text";
+import { useEffect, useLayoutEffect } from "react";
+import {
+  DARK,
+  TRANSITION,
+  TRANSITION_ROOT,
+  WHITE,
+} from "../../common/constants/constants";
+import {setGlobalTheme} from "../../../services/styles/setGlobalTheme";
+import {setFontSize} from "../../../services/styles/setFontSize";
+import {setProperty} from "../../../services/styles/setProperty";
 
-const ThemeSwitcher = (props) => {
-  const TRANSITION_ALL = "--transition-all";
-  const TRANSITION_VALUE = "0.4s all ease-in";
+export const ThemeSwitcher = ({ colors, setColors, theme, setTheme }) => {
   const colorS = localStorage.getItem("secondary");
   const colorP = localStorage.getItem("primary");
-  const { colors, setColors } = props;
 
-  setGlobalTheme(props.theme, props.colors);
+  setGlobalTheme(theme, colors);
   setFontSize();
 
   useEffect(() => {
-    setTimeout(() => {
-      setProperty(TRANSITION_ALL, TRANSITION_VALUE);
-    }, 0);
+    setProperty(TRANSITION_ROOT, TRANSITION);
   }, []);
 
   useLayoutEffect(() => {
@@ -40,31 +39,28 @@ const ThemeSwitcher = (props) => {
   }, [colorP, colorS, colors, setColors]);
 
   const themeSwitcher = () => {
-    const newTheme = props.theme === WHITE ? DARK : WHITE;
-    props.setTheme(newTheme);
+    const newTheme = theme === WHITE ? DARK : WHITE;
+    setTheme(newTheme);
     localStorage.setItem("theme", newTheme);
-    setGlobalTheme(newTheme, props.colors);
+    setGlobalTheme(newTheme, colors);
   };
 
   return (
-    <div className={style.themeSwitcher}>
+    <div className="themeSwitcher">
       <input
         type="checkbox"
         name="switcher"
         id="switcher-input"
         className="switcher-input"
-        checked={props.theme === WHITE}
-        onChange={themeSwitcher}
+        onChange={() => setGlobalTheme(theme, colors)}
       />
-      <label htmlFor="switcher-input" className={`${style.switcherLabel}`}>
-        <span
-          className={`${style.switcherToggler} ${
-            props.theme === WHITE ? style.switcherTogglerWhite : ""
-          }`}
-        ></span>
+      <label
+        className={`switcherLabel ${theme === WHITE ? "white" : ""}`}
+        htmlFor="switcher-input"
+        onClick={() => themeSwitcher()}
+      >
+        <Text className={`switcherToggler ${theme === WHITE ? "white" : ""}`} />
       </label>
     </div>
   );
 };
-
-export default memo(ThemeSwitcher);

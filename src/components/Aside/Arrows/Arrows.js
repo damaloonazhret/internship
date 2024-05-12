@@ -1,8 +1,8 @@
-import style from "./arrows.module.scss";
-import { useHistory } from "react-router-dom";
-import {memo, useCallback} from "react";
+import { Arrow } from "./Arrow/Arrow";
+import { useHistory } from "react-router-dom/cjs/react-router-dom";
+import { useCallback } from "react";
 
-const Arrows = () => {
+export const Arrows = () => {
   const history = useHistory();
 
   const goBack = useCallback(() => {
@@ -14,15 +14,9 @@ const Arrows = () => {
   }, [history]);
 
   return (
-    <nav className={style.navArrows}>
-      <p className={style.back} onClick={goBack}>
-        {"<"}
-      </p>
-      <p className={style.forward} onClick={goForward}>
-        {">"}
-      </p>
+    <nav className="navArrows">
+      <Arrow className="back" handleClick={goBack} content={"<"} />
+      <Arrow className="forward" handleClick={goForward} content={">"} />
     </nav>
   );
 };
-
-export default memo(Arrows);
