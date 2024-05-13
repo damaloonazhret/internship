@@ -11,7 +11,6 @@ import {
   SettingsPage,
   ValidatePage,
 } from "../../pages";
-import { createCards } from "../../services/create/createCards";
 import { getCookie } from "../../services/cookie/getCookie";
 import Loader from "../common/preloaders/Loader";
 
@@ -49,7 +48,6 @@ export const Main = ({ ...props }) => {
             path="/async"
             render={() => (
               <AsyncPage
-                create={createCards}
                 setAsyncState={(newState) => setAsync(newState)}
                 asyncState={async}
                 render={headerInfo}
@@ -63,7 +61,6 @@ export const Main = ({ ...props }) => {
             path="/promise"
             render={() => (
               <PromisePage
-                create={createCards}
                 setPromiseState={(newState) => setPromise(newState)}
                 promiseState={promise}
                 render={headerInfo}
@@ -80,7 +77,7 @@ export const Main = ({ ...props }) => {
             path="/login"
             component={ValidatePage}
             isAuth={isAuth}
-            setAuth={(auth) => setIsAuth({ auth })}
+            setAuth={(auth) => setIsAuth(auth)}
           />
           <Route component={NotFoundPage} />
         </Switch>

@@ -2,7 +2,8 @@ import { useCallback, useRef, useState } from "react";
 import { Text } from "../../components/common/Text";
 import { InputWithError } from "../../components/common/InputWithError";
 import {setCookie} from "../../services/cookie/setCookie";
-import {checkUserPass} from "../../services/validate/pass";
+import {checkUserPass} from "../../services/validate/checkUserPass";
+import {DEBOUNCE_DELAY} from "../../components/common/constants/constants";
 
 const Validate = (props) => {
   const passwordRef = useRef("");
@@ -40,7 +41,7 @@ const Validate = (props) => {
         onChange={(value) => setPass(value)}
         error={error}
         value={userPass}
-        debounceTime={300}
+        debounceTime={DEBOUNCE_DELAY}
         setRef={(value) => (passwordRef.current = value)}
       />
     </form>
