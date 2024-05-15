@@ -1,9 +1,14 @@
+import { Text } from "../InfoText/Text";
+
 export const Cards = ({ userRepo }) => {
   return userRepo.map((repoData, index) => (
     <div key={index} className="repos">
-      <span key={repoData.full_name}>{repoData.full_name}</span>
-      <span key={repoData.language}>{repoData.language}</span>
-      <span key={repoData.visibility}>Visibility: {repoData.visibility}</span>
+      <Text key={repoData.full_name} text={repoData.full_name} />
+      <Text key={repoData.language} text={repoData.language} />
+      <Text
+        key={repoData.visibility}
+        text={`Visibility ${repoData.language}`}
+      />
       <a
         key={repoData.html_url}
         rel="noreferrer"
@@ -12,7 +17,7 @@ export const Cards = ({ userRepo }) => {
       >
         Link to repo
       </a>
-      <span key={repoData.created_at}>{repoData.created_at}</span>
+      <Text key={repoData.created_at} text={repoData.created_at} />
     </div>
   ));
 };

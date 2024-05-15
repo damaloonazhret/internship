@@ -1,4 +1,10 @@
 import { asyncRequest, promiseRequest } from "./api";
+const token = process.env.REACT_APP_TOKEN;
+
+const headers = {
+  "Content-Type": "application/json",
+  'Authorization': `token ${token}`,
+}
 
 const extractUserData = ({ userInfo, userRepo }) => {
   const userInfoMy = {
@@ -20,7 +26,7 @@ const extractUserData = ({ userInfo, userRepo }) => {
 };
 
 export const getUserInfo = (username) => {
-  return promiseRequest(username).then((response) => {
+  return promiseRequest(username, headers).then((response) => {
     const newUserData = JSON.parse(response["userInfo"]);
     const newRepoData = JSON.parse(response["userRepo"]);
     return extractUserData({
@@ -31,6 +37,6 @@ export const getUserInfo = (username) => {
 };
 
 export const getUserInfoAsync = async (username) => {
-  const newUserData = await asyncRequest(username);
+  const newUserData = await asyncRequest(username, headers);
   return extractUserData(newUserData);
 };

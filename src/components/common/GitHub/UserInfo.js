@@ -1,3 +1,5 @@
+import {Text} from '../InfoText/Text'
+
 export const UserInfo = ({ userInfo }) => {
   return (
     <div key={userInfo.html_url} className="user-info">
@@ -14,8 +16,8 @@ export const UserInfo = ({ userInfo }) => {
           className="avatar"
         />
       </a>
-      <span key={userInfo.name}>Name: {userInfo.name}</span>
-      <span key={userInfo.login}>{userInfo.login}</span>
+      <Text key={userInfo.name} text={`Name: ${userInfo.name}`}/>
+      <Text key={userInfo.login} text={userInfo.login}/>
     </div>
   );
 };

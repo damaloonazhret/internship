@@ -6,7 +6,7 @@ import { PublicRoute } from "../../routes/PublicRoute";
 import { PrivateRoute } from "../../routes/PrivateRoute";
 import { Validate } from "../../pages/Validate/Validate";
 import { NotFound } from "../../pages/NotFound/NotFound";
-import {useEffect, useMemo, useState} from "react";
+import { useEffect, useState } from "react";
 import { HeaderInfo } from "../common/InfoText/HeaderInfo";
 import { getCookie } from "../../services/cookie/getCookie";
 import { MainLoader } from "../common/Loaders/MainLoader";
@@ -23,10 +23,9 @@ export const Main = () => {
     setLoading(false);
   }, []);
 
-  const headerInfo = useMemo(() => (pageName) => {
+  const headerInfo = (pageName) => {
     return <HeaderInfo pageName={pageName} />;
-  }, []);
-
+  };
 
   const ChildComponent = () => {
     return <>Settings page</>;
@@ -63,7 +62,7 @@ export const Main = () => {
           )}
         />
         <PrivateRoute path="/settings" component={Settings} isAuth={isAuth}>
-          <ChildComponent/>
+          <ChildComponent />
         </PrivateRoute>
         <PublicRoute
           path="/login"

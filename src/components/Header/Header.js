@@ -4,6 +4,8 @@ import { getUserInfo, getUserInfoAsync } from "../../services/getData";
 import { InputWithError } from "../common/Inputs/InputWithError";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
 import { useAsyncRequest } from "../../services/hooks/useAsyncRequest";
+import { useDebounce } from "../../services/hooks/useDebounce";
+import { DEBOUNCE_DELAY } from "../common/constants/constants";
 
 export const Header = ({ setState, render }) => {
   const history = useHistory();
@@ -12,6 +14,7 @@ export const Header = ({ setState, render }) => {
   const pageName = pathName.charAt(1).toUpperCase() + pathName.slice(2);
   const userNameRef = useRef(null);
   const [userName, setUserName] = useState("");
+  const debouncedValue = useDebounce(userName, DEBOUNCE_DELAY);
   const { isLoading, error, data, setError, fetchData } = useAsyncRequest();
 
   useEffect(() => {
@@ -20,38 +23,35 @@ export const Header = ({ setState, render }) => {
     }
   }, [data, pathName, setState]);
 
-  useEffect(() => {
-    const clearError = setTimeout(() => {
-      setError("");
-    }, 7000);
-
-    return () => clearTimeout(clearError);
-  }, [error, setError]);
-
-  const setRepos = async (e) => {
-    e.preventDefault();
-    const currentUserName = userNameRef.current.value;
-    const isChecked = checkValidate(currentUserName);
-
-    if (isChecked.check) {
-      try {
-        await fetchData(
-          pathName === "/async" ? getUserInfoAsync : getUserInfo,
-          currentUserName,
-        );
-        const params = new URLSearchParams();
-        params.append("query", currentUserName);
-        history.push({
-          pathname: pathName,
-          search: params.toString(),
-        });
-      } catch (err) {
-        setError(err.message);
+  const setRepos = useCallback(
+    async (value) => {
+      const isChecked = checkValidate(value);
+      if (isChecked.check) {
+        try {
+          await fetchData(
+            pathName === "/async" ? getUserInfoAsync : getUserInfo,
+            value,
+          );
+          const params = new URLSearchParams();
+          params.append("query", value);
+          history.push({
+            pathname: pathName,
+            search: params.toString(),
+          });
+          setError("");
+        } catch (err) {
+          setError(err.message);
+        }
+      } else {
+        setError(isChecked.message);
       }
-    } else {
-      setError(isChecked.message);
-    }
-  };
+    },
+    [setError, history, pathName, fetchData],
+  );
+
+  useEffect(() => {
+    setRepos(debouncedValue);
+  }, [setRepos, debouncedValue]);
 
   const setNameValue = useCallback(
     (value) => {
@@ -62,7 +62,7 @@ export const Header = ({ setState, render }) => {
 
   return (
     <header className="header">
-      <form onSubmit={(e) => setRepos(e)}>
+      <form>
         {render(pageName)}
         <div className="search">
           <datalist id="names" />
@@ -76,7 +76,7 @@ export const Header = ({ setState, render }) => {
             ref={userNameRef}
             value={userName}
             error={error}
-            onChange={(value) => setNameValue(value)}
+            onChange={(e) => setNameValue(e.target.value)}
           />
           <div id="preloader" className={isLoading ? "loader" : null} />
         </div>

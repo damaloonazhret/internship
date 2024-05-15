@@ -1,10 +1,11 @@
 const repos = "/repos";
 const userUrl = "https://api.github.com/users/";
 
-export const promiseRequest = (username) => {
+export const promiseRequest = (username, headers) => {
   const userInfoPromise = new Promise((resolve, reject) => {
     let xhrUserInfo = new XMLHttpRequest();
     xhrUserInfo.open("GET", `${userUrl}${username}`);
+    xhrUserInfo.setRequestHeader('Authorization', headers.Authorization);
     xhrUserInfo.onload = () => {
       if (!(xhrUserInfo.status >= 200 && xhrUserInfo.status <= 299)) {
         reject(new Error(`User: error ${xhrUserInfo.status}`));
@@ -21,6 +22,7 @@ export const promiseRequest = (username) => {
   const userRepoPromise = new Promise((resolve, reject) => {
     let xhrUserRepo = new XMLHttpRequest();
     xhrUserRepo.open("GET", `${userUrl}${username}${repos}`);
+    xhrUserRepo.setRequestHeader('Authorization', headers.Authorization);
     xhrUserRepo.onload = () => {
       if (!(xhrUserRepo.status >= 200 && xhrUserRepo.status <= 299)) {
         reject(new Error(`User: error ${xhrUserRepo.status}`));
@@ -41,15 +43,13 @@ export const promiseRequest = (username) => {
   );
 };
 
-export const asyncRequest = async (username) => {
+export const asyncRequest = async (username, headers) => {
   const options = {
     method: "GET",
     mode: "cors",
     cache: "no-cache",
     credentials: "same-origin",
-    headers: {
-      "Content-Type": "application/json",
-    },
+    headers: headers,
     redirect: "follow",
     referrerPolicy: "no-referrer",
   };

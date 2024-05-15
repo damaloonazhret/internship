@@ -9,7 +9,7 @@ const isValidGitHubUsername = (username) => {
 
 export const checkValidate = (value) => {
   if (value === "") {
-    return { check: false, message: "Empty string" };
+    return { check: false, message: ''};
   } else if (!isValidGitHubUsername(value)) {
     return { check: false, message: invalidUsernameMessage };
   } else {

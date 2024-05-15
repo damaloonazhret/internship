@@ -7,8 +7,8 @@ export const GitHubInfo = ({ userInfo, userRepo }) => {
   return (
     <main key={userInfo.html_url} className="mainContent">
       <article key={userInfo.html_url}>
-        <Cards userRepo={userRepo} />
         <UserInfo userInfo={userInfo} />
+        <Cards userRepo={userRepo} />
       </article>
     </main>
   );

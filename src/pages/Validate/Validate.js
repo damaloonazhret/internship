@@ -37,7 +37,7 @@ export const Validate = (props) => {
         placeholder="Type password..."
         name="password"
         type="password"
-        onChange={(value) => setPass(value)}
+        onChange={(e) => setPass(e.target.value)}
         error={error}
         value={userPass}
         ref={passwordRef}
