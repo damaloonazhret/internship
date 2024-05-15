@@ -1,4 +1,4 @@
-export const createTitle = (title) => {
+export const Title = ({ title }) => {
   if (title) {
     return (
       <main className="mainContent">
@@ -6,4 +6,4 @@ export const createTitle = (title) => {
       </main>
     );
   }
-}
+};

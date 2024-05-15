@@ -1,32 +1,22 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { checkValidate } from "../../services/validate/checkUserName";
 import { getUserInfo, getUserInfoAsync } from "../../services/getData";
-import { InputWithError } from "../common/InputWithError";
+import { InputWithError } from "../common/Inputs/InputWithError";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
 import { useAsyncRequest } from "../../services/hooks/useAsyncRequest";
-import {DEBOUNCE_DELAY} from "../common/constants/constants";
 
 export const Header = ({ setState, render }) => {
   const history = useHistory();
   const location = useLocation();
   const pathName = location.pathname;
   const pageName = pathName.charAt(1).toUpperCase() + pathName.slice(2);
-  const userNameRef = useRef("");
+  const userNameRef = useRef(null);
   const [userName, setUserName] = useState("");
   const { isLoading, error, data, setError, fetchData } = useAsyncRequest();
 
   useEffect(() => {
     if (data && data.userInfoMy && data.userRepoMy) {
-      switch (pathName) {
-        case "/async":
-          setState(data);
-          break;
-        case "/promise":
-          setState(data);
-          break;
-        default:
-          break;
-      }
+      setState(data);
     }
   }, [data, pathName, setState]);
 
@@ -40,7 +30,7 @@ export const Header = ({ setState, render }) => {
 
   const setRepos = async (e) => {
     e.preventDefault();
-    const currentUserName = userNameRef.current;
+    const currentUserName = userNameRef.current.value;
     const isChecked = checkValidate(currentUserName);
 
     if (isChecked.check) {
@@ -63,9 +53,12 @@ export const Header = ({ setState, render }) => {
     }
   };
 
-  const setNameValue = useCallback((value) => {
-    setUserName(value);
-  }, []);
+  const setNameValue = useCallback(
+    (value) => {
+      setUserName(value);
+    },
+    [setUserName],
+  );
 
   return (
     <header className="header">
@@ -80,11 +73,10 @@ export const Header = ({ setState, render }) => {
             name="url"
             type="search"
             list="names"
-            error={error}
+            ref={userNameRef}
             value={userName}
-            setRef={(value) => (userNameRef.current = value)}
+            error={error}
             onChange={(value) => setNameValue(value)}
-            debounceTime={DEBOUNCE_DELAY}
           />
           <div id="preloader" className={isLoading ? "loader" : null} />
         </div>

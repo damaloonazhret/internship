@@ -4,6 +4,7 @@ export const TRANSITION_ROOT = "--transition-all";
 export const DARK = "dark";
 export const WHITE = "white";
 export const TRANSITION = "0.2s ease-in";
+export const TRANSITION_NONE = "none";
 export const DEFAULT_COLOR_WHITE = "#ffffff";
 export const DEFAULT_COLOR_BLACK = "#1a1a1a";
 export const DEBOUNCE_DELAY = 300;

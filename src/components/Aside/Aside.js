@@ -7,7 +7,7 @@ export const Aside = (props) => {
     <aside className="aside">
       <Nav />
       <Arrows />
-      <ThemeSwitcher {...props} />
+      <ThemeSwitcher />
     </aside>
   );
 };

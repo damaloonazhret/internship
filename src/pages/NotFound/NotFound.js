@@ -1,4 +1,4 @@
-import { Text } from "../../components/common/Text";
+import { Text } from "../../components/common/InfoText/Text";
 
 export const NotFound = () => {
   return (

@@ -1,4 +1,4 @@
-import { Request } from "./Request";
+import { Request } from "../../components/common/GitHub/Request";
 
 export const Async = ({ setAsyncState, asyncState, render }) => {
   return (

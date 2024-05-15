@@ -1,4 +1,4 @@
-import { Request } from "./Request";
+import { Request } from "../../components/common/GitHub/Request";
 
 export const Promises = ({ setPromiseState, promiseState, render }) => {
   return (
@@ -7,6 +7,8 @@ export const Promises = ({ setPromiseState, promiseState, render }) => {
       state={promiseState}
       render={render}
       title="Promise Page Request"
-    />
+    >
+
+    </Request>
   );
 };
