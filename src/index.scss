@@ -489,7 +489,11 @@ a.white {
   display: flex;
   gap: 30px;
   flex-direction: column;
+  height: 100%;
+  width: 100%;
   align-items: center;
+  justify-content: center;
+  border-left: 2px solid black;
   &__password {
     height: 30px;
     width: 400px;

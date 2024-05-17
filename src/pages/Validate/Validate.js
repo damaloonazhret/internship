@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import {useCallback, useLayoutEffect, useRef, useState} from "react";
 import { Text } from "../../components/common/InfoText/Text";
 import { InputWithError } from "../../components/common/Input/InputWithError";
 import { setCookie } from "../../services/cookie/setCookie";
@@ -20,6 +20,10 @@ export const Validate = (props) => {
       setError(passCheck.error);
     }
   };
+
+  useLayoutEffect(() => {
+    passwordRef.current.focus();
+  }, []);
 
   const setPass = useCallback((value) => {
     setUserPass(value);
