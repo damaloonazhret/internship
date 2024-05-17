@@ -1,26 +1,23 @@
 import { setProperty } from "../../../services/styles/setProperty";
 import { Text } from "../../common/InfoText/Text";
-import {useEffect, useLayoutEffect, useMemo, useState} from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   DARK,
-  TRANSITION, TRANSITION_NONE,
+  TRANSITION,
   TRANSITION_ROOT,
   WHITE,
 } from "../../constants/constants";
 import { setGlobalTheme } from "../../../services/styles/setGlobalTheme";
 
 export const ThemeSwitcher = () => {
-  function initialTheme () {
+  function initialTheme() {
     const theme = localStorage.getItem("theme");
     if (theme) return theme;
     return "dark";
   }
+
   const [theme, setTheme] = useState(initialTheme);
   setGlobalTheme(theme);
-
-  useLayoutEffect(() => {
-    setProperty(TRANSITION_ROOT, TRANSITION_NONE)
-  }, []);
 
   useEffect(() => {
     setProperty(TRANSITION_ROOT, TRANSITION);

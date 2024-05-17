@@ -1,6 +1,6 @@
 import { Header } from "../../Header/Header";
-import {GitHubInfo} from "./GitHubInfo";
-import {Title} from "../InfoText/Title";
+import { GitHubInfo } from "./GitHubInfo";
+import { Title } from "../InfoText/Title";
 
 export const Request = ({ state, setState, title, render }) => {
   let info = state.userInfoMy;
@@ -9,7 +9,11 @@ export const Request = ({ state, setState, title, render }) => {
   return (
     <>
       <Header setState={setState} render={render} />
-      {info && repo ? <GitHubInfo userInfo={info} userRepo={repo}/> : <Title title={title}/>}
+      {info && repo ? (
+        <GitHubInfo userInfo={info} userRepo={repo} />
+      ) : (
+        <Title title={title} className="main-title" type="h1" />
+      )}
     </>
   );
 };

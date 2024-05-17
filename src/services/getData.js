@@ -3,7 +3,7 @@ const token = process.env.REACT_APP_TOKEN;
 
 const headers = {
   "Content-Type": "application/json",
-  'Authorization': `token ${token}`,
+  'Authorization': `Bearer ${token}`,
 }
 
 const extractUserData = ({ userInfo, userRepo }) => {

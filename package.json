@@ -72,7 +72,7 @@
   },
   "scripts": {
     "start": "node scripts/start.js",
-    "build": "set \"PUBLIC_URL=.\" &&  node scripts/build.js",
+    "build": "set \"PUBLIC_URL=.\" && set \"GENERATE_SOURCEMAP=false\" && node scripts/build.js",
     "test": "node scripts/test.js"
   },
   "eslintConfig": {

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import {useCallback, useEffect, useLayoutEffect, useRef, useState} from "react";
 import { checkValidate } from "../../services/validate/checkUserName";
 import { getUserInfo, getUserInfoAsync } from "../../services/getData";
 import { InputWithError } from "../common/Input/InputWithError";
@@ -22,6 +22,10 @@ export const Header = ({ setState, render }) => {
       setState(data);
     }
   }, [data, pathName, setState]);
+
+  useLayoutEffect(() => {
+    userNameRef.current.focus();
+  }, []);
 
   const setRepos = useCallback(
     async (value) => {
