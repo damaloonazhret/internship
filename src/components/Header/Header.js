@@ -1,17 +1,17 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { checkValidate } from "../../services/validate/checkUserName";
 import { getUserInfo, getUserInfoAsync } from "../../services/getData";
-import { InputWithError } from "../common/Inputs/InputWithError";
+import { InputWithError } from "../common/Input/InputWithError";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
 import { useAsyncRequest } from "../../services/hooks/useAsyncRequest";
 import { useDebounce } from "../../services/hooks/useDebounce";
-import { DEBOUNCE_DELAY } from "../common/constants/constants";
+import { DEBOUNCE_DELAY } from "../constants/constants";
 
 export const Header = ({ setState, render }) => {
   const history = useHistory();
   const location = useLocation();
   const pathName = location.pathname;
-  const pageName = pathName.charAt(1).toUpperCase() + pathName.slice(2);
+  const title = pathName.charAt(1).toUpperCase() + pathName.slice(2);
   const userNameRef = useRef(null);
   const [userName, setUserName] = useState("");
   const debouncedValue = useDebounce(userName, DEBOUNCE_DELAY);
@@ -63,7 +63,7 @@ export const Header = ({ setState, render }) => {
   return (
     <header className="header">
       <form>
-        {render(pageName)}
+        {render(`${title} page`)}
         <div className="search">
           <datalist id="names" />
           <InputWithError

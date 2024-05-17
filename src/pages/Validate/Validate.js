@@ -1,6 +1,6 @@
 import { useCallback, useRef, useState } from "react";
 import { Text } from "../../components/common/InfoText/Text";
-import { InputWithError } from "../../components/common/Inputs/InputWithError";
+import { InputWithError } from "../../components/common/Input/InputWithError";
 import { setCookie } from "../../services/cookie/setCookie";
 import { checkUserPass } from "../../services/validate/checkUserPass";
 

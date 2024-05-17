@@ -6,7 +6,7 @@ import {
   TRANSITION, TRANSITION_NONE,
   TRANSITION_ROOT,
   WHITE,
-} from "../../common/constants/constants";
+} from "../../constants/constants";
 import { setGlobalTheme } from "../../../services/styles/setGlobalTheme";
 
 export const ThemeSwitcher = () => {

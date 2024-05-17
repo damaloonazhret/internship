@@ -12,6 +12,15 @@
   background: var(--green);
 }
 
+h1, h2, h3, h4, h5, h6 {
+  margin: 0;
+  padding: 0;
+  font-size: inherit;
+  font-weight: normal;
+  line-height: normal;
+  color: inherit;
+}
+
 @mixin inputReset($param) {
   appearance: $param;
   -webkit-appearance: $param;
@@ -72,6 +81,8 @@ select:focus {
 
 .header {
   transition: var(--transition-all);
+  display: flex;
+  justify-content: center;
 
   &.hidden {
     transform: translateY(-129px);
@@ -86,6 +97,7 @@ select:focus {
     border-bottom: 2px solid #000;
     padding: 0 40px;
     gap: 10px;
+    width: 100%;
   }
 }
 
@@ -488,10 +500,18 @@ a.white {
 }
 
 .settings-nav {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  & h2 {
+    flex-basis: 100%;
+  }
   &__list {
     display: flex;
     list-style: none;
     justify-content: space-around;
+    width: 100%;
     margin: 0;
     padding: 0;
     & a {

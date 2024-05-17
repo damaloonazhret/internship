@@ -6,7 +6,7 @@ import {
   DEFAULT_COLOR_WHITE,
   WHITE,
   WHITE_ROOT,
-} from "../../components/common/constants/constants";
+} from "../../components/constants/constants";
 
 export function setGlobalTheme(theme) {
   if (theme === WHITE) {
