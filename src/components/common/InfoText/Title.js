@@ -1,9 +1,12 @@
-import { Info } from "./Info";
-
-export const Title = ({ title, className, type }) => {
+export const Title = ({
+  type: Tag = "h2",
+  title,
+  id = "page-title",
+  ...props
+}) => {
   return (
-    <main className="mainContent">
-      <Info title={title} className={className} type={type} />
-    </main>
+    <Tag id={id} {...props}>
+      {title}
+    </Tag>
   );
 };

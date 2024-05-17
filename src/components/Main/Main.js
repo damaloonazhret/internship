@@ -7,7 +7,7 @@ import { PrivateRoute } from "../../routes/PrivateRoute";
 import { Validate } from "../../pages/Validate/Validate";
 import { NotFound } from "../../pages/NotFound/NotFound";
 import { useEffect, useState } from "react";
-import { Info } from "../common/InfoText/Info";
+import { Title } from "../common/InfoText/Title";
 import { getCookie } from "../../services/cookie/getCookie";
 import { MainLoader } from "../common/Loaders/MainLoader";
 
@@ -24,7 +24,7 @@ export const Main = () => {
   }, []);
 
   const headerInfo = (title) => {
-    return <Info title={title} />;
+    return <Title title={title} />;
   };
 
   const ChildComponent = () => {
