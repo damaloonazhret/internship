@@ -17,6 +17,7 @@ export const App = () => {
     primary: "#1a1a1a",
     secondary: "#ffffff",
   });
+
   return (
     <Router>
       <Aside theme={theme} setTheme={setTheme} colors={colors} setColors={setColors} />
