@@ -14,6 +14,8 @@ class ColorsPageCC extends Component {
 
   itemsPerPage = 40;
   linkRef = createRef();
+  sortedColorsCache = null;
+  prevColors = null;
 
   componentDidMount() {
     const { location } = this.props;
@@ -38,7 +40,6 @@ class ColorsPageCC extends Component {
 
   componentDidUpdate(prevProps) {
     if (this.props.location.search !== prevProps.location.search) {
-      console.log(this.props.location.search);
       const params = new URLSearchParams(this.props.location.search);
       const page = params.get("page");
       if (page) {
@@ -48,10 +49,11 @@ class ColorsPageCC extends Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    if (this.state.colors === nextState.colors) {
-      return true;
-    }
-    return true;
+    return (
+      this.state.colors !== nextState.colors ||
+      this.state.currentPage !== nextState.currentPage ||
+      this.state.activeLink !== nextState.activeLink
+    );
   }
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
@@ -61,11 +63,10 @@ class ColorsPageCC extends Component {
     return null;
   }
 
-  componentWillUnmount = () => {
-    console.log(this.state.currentPage);
+  componentWillUnmount() {
     sessionStorage.setItem("currentPage", this.state.currentPage);
     sessionStorage.setItem("activeLink", this.state.activeLink);
-  };
+  }
 
   handlePageChange = (pageNumber) => {
     const { history, location } = this.props;
@@ -85,11 +86,12 @@ class ColorsPageCC extends Component {
     }));
   };
 
-  getSortedColors = () => {
-    const { colors } = this.state;
-    if (!colors) return [];
+  getSortedColors = (colors) => {
+    if (colors === this.prevColors) {
+      return this.sortedColorsCache;
+    }
 
-    return colors.slice().sort((a, b) => {
+    this.sortedColorsCache = colors.slice().sort((a, b) => {
       const colorF = extractColorFromUrl(a.thumbnailUrl);
       const colorL = extractColorFromUrl(b.thumbnailUrl);
 
@@ -100,6 +102,9 @@ class ColorsPageCC extends Component {
       if (hslF[1] !== hslL[1]) return hslF[1] - hslL[1];
       return hslF[2] - hslL[2];
     });
+
+    this.prevColors = colors;
+    return this.sortedColorsCache;
   };
 
   getPaginatedColors = (sortedColors) => {
@@ -111,7 +116,7 @@ class ColorsPageCC extends Component {
 
   render() {
     const { colors, currentPage, activeLink } = this.state;
-    const sortedColors = this.getSortedColors();
+    const sortedColors = this.getSortedColors(colors);
     const paginatedColors = this.getPaginatedColors(sortedColors);
 
     return (

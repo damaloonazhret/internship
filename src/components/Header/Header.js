@@ -1,4 +1,10 @@
-import {useCallback, useEffect, useLayoutEffect, useRef, useState} from "react";
+import {
+  useCallback,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
 import { checkValidate } from "../../services/validate/checkUserName";
 import { getUserInfo, getUserInfoAsync } from "../../services/api/getData";
 import { InputWithError } from "../common/Input/InputWithError";
@@ -25,6 +31,12 @@ export const Header = ({ setState, render }) => {
 
   useLayoutEffect(() => {
     userNameRef.current.focus();
+  }, []);
+
+  useEffect(() => {
+    if (userNameRef.current) {
+      userNameRef.current.typeText("hello:)");
+    }
   }, []);
 
   const setRepos = useCallback(
@@ -66,7 +78,7 @@ export const Header = ({ setState, render }) => {
 
   return (
     <header className="header">
-      <form onSubmit={(e) => (e.preventDefault())}>
+      <form onSubmit={(e) => e.preventDefault()}>
         {render(`${title} page`)}
         <div className="search">
           <datalist id="names" />

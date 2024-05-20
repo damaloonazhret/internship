@@ -59,4 +59,5 @@ const Pagination = ({
     </div>
   );
 };
+
 export default memo(Pagination);
