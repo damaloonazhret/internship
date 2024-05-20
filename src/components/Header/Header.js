@@ -66,7 +66,7 @@ export const Header = ({ setState, render }) => {
 
   return (
     <header className="header">
-      <form>
+      <form onSubmit={(e) => (e.preventDefault())}>
         {render(`${title} page`)}
         <div className="search">
           <datalist id="names" />
