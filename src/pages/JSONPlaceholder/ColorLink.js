@@ -1,9 +1,13 @@
+import {extractColorFromUrl} from "../../services/colors/extractColorFromUrl";
+
 export const ColorLink = ({ color, onClick, isActive }) => {
+  const bgColor = extractColorFromUrl(color.thumbnailUrl);
+
   return (
     <li>
       <a
         style={{
-          backgroundColor: `#${color.thumbnailUrl.substring(color.thumbnailUrl.lastIndexOf("/") + 1)}`,
+          backgroundColor: `#${bgColor}`,
         }}
         href={color.thumbnailUrl}
         rel="noreferrer"
@@ -16,3 +20,4 @@ export const ColorLink = ({ color, onClick, isActive }) => {
     </li>
   );
 };
+

@@ -3,15 +3,15 @@ import Pagination from "./Pagination";
 import { rgbToHsl } from "../../services/colors/rgbToHsl";
 import { hexToRgb } from "../../services/colors/hexToRgb";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
-import { extractColorFromUrl } from "../../services/colors/extractColorFromUrl";
 import { Title } from "../../components/common/InfoText/Title";
 import { ColorLink } from "./ColorLink";
+import {extractColorFromUrl} from "../../services/colors/extractColorFromUrl";
 
 const ColorsPage = () => {
   const [colors, setColors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeLink, setActiveLink] = useState(null);
-  const itemsPerPage = 10;
+  const itemsPerPage = 40;
   const history = useHistory();
   const location = useLocation();
   const pathname = location.pathname;
