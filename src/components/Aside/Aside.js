@@ -7,7 +7,12 @@ export const Aside = (props) => {
     <aside className="aside">
       <Nav />
       <Arrows />
-      <ThemeSwitcher />
+      <ThemeSwitcher
+        theme={props.theme}
+        setTheme={props.setTheme}
+        colors={props.colors}
+        setColors={props.setColors}
+      />
     </aside>
   );
 };

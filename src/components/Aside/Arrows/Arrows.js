@@ -1,8 +1,8 @@
 import { Arrow } from "./Arrow/Arrow";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
-import { useCallback } from "react";
+import {memo, useCallback} from "react";
 
-export const Arrows = () => {
+export const Arrows = memo(function Arrows() {
   const history = useHistory();
 
   const goBack = useCallback(() => {
@@ -19,4 +19,4 @@ export const Arrows = () => {
       <Arrow className="forward" handleClick={goForward} content={">"} />
     </nav>
   );
-};
+});

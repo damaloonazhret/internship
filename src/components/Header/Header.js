@@ -1,6 +1,6 @@
 import {useCallback, useEffect, useLayoutEffect, useRef, useState} from "react";
 import { checkValidate } from "../../services/validate/checkUserName";
-import { getUserInfo, getUserInfoAsync } from "../../services/getData";
+import { getUserInfo, getUserInfoAsync } from "../../services/api/getData";
 import { InputWithError } from "../common/Input/InputWithError";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
 import { useAsyncRequest } from "../../services/hooks/useAsyncRequest";
@@ -10,8 +10,8 @@ import { DEBOUNCE_DELAY } from "../constants/constants";
 export const Header = ({ setState, render }) => {
   const history = useHistory();
   const location = useLocation();
-  const pathName = location.pathname;
-  const title = pathName.charAt(1).toUpperCase() + pathName.slice(2);
+  const pathname = location.pathname;
+  const title = pathname.charAt(1).toUpperCase() + pathname.slice(2);
   const userNameRef = useRef(null);
   const [userName, setUserName] = useState("");
   const debouncedValue = useDebounce(userName, DEBOUNCE_DELAY);
@@ -21,7 +21,7 @@ export const Header = ({ setState, render }) => {
     if (data && data.userInfoMy && data.userRepoMy) {
       setState(data);
     }
-  }, [data, pathName, setState]);
+  }, [data, pathname, setState]);
 
   useLayoutEffect(() => {
     userNameRef.current.focus();
@@ -33,13 +33,13 @@ export const Header = ({ setState, render }) => {
       if (isChecked.check) {
         try {
           await fetchData(
-            pathName === "/async" ? getUserInfoAsync : getUserInfo,
+            pathname === "/async" ? getUserInfoAsync : getUserInfo,
             value,
           );
           const params = new URLSearchParams();
           params.append("query", value);
           history.push({
-            pathname: pathName,
+            pathname: pathname,
             search: params.toString(),
           });
           setError("");
@@ -50,7 +50,7 @@ export const Header = ({ setState, render }) => {
         setError(isChecked.message);
       }
     },
-    [setError, history, pathName, fetchData],
+    [setError, history, pathname, fetchData],
   );
 
   useEffect(() => {

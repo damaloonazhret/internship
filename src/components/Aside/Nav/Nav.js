@@ -6,6 +6,7 @@ export const Nav = () => {
       <NavLink to="/promise">Promise</NavLink>
       <NavLink to="/async">Async</NavLink>
       <NavLink to="/settings">Settings</NavLink>
+      <NavLink to="/colors">Colors</NavLink>
     </nav>
   );
 };

@@ -6,12 +6,13 @@ import { PublicRoute } from "../../routes/PublicRoute";
 import { PrivateRoute } from "../../routes/PrivateRoute";
 import { Validate } from "../../pages/Validate/Validate";
 import { NotFound } from "../../pages/NotFound/NotFound";
-import { useEffect, useState } from "react";
+import {useEffect, useState} from "react";
 import { Title } from "../common/InfoText/Title";
 import { getCookie } from "../../services/cookie/getCookie";
 import { MainLoader } from "../common/Loaders/MainLoader";
+import ColorsPage from "../../pages/JSONPlaceholder/ColorsPage";
 
-export const Main = () => {
+export const Main = ({ ...props }) => {
   const [async, setAsync] = useState({});
   const [promise, setPromise] = useState({});
   const [isAuth, setIsAuth] = useState(false);
@@ -61,7 +62,12 @@ export const Main = () => {
             />
           )}
         />
-        <PrivateRoute path="/settings" component={Settings} isAuth={isAuth}>
+        <PrivateRoute
+          path="/settings"
+          component={Settings}
+          isAuth={isAuth}
+          {...props}
+        >
           <ChildComponent />
         </PrivateRoute>
         <PublicRoute
@@ -70,6 +76,7 @@ export const Main = () => {
           isAuth={isAuth}
           setAuth={(auth) => setIsAuth(auth)}
         />
+        <Route path="/colors" component={ColorsPage} />
         <Route>{NotFound}</Route>
       </Switch>
     </>

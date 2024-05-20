@@ -1,28 +1,23 @@
-import { Link, Switch } from "react-router-dom";
+import { Switch } from "react-router-dom";
 import { ComputedStyle } from "./ComputedStyle/ComputedStyle";
 import { PrivateRoute } from "../../routes/PrivateRoute";
-
+import "./index.css";
+import {SetNav} from "./SetNav";
 
 export const Settings = (props) => {
   const { url } = props.computedMatch;
   return (
     <>
-      <nav className="settings-nav">
-        <h2>{props.children}</h2>
-        <ul className="settings-nav__list">
-          <li>
-            <Link to={`${url}/colors`}>Color Settings</Link>
-          </li>
-          <li>
-            <Link to={`${url}/fonts`}>Font Settings</Link>
-          </li>
-        </ul>
-      </nav>
+      <SetNav children={props.children} url={url} />
       <Switch>
         <PrivateRoute
           isAuth={props.isAuth}
           path={`${url}/:settingsId`}
           component={ComputedStyle}
+          colors={props.colors}
+          theme={props.theme}
+          setColors={props.setColors}
+          setTheme={props.setTheme}
         />
       </Switch>
     </>
