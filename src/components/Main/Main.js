@@ -10,7 +10,8 @@ import {useEffect, useState} from "react";
 import { Title } from "../common/InfoText/Title";
 import { getCookie } from "../../services/cookie/getCookie";
 import { MainLoader } from "../common/Loaders/MainLoader";
-import ColorsPage from "../../pages/JSONPlaceholder/ColorsPage";
+import ColorsPageFC from "../../pages/JSONPlaceholder/ColorsPageFC";
+import ColorsPageCC from "../../pages/JSONPlaceholder/ColorsPageCC";
 
 export const Main = ({ ...props }) => {
   const [async, setAsync] = useState({});
@@ -76,7 +77,8 @@ export const Main = ({ ...props }) => {
           isAuth={isAuth}
           setAuth={(auth) => setIsAuth(auth)}
         />
-        <Route path="/colors" component={ColorsPage} />
+        <Route path="/colorsCC" component={ColorsPageCC} />
+        <Route path="/colorsFC" component={ColorsPageFC} />
         <Route>{NotFound}</Route>
       </Switch>
     </>

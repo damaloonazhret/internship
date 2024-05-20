@@ -14,7 +14,7 @@ const Pagination = ({
     const pageNumbers = [];
     const startPages = 2;
     const endPages = 2;
-    const surroundingPages = 2;
+    const surroundingPages = 1;
 
     pageNumbers.push(1);
 
