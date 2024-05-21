@@ -1,4 +1,4 @@
-export const Fonts = (props) => {
+const Fonts = (props) => {
   return (
     <div className="settings__font">
       <p>Value: {props.count.fontSize ? props.count.fontSize : props.FS}px </p>
@@ -15,3 +15,5 @@ export const Fonts = (props) => {
     </div>
   )
 }
+
+export default Fonts;

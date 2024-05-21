@@ -1,6 +1,6 @@
 import { ColorSetting } from "./ColorSetting";
 
-export const Colors = ({ ...props }) => {
+const Colors = ({ ...props }) => {
   return (
     <>
       <ColorSetting purpose="background" {...props} />
@@ -8,3 +8,5 @@ export const Colors = ({ ...props }) => {
     </>
   );
 };
+
+export default Colors;

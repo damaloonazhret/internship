@@ -1,5 +1,3 @@
-import { Fonts } from "./Fonts/Fonts";
-import { Colors } from "./Colors/Colors";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { fontReducer } from "../../../services/reducers/fontReducer";
 import { colorReducer } from "../../../services/reducers/colorReducer";
@@ -10,6 +8,7 @@ import {
   DEFAULT_COLOR_BLACK,
   DEFAULT_COLOR_WHITE,
 } from "../../../components/constants/constants";
+import { ColorsPage, FontsPage } from "../index";
 
 export const ComputedStyle = ({ computedMatch, theme, setColors, colors }) => {
   const { settingsId } = computedMatch.params;
@@ -91,7 +90,7 @@ export const ComputedStyle = ({ computedMatch, theme, setColors, colors }) => {
         title={`${settingsId.charAt(0).toUpperCase() + settingsId.slice(1)} style settings`}
       />
       {settingsId === "colors" ? (
-        <Colors
+        <ColorsPage
           primaryColorRef={primaryColorRef}
           secondaryColorRef={secondaryColorRef}
           changePrimaryColor={changeColor("primary", setPrimary)}
@@ -102,7 +101,7 @@ export const ComputedStyle = ({ computedMatch, theme, setColors, colors }) => {
           colors={colorState}
         />
       ) : (
-        <Fonts
+        <FontsPage
           increment={increment}
           decrement={decrement}
           reset={resetFont}
