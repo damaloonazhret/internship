@@ -1,15 +1,18 @@
 import { Component, createRef } from "react";
-import { rgbToHsl } from "../../services/colors/rgbToHsl";
-import { hexToRgb } from "../../services/colors/hexToRgb";
+import { rgbToHsl } from "../../../services/colors/rgbToHsl";
+import { hexToRgb } from "../../../services/colors/hexToRgb";
 import { withRouter } from "react-router-dom";
-import { extractColorFromUrl } from "../../services/colors/extractColorFromUrl";
-import { ColorsPage } from "./ColorsPage";
+import { extractColorFromUrl } from "../../../services/colors/extractColorFromUrl";
+import { ColorsPage } from "../ColorsPage";
+import "../index.scss";
+import { MainLoader } from "../../../components/common/Loaders/MainLoader";
 
-class ColorsPageCC extends Component {
+class ColorsCC extends Component {
   state = {
     colors: [],
     currentPage: 1,
     activeLink: null,
+    isLoading: true,
   };
 
   itemsPerPage = 40;
@@ -34,7 +37,7 @@ class ColorsPageCC extends Component {
     }
     fetch("https://jsonplaceholder.typicode.com/photos/")
       .then((response) => response.json())
-      .then((data) => this.setState({ colors: data }))
+      .then((data) => this.setState({ colors: data, isLoading: false }))
       .catch((error) => console.error("Error fetching colors:", error));
   }
 
@@ -119,7 +122,9 @@ class ColorsPageCC extends Component {
     const sortedColors = this.getSortedColors(colors);
     const paginatedColors = this.getPaginatedColors(sortedColors);
 
-    return (
+    return this.state.isLoading ? (
+      <MainLoader />
+    ) : (
       <ColorsPage
         paginatedColors={paginatedColors}
         activeLink={activeLink}
@@ -133,4 +138,4 @@ class ColorsPageCC extends Component {
   }
 }
 
-export default withRouter(ColorsPageCC);
+export default withRouter(ColorsCC);

@@ -1,23 +1,20 @@
-import {extractColorFromUrl} from "../../services/colors/extractColorFromUrl";
+import { extractColorFromUrl } from "../../services/colors/extractColorFromUrl";
+import { Text } from "../../components/common/InfoText/Text";
+import {CustomLink} from "../../components/common/CustomLink";
 
 export const ColorLink = ({ color, onClick, isActive }) => {
   const bgColor = extractColorFromUrl(color.thumbnailUrl);
 
   return (
     <li>
-      <a
-        style={{
-          backgroundColor: `#${bgColor}`,
-        }}
+      <CustomLink
+        style={{ backgroundColor: `#${bgColor}` }}
         href={color.thumbnailUrl}
-        rel="noreferrer"
-        target="_blank"
         onClick={onClick}
         className={isActive ? "active" : ""}
       >
-        <span style={{ visibility: "hidden" }}>{color.title}</span>
-      </a>
+        <Text style={{ visibility: "hidden" }} text={color.title} />
+      </CustomLink>
     </li>
   );
 };
-

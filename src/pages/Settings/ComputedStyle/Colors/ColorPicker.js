@@ -1,5 +1,5 @@
-import { DARK } from "../../../components/constants/constants";
-import { Input } from "../../../components/common/Input/Input";
+import { DARK } from "../../../../components/constants/constants";
+import { Input } from "../../../../components/common/Input/Input";
 
 export const ColorPicker = ({
   theme,

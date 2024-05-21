@@ -60,3 +60,36 @@ input[type='color'] {
     height: 30px;
     color: white;
 }
+
+
+.settings-nav {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+
+    & h2 {
+        flex-basis: 100%;
+    }
+
+    &__list {
+        display: flex;
+        list-style: none;
+        justify-content: space-around;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+
+        & a {
+            color: var(--white);
+            text-decoration: none;
+            padding: 10px;
+            display: block;
+
+            &:hover,
+            &:active {
+                color: var(--green);
+            }
+        }
+    }
+}

@@ -1,5 +1,5 @@
-import { Fonts } from "./Fonts";
-import { Colors } from "./Colors";
+import { Fonts } from "./Fonts/Fonts";
+import { Colors } from "./Colors/Colors";
 import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { fontReducer } from "../../../services/reducers/fontReducer";
 import { colorReducer } from "../../../services/reducers/colorReducer";
@@ -60,7 +60,7 @@ export const ComputedStyle = ({ computedMatch, theme, setColors, colors }) => {
   const changeColor = (colorKey, setColorFn) => () => {
     const newColor = (
       colorKey === "primary" ? primaryColorRef : secondaryColorRef
-    ).current.value;
+    ).current.getValue();
     setColorFn(newColor);
   };
 

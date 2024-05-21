@@ -1,14 +1,17 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { rgbToHsl } from "../../services/colors/rgbToHsl";
-import { hexToRgb } from "../../services/colors/hexToRgb";
+import { rgbToHsl } from "../../../services/colors/rgbToHsl";
+import { hexToRgb } from "../../../services/colors/hexToRgb";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
-import { extractColorFromUrl } from "../../services/colors/extractColorFromUrl";
-import { ColorsPage } from "./ColorsPage";
+import { extractColorFromUrl } from "../../../services/colors/extractColorFromUrl";
+import { ColorsPage } from "../ColorsPage";
+import '../index.scss';
+import {MainLoader} from "../../../components/common/Loaders/MainLoader";
 
-const ColorsPageFC = () => {
+const ColorsFC = () => {
   const [colors, setColors] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [activeLink, setActiveLink] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const itemsPerPage = 40;
   const history = useHistory();
   const location = useLocation();
@@ -25,7 +28,10 @@ const ColorsPageFC = () => {
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/photos/")
       .then((response) => response.json())
-      .then((data) => setColors(data))
+      .then((data) => {
+        setColors(data);
+        setIsLoading(false)
+      })
       .catch((error) => console.error("Error fetching colors:", error));
   }, []);
 
@@ -64,6 +70,10 @@ const ColorsPageFC = () => {
     [history, pathname],
   );
 
+  if (isLoading) {
+    return <MainLoader/>
+  }
+
   const handleMoreInfoClick = (e, id) => {
     e.preventDefault();
     id === activeLink ? setActiveLink("") : setActiveLink(id);
@@ -82,4 +92,4 @@ const ColorsPageFC = () => {
   );
 };
 
-export default ColorsPageFC;
+export default ColorsFC;

@@ -4,14 +4,14 @@ import { InputWithError } from "../../components/common/Input/InputWithError";
 import { setCookie } from "../../services/cookie/setCookie";
 import { checkUserPass } from "../../services/validate/checkUserPass";
 
-export const Validate = (props) => {
+const Validate = (props) => {
   const passwordRef = useRef(null);
   const [error, setError] = useState("");
   const [userPass, setUserPass] = useState("");
 
   const checkPass = (e) => {
     e.preventDefault();
-    const currentPassword = passwordRef.current.value;
+    const currentPassword = passwordRef.current.getValue();
     const passCheck = checkUserPass(currentPassword);
     if (passCheck.validate) {
       props.setAuth(true);
@@ -49,3 +49,5 @@ export const Validate = (props) => {
     </form>
   );
 };
+
+export default Validate;

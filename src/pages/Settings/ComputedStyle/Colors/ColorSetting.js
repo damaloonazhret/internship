@@ -1,5 +1,5 @@
-import { Text } from "../../../components/common/InfoText/Text";
-import { BG_INFO, TXT_INFO } from "../../../components/constants/constants";
+import { Text } from "../../../../components/common/InfoText/Text";
+import { BG_INFO, TXT_INFO } from "../../../../components/constants/constants";
 import { ColorPicker } from "./ColorPicker";
 import { ResetButton } from "./ResetButton";
 

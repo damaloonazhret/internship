@@ -1,6 +1,6 @@
 import { Request } from "../../components/common/GitHub/Request";
 
-export const Promises = ({ setPromiseState, promiseState, render }) => {
+const Promises = ({ setPromiseState, promiseState, render }) => {
   return (
     <Request
       setState={setPromiseState}
@@ -12,3 +12,5 @@ export const Promises = ({ setPromiseState, promiseState, render }) => {
     </Request>
   );
 };
+
+export default Promises;

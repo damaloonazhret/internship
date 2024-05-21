@@ -2,7 +2,9 @@ import { Component } from "react";
 import { Title } from "../../components/common/InfoText/Title";
 import { Text } from "../../components/common/InfoText/Text";
 import "./index.scss";
-import {Button} from "../../components/common/Button";
+import { Button } from "../../components/common/Button";
+import { getAllCookieNames } from "../../services/cookie/getAllCookieNames";
+import { resetCookies } from "../../services/cookie/resetCookies";
 
 export class ErrorBoundary extends Component {
   constructor(props) {
@@ -18,40 +20,28 @@ export class ErrorBoundary extends Component {
     this.setState({ error: error, info: info, errorTime: new Date() });
   }
 
-  resetCookies (name, value) {
-    const expires = new Date();
-    expires.setTime(expires.getTime());
-    document.cookie = `${name}=${value};expires=${expires.toUTCString()};path=/`;
-  };
-
   fixApp = (e) => {
     e.preventDefault();
-    localStorage.clear()
-    sessionStorage.clear()
-    function getAllCookieNames() {
-      const cookies = document.cookie;
-      const cookieArray = cookies.split(';');
-      const cookieNames = cookieArray.map(cookie => cookie.split('=')[0].trim());
-      return cookieNames;
-    }
+    localStorage.clear();
+    sessionStorage.clear();
     const cookieNames = getAllCookieNames();
-    cookieNames.forEach(cookieName => {
-      this.resetCookies(cookieName, '');
+    cookieNames.forEach((cookieName) => {
+      resetCookies(cookieName, "");
     });
-    window.location.href = '/';
-  }
+    window.location.href = "/";
+  };
 
   render() {
     if (this.state.hasError) {
       return (
         <>
           <Title
-            className="somethingWrong"
+            className="something-wrong"
             title="It seems something went wrong..."
           />
-          <div className="somethingWrongInfo">
+          <div className="somethin-wrong">
             <Text
-              className="somethingWrongInfo__info"
+              className="something-wrong__info"
               text={
                 this.state.error
                   ? this.state.error.toString()
@@ -59,7 +49,7 @@ export class ErrorBoundary extends Component {
               }
             />
             <Text
-              className="somethingWrongInfo__info"
+              className="something-wrong__info"
               text={
                 this.state.info
                   ? this.state.info.componentStack
@@ -67,14 +57,14 @@ export class ErrorBoundary extends Component {
               }
             />
             <Text
-              className="somethingWrongInfo__info"
+              className="something-wrong__info"
               text={
                 this.state.errorTime
                   ? this.state.errorTime.toString()
                   : "The time of the error is unknown"
               }
             />
-            <Button onClick={this.fixApp} className='somethingWrongInfo__btn'>
+            <Button onClick={this.fixApp} className="somethingWrongInfo__btn">
               try to fix the app
             </Button>
           </div>

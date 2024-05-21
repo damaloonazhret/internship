@@ -1,5 +1,5 @@
-import { DARK } from "../../../components/constants/constants";
-import { Button } from "../../../components/common/Button";
+import { DARK } from "../../../../components/constants/constants";
+import { Button } from "../../../../components/common/Button";
 
 export const ResetButton = ({
   theme,

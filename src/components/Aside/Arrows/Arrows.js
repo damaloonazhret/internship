@@ -1,6 +1,7 @@
 import { Arrow } from "./Arrow/Arrow";
 import { useHistory } from "react-router-dom/cjs/react-router-dom";
 import {memo, useCallback} from "react";
+import './index.scss';
 
 export const Arrows = memo(function Arrows() {
   const history = useHistory();

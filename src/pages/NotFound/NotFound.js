@@ -1,6 +1,6 @@
 import { Text } from "../../components/common/InfoText/Text";
 
-export const NotFound = () => {
+const NotFound = () => {
   return (
     <article className="article">
       <h2>404 Not Found</h2>
@@ -8,3 +8,5 @@ export const NotFound = () => {
     </article>
   );
 };
+
+export default NotFound;

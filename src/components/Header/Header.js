@@ -12,6 +12,7 @@ import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
 import { useAsyncRequest } from "../../services/hooks/useAsyncRequest";
 import { useDebounce } from "../../services/hooks/useDebounce";
 import { DEBOUNCE_DELAY } from "../constants/constants";
+import {Preloader} from "../common/Loaders/Preloader";
 
 export const Header = ({ setState, render }) => {
   const history = useHistory();
@@ -31,12 +32,6 @@ export const Header = ({ setState, render }) => {
 
   useLayoutEffect(() => {
     userNameRef.current.focus();
-  }, []);
-
-  useEffect(() => {
-    if (userNameRef.current) {
-      userNameRef.current.typeText("hello:)");
-    }
   }, []);
 
   const setRepos = useCallback(
@@ -94,7 +89,7 @@ export const Header = ({ setState, render }) => {
             error={error}
             onChange={(e) => setNameValue(e.target.value)}
           />
-          <div id="preloader" className={isLoading ? "loader" : null} />
+          <Preloader isLoading={isLoading}/>
         </div>
       </form>
     </header>

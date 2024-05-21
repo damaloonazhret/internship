@@ -1,10 +1,10 @@
 import { Switch } from "react-router-dom";
 import { ComputedStyle } from "./ComputedStyle/ComputedStyle";
 import { PrivateRoute } from "../../routes/PrivateRoute";
-import "./index.css";
 import {SetNav} from "./SetNav";
+import "./index.scss";
 
-export const Settings = (props) => {
+const Settings = (props) => {
   const { url } = props.computedMatch;
   return (
     <>
@@ -23,3 +23,5 @@ export const Settings = (props) => {
     </>
   );
 };
+
+export default Settings;

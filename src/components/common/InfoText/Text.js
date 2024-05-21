@@ -1,3 +1,3 @@
 export const Text = (props) => {
-  return <span className={props.className}>{props.text}</span>;
+  return <span className={props.className} style={props.style}>{props.text}</span>;
 };

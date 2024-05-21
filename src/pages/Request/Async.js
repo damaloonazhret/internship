@@ -1,6 +1,6 @@
 import { Request } from "../../components/common/GitHub/Request";
 
-export const Async = ({ setAsyncState, asyncState, render }) => {
+const Async = ({ setAsyncState, asyncState, render }) => {
   return (
     <Request
       setState={setAsyncState}
@@ -10,3 +10,5 @@ export const Async = ({ setAsyncState, asyncState, render }) => {
     />
   );
 };
+
+export default Async;
