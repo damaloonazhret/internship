@@ -41,7 +41,7 @@ class ColorsCC extends Component {
       .catch((error) => console.error("Error fetching colors:", error));
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
     if (this.props.location.search !== prevProps.location.search) {
       const params = new URLSearchParams(this.props.location.search);
       const page = params.get("page");
@@ -51,7 +51,7 @@ class ColorsCC extends Component {
     }
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
+  shouldComponentUpdate(nextProps, nextState, nextContext) {
     return (
       this.state.colors !== nextState.colors ||
       this.state.currentPage !== nextState.currentPage ||
@@ -61,14 +61,19 @@ class ColorsCC extends Component {
 
   getSnapshotBeforeUpdate(prevProps, prevState) {
     if (prevState.activeLink !== this.state.activeLink) {
+      this.linkRef.current = this.state.activeLink;
       return this.linkRef.current;
     }
     return null;
   }
 
   componentWillUnmount() {
-    sessionStorage.setItem("currentPage", this.state.currentPage);
-    sessionStorage.setItem("activeLink", this.state.activeLink);
+    if (this.state.currentPage) {
+      sessionStorage.setItem("currentPage", this.state.currentPage);
+    }
+    if (this.linkRef.current) {
+      sessionStorage.setItem("activeLink", this.linkRef.current);
+    }
   }
 
   handlePageChange = (pageNumber) => {
