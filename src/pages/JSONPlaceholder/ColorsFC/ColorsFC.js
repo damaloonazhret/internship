@@ -1,11 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { rgbToHsl } from "../../../services/colors/rgbToHsl";
-import { hexToRgb } from "../../../services/colors/hexToRgb";
 import { useHistory, useLocation } from "react-router-dom/cjs/react-router-dom";
-import { extractColorFromUrl } from "../../../services/colors/extractColorFromUrl";
 import { ColorsPage } from "../ColorsPage";
-import '../index.scss';
-import {MainLoader} from "../../../components/common/Loaders/MainLoader";
+import "../index.scss";
+import { MainLoader } from "../../../components/common/Loaders/MainLoader";
+import { sortColors } from "../../../services/colors/sortColors";
 
 const ColorsFC = () => {
   const [colors, setColors] = useState([]);
@@ -30,25 +28,14 @@ const ColorsFC = () => {
       .then((response) => response.json())
       .then((data) => {
         setColors(data);
-        setIsLoading(false)
+        setIsLoading(false);
       })
       .catch((error) => console.error("Error fetching colors:", error));
   }, []);
 
   const sortedColors = useMemo(() => {
     if (!colors) return [];
-
-    return colors.slice().sort((a, b) => {
-      const colorF = extractColorFromUrl(a.thumbnailUrl);
-      const colorL = extractColorFromUrl(b.thumbnailUrl);
-
-      const hslF = rgbToHsl(hexToRgb(colorF));
-      const hslL = rgbToHsl(hexToRgb(colorL));
-
-      if (hslF[0] !== hslL[0]) return hslF[0] - hslL[0];
-      if (hslF[1] !== hslL[1]) return hslF[1] - hslL[1];
-      return hslF[2] - hslL[2];
-    });
+    return sortColors(colors);
   }, [colors]);
 
   const paginatedColors = useMemo(() => {
@@ -70,24 +57,24 @@ const ColorsFC = () => {
     [history, pathname],
   );
 
-  if (isLoading) {
-    return <MainLoader/>
-  }
-
-  const handleMoreInfoClick = (e, id) => {
+  const toggleLink = (e, id) => {
     e.preventDefault();
     id === activeLink ? setActiveLink("") : setActiveLink(id);
   };
 
+  if (isLoading) {
+    return <MainLoader />;
+  }
+
   return (
     <ColorsPage
-      paginatedColors={paginatedColors}
+      totalItems={colors.length}
       activeLink={activeLink}
-      colors={colors}
-      itemsPerPage={itemsPerPage}
+      toggleLink={toggleLink}
       currentPage={currentPage}
+      itemsPerPage={itemsPerPage}
+      paginatedColors={paginatedColors}
       handlePageChange={handlePageChange}
-      handleMoreInfoClick={handleMoreInfoClick}
     />
   );
 };

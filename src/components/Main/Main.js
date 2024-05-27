@@ -80,8 +80,8 @@ export const Main = ({ ...props }) => {
             isAuth={isAuth}
             setAuth={(auth) => setIsAuth(auth)}
           />
-          <Route path="/colorsCC" component={ColorsFCPage} />
-          <Route path="/colorsFC" component={ColorsCCPage} />
+          <Route path="/colorsCC" component={ColorsCCPage} />
+          <Route path="/colorsFC" component={ColorsFCPage} />
           <Route component={NotFoundPage} />
         </Switch>
       </Suspense>

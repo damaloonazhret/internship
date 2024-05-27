@@ -1,11 +1,9 @@
 import { Component, createRef } from "react";
-import { rgbToHsl } from "../../../services/colors/rgbToHsl";
-import { hexToRgb } from "../../../services/colors/hexToRgb";
 import { withRouter } from "react-router-dom";
-import { extractColorFromUrl } from "../../../services/colors/extractColorFromUrl";
 import { ColorsPage } from "../ColorsPage";
 import "../index.scss";
 import { MainLoader } from "../../../components/common/Loaders/MainLoader";
+import { sortColors } from "../../../services/colors/sortColors";
 
 class ColorsCC extends Component {
   state = {
@@ -87,29 +85,12 @@ class ColorsCC extends Component {
     this.setState({ currentPage: pageNumber });
   };
 
-  handleMoreInfoClick = (e, id) => {
-    e.preventDefault();
-    this.setState((prevState) => ({
-      activeLink: prevState.activeLink === id ? null : id,
-    }));
-  };
-
   getSortedColors = (colors) => {
     if (colors === this.prevColors) {
       return this.sortedColorsCache;
     }
 
-    this.sortedColorsCache = colors.slice().sort((a, b) => {
-      const colorF = extractColorFromUrl(a.thumbnailUrl);
-      const colorL = extractColorFromUrl(b.thumbnailUrl);
-
-      const hslF = rgbToHsl(hexToRgb(colorF));
-      const hslL = rgbToHsl(hexToRgb(colorL));
-
-      if (hslF[0] !== hslL[0]) return hslF[0] - hslL[0];
-      if (hslF[1] !== hslL[1]) return hslF[1] - hslL[1];
-      return hslF[2] - hslL[2];
-    });
+    this.sortedColorsCache = sortColors(colors);
 
     this.prevColors = colors;
     return this.sortedColorsCache;
@@ -122,6 +103,13 @@ class ColorsCC extends Component {
     return sortedColors.slice(startIndex, endIndex);
   };
 
+  toggleLink = (e, id) => {
+    e.preventDefault();
+    this.setState((prevState) => ({
+      activeLink: prevState.activeLink === id ? null : id,
+    }));
+  };
+
   render() {
     const { colors, currentPage, activeLink } = this.state;
     const sortedColors = this.getSortedColors(colors);
@@ -131,13 +119,13 @@ class ColorsCC extends Component {
       <MainLoader />
     ) : (
       <ColorsPage
-        paginatedColors={paginatedColors}
+        totalItems={colors.length}
         activeLink={activeLink}
-        colors={colors}
-        itemsPerPage={this.itemsPerPage}
+        toggleLink={this.toggleLink}
         currentPage={currentPage}
+        itemsPerPage={this.itemsPerPage}
+        paginatedColors={paginatedColors}
         handlePageChange={this.handlePageChange}
-        handleMoreInfoClick={this.handleMoreInfoClick}
       />
     );
   }
