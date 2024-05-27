@@ -9,6 +9,7 @@ import {
 } from "../../constants/constants";
 import { setGlobalTheme } from "../../../services/styles/setGlobalTheme";
 import { setFontSize } from "../../../services/styles/setFontSize";
+import './index.scss';
 
 export const ThemeSwitcher = ({ colors, setColors, theme, setTheme }) => {
   const colorS = localStorage.getItem("secondary");
