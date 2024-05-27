@@ -312,9 +312,15 @@ a.white {
 
 @media screen and (width <= 600px) {
   .header {
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 0;
+    padding: 20px;
+    form {
+      flex-wrap: wrap;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+    h2 {
+      font-size: 1.5rem;
+    }
   }
 
   #url {
@@ -330,9 +336,9 @@ a.white {
     display: flex;
     flex-direction: column;
     gap: 30px;
-    justify-content: end;
-    padding-bottom: 140px;
-    margin-top: -140px;
+    //justify-content: start;
+    //padding-bottom: 140px;
+    //margin-top: -140px;
 
     & .HomePage {
       margin: auto;
@@ -345,23 +351,6 @@ a.white {
     position: fixed;
     bottom: 50px;
     z-index: 1;
-  }
-
-  .nav {
-    flex-direction: row;
-    z-index: 1;
-    right: 50%;
-    transform: translateX(50%);
-    position: fixed;
-    bottom: 60px;
-    width: 90%;
-    background: rgba(39, 174, 96, 0.1);
-    border-radius: 5px;
-    box-shadow: 0 0 10px var(--white);
-
-    & a {
-      justify-content: center;
-    }
   }
 
   .navArrows {
@@ -383,15 +372,6 @@ a.white {
     padding-right: 20px;
   }
 
-  .themeSwitcher {
-    padding: 0;
-    position: fixed;
-    bottom: 10px;
-    right: calc(50vw - 50px);
-    left: initial;
-    z-index: 1;
-  }
-
   .mainContent {
     & article {
       gap: 40px;
@@ -410,7 +390,23 @@ a.white {
     margin: auto;
   }
 
+  .settings {
+    margin: auto;
+    padding-bottom: 20vh;
+    gap: 40px;
+  }
+
   .settings-nav {
-    order: 1;
+    padding: 20px;
+    gap: 20px;
+  }
+
+  .repos {
+    width: 80vw;
+    span {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+    }
   }
 }

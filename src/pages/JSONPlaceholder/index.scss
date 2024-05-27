@@ -15,6 +15,7 @@
     height: 100px;
     display: block;
     transition: var(--transition-all);
+
     &.active {
       width: 300px;
       height: 300px;
@@ -52,4 +53,18 @@
   justify-content: center;
   gap: 10px;
   margin-top: auto;
+}
+
+@media screen and (width <= 600px) {
+  .colors {
+    &-page {
+      padding-bottom: 25vh;
+    }
+    a {
+      &.active {
+        width: 200px;
+        height: 200px;
+      }
+    }
+  }
 }

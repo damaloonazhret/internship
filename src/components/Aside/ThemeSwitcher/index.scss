@@ -44,3 +44,14 @@
   bottom: 0;
   left: 27px;
 }
+
+@media screen and (width <= 600px) {
+  .themeSwitcher {
+    padding: 0;
+    position: fixed;
+    bottom: 10px;
+    right: calc(50vw - 50px);
+    left: initial;
+    z-index: 1;
+  }
+}

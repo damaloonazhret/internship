@@ -5,3 +5,24 @@
   align-items: center;
   flex-direction: column;
 }
+
+@media screen and (width <= 600px) {
+  .nav {
+    flex-direction: row;
+    flex-wrap: wrap;
+    z-index: 1;
+    right: 50%;
+    transform: translateX(50%);
+    position: fixed;
+    bottom: 60px;
+    width: 90%;
+    background: rgba(39, 174, 96, 0.1);
+    border-radius: 5px;
+    box-shadow: 0 0 10px var(--white);
+
+    & a {
+      justify-content: center;
+      padding: 10px;
+    }
+  }
+}
