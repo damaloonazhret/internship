@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState, MouseEvent } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { ColorsPage } from "../ColorsPage";
 import { MainLoader } from "../../../components/common/Loaders/MainLoader";

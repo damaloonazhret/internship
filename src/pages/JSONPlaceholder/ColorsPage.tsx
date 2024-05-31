@@ -1,4 +1,4 @@
-import React, { memo, MouseEvent, useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import Pagination from "./Pagination";
 import { Color, ColorLink } from "./ColorLink";
 import { Title } from "../../components/common/InfoText/Title";
