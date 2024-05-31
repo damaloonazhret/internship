@@ -30,3 +30,7 @@
 - [Iteration 10: Functions components](https://effortless-douhua-013ec2.netlify.app) — [Branch](https://github.com/damaloonazhret/internship/tree/ReactFunctions) — [ZIP](https://github.com/damaloonazhret/internship/archive/refs/heads/ReactFunctions.zip) — [Pull Request](https://github.com/damaloonazhret/internship/pull/12)
 
 - [Iteration 11: Lyfe Cycle](https://remarkable-babka-28f9fa.netlify.app) — [Branch](https://github.com/damaloonazhret/internship/tree/LyfeCycle) — [ZIP](https://github.com/damaloonazhret/internship/archive/refs/heads/LyfeCycle.zip) — [Pull Request](https://github.com/damaloonazhret/internship/pull/13)
+
+### Typescript
+
+- [Iteration 12: Typescript](https://beautiful-liger-ce1081.netlify.app/promise) — [Branch](https://github.com/damaloonazhret/internship/tree/typescript) — [ZIP](https://github.com/damaloonazhret/internship/archive/refs/heads/typescript.zip) — [Pull Request](https://github.com/damaloonazhret/internship/pull/14)
