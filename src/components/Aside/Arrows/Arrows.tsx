@@ -1,18 +1,18 @@
 import { Arrow } from "./Arrow/Arrow";
-import { useHistory } from "react-router-dom";
 import {FunctionComponent, memo, useCallback} from "react";
+import {useNavigate} from "react-router-dom";
 import './index.scss';
 
 export const Arrows: FunctionComponent = memo(function Arrows() {
-  const history = useHistory();
+  const navigate = useNavigate();
 
   const goBack = useCallback(() => {
-    history.goBack();
-  }, [history]);
+    navigate(-1);
+  }, [navigate]);
 
   const goForward = useCallback(() => {
-    history.goForward();
-  }, [history]);
+    navigate(1);
+  }, [navigate]);
 
   return (
     <nav className="navArrows">

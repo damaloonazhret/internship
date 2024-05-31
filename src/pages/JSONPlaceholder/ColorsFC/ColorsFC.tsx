@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useHistory, useLocation } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import { ColorsPage } from "../ColorsPage";
 import { MainLoader } from "../../../components/common/Loaders/MainLoader";
 import { sortColors } from "../../../services/colors/sortColors";
@@ -11,7 +11,7 @@ const ColorsFC = () => {
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const itemsPerPage = 40;
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
 
@@ -45,16 +45,16 @@ const ColorsFC = () => {
   }, [currentPage, sortedColors]);
 
   const handlePageChange = useCallback(
-    (pageNumber: number) => {
-      const params = new URLSearchParams();
-      params.append("page", pageNumber.toString());
-      history.push({
-        pathname: pathname,
-        search: params.toString(),
-      });
-      setCurrentPage(pageNumber);
-    },
-    [history, pathname],
+      (pageNumber: number) => {
+        const params = new URLSearchParams();
+        params.append("page", String(pageNumber));
+        navigate({
+          pathname: pathname,
+          search: params.toString(),
+        });
+        setCurrentPage(pageNumber);
+      },
+      [navigate, pathname],
   );
 
   if (isLoading) {

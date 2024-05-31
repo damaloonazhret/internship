@@ -67,7 +67,6 @@ export interface UserRepo {
   pushed_at: string;
   language: string | null;
   visibility: string;
-  [key: string]: any;
 }
 
 interface ExtractUserDataArgs {

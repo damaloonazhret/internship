@@ -1,10 +1,32 @@
-import React, { Component } from "react";
-import { RouteComponentProps, withRouter } from "react-router-dom";
+import React, { Component, ComponentType } from "react";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ColorsPage } from "../ColorsPage";
 import "../index.scss";
 import { MainLoader } from "../../../components/common/Loaders/MainLoader";
 import { sortColors } from "../../../services/colors/sortColors";
 import { getAllSessionStorage } from "../../../services/sessionStorage/getAllSessionStorage";
+
+export interface RouterProps {
+  location: ReturnType<typeof useLocation>;
+  navigate: ReturnType<typeof useNavigate>;
+  params: ReturnType<typeof useParams>;
+}
+
+export interface WithRouterProps {
+  router?: RouterProps;
+}
+
+export function withRouter<T>(Component: ComponentType<T & WithRouterProps>) {
+  function ComponentWithRouterProp(props: T) {
+    const location = useLocation();
+    const navigate = useNavigate();
+    const params = useParams();
+
+    return <Component {...props} router={{ location, navigate, params }} />;
+  }
+
+  return ComponentWithRouterProp;
+}
 
 interface Color {
   albumId: number;
@@ -21,9 +43,7 @@ interface ColorsCCState {
   activities: { [key: string]: string };
 }
 
-type Props = RouteComponentProps;
-
-class ColorsCC extends Component<Props, ColorsCCState> {
+class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
   state: ColorsCCState = {
     colors: [],
     currentPage: 1,
@@ -36,8 +56,11 @@ class ColorsCC extends Component<Props, ColorsCCState> {
   prevColors: Color[] | null = null;
 
   componentDidMount() {
-    const { location } = this.props;
-    const params = new URLSearchParams(location.search);
+    let params = new URLSearchParams();
+    if (this.props.router) {
+      const { location } = this.props.router;
+      params = new URLSearchParams(location.search);
+    }
     const page = params.get("page");
     const sessionPage = sessionStorage.getItem("currentPage");
 
@@ -56,15 +79,19 @@ class ColorsCC extends Component<Props, ColorsCCState> {
   }
 
   componentDidUpdate(
-    prevProps: Props,
+    prevProps: WithRouterProps,
     prevState: ColorsCCState,
     snapshot: number | null,
   ) {
-    if (this.props.location.search !== prevProps.location.search) {
-      const params = new URLSearchParams(this.props.location.search);
-      const page = params.get("page");
-      if (page) {
-        this.setState({ currentPage: Number(page) });
+    if (this.props.router && prevProps.router) {
+      if (
+        this.props.router.location.search !== prevProps.router.location.search
+      ) {
+        const params = new URLSearchParams(this.props.router.location.search);
+        const page = params.get("page");
+        if (page) {
+          this.setState({ currentPage: Number(page) });
+        }
       }
     }
     if (prevState.currentPage !== this.state.currentPage) {
@@ -72,7 +99,7 @@ class ColorsCC extends Component<Props, ColorsCCState> {
     }
   }
 
-  shouldComponentUpdate(nextProps: Props, nextState: ColorsCCState) {
+  shouldComponentUpdate(nextProps: WithRouterProps, nextState: ColorsCCState) {
     return (
       this.state.colors !== nextState.colors ||
       this.state.currentPage !== nextState.currentPage
@@ -94,14 +121,16 @@ class ColorsCC extends Component<Props, ColorsCCState> {
   }
 
   handlePageChange = (pageNumber: number) => {
-    const { history, location } = this.props;
-    const params = new URLSearchParams();
-    params.append("page", String(pageNumber));
-    history.push({
-      pathname: location.pathname,
-      search: params.toString(),
-    });
-    this.setState({ currentPage: pageNumber });
+    if (this.props.router) {
+      const { navigate, location } = this.props.router;
+      const params = new URLSearchParams();
+      params.append("page", String(pageNumber));
+      navigate({
+        pathname: location.pathname,
+        search: params.toString(),
+      });
+      this.setState({ currentPage: pageNumber });
+    }
   };
 
   getSortedColors = (colors: Color[]): Color[] => {

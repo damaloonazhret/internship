@@ -6,7 +6,7 @@ interface SetNavProps {
     url: string,
 }
 
-export const SetNav = ({ children, url }: SetNavProps) => {
+export const SetNav = ({ url, children }: SetNavProps) => {
   return (
     <nav className="settings-nav">
       <h2>{children}</h2>

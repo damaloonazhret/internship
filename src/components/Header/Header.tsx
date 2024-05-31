@@ -14,16 +14,17 @@ import { useAsyncRequest } from "../../services/hooks/useAsyncRequest";
 import { useDebounce } from "../../services/hooks/useDebounce";
 import { DEBOUNCE_DELAY } from "../constants/constants";
 import { Preloader } from "../common/Loaders/Preloader";
-import { useHistory, useLocation } from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {RefObjectWithValue} from "../common/Input/Input";
+import {GithubData} from "../Main/Main";
 
 interface HeaderProps {
-  setState: (data: any) => void;
+  setState: (data: GithubData) => void;
   render: (title: string) => JSX.Element;
 }
 
 export const Header: FC<HeaderProps> = ({ setState, render }) => {
-  const history = useHistory();
+  const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
   const title = pathname.charAt(1).toUpperCase() + pathname.slice(2);
@@ -55,7 +56,7 @@ export const Header: FC<HeaderProps> = ({ setState, render }) => {
           );
           const params = new URLSearchParams();
           params.append("query", value);
-          history.push({
+          navigate({
             pathname: pathname,
             search: params.toString(),
           });
@@ -67,7 +68,7 @@ export const Header: FC<HeaderProps> = ({ setState, render }) => {
         setError(isChecked.error);
       }
     },
-    [setError, history, pathname, fetchData],
+    [setError, navigate, pathname, fetchData],
   );
 
   useEffect(() => {

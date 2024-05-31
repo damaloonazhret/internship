@@ -1,4 +1,9 @@
-import {forwardRef, InputHTMLAttributes, useImperativeHandle, useRef} from "react";
+import {
+  forwardRef,
+  InputHTMLAttributes,
+  useImperativeHandle,
+  useRef,
+} from "react";
 
 export interface RefObjectWithValue {
   getValue(): string;
@@ -10,7 +15,10 @@ export interface RefObjectWithValue {
   value?: string;
 }
 
-export const Input = forwardRef<RefObjectWithValue, InputHTMLAttributes<HTMLInputElement>>((props, ref) => {
+export const Input = forwardRef<
+  RefObjectWithValue,
+  InputHTMLAttributes<HTMLInputElement>
+>((props, ref) => {
   const inputRef = useRef<HTMLInputElement>(null);
 
   useImperativeHandle(

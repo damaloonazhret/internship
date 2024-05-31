@@ -1,40 +1,39 @@
-import {RouteComponentProps, Switch} from "react-router-dom";
+import { Outlet, Route, Routes, useResolvedPath } from "react-router-dom";
 import { ComputedStyle } from "./ComputedStyle/ComputedStyle";
-import { PrivateRoute } from "../../routes/PrivateRoute";
 import { SetNav } from "./SetNav";
 import "./index.scss";
-import {ReactNode, Suspense} from "react";
+import { ReactNode, Suspense } from "react";
 import { MainLoader } from "../../components/common/Loaders/MainLoader";
-import {ComputedMatch} from "../Validate/Validate";
-import {Colors, Themes} from "../../components/App";
+import { Colors, Themes } from "../../components/App";
 
-interface SettingsProps extends RouteComponentProps {
+interface SettingsProps {
   isAuth: boolean;
   colors: Colors;
-  theme: Themes
-  setColors: (colors: Colors) => void;
+  theme: Themes;
+  setColors: (colors: (prevColors: Colors) => Colors) => void;
   setTheme: (theme: Themes) => void;
   children: ReactNode;
-  computedMatch: ComputedMatch;
 }
 
 const Settings = (props: SettingsProps) => {
-  const { url } = props.computedMatch;
+  const url = useResolvedPath("").pathname;
   return (
     <>
       <Suspense fallback={<MainLoader />}>
         <SetNav children={props.children} url={url} />
-        <Switch>
-          <PrivateRoute
-            isAuth={props.isAuth}
-            path={`${url}/:settingsId`}
-            component={ComputedStyle}
-            colors={props.colors}
-            theme={props.theme}
-            setColors={props.setColors}
-            setTheme={props.setTheme}
+        <Routes>
+          <Route
+            path=":settingsId"
+            element={
+              <ComputedStyle
+                colors={props.colors}
+                theme={props.theme}
+                setColors={props.setColors}
+              />
+            }
           />
-        </Switch>
+        </Routes>
+        <Outlet />
       </Suspense>
     </>
   );

@@ -1,7 +1,7 @@
-import { Redirect, Route, Switch } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { PublicRoute } from "../../routes/PublicRoute";
 import { PrivateRoute } from "../../routes/PrivateRoute";
-import { Suspense, useEffect, useState } from "react";
+import React, { Suspense, useEffect, useState } from "react";
 import { Title } from "../common/InfoText/Title";
 import { getCookie } from "../../services/cookie/getCookie";
 import { MainLoader } from "../common/Loaders/MainLoader";
@@ -16,23 +16,23 @@ import {
 } from "../../pages";
 
 export interface GithubRepo {
-  full_name: string,
-  language: string | null,
-  visibility: string,
-  html_url: string,
-  created_at: string,
+  full_name: string;
+  language: string | null;
+  visibility: string;
+  html_url: string;
+  created_at: string;
 }
 
 export interface GithubInfo {
-  name: string,
-  html_url: string,
-  avatar_url: string,
-  login: string,
+  name: string;
+  html_url: string;
+  avatar_url: string;
+  login: string;
 }
 
 export interface GithubData {
-  userInfoData: GithubInfo,
-  userRepoData: GithubRepo[],
+  userInfoData: GithubInfo;
+  userRepoData: GithubRepo[];
 }
 
 export const Main = ({ ...props }) => {
@@ -62,48 +62,53 @@ export const Main = ({ ...props }) => {
   return (
     <>
       <Suspense fallback={<MainLoader />}>
-        <Switch>
+        <Routes>
           <Route
             path="/async"
-            render={() => (
+            element={
               <AsyncPage
                 setAsyncState={(newState: GithubData) => setAsync(newState)}
                 asyncState={async}
                 render={headerInfo}
               />
-            )}
+            }
           />
-          <Route exact path="/">
-            <Redirect to="/promise" />
-          </Route>
+          <Route path="/" element={<Navigate to="/promise" />} />
           <Route
             path="/promise"
-            render={() => (
+            element={
               <PromisePage
                 setPromiseState={(newState: GithubData) => setPromise(newState)}
                 promiseState={promise}
                 render={headerInfo}
               />
-            )}
+            }
           />
-          <PrivateRoute
-            path="/settings"
-            component={SettingsPage}
-            isAuth={isAuth}
-            {...props}
-          >
-            <ChildComponent />
-          </PrivateRoute>
-          <PublicRoute
+          <Route
+            path="settings/*"
+            element={
+              <PrivateRoute
+                element={SettingsPage}
+                isAuth={isAuth}
+                children={ChildComponent}
+                {...props}
+              />
+            }
+          />
+          <Route
             path="/login"
-            component={ValidatePage}
-            isAuth={isAuth}
-            setIsAuth={(auth: boolean) => setIsAuth(auth)}
+            element={
+              <PublicRoute
+                element={ValidatePage}
+                isAuth={isAuth}
+                setIsAuth={(auth: boolean) => setIsAuth(auth)}
+              />
+            }
           />
-          <Route path="/colorsCC" component={ColorsCCPage} />
-          <Route path="/colorsFC" component={ColorsFCPage} />
-          <Route component={NotFoundPage} />
-        </Switch>
+          <Route path="/colorsCC" element={<ColorsCCPage />} />
+          <Route path="/colorsFC" element={<ColorsFCPage />} />
+          <Route path="*" element={<NotFoundPage />} />
+        </Routes>
       </Suspense>
     </>
   );

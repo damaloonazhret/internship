@@ -1,5 +1,4 @@
 import { createRoot } from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
 import { App } from "./components/App";
 import { ErrorBoundary } from "./pages/ErrorBoundary/ErrorBoundary";
 import "./index.scss";
@@ -11,9 +10,7 @@ if (!container) {
 
 const root = createRoot(container);
 root.render(
-  <BrowserRouter>
-    <ErrorBoundary>
-      <App />
-    </ErrorBoundary>
-  </BrowserRouter>,
+  <ErrorBoundary>
+    <App />
+  </ErrorBoundary>,
 );

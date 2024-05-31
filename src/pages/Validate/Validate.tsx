@@ -15,24 +15,7 @@ import { setCookie } from "../../services/cookie/setCookie";
 import { checkUserPass } from "../../services/validate/checkUserPass";
 import { RefObjectWithValue } from "../../components/common/Input/Input";
 
-interface Location {
-  pathname: string;
-  search: string;
-  hash: string;
-  key: string;
-}
-
-export interface ComputedMatch {
-  path: string;
-  url: string;
-  isExact: boolean;
-  params: Record<string, any>;
-}
-
 interface ValidateProps {
-  path: string;
-  location: Location;
-  computedMatch: ComputedMatch;
   setIsAuth: Dispatch<SetStateAction<boolean>>;
 }
 

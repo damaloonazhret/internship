@@ -1,6 +1,17 @@
-import {Dispatch, SetStateAction, useCallback, useEffect, useReducer, useRef, useState} from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import { fontReducer } from "../../../services/reducers/fontReducer";
-import {colorReducer, ColorsTypes} from "../../../services/reducers/colorReducer";
+import {
+  colorReducer,
+  ColorsTypes,
+} from "../../../services/reducers/colorReducer";
 import { Title } from "../../../components/common/InfoText/Title";
 import { useLocalStorage } from "../../../services/hooks/useLocalStorage";
 import { useThrottle } from "../../../services/hooks/useThrottle";
@@ -9,23 +20,24 @@ import {
   DEFAULT_COLOR_WHITE,
 } from "../../../components/constants/constants";
 import { ColorsPage, FontsPage } from "../index";
-import {Colors, Themes} from "../../../components/App";
-import {ComputedMatch} from "../../Validate/Validate";
-import {RefObjectWithValue} from "../../../components/common/Input/Input";
+import { Colors, Themes } from "../../../components/App";
+import { RefObjectWithValue } from "../../../components/common/Input/Input";
+import { useParams } from "react-router-dom";
 
 interface ComputedStyleProps {
   colors: Colors;
   theme: Themes;
-  setColors: (
-    colors: (prevColors: Colors) => { secondary: string; primary: string },
-  ) => void;
-  computedMatch: ComputedMatch;
+  setColors: (colors: (prevColors: Colors) => Colors) => void;
 }
 
 type ColorKeyType = "primary" | "secondary";
 
-export const ComputedStyle = ({ computedMatch, theme, setColors, colors }: ComputedStyleProps) => {
-  const { settingsId } = computedMatch.params;
+export const ComputedStyle = ({
+  theme,
+  setColors,
+  colors,
+}: ComputedStyleProps) => {
+  const { settingsId } = useParams();
   const { getItem, setItem, removeItem } = useLocalStorage();
   const primaryColorRef = useRef<RefObjectWithValue>(null);
   const secondaryColorRef = useRef<RefObjectWithValue>(null);
@@ -42,34 +54,33 @@ export const ComputedStyle = ({ computedMatch, theme, setColors, colors }: Compu
     initialColorState,
   );
 
-  const [primary, setPrimary] = useState<string>('');
-  const [secondary, setSecondary] = useState<string>('');
+  const [primary, setPrimary] = useState<string>("");
+  const [secondary, setSecondary] = useState<string>("");
   const throttlePrimaryColor = useThrottle(primary || colorState.primary);
   const throttleSecondaryColor = useThrottle(secondary || colorState.secondary);
 
   const setColor = useCallback(
-      (colorKey: ColorKeyType, throttledColor: string) => {
-        let type: ColorsTypes;
-        switch (colorKey) {
-          case "primary":
-            type = "SET_PRIMARY";
-            break;
-          case "secondary":
-            type = "SET_SECONDARY";
-            break;
-          default:
-            throw new Error(`Invalid colorKey: ${colorKey}`);
-        }
+    (colorKey: ColorKeyType, throttledColor: string) => {
+      let type: ColorsTypes;
+      switch (colorKey) {
+        case "primary":
+          type = "SET_PRIMARY";
+          break;
+        case "secondary":
+          type = "SET_SECONDARY";
+          break;
+        default:
+          throw new Error(`Invalid colorKey: ${colorKey}`);
+      }
 
-        dispatchColor({
-          type,
-          payload: throttledColor,
-        });
-        setItem(colorKey, throttledColor);
-      },
-      [setItem],
+      dispatchColor({
+        type,
+        payload: throttledColor,
+      });
+      setItem(colorKey, throttledColor);
+    },
+    [setItem],
   );
-
 
   useEffect(() => {
     setColors((prevColors: Colors) => ({ ...prevColors, ...colorState }));
@@ -83,13 +94,15 @@ export const ComputedStyle = ({ computedMatch, theme, setColors, colors }: Compu
     setColor("secondary", throttleSecondaryColor);
   }, [throttleSecondaryColor, setColor]);
 
-  const changeColor = (colorKey: string, setColorFn: Dispatch<SetStateAction<string>>) => () => {
-    const currentRef = colorKey === 'primary' ? primaryColorRef : secondaryColorRef;
-    if (currentRef && currentRef.current) {
-      const newColor = currentRef.current.getValue();
-      setColorFn(newColor);
-    }
-  };
+  const changeColor =
+    (colorKey: string, setColorFn: Dispatch<SetStateAction<string>>) => () => {
+      const currentRef =
+        colorKey === "primary" ? primaryColorRef : secondaryColorRef;
+      if (currentRef && currentRef.current) {
+        const newColor = currentRef.current.getValue();
+        setColorFn(newColor);
+      }
+    };
 
   const resetColor = (colorKey: keyof Colors, defaultColor: string) => () => {
     let type: ColorsTypes;
@@ -127,7 +140,11 @@ export const ComputedStyle = ({ computedMatch, theme, setColors, colors }: Compu
   return (
     <div className="settings">
       <Title
-        title={`${settingsId.charAt(0).toUpperCase() + settingsId.slice(1)} style settings`}
+        title={
+          settingsId
+            ? `${settingsId.charAt(0).toUpperCase() + settingsId.slice(1)} style settings`
+            : ""
+        }
       />
       {settingsId === "colors" ? (
         <ColorsPage
