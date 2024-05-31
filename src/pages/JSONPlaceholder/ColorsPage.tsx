@@ -1,8 +1,7 @@
-import React, { memo, useEffect, useState } from "react";
+import React, { memo } from "react";
 import Pagination from "./Pagination";
 import { Color, ColorLink } from "./ColorLink";
 import { Title } from "../../components/common/InfoText/Title";
-import {getAllSessionStorage} from "../../services/sessionStorage/getAllSessionStorage";
 
 interface ColorsPageProps {
   totalItems: number;
@@ -10,6 +9,7 @@ interface ColorsPageProps {
   itemsPerPage: number;
   paginatedColors: Color[];
   handlePageChange: (pageNumber: number) => void;
+  activities?: { [key: string]: string };
 }
 
 export const ColorsPage: React.FC<ColorsPageProps> = memo(
@@ -19,22 +19,16 @@ export const ColorsPage: React.FC<ColorsPageProps> = memo(
     itemsPerPage,
     paginatedColors,
     handlePageChange,
+    activities,
   }) => {
-    const [activities, setActivities] = useState({});
-
     const colors = paginatedColors.map((color) => (
       <ColorLink
         key={color.id}
         color={color}
         id={color.id}
-        activities={activities}
+        activities={activities ? activities : {}}
       />
     ));
-
-    useEffect(() => {
-      const allSessionStorage = getAllSessionStorage();
-      setActivities(allSessionStorage);
-    }, []);
 
     return (
       <div className="colors-page">

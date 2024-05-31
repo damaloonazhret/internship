@@ -4,6 +4,7 @@ import { ColorsPage } from "../ColorsPage";
 import "../index.scss";
 import { MainLoader } from "../../../components/common/Loaders/MainLoader";
 import { sortColors } from "../../../services/colors/sortColors";
+import { getAllSessionStorage } from "../../../services/sessionStorage/getAllSessionStorage";
 
 interface Color {
   albumId: number;
@@ -17,6 +18,7 @@ interface ColorsCCState {
   colors: Color[];
   currentPage: number;
   isLoading: boolean;
+  activities: { [key: string]: string };
 }
 
 type Props = RouteComponentProps;
@@ -26,6 +28,7 @@ class ColorsCC extends Component<Props, ColorsCCState> {
     colors: [],
     currentPage: 1,
     isLoading: true,
+    activities: {},
   };
 
   itemsPerPage = 40;
@@ -37,6 +40,8 @@ class ColorsCC extends Component<Props, ColorsCCState> {
     const params = new URLSearchParams(location.search);
     const page = params.get("page");
     const sessionPage = sessionStorage.getItem("currentPage");
+
+    this.setActivities();
 
     if (page) {
       this.setState({ currentPage: Number(page) });
@@ -62,6 +67,9 @@ class ColorsCC extends Component<Props, ColorsCCState> {
         this.setState({ currentPage: Number(page) });
       }
     }
+    if (prevState.currentPage !== this.state.currentPage) {
+      this.setActivities();
+    }
   }
 
   shouldComponentUpdate(nextProps: Props, nextState: ColorsCCState) {
@@ -70,6 +78,14 @@ class ColorsCC extends Component<Props, ColorsCCState> {
       this.state.currentPage !== nextState.currentPage
     );
   }
+
+  setActivities = () => {
+    const allSessionStorage = getAllSessionStorage();
+
+    if (allSessionStorage) {
+      this.setState({ activities: allSessionStorage });
+    }
+  };
 
   componentWillUnmount() {
     if (this.state.currentPage) {
@@ -117,6 +133,7 @@ class ColorsCC extends Component<Props, ColorsCCState> {
       <ColorsPage
         totalItems={colors.length}
         currentPage={currentPage}
+        activities={this.state.activities}
         itemsPerPage={this.itemsPerPage}
         paginatedColors={paginatedColors}
         handlePageChange={this.handlePageChange}
