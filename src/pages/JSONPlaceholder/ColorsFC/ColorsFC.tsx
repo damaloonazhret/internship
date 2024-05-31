@@ -9,7 +9,6 @@ import "../index.scss";
 const ColorsFC = () => {
   const [colors, setColors] = useState<Color[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [activeLink, setActiveLink] = useState<number | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const itemsPerPage = 40;
   const history = useHistory();
@@ -58,11 +57,6 @@ const ColorsFC = () => {
     [history, pathname],
   );
 
-  const toggleLink = (e: MouseEvent<HTMLAnchorElement>, id: number) => {
-    e.preventDefault();
-    setActiveLink(id === activeLink ? null : id);
-  };
-
   if (isLoading) {
     return <MainLoader />;
   }
@@ -70,8 +64,6 @@ const ColorsFC = () => {
   return (
     <ColorsPage
       totalItems={colors.length}
-      activeLink={activeLink}
-      toggleLink={toggleLink}
       currentPage={currentPage}
       itemsPerPage={itemsPerPage}
       paginatedColors={paginatedColors}

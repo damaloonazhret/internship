@@ -1,11 +1,11 @@
-import { AnchorHTMLAttributes, CSSProperties, forwardRef } from "react";
+import {AnchorHTMLAttributes, CSSProperties, forwardRef, memo} from "react";
 
 interface CustomLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
   className?: string;
   style?: CSSProperties;
 }
 
-export const CustomLink = forwardRef<HTMLAnchorElement, CustomLinkProps>(
+export const CustomLink = memo(forwardRef<HTMLAnchorElement, CustomLinkProps>(
   (
     {
       href,
@@ -34,4 +34,5 @@ export const CustomLink = forwardRef<HTMLAnchorElement, CustomLinkProps>(
       </a>
     );
   },
-);
+));
+

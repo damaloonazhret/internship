@@ -1,7 +1,7 @@
 import { extractColorFromUrl } from "../../services/colors/extractColorFromUrl";
 import { Text } from "../../components/common/InfoText/Text";
 import { CustomLink } from "../../components/common/CustomLink";
-import { FunctionComponent, MouseEvent } from "react";
+import { FunctionComponent, useEffect, useState } from "react";
 
 export interface Color {
   albumId: number;
@@ -13,24 +13,41 @@ export interface Color {
 
 interface ColorLinkProps {
   color: Color;
-  onClick: (e: MouseEvent<HTMLAnchorElement>, id: number) => void;
-  isActive: boolean;
+  id: number;
+  activities: { [key: string]: string };
 }
 
 export const ColorLink: FunctionComponent<ColorLinkProps> = ({
   color,
-  onClick,
-  isActive,
+  id,
+  activities,
 }) => {
   const bgColor = extractColorFromUrl(color.thumbnailUrl);
+  const [active, setActive] = useState(false);
 
+  useEffect(() => {
+    if (activities[id] === "true") {
+      setActive(true);
+    }
+  }, [id, activities]);
+
+  const handleClick = (e: { preventDefault: () => void }) => {
+    e.preventDefault();
+    if (active) {
+      setActive(false);
+      sessionStorage.removeItem(String(id));
+    } else {
+      setActive(true);
+      sessionStorage.setItem(String(id), "true");
+    }
+  };
   return (
     <li>
       <CustomLink
         style={{ backgroundColor: `#${bgColor}` }}
         href={color.thumbnailUrl}
-        onClick={(e) => onClick(e, color.id)}
-        className={isActive ? "active" : ""}
+        onClick={handleClick}
+        className={active ? "active" : ""}
       >
         <Text style={{ visibility: "hidden" }} text={color.title} />
       </CustomLink>

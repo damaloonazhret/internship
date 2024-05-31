@@ -1,4 +1,4 @@
-import React, { Component, createRef, MouseEvent } from "react";
+import React, { Component } from "react";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import { ColorsPage } from "../ColorsPage";
 import "../index.scss";
@@ -16,7 +16,6 @@ interface Color {
 interface ColorsCCState {
   colors: Color[];
   currentPage: number;
-  activeLink: number | null;
   isLoading: boolean;
 }
 
@@ -26,12 +25,10 @@ class ColorsCC extends Component<Props, ColorsCCState> {
   state: ColorsCCState = {
     colors: [],
     currentPage: 1,
-    activeLink: null,
     isLoading: true,
   };
 
   itemsPerPage = 40;
-  linkRef = createRef<HTMLAnchorElement>();
   sortedColorsCache: Color[] | null = null;
   prevColors: Color[] | null = null;
 
@@ -40,16 +37,12 @@ class ColorsCC extends Component<Props, ColorsCCState> {
     const params = new URLSearchParams(location.search);
     const page = params.get("page");
     const sessionPage = sessionStorage.getItem("currentPage");
-    const activeLink = sessionStorage.getItem("activeLink");
 
     if (page) {
       this.setState({ currentPage: Number(page) });
     }
     if (sessionPage) {
       this.setState({ currentPage: Number(sessionPage) });
-    }
-    if (activeLink) {
-      this.setState({ activeLink: Number(activeLink) });
     }
     fetch("https://jsonplaceholder.typicode.com/photos/")
       .then((response) => response.json())
@@ -74,24 +67,13 @@ class ColorsCC extends Component<Props, ColorsCCState> {
   shouldComponentUpdate(nextProps: Props, nextState: ColorsCCState) {
     return (
       this.state.colors !== nextState.colors ||
-      this.state.currentPage !== nextState.currentPage ||
-      this.state.activeLink !== nextState.activeLink
+      this.state.currentPage !== nextState.currentPage
     );
-  }
-
-  getSnapshotBeforeUpdate(prevProps: Props, prevState: ColorsCCState) {
-    if (prevState.activeLink !== this.state.activeLink) {
-      return this.state.activeLink;
-    }
-    return null;
   }
 
   componentWillUnmount() {
     if (this.state.currentPage) {
       sessionStorage.setItem("currentPage", String(this.state.currentPage));
-    }
-    if (this.state.activeLink) {
-      sessionStorage.setItem("activeLink", String(this.state.activeLink));
     }
   }
 
@@ -124,15 +106,8 @@ class ColorsCC extends Component<Props, ColorsCCState> {
     return sortedColors.slice(startIndex, endIndex);
   };
 
-  toggleLink = (e: MouseEvent<HTMLAnchorElement>, id: number) => {
-    e.preventDefault();
-    this.setState((prevState) => ({
-      activeLink: prevState.activeLink === id ? null : id,
-    }));
-  };
-
   render() {
-    const { colors, currentPage, activeLink, isLoading } = this.state;
+    const { colors, currentPage, isLoading } = this.state;
     const sortedColors = this.getSortedColors(colors);
     const paginatedColors = this.getPaginatedColors(sortedColors);
 
@@ -141,8 +116,6 @@ class ColorsCC extends Component<Props, ColorsCCState> {
     ) : (
       <ColorsPage
         totalItems={colors.length}
-        activeLink={activeLink}
-        toggleLink={this.toggleLink}
         currentPage={currentPage}
         itemsPerPage={this.itemsPerPage}
         paginatedColors={paginatedColors}

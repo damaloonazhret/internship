@@ -8,7 +8,6 @@ interface ColorAction {
 }
 
 export const colorReducer = (state: Colors, action: ColorAction): Colors => {
-  console.log(state);
   switch (action.type) {
     case "SET_PRIMARY":
       return { ...state, primary: action.payload };
