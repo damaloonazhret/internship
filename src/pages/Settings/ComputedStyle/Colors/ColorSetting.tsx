@@ -2,7 +2,7 @@ import { Text } from "../../../../components/common/InfoText/Text";
 import { BG_INFO, TXT_INFO } from "../../../../components/constants/constants";
 import { ColorPicker } from "./ColorPicker";
 import { ResetButton } from "./ResetButton";
-import { FunctionComponent } from "react";
+import { FC } from "react";
 import { ColorsProps } from "./Colors";
 
 export type Purpose = "text" | "background";
@@ -11,10 +11,7 @@ export interface ColorSettingProps extends ColorsProps {
   purpose: Purpose;
 }
 
-export const ColorSetting: FunctionComponent<ColorSettingProps> = ({
-  purpose,
-  ...props
-}) => {
+export const ColorSetting: FC<ColorSettingProps> = ({ purpose, ...props }) => {
   return (
     <div className={`settings__${purpose === "text" ? "txt" : "bg"}`}>
       <label>

@@ -1,9 +1,7 @@
 import {
   ChangeEvent,
-  Dispatch,
   FormEvent,
-  FunctionComponent,
-  SetStateAction,
+  FC,
   useCallback,
   useLayoutEffect,
   useRef,
@@ -15,11 +13,11 @@ import { setCookie } from "../../services/cookie/setCookie";
 import { checkUserPass } from "../../services/validate/checkUserPass";
 import { RefObjectWithValue } from "../../components/common/Input/Input";
 
-interface ValidateProps {
-  setIsAuth: Dispatch<SetStateAction<boolean>>;
+export interface ValidateProps {
+  setIsAuth: (auth: boolean) => void;
 }
 
-const Validate: FunctionComponent<ValidateProps> = (props) => {
+const Validate: FC<ValidateProps> = (props) => {
   const passwordRef = useRef<RefObjectWithValue>(null);
   const [error, setError] = useState("");
   const [userPass, setUserPass] = useState("");

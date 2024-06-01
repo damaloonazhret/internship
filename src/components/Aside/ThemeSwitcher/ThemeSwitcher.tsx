@@ -1,6 +1,6 @@
 import { setProperty } from "../../../services/styles/setProperty";
 import { Text } from "../../common/InfoText/Text";
-import { useEffect, useLayoutEffect, useMemo } from "react";
+import { FC, useEffect, useLayoutEffect, useMemo } from "react";
 import {
   DARK,
   TRANSITION,
@@ -9,10 +9,15 @@ import {
 } from "../../constants/constants";
 import { setGlobalTheme } from "../../../services/styles/setGlobalTheme";
 import { setFontSize } from "../../../services/styles/setFontSize";
-import './index.scss';
-import {AsideProps} from "../Aside";
+import "./index.scss";
+import { AsideProps } from "../Aside";
 
-export const ThemeSwitcher = ({ colors, setColors, theme, setTheme }: AsideProps) => {
+export const ThemeSwitcher: FC<AsideProps> = ({
+  colors,
+  setColors,
+  theme,
+  setTheme,
+}) => {
   const colorS = localStorage.getItem("secondary");
   const colorP = localStorage.getItem("primary");
 

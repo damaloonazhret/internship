@@ -1,8 +1,8 @@
 import { NavLink } from "react-router-dom";
 import "./index.scss";
-import { FunctionComponent } from "react";
+import { FC } from "react";
 
-export const Nav: FunctionComponent = () => {
+export const Nav: FC = () => {
   return (
     <nav className="nav">
       <NavLink to="/promise">Promise</NavLink>

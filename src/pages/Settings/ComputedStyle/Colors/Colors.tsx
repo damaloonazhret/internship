@@ -1,6 +1,6 @@
 import { ColorSetting } from "./ColorSetting";
-import {FunctionComponent, RefObject} from "react";
-import {Themes} from "../../../../components/App";
+import {FC, RefObject} from "react";
+import {ColorsState, ThemeState} from "../../../../components/App";
 import {RefObjectWithValue} from "../../../../components/common/Input/Input";
 
 export interface ColorsProps {
@@ -10,14 +10,11 @@ export interface ColorsProps {
     changeSecondaryColor: () => void;
     resetPrimaryColor: () => void;
     resetSecondaryColor: () => void;
-    theme: Themes;
-    colors: {
-        primary: string;
-        secondary: string;
-    };
+    theme: ThemeState;
+    colors: ColorsState;
 }
 
-const Colors: FunctionComponent<ColorsProps> = ({ ...props }) => {
+const Colors: FC<ColorsProps> = ({ ...props }) => {
   return (
     <>
       <ColorSetting purpose="background" {...props} />

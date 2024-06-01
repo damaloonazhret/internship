@@ -1,34 +1,31 @@
 import { Outlet, Route, Routes, useResolvedPath } from "react-router-dom";
 import { ComputedStyle } from "./ComputedStyle/ComputedStyle";
 import { SetNav } from "./SetNav";
-import "./index.scss";
-import { ReactNode, Suspense } from "react";
+import { FC, Suspense } from "react";
 import { MainLoader } from "../../components/common/Loaders/MainLoader";
-import { Colors, Themes } from "../../components/App";
+import {ColorsState, SetColorsState, ThemeState} from "../../components/App";
+import "./index.scss";
 
-interface SettingsProps {
-  isAuth: boolean;
-  colors: Colors;
-  theme: Themes;
-  setColors: (colors: (prevColors: Colors) => Colors) => void;
-  setTheme: (theme: Themes) => void;
-  children: ReactNode;
+export interface SettingsProps {
+  colors: ColorsState;
+  theme: ThemeState;
+  setColors: SetColorsState;
 }
 
-const Settings = (props: SettingsProps) => {
+const Settings: FC<SettingsProps> = ({ colors, theme, setColors }) => {
   const url = useResolvedPath("").pathname;
   return (
     <>
       <Suspense fallback={<MainLoader />}>
-        <SetNav children={props.children} url={url} />
+        <SetNav url={url} />
         <Routes>
           <Route
             path=":settingsId"
             element={
               <ComputedStyle
-                colors={props.colors}
-                theme={props.theme}
-                setColors={props.setColors}
+                colors={colors}
+                theme={theme}
+                setColors={setColors}
               />
             }
           />

@@ -1,9 +1,9 @@
 import { Arrow } from "./Arrow/Arrow";
-import {FunctionComponent, memo, useCallback} from "react";
-import {useNavigate} from "react-router-dom";
-import './index.scss';
+import { FC, memo, useCallback } from "react";
+import { useNavigate } from "react-router-dom";
+import "./index.scss";
 
-export const Arrows: FunctionComponent = memo(function Arrows() {
+export const Arrows: FC = memo(function Arrows() {
   const navigate = useNavigate();
 
   const goBack = useCallback(() => {

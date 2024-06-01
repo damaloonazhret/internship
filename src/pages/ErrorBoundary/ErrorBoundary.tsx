@@ -1,4 +1,4 @@
-import { Component, ErrorInfo, ReactNode } from "react";
+import React, { Component, ErrorInfo, ReactNode } from "react";
 import { Title } from "../../components/common/InfoText/Title";
 import { Text } from "../../components/common/InfoText/Text";
 import "./index.scss";

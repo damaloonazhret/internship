@@ -1,9 +1,9 @@
 import { DARK } from "../../../../components/constants/constants";
 import { Input } from "../../../../components/common/Input/Input";
-import {FunctionComponent} from "react";
+import {FC} from "react";
 import {ColorSettingProps} from "./ColorSetting";
 
-export const ColorPicker: FunctionComponent<ColorSettingProps> = ({
+export const ColorPicker: FC<ColorSettingProps> = ({
   theme,
   purpose,
   colors,

@@ -1,15 +1,14 @@
 import { Link } from "react-router-dom";
-import {ReactNode} from "react";
+import { FC } from "react";
 
 interface SetNavProps {
-    children: ReactNode,
-    url: string,
+  url: string;
 }
 
-export const SetNav = ({ url, children }: SetNavProps) => {
+export const SetNav:FC<SetNavProps> = ({ url }) => {
   return (
     <nav className="settings-nav">
-      <h2>{children}</h2>
+      <h2>Settings page</h2>
       <ul className="settings-nav__list">
         <li>
           <Link to={`${url}/colors`}>Color Settings</Link>

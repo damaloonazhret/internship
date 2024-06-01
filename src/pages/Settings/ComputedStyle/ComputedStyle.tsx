@@ -1,5 +1,6 @@
 import {
   Dispatch,
+  FC,
   SetStateAction,
   useCallback,
   useEffect,
@@ -20,23 +21,39 @@ import {
   DEFAULT_COLOR_WHITE,
 } from "../../../components/constants/constants";
 import { ColorsPage, FontsPage } from "../index";
-import { Colors, Themes } from "../../../components/App";
+import {
+  ColorsState,
+  SetColorsState,
+  ThemeState,
+} from "../../../components/App";
 import { RefObjectWithValue } from "../../../components/common/Input/Input";
 import { useParams } from "react-router-dom";
+import {
+  ColorsActionTypes,
+  ColorsKey,
+  FontsActionTypes,
+} from "../../../components/common/Enums";
 
 interface ComputedStyleProps {
-  colors: Colors;
-  theme: Themes;
-  setColors: (colors: (prevColors: Colors) => Colors) => void;
+  colors: ColorsState;
+  theme: ThemeState;
+  setColors: SetColorsState;
 }
 
-type ColorKeyType = "primary" | "secondary";
+type ColorKeyType = ColorsKey.PRIMARY | ColorsKey.SECONDARY;
 
-export const ComputedStyle = ({
+type ActionType = "SET" | "RESET";
+
+export type ChangeColorFunction = (
+  colorKey: ColorKeyType,
+  setColorFn: Dispatch<SetStateAction<string>>,
+) => () => void;
+
+export const ComputedStyle: FC<ComputedStyleProps> = ({
   theme,
   setColors,
   colors,
-}: ComputedStyleProps) => {
+}) => {
   const { settingsId } = useParams();
   const { getItem, setItem, removeItem } = useLocalStorage();
   const primaryColorRef = useRef<RefObjectWithValue>(null);
@@ -59,81 +76,84 @@ export const ComputedStyle = ({
   const throttlePrimaryColor = useThrottle(primary || colorState.primary);
   const throttleSecondaryColor = useThrottle(secondary || colorState.secondary);
 
+  const getActionType = (
+    colorKey: ColorKeyType,
+    action: ActionType,
+  ): ColorsTypes => {
+    switch (colorKey) {
+      case ColorsKey.PRIMARY:
+        return action === ColorsActionTypes.SET
+          ? ColorsActionTypes.SET_PRIMARY
+          : ColorsActionTypes.RESET_PRIMARY;
+      case ColorsKey.SECONDARY:
+        return action === ColorsActionTypes.SET
+          ? ColorsActionTypes.SET_SECONDARY
+          : ColorsActionTypes.RESET_SECONDARY;
+      default:
+        throw new Error(`Invalid colorKey: ${colorKey}`);
+    }
+  };
+
   const setColor = useCallback(
     (colorKey: ColorKeyType, throttledColor: string) => {
-      let type: ColorsTypes;
-      switch (colorKey) {
-        case "primary":
-          type = "SET_PRIMARY";
-          break;
-        case "secondary":
-          type = "SET_SECONDARY";
-          break;
-        default:
-          throw new Error(`Invalid colorKey: ${colorKey}`);
-      }
+      const type = getActionType(colorKey, ColorsActionTypes.SET);
 
       dispatchColor({
         type,
         payload: throttledColor,
       });
+
       setItem(colorKey, throttledColor);
     },
     [setItem],
   );
 
+  const resetColor =
+    (colorKey: keyof ColorsState, defaultColor: string) => () => {
+      const type = getActionType(
+        colorKey as ColorKeyType,
+        ColorsActionTypes.RESET,
+      );
+
+      dispatchColor({
+        type,
+        payload: defaultColor,
+      });
+
+      removeItem(colorKey);
+    };
+
   useEffect(() => {
-    setColors((prevColors: Colors) => ({ ...prevColors, ...colorState }));
+    setColors((prevColors: ColorsState) => ({ ...prevColors, ...colorState }));
   }, [colorState, setColors]);
 
   useEffect(() => {
-    setColor("primary", throttlePrimaryColor);
+    setColor(ColorsKey.PRIMARY, throttlePrimaryColor);
   }, [throttlePrimaryColor, setColor]);
 
   useEffect(() => {
-    setColor("secondary", throttleSecondaryColor);
+    setColor(ColorsKey.SECONDARY, throttleSecondaryColor);
   }, [throttleSecondaryColor, setColor]);
 
-  const changeColor =
-    (colorKey: string, setColorFn: Dispatch<SetStateAction<string>>) => () => {
-      const currentRef =
-        colorKey === "primary" ? primaryColorRef : secondaryColorRef;
-      if (currentRef && currentRef.current) {
-        const newColor = currentRef.current.getValue();
-        setColorFn(newColor);
-      }
-    };
-
-  const resetColor = (colorKey: keyof Colors, defaultColor: string) => () => {
-    let type: ColorsTypes;
-    switch (colorKey) {
-      case "primary":
-        type = "RESET_PRIMARY";
-        break;
-      case "secondary":
-        type = "RESET_SECONDARY";
-        break;
-      default:
-        throw new Error(`Invalid colorKey: ${colorKey}`);
+  const changeColor: ChangeColorFunction = (colorKey, setColorFn) => () => {
+    const currentRef =
+      colorKey === ColorsKey.PRIMARY ? primaryColorRef : secondaryColorRef;
+    if (currentRef && currentRef.current) {
+      const newColor = currentRef.current.getValue();
+      setColorFn(newColor);
     }
-
-    dispatchColor({
-      type,
-      payload: defaultColor,
-    });
-    removeItem(colorKey);
   };
 
   const increment = useCallback(
-    () => dispatchFont({ type: "INCREMENT", payload: 0.5 }),
+    () => dispatchFont({ type: FontsActionTypes.INCREMENT, payload: 0.5 }),
     [],
   );
   const decrement = useCallback(
-    () => dispatchFont({ type: "DECREMENT", payload: 0.5 }),
+    () => dispatchFont({ type: FontsActionTypes.DECREMENT, payload: 0.5 }),
     [],
   );
   const resetFont = useCallback(
-    () => dispatchFont({ type: "RESET", payload: 16 }),
+    () => dispatchFont({ type: FontsActionTypes.RESET, payload: 16 }),
     [],
   );
 
@@ -150,10 +170,13 @@ export const ComputedStyle = ({
         <ColorsPage
           primaryColorRef={primaryColorRef}
           secondaryColorRef={secondaryColorRef}
-          changePrimaryColor={changeColor("primary", setPrimary)}
-          changeSecondaryColor={changeColor("secondary", setSecondary)}
-          resetPrimaryColor={resetColor("primary", DEFAULT_COLOR_BLACK)}
-          resetSecondaryColor={resetColor("secondary", DEFAULT_COLOR_WHITE)}
+          changePrimaryColor={changeColor(ColorsKey.PRIMARY, setPrimary)}
+          changeSecondaryColor={changeColor(ColorsKey.SECONDARY, setSecondary)}
+          resetPrimaryColor={resetColor(ColorsKey.PRIMARY, DEFAULT_COLOR_BLACK)}
+          resetSecondaryColor={resetColor(
+            ColorsKey.SECONDARY,
+            DEFAULT_COLOR_WHITE,
+          )}
           theme={theme}
           colors={colorState}
         />

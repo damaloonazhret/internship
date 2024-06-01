@@ -1,19 +1,17 @@
 import { Navigate } from "react-router-dom";
-import { ComponentType, FC } from "react";
+import { cloneElement, FC, ReactElement } from "react";
 
-interface Props {
-  element: ComponentType<any>;
+export interface Props {
+  element: ReactElement;
   isAuth: boolean;
-  children: () => JSX.Element;
 }
 
 export const PrivateRoute: FC<Props> = ({
   element: RouteComponent,
   isAuth,
-  ...restProps
 }) => {
   if (isAuth) {
-    return <RouteComponent {...restProps} />;
+    return cloneElement(RouteComponent);
   }
 
   return <Navigate to="/login" />;

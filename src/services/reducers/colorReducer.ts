@@ -1,21 +1,29 @@
-import {Colors} from "../../components/App";
+import { ColorsState } from "../../components/App";
+import {ColorsActionTypes} from "../../components/common/Enums";
 
-export type ColorsTypes = "SET_PRIMARY" | "SET_SECONDARY" | "RESET_PRIMARY" | "RESET_SECONDARY"
+export type ColorsTypes =
+  | ColorsActionTypes.SET_PRIMARY
+  | ColorsActionTypes.SET_SECONDARY
+  | ColorsActionTypes.RESET_PRIMARY
+  | ColorsActionTypes.RESET_SECONDARY;
 
 interface ColorAction {
-  type: ColorsTypes,
-  payload: string
+  type: ColorsTypes;
+  payload: string;
 }
 
-export const colorReducer = (state: Colors, action: ColorAction): Colors => {
+export const colorReducer = (
+  state: ColorsState,
+  action: ColorAction,
+): ColorsState => {
   switch (action.type) {
-    case "SET_PRIMARY":
+    case ColorsActionTypes.SET_PRIMARY:
       return { ...state, primary: action.payload };
-    case "SET_SECONDARY":
+    case ColorsActionTypes.SET_SECONDARY:
       return { ...state, secondary: action.payload };
-    case "RESET_PRIMARY":
+    case ColorsActionTypes.RESET_PRIMARY:
       return { ...state, primary: action.payload };
-    case "RESET_SECONDARY":
+    case ColorsActionTypes.RESET_SECONDARY:
       return { ...state, secondary: action.payload };
     default:
       return state;

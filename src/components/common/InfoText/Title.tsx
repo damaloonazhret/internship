@@ -1,4 +1,4 @@
-import {FunctionComponent, memo} from "react";
+import {FC, memo} from "react";
 
 interface TitleProps {
   title: string;
@@ -7,7 +7,7 @@ interface TitleProps {
   className?: string;
 }
 
-export const Title: FunctionComponent<TitleProps> = memo(function Title({
+export const Title: FC<TitleProps> = memo(function Title({
   title,
   id = "page-title",
   type: Tag = "h2",

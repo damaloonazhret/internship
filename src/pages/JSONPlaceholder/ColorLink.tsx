@@ -1,7 +1,7 @@
 import { extractColorFromUrl } from "../../services/colors/extractColorFromUrl";
 import { Text } from "../../components/common/InfoText/Text";
 import { CustomLink } from "../../components/common/CustomLink";
-import { FunctionComponent, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 
 export interface Color {
   albumId: number;
@@ -17,7 +17,7 @@ interface ColorLinkProps {
   activities: { [key: string]: string };
 }
 
-export const ColorLink: FunctionComponent<ColorLinkProps> = ({
+export const ColorLink: FC<ColorLinkProps> = ({
   color,
   id,
   activities,

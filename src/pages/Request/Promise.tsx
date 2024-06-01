@@ -1,5 +1,5 @@
 import { Request } from "../../components/common/GitHub/Request";
-import { FunctionComponent } from "react";
+import { FC } from "react";
 import { GithubData } from "../../components/Main/Main";
 
 interface AsyncProps {
@@ -8,7 +8,7 @@ interface AsyncProps {
   render: (title: string) => JSX.Element;
 }
 
-const Promises: FunctionComponent<AsyncProps> = ({
+const Promises: FC<AsyncProps> = ({
   setPromiseState,
   promiseState,
   render,
@@ -19,7 +19,7 @@ const Promises: FunctionComponent<AsyncProps> = ({
       state={promiseState}
       render={render}
       title="Promise Page Request"
-    ></Request>
+    />
   );
 };
 

@@ -1,4 +1,4 @@
-import { FunctionComponent, memo } from "react";
+import { FC, memo } from "react";
 import { Text } from "../../components/common/InfoText/Text";
 import { Button } from "../../components/common/Button";
 
@@ -9,7 +9,7 @@ interface PaginationProps {
   onPageChange: (pageNumber: number) => void;
 }
 
-const Pagination: FunctionComponent<PaginationProps> = ({
+const Pagination: FC<PaginationProps> = ({
   totalItems,
   itemsPerPage,
   currentPage,

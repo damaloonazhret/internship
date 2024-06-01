@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PublicRoute } from "../../routes/PublicRoute";
 import { PrivateRoute } from "../../routes/PrivateRoute";
-import React, { Suspense, useEffect, useState } from "react";
+import React, {FC, Suspense, useEffect, useState} from "react";
 import { Title } from "../common/InfoText/Title";
 import { getCookie } from "../../services/cookie/getCookie";
 import { MainLoader } from "../common/Loaders/MainLoader";
@@ -14,6 +14,14 @@ import {
   SettingsPage,
   ValidatePage,
 } from "../../pages";
+import {ColorsState, SetColorsState, ThemeState} from "../App";
+
+export interface GithubInfo {
+    name: string;
+    html_url: string;
+    avatar_url: string;
+    login: string;
+}
 
 export interface GithubRepo {
   full_name: string;
@@ -23,23 +31,22 @@ export interface GithubRepo {
   created_at: string;
 }
 
-export interface GithubInfo {
-  name: string;
-  html_url: string;
-  avatar_url: string;
-  login: string;
-}
-
 export interface GithubData {
   userInfoData: GithubInfo;
   userRepoData: GithubRepo[];
 }
 
-export const Main = ({ ...props }) => {
+interface MainProps {
+    theme: ThemeState,
+    colors: ColorsState,
+    setColors: SetColorsState;
+}
+
+export const Main: FC<MainProps> = ({ colors, theme, setColors }) => {
   const [async, setAsync] = useState<GithubData | {}>({});
   const [promise, setPromise] = useState<GithubData | {}>({});
-  const [isAuth, setIsAuth] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
     const auth = getCookie("admin");
@@ -49,10 +56,6 @@ export const Main = ({ ...props }) => {
 
   const headerInfo = (title: string) => {
     return <Title title={title} />;
-  };
-
-  const ChildComponent = () => {
-    return <>Settings page</>;
   };
 
   if (loading) {
@@ -88,10 +91,14 @@ export const Main = ({ ...props }) => {
             path="settings/*"
             element={
               <PrivateRoute
-                element={SettingsPage}
+                element={
+                  <SettingsPage
+                    colors={colors}
+                    theme={theme}
+                    setColors={setColors}
+                  />
+                }
                 isAuth={isAuth}
-                children={ChildComponent}
-                {...props}
               />
             }
           />
@@ -99,9 +106,12 @@ export const Main = ({ ...props }) => {
             path="/login"
             element={
               <PublicRoute
-                element={ValidatePage}
+                element={
+                  <ValidatePage
+                    setIsAuth={(auth: boolean) => setIsAuth(auth)}
+                  />
+                }
                 isAuth={isAuth}
-                setIsAuth={(auth: boolean) => setIsAuth(auth)}
               />
             }
           />

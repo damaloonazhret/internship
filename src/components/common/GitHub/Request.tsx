@@ -1,7 +1,7 @@
 import { Header } from "../../Header/Header";
 import { GitHubInfo } from "./GitHubInfo";
 import { Title } from "../InfoText/Title";
-import { FunctionComponent } from "react";
+import { FC } from "react";
 import { GithubData } from "../../Main/Main";
 
 interface RequestProps {
@@ -11,7 +11,7 @@ interface RequestProps {
   title: string;
 }
 
-export const Request: FunctionComponent<RequestProps> = ({
+export const Request: FC<RequestProps> = ({
   state,
   setState,
   title,

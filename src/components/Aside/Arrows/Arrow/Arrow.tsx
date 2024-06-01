@@ -1,4 +1,4 @@
-import { FunctionComponent } from "react";
+import { FC } from "react";
 
 interface ArrowProps {
   className: string;
@@ -6,11 +6,7 @@ interface ArrowProps {
   content: string;
 }
 
-export const Arrow: FunctionComponent<ArrowProps> = ({
-  className,
-  handleClick,
-  content,
-}) => {
+export const Arrow: FC<ArrowProps> = ({ className, handleClick, content }) => {
   return (
     <p className={className} onClick={handleClick}>
       {content}
