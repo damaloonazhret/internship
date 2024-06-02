@@ -4,13 +4,13 @@ import { Main } from "./Main/Main";
 import { useState } from "react";
 import "../index.scss";
 
-export interface ColorsState {
+export interface ThemeColorsState {
   primary: string;
   secondary: string;
 }
 
 export type SetColorsState = (
-    colors: (prevColors: ColorsState) => { secondary: string; primary: string },
+    colors: (prevColors: ThemeColorsState) => { secondary: string; primary: string },
 ) => void;
 
 export type ThemeState = 'dark' | 'white'
@@ -26,7 +26,7 @@ export const App = () => {
 
   const [theme, setTheme] = useState<ThemeState>(initialTheme);
 
-  const [colors, setColors] = useState<ColorsState>({
+  const [colors, setColors] = useState<ThemeColorsState>({
     primary: "#1a1a1a",
     secondary: "#ffffff",
   });

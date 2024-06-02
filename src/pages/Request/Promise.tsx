@@ -1,11 +1,15 @@
-import { Request } from "../../components/common/GitHub/Request";
+import {
+  RenderRequest,
+  Request,
+  SetStateRequest,
+  StateRequest,
+} from "../../components/common/GitHub/Request";
 import { FC } from "react";
-import { GithubData } from "../../components/Main/Main";
 
 interface AsyncProps {
-  setPromiseState: (newState: GithubData) => void;
-  promiseState: GithubData | {};
-  render: (title: string) => JSX.Element;
+  setPromiseState: SetStateRequest;
+  promiseState: StateRequest;
+  render: RenderRequest;
 }
 
 const Promises: FC<AsyncProps> = ({

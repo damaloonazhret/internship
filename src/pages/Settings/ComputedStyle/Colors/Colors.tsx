@@ -1,6 +1,6 @@
 import { ColorSetting } from "./ColorSetting";
 import {FC, RefObject} from "react";
-import {ColorsState, ThemeState} from "../../../../components/App";
+import {ThemeColorsState, ThemeState} from "../../../../components/App";
 import {RefObjectWithValue} from "../../../../components/common/Input/Input";
 
 export interface ColorsProps {
@@ -11,7 +11,7 @@ export interface ColorsProps {
     resetPrimaryColor: () => void;
     resetSecondaryColor: () => void;
     theme: ThemeState;
-    colors: ColorsState;
+    colors: ThemeColorsState;
 }
 
 const Colors: FC<ColorsProps> = ({ ...props }) => {

@@ -4,10 +4,14 @@ import { Title } from "../InfoText/Title";
 import { FC } from "react";
 import { GithubData } from "../../Main/Main";
 
+export type SetStateRequest = (newState: GithubData) => void;
+export type StateRequest = GithubData | {};
+export type RenderRequest = (title: string) => JSX.Element;
+
 interface RequestProps {
-  setState: (newState: GithubData) => void;
-  state: GithubData | {};
-  render: (title: string) => JSX.Element;
+  setState: SetStateRequest;
+  state: StateRequest;
+  render: RenderRequest;
   title: string;
 }
 

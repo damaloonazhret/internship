@@ -2,17 +2,10 @@ import { extractColorFromUrl } from "../../services/colors/extractColorFromUrl";
 import { Text } from "../../components/common/InfoText/Text";
 import { CustomLink } from "../../components/common/CustomLink";
 import { FC, useEffect, useState } from "react";
-
-export interface Color {
-  albumId: number;
-  id: number;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
-}
+import {LinkColorData} from "./ColorsCC/ColorsCC";
 
 interface ColorLinkProps {
-  color: Color;
+  color: LinkColorData;
   id: number;
   activities: { [key: string]: string };
 }

@@ -1,6 +1,5 @@
 import "./index.scss";
-import { FC } from "react";
 
-export const MainLoader: FC = () => {
+export const MainLoader = () => {
   return <div className="main-loader">Loading...</div>;
 };

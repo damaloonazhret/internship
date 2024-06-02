@@ -1,12 +1,12 @@
 import { Navigate } from "react-router-dom";
 import { cloneElement, FC, ReactElement } from "react";
 
-export interface Props {
+export interface CustomRouteProps {
   element: ReactElement;
   isAuth: boolean;
 }
 
-export const PrivateRoute: FC<Props> = ({
+export const PrivateRoute: FC<CustomRouteProps> = ({
   element: RouteComponent,
   isAuth,
 }) => {

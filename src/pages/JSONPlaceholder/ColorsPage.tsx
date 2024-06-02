@@ -1,18 +1,19 @@
-import React, { memo } from "react";
+import { FC, memo } from "react";
 import Pagination from "./Pagination";
-import { Color, ColorLink } from "./ColorLink";
+import { ColorLink } from "./ColorLink";
 import { Title } from "../../components/common/InfoText/Title";
+import {LinkColorData} from "./ColorsCC/ColorsCC";
 
 interface ColorsPageProps {
   totalItems: number;
   currentPage: number;
   itemsPerPage: number;
-  paginatedColors: Color[];
+  paginatedColors: LinkColorData[];
   handlePageChange: (pageNumber: number) => void;
   activities?: { [key: string]: string };
 }
 
-export const ColorsPage: React.FC<ColorsPageProps> = memo(
+export const ColorsPage: FC<ColorsPageProps> = memo(
   ({
     totalItems,
     currentPage,

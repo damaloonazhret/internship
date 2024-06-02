@@ -1,11 +1,9 @@
+import {GithubInfo, GithubRepo} from "../../components/Main/Main";
+
 const repos = "/repos";
 const userUrl = "https://api.github.com/users/";
 
-export interface UserInfo {
-  name: string;
-  html_url: string;
-  avatar_url: string;
-  login: string;
+export interface UserInfo extends GithubInfo{
   id: number;
   node_id: string;
   url: string;
@@ -47,12 +45,7 @@ export interface UserInfo {
   };
 }
 
-export interface UserRepo {
-  full_name: string;
-  language: string | null;
-  visibility: string;
-  html_url: string;
-  created_at: string;
+export interface UserRepo extends GithubRepo{
   name: string;
   id: number;
   node_id: string;

@@ -1,10 +1,10 @@
 import React, { Component, ComponentType } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ColorsPage } from "../ColorsPage";
-import "../index.scss";
 import { MainLoader } from "../../../components/common/Loaders/MainLoader";
 import { sortColors } from "../../../services/colors/sortColors";
 import { getAllSessionStorage } from "../../../services/sessionStorage/getAllSessionStorage";
+import "../index.scss";
 
 export interface RouterProps {
   location: ReturnType<typeof useLocation>;
@@ -28,7 +28,7 @@ export function withRouter<T>(Component: ComponentType<T & WithRouterProps>) {
   return ComponentWithRouterProp;
 }
 
-interface Color {
+export interface LinkColorData {
   albumId: number;
   id: number;
   title: string;
@@ -37,7 +37,7 @@ interface Color {
 }
 
 interface ColorsCCState {
-  colors: Color[];
+  colors: LinkColorData[];
   currentPage: number;
   isLoading: boolean;
   activities: { [key: string]: string };
@@ -52,8 +52,8 @@ class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
   };
 
   itemsPerPage = 40;
-  sortedColorsCache: Color[] | null = null;
-  prevColors: Color[] | null = null;
+  sortedColorsCache: LinkColorData[] | null = null;
+  prevColors: LinkColorData[] | null = null;
 
   componentDidMount() {
     let params = new URLSearchParams();
@@ -133,7 +133,7 @@ class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
     }
   };
 
-  getSortedColors = (colors: Color[]): Color[] => {
+  getSortedColors = (colors: LinkColorData[]): LinkColorData[] => {
     if (colors === this.prevColors) {
       return this.sortedColorsCache || [];
     }
@@ -144,7 +144,7 @@ class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
     return this.sortedColorsCache;
   };
 
-  getPaginatedColors = (sortedColors: Color[]) => {
+  getPaginatedColors = (sortedColors: LinkColorData[]) => {
     const { currentPage } = this.state;
     const startIndex = (currentPage - 1) * this.itemsPerPage;
     const endIndex = startIndex + this.itemsPerPage;

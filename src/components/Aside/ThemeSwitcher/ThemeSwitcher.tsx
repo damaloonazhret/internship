@@ -9,8 +9,8 @@ import {
 } from "../../constants/constants";
 import { setGlobalTheme } from "../../../services/styles/setGlobalTheme";
 import { setFontSize } from "../../../services/styles/setFontSize";
-import "./index.scss";
 import { AsideProps } from "../Aside";
+import "./index.scss";
 
 export const ThemeSwitcher: FC<AsideProps> = ({
   colors,

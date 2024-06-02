@@ -1,11 +1,11 @@
 import React, {
+  ChangeEvent,
+  FC,
   useCallback,
   useEffect,
   useLayoutEffect,
   useRef,
   useState,
-  FC,
-  ChangeEvent
 } from "react";
 import { checkValidate } from "../../services/validate/checkUserName";
 import { getUserInfo, getUserInfoAsync } from "../../services/api/getData";
@@ -14,13 +14,13 @@ import { useAsyncRequest } from "../../services/hooks/useAsyncRequest";
 import { useDebounce } from "../../services/hooks/useDebounce";
 import { DEBOUNCE_DELAY } from "../constants/constants";
 import { Preloader } from "../common/Loaders/Preloader";
-import {useLocation, useNavigate} from "react-router-dom";
-import {RefObjectWithValue} from "../common/Input/Input";
-import {GithubData} from "../Main/Main";
+import { useLocation, useNavigate } from "react-router-dom";
+import { RefObjectWithValue } from "../common/Input/Input";
+import { RenderRequest, SetStateRequest } from "../common/GitHub/Request";
 
 interface HeaderProps {
-  setState: (data: GithubData) => void;
-  render: (title: string) => JSX.Element;
+  setState: SetStateRequest;
+  render: RenderRequest;
 }
 
 export const Header: FC<HeaderProps> = ({ setState, render }) => {

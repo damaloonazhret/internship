@@ -1,16 +1,9 @@
 import { rgbToHsl } from "./rgbToHsl";
 import { hexToRgb } from "./hexToRgb";
 import { extractColorFromUrl } from "./extractColorFromUrl";
+import {LinkColorData} from "../../pages/JSONPlaceholder/ColorsCC/ColorsCC";
 
-interface Color {
-  albumId: number;
-  id: number;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
-}
-
-type Colors = Color[];
+type Colors = LinkColorData[];
 
 export const sortColors = (colors: Colors): Colors => {
   return colors.toSorted((a, b) => {

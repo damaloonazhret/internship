@@ -3,11 +3,11 @@ import {useLocation, useNavigate} from "react-router-dom";
 import { ColorsPage } from "../ColorsPage";
 import { MainLoader } from "../../../components/common/Loaders/MainLoader";
 import { sortColors } from "../../../services/colors/sortColors";
-import { Color } from "../ColorLink";
+import {LinkColorData} from "../ColorsCC/ColorsCC";
 import "../index.scss";
 
 const ColorsFC = () => {
-  const [colors, setColors] = useState<Color[]>([]);
+  const [colors, setColors] = useState<LinkColorData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const itemsPerPage = 40;
@@ -26,7 +26,7 @@ const ColorsFC = () => {
   useEffect(() => {
     fetch("https://jsonplaceholder.typicode.com/photos/")
       .then((response) => response.json())
-      .then((data: Color[]) => {
+      .then((data: LinkColorData[]) => {
         setColors(data);
         setIsLoading(false);
       })

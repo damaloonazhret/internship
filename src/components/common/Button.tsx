@@ -1,4 +1,4 @@
-import {MouseEventHandler, ReactNode} from "react";
+import {FC, MouseEventHandler, ReactNode} from "react";
 
 interface ButtonProps {
   onClick: MouseEventHandler<HTMLButtonElement>;
@@ -7,7 +7,7 @@ interface ButtonProps {
   children: ReactNode;
 }
 
-export const Button = ({ onClick, disabled = false, className = 'btn', children }: ButtonProps) => {
+export const Button: FC<ButtonProps> = ({ onClick, disabled = false, className = 'btn', children }) => {
   return (
     <button
       onClick={onClick}

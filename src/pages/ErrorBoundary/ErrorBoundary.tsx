@@ -1,10 +1,10 @@
 import React, { Component, ErrorInfo, ReactNode } from "react";
 import { Title } from "../../components/common/InfoText/Title";
 import { Text } from "../../components/common/InfoText/Text";
-import "./index.scss";
 import { Button } from "../../components/common/Button";
 import { getAllCookieNames } from "../../services/cookie/getAllCookieNames";
 import { resetCookies } from "../../services/cookie/resetCookies";
+import "./index.scss";
 
 interface ErrorBoundaryProps {
   children: ReactNode;

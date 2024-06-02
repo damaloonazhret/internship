@@ -3,11 +3,11 @@ import { ComputedStyle } from "./ComputedStyle/ComputedStyle";
 import { SetNav } from "./SetNav";
 import { FC, Suspense } from "react";
 import { MainLoader } from "../../components/common/Loaders/MainLoader";
-import {ColorsState, SetColorsState, ThemeState} from "../../components/App";
+import {ThemeColorsState, SetColorsState, ThemeState} from "../../components/App";
 import "./index.scss";
 
 export interface SettingsProps {
-  colors: ColorsState;
+  colors: ThemeColorsState;
   theme: ThemeState;
   setColors: SetColorsState;
 }

@@ -1,12 +1,12 @@
 import { ThemeSwitcher } from "./ThemeSwitcher/ThemeSwitcher";
 import { Nav } from "./Nav/Nav";
 import { Arrows } from "./Arrows/Arrows";
-import { ColorsState, SetColorsState, SetThemeState, ThemeState } from "../App";
+import { ThemeColorsState, SetColorsState, SetThemeState, ThemeState } from "../App";
 import { FC } from "react";
 
 export interface AsideProps {
   theme: ThemeState;
-  colors: ColorsState;
+  colors: ThemeColorsState;
   setColors: SetColorsState;
   setTheme: SetThemeState;
 }

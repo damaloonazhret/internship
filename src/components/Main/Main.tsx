@@ -14,7 +14,7 @@ import {
   SettingsPage,
   ValidatePage,
 } from "../../pages";
-import {ColorsState, SetColorsState, ThemeState} from "../App";
+import {ThemeColorsState, SetColorsState, ThemeState} from "../App";
 
 export interface GithubInfo {
     name: string;
@@ -38,7 +38,7 @@ export interface GithubData {
 
 interface MainProps {
     theme: ThemeState,
-    colors: ColorsState,
+    colors: ThemeColorsState,
     setColors: SetColorsState;
 }
 
