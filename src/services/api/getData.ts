@@ -41,10 +41,10 @@ export const getUserInfo = (username: string) => {
   return promiseRequest(username, headers).then((value: UserData) => {
     const newUserData = value.userInfo;
     const newRepoData = value.userRepo;
-    return extractUserData(<ExtractUserData>{
+    return extractUserData({
       userInfo: newUserData,
       userRepo: newRepoData,
-    });
+    } as ExtractUserData);
   });
 };
 
