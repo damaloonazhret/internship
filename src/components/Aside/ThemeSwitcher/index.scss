@@ -12,6 +12,18 @@
   transition: var(--transition-all);
   border: 2px solid var(--white);
 
+  &:hover {
+    box-shadow: 0 0 4px var(--white);
+  }
+  @media (hover: none) {
+    &:hover {
+      box-shadow: inherit;
+    }
+    &:active {
+      box-shadow: 0 0 4px var(--white);
+    }
+  }
+
   &.white {
     border: 2px solid black;
   }
@@ -27,6 +39,17 @@
     left: 9%;
     top: 14%;
     transition: var(--transition-all);
+    &:hover {
+      box-shadow: 0 0 4px var(--white);
+    }
+    @media (hover: none) {
+      &:hover {
+        box-shadow: inherit;
+      }
+      &:active {
+        box-shadow: 0 0 4px var(--white);
+      }
+    }
   }
 }
 

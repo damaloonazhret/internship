@@ -27,10 +27,22 @@ input[type='color'] {
     &:hover {
         box-shadow: 0 0 8px var(--white);
     }
+    @media (hover: none) {
+        &:hover {
+            box-shadow: inherit;
+        }
+        &:active {
+            box-shadow: 0 0 8px var(--white);
+        }
+    }
 
     &:active {
         box-shadow: 0 2px 12px var(--white);
         transform: scale(0.95);
+    }
+
+    &.big {
+        width: 85px;
     }
 }
 
@@ -89,6 +101,14 @@ input[type='color'] {
             &:hover,
             &:active {
                 color: var(--green);
+            }
+            @media (hover: none) {
+                &:hover {
+                    color: inherit;
+                }
+                &:active {
+                    color: var(--green);
+                }
             }
         }
     }
