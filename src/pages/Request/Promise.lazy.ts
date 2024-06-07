@@ -1,3 +1,3 @@
 import { lazy } from "react";
 
-export const Promises = lazy(() => import("./Promise"));
+export const PromisePage = lazy(() => import("./Promise"));

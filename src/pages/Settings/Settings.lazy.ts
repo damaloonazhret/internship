@@ -1,3 +1,3 @@
-import {lazy} from "react";
+import { lazy } from "react";
 
-export const Settings = lazy(() => import('./Settings'))
+export const SettingsPage = lazy(() => import("./Settings"));

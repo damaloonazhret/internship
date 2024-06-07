@@ -1,7 +1,7 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import { Aside } from "./Aside/Aside";
 import { Main } from "./Main/Main";
-import React, { Dispatch, SetStateAction, useState } from "react";
+import React, { useState } from "react";
 import "../index.scss";
 
 export interface ThemeColors {
@@ -9,7 +9,9 @@ export interface ThemeColors {
   secondary: string;
 }
 
-export type SetColorsState = Dispatch<SetStateAction<ThemeColors>>;
+export type SetColorsState = (
+  colors: (prevColors: ThemeColors) => ThemeColors,
+) => void;
 
 export type ThemeState = "dark" | "white";
 
