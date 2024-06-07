@@ -11,7 +11,7 @@ type RequestFunction<T> = {
 interface UseAsyncRequestResult<T> {
   isLoading: boolean;
   error: Error | null | string;
-  data: T;
+  data: T | null;
   setError: (error: Error | null | string) => void;
   fetchData: RequestFunction<T>;
 }
@@ -19,7 +19,7 @@ interface UseAsyncRequestResult<T> {
 export const useAsyncRequest = <T>(): UseAsyncRequestResult<T> => {
   const [isLoading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<Error | null | string>(null);
-  const [data, setData] = useState<T | {}>({} as T);
+  const [data, setData] = useState<T | null>(null);
 
   const fetchData: RequestFunction<T> = useCallback(
     async (requestFunction, value?: string) => {
@@ -46,7 +46,7 @@ export const useAsyncRequest = <T>(): UseAsyncRequestResult<T> => {
   return {
     isLoading,
     error,
-    data: data as T,
+    data,
     setError,
     fetchData,
   };

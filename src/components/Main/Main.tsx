@@ -1,21 +1,24 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PublicRoute } from "../../routes/PublicRoute";
 import { PrivateRoute } from "../../routes/PrivateRoute";
-import React, { FC, Suspense, useEffect, useState } from "react";
+import React, { FC, lazy, Suspense, useEffect, useState } from "react";
 import { Title } from "../common/InfoText/Title";
 import { getCookie } from "../../services/cookie/getCookie";
 import { MainLoader } from "../common/Loaders/MainLoader";
-import {
-  AsyncPage,
-  ColorsCCPage,
-  ColorsFCPage,
-  NotFoundPage,
-  PromisePage,
-  SettingsPage,
-  ValidatePage,
-} from "../../pages";
+
 import { ThemeColors, SetColorsState, ThemeState } from "../App";
 import { UserInfo, UserRepo } from "../../services/api/github/api";
+export const AsyncPage = lazy(() => import("../../pages/Request/Async"));
+export const PromisePage = lazy(() => import("../../pages/Request/Promise"));
+export const ColorsCCPage = lazy(
+  () => import("../../pages/JSONPlaceholder/ColorsCC/ColorsCC"),
+);
+export const ColorsFCPage = lazy(
+  () => import("../../pages/JSONPlaceholder/ColorsFC/ColorsFC"),
+);
+export const NotFoundPage = lazy(() => import("../../pages/NotFound/NotFound"));
+export const SettingsPage = lazy(() => import("../../pages/Settings/Settings"));
+export const ValidatePage = lazy(() => import("../../pages/Validate/Validate"));
 
 export type GithubInfo = Pick<
   UserInfo,

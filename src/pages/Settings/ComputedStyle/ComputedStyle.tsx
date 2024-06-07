@@ -1,6 +1,7 @@
 import {
   Dispatch,
   FC,
+  lazy,
   SetStateAction,
   useCallback,
   useReducer,
@@ -13,12 +14,13 @@ import {
   DEFAULT_COLOR_BLACK,
   DEFAULT_COLOR_WHITE,
 } from "../../../components/constants/constants";
-import { ColorsPage, FontsPage } from "../index";
 import { RefObjectWithValue } from "../../../components/common/Input/Input";
 import { useParams } from "react-router-dom";
 import { ColorsKey, FontsActionTypes } from "../../../components/common/Enums";
 import { useColorManagement } from "../../../services/hooks/useColorManagement";
-import {SettingsProps} from "../Settings";
+import { SettingsProps } from "../Settings";
+export const FontsPage = lazy(() => import("./Fonts/Fonts"));
+export const ColorsPage = lazy(() => import("./Colors/Colors"));
 
 type ComputedStyleProps = SettingsProps;
 
