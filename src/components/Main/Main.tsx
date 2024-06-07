@@ -1,7 +1,7 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PublicRoute } from "../../routes/PublicRoute";
 import { PrivateRoute } from "../../routes/PrivateRoute";
-import React, {FC, Suspense, useEffect, useState} from "react";
+import React, { FC, Suspense, useEffect, useState } from "react";
 import { Title } from "../common/InfoText/Title";
 import { getCookie } from "../../services/cookie/getCookie";
 import { MainLoader } from "../common/Loaders/MainLoader";
@@ -14,32 +14,28 @@ import {
   SettingsPage,
   ValidatePage,
 } from "../../pages";
-import {ThemeColorsState, SetColorsState, ThemeState} from "../App";
+import { ThemeColors, SetColorsState, ThemeState } from "../App";
+import { UserInfo, UserRepo } from "../../services/api/github/api";
 
-export interface GithubInfo {
-    name: string;
-    html_url: string;
-    avatar_url: string;
-    login: string;
-}
+export type GithubInfo = Pick<
+  UserInfo,
+  "name" | "html_url" | "avatar_url" | "login"
+>;
 
-export interface GithubRepo {
-  full_name: string;
-  language: string | null;
-  visibility: string;
-  html_url: string;
-  created_at: string;
-}
+export type GithubRepo = Pick<
+  UserRepo,
+  "full_name" | "language" | "visibility" | "html_url" | "created_at"
+>;
 
 export interface GithubData {
-  userInfoData: GithubInfo;
-  userRepoData: GithubRepo[];
+  userInfoData: Readonly<GithubInfo>;
+  userRepoData: Readonly<GithubRepo>[];
 }
 
 interface MainProps {
-    theme: ThemeState,
-    colors: ThemeColorsState,
-    setColors: SetColorsState;
+  theme: ThemeState;
+  colors: ThemeColors;
+  setColors: SetColorsState;
 }
 
 export const Main: FC<MainProps> = ({ colors, theme, setColors }) => {

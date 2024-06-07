@@ -1,7 +1,7 @@
-export {AsyncLazy as AsyncPage} from './Request/Async.lazy';
-export {PromiseLazy as PromisePage} from './Request/Promise.lazy';
-export {SettingsLazy as SettingsPage} from './Settings/Settings.lazy';
-export {ValidateLazy as ValidatePage} from './Validate/Validate.lazy';
-export {NotFoundLazy as NotFoundPage} from './NotFound/NotFound.lazy';
-export {ColorsFCLazy as ColorsFCPage} from './JSONPlaceholder/ColorsFC/ColorsFC.lazy';
-export {ColorsCCLazy as ColorsCCPage} from './JSONPlaceholder/ColorsCC/ColorsCC.lazy';
+export { Async as AsyncPage } from "./Request/Async.lazy";
+export { Promises as PromisePage } from "./Request/Promise.lazy";
+export { Settings as SettingsPage } from "./Settings/Settings.lazy";
+export { Validate as ValidatePage } from "./Validate/Validate.lazy";
+export { NotFound as NotFoundPage } from "./NotFound/NotFound.lazy";
+export { ColorsFC as ColorsFCPage } from "./JSONPlaceholder/ColorsFC/ColorsFC.lazy";
+export { ColorsCC as ColorsCCPage } from "./JSONPlaceholder/ColorsCC/ColorsCC.lazy";

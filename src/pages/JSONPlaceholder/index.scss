@@ -55,6 +55,13 @@
   margin-top: auto;
 }
 
+.colors-error {
+  grid-row: 1 / 3;
+  font-size: 2rem;
+  display: grid;
+  align-self: center;
+}
+
 @media screen and (width <= 600px) {
   .colors {
     &-page {

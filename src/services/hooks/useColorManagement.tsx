@@ -3,7 +3,7 @@ import {colorReducer, ColorsTypes} from "../reducers/colorReducer";
 import {useLocalStorage} from "./useLocalStorage";
 import {useCallback, useEffect, useReducer, useState} from "react";
 import {useThrottle} from "./useThrottle";
-import {ThemeColorsState, SetColorsState} from "../../components/App";
+import {ThemeColors, SetColorsState} from "../../components/App";
 import {ActionType, ColorKeyType} from "../../pages/Settings/ComputedStyle/ComputedStyle";
 
 const getActionType = (
@@ -24,7 +24,7 @@ const getActionType = (
     }
 };
 
-export const useColorManagement = (initialColorState: ThemeColorsState, setColors: SetColorsState) => {
+export const useColorManagement = (initialColorState: ThemeColors, setColors: SetColorsState) => {
     const { setItem, removeItem } = useLocalStorage();
 
     const [colorState, dispatchColor] = useReducer(
@@ -52,7 +52,7 @@ export const useColorManagement = (initialColorState: ThemeColorsState, setColor
     );
 
     const resetColor = useCallback(
-        (colorKey: keyof ThemeColorsState, defaultColor: string) => () => {
+        (colorKey: keyof ThemeColors, defaultColor: string) => () => {
             const type = getActionType(
                 colorKey as ColorKeyType,
                 ColorsActionTypes.RESET,
@@ -69,7 +69,7 @@ export const useColorManagement = (initialColorState: ThemeColorsState, setColor
     );
 
     useEffect(() => {
-        setColors((prevColors: ThemeColorsState) => ({ ...prevColors, ...colorState }));
+        setColors((prevColors: ThemeColors) => ({ ...prevColors, ...colorState }));
     }, [colorState, setColors]);
 
     useEffect(() => {

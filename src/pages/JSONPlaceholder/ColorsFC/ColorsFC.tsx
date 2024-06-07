@@ -1,19 +1,24 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ColorsPage } from "../ColorsPage";
 import { MainLoader } from "../../../components/common/Loaders/MainLoader";
 import { sortColors } from "../../../services/colors/sortColors";
-import {LinkColorData} from "../ColorsCC/ColorsCC";
+import { LinkColorData } from "../ColorsCC/ColorsCC";
 import "../index.scss";
+import { colorsRequest } from "../../../services/api/JSONPlaceholder/api";
+import { useAsyncRequest } from "../../../services/hooks/useAsyncRequest";
+import { Text } from "../../../components/common/InfoText/Text";
 
 const ColorsFC = () => {
   const [colors, setColors] = useState<LinkColorData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   const itemsPerPage = 40;
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
+
+  const { isLoading, error, data, fetchData } =
+    useAsyncRequest<LinkColorData[]>();
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -24,17 +29,17 @@ const ColorsFC = () => {
   }, [location]);
 
   useEffect(() => {
-    fetch("https://jsonplaceholder.typicode.com/photos/")
-      .then((response) => response.json())
-      .then((data: LinkColorData[]) => {
-        setColors(data);
-        setIsLoading(false);
-      })
-      .catch((error) => console.error("Error fetching colors:", error));
-  }, []);
+    fetchData(colorsRequest);
+  }, [fetchData]);
+
+  useEffect(() => {
+    if (Array.isArray(data) && data.length > 0) {
+      setColors(data);
+    }
+  }, [data]);
 
   const sortedColors = useMemo(() => {
-    if (!colors) return [];
+    if (!Array.isArray(colors) || colors.length === 0) return [];
     return sortColors(colors);
   }, [colors]);
 
@@ -45,29 +50,34 @@ const ColorsFC = () => {
   }, [currentPage, sortedColors]);
 
   const handlePageChange = useCallback(
-      (pageNumber: number) => {
-        const params = new URLSearchParams();
-        params.append("page", String(pageNumber));
-        navigate({
-          pathname: pathname,
-          search: params.toString(),
-        });
-        setCurrentPage(pageNumber);
-      },
-      [navigate, pathname],
+    (pageNumber: number) => {
+      const params = new URLSearchParams();
+      params.append("page", String(pageNumber));
+      navigate({
+        pathname: pathname,
+        search: params.toString(),
+      });
+      setCurrentPage(pageNumber);
+    },
+    [navigate, pathname],
   );
 
   if (isLoading) {
     return <MainLoader />;
   }
 
-  return (
+  return error ? (
+    <Text
+      text={error instanceof Error ? error.message : error}
+      className="colors-error"
+    ></Text>
+  ) : (
     <ColorsPage
       totalItems={colors.length}
       currentPage={currentPage}
       itemsPerPage={itemsPerPage}
       paginatedColors={paginatedColors}
-      handlePageChange={handlePageChange}
+      onPageChange={handlePageChange}
     />
   );
 };

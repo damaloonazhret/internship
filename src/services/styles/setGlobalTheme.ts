@@ -4,9 +4,9 @@ import {
   WHITE,
   WHITE_ROOT,
 } from "../../components/constants/constants";
-import {ThemeColorsState} from "../../components/App";
+import {ThemeColors} from "../../components/App";
 
-export function setGlobalTheme(currentTheme: string, colors: ThemeColorsState) {
+export function setGlobalTheme(currentTheme: string, colors: ThemeColors) {
   if (currentTheme === WHITE) {
     setProperty(BLACK_ROOT, colors.secondary);
     setProperty(WHITE_ROOT, colors.primary);

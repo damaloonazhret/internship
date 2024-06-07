@@ -1,3 +1,3 @@
 import { lazy } from "react";
 
-export const ColorsLazy = lazy(() => import("./Colors"));
+export const Colors = lazy(() => import("./Colors"));

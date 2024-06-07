@@ -2,7 +2,7 @@ import { FC, memo } from "react";
 import { Text } from "../../components/common/InfoText/Text";
 import { Button } from "../../components/common/Button";
 
-interface PaginationProps {
+export interface PaginationProps {
   totalItems: number;
   currentPage: number;
   itemsPerPage: number;

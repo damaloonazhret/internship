@@ -1,3 +1,3 @@
 import { lazy } from "react";
 
-export const ValidateLazy = lazy(() => import('./Validate'))
+export const Validate = lazy(() => import('./Validate'))

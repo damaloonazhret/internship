@@ -1,12 +1,14 @@
 import { Header } from "../../Header/Header";
 import { GitHubInfo } from "./GitHubInfo";
 import { Title } from "../InfoText/Title";
-import { FC } from "react";
+import React, { Dispatch, FC, SetStateAction, useState } from "react";
 import { GithubData } from "../../Main/Main";
+import { Preloader } from "../Loaders/Preloader";
 
 export type SetStateRequest = (newState: GithubData) => void;
 export type StateRequest = GithubData | {};
 export type RenderRequest = (title: string) => JSX.Element;
+export type SetIsLoadingRequest = Dispatch<SetStateAction<boolean>>;
 
 interface RequestProps {
   setState: SetStateRequest;
@@ -21,6 +23,8 @@ export const Request: FC<RequestProps> = ({
   title,
   render,
 }) => {
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
   const isGithubData = (state: GithubData | {}): state is GithubData => {
     return (
       (state as GithubData).userInfoData !== undefined &&
@@ -33,12 +37,18 @@ export const Request: FC<RequestProps> = ({
 
   return (
     <>
-      <Header setState={setState} render={render} />
+      <Header setState={setState} render={render} setIsLoading={setIsLoading} />
       <main key={info ? info.html_url : null} className="mainContent">
-        {info && repo ? (
-          <GitHubInfo userInfo={info} userRepo={repo} />
+        {isLoading ? (
+          <Preloader isLoading={isLoading} />
         ) : (
-          <Title title={title} className="main-title" type="h1" />
+          <>
+            {info && repo ? (
+              <GitHubInfo userInfo={info} userRepo={repo} />
+            ) : (
+              <Title title={title} className="main-title" type="h1" />
+            )}
+          </>
         )}
       </main>
     </>

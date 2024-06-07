@@ -1,4 +1,4 @@
-import { ThemeColorsState } from "../../components/App";
+import { ThemeColors } from "../../components/App";
 import {ColorsActionTypes} from "../../components/common/Enums";
 
 export type ColorsTypes =
@@ -13,9 +13,9 @@ interface ColorAction {
 }
 
 export const colorReducer = (
-  state: ThemeColorsState,
+  state: ThemeColors,
   action: ColorAction,
-): ThemeColorsState => {
+): ThemeColors => {
   switch (action.type) {
     case ColorsActionTypes.SET_PRIMARY:
       return { ...state, primary: action.payload };

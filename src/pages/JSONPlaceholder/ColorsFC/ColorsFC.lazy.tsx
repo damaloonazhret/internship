@@ -1,3 +1,3 @@
 import {lazy} from 'react';
 
-export const ColorsFCLazy = lazy (() => import('./ColorsFC'));
+export const ColorsFC = lazy (() => import('./ColorsFC'));

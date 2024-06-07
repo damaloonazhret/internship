@@ -17,7 +17,10 @@ interface ErrorBoundaryState {
   errorTime?: Date;
 }
 
-export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundaryState> {
+export class ErrorBoundary extends Component<
+  ErrorBoundaryProps,
+  ErrorBoundaryState
+> {
   constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false };
@@ -45,41 +48,41 @@ export class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBoundarySt
   render() {
     if (this.state.hasError) {
       return (
-          <>
-            <Title
-                className="something-wrong"
-                title="It seems something went wrong..."
+        <>
+          <Title
+            className="something-wrong__title"
+            title="It seems something went wrong..."
+          />
+          <div className="something-wrong">
+            <Text
+              className="something-wrong__info"
+              text={
+                this.state.error
+                  ? this.state.error.toString()
+                  : "Error is unknown"
+              }
             />
-            <div className="something-wrong">
-              <Text
-                  className="something-wrong__info"
-                  text={
-                    this.state.error
-                        ? this.state.error.toString()
-                        : "Error is unknown"
-                  }
-              />
-              <Text
-                  className="something-wrong__info"
-                  text={
-                    this.state.info
-                        ? this.state.info.componentStack
-                        : "Error information is unknown"
-                  }
-              />
-              <Text
-                  className="something-wrong__info"
-                  text={
-                    this.state.errorTime
-                        ? this.state.errorTime.toString()
-                        : "The time of the error is unknown"
-                  }
-              />
-              <Button onClick={this.fixApp} className="somethingWrongInfo__btn">
-                try to fix the app
-              </Button>
-            </div>
-          </>
+            <Text
+              className="something-wrong__info"
+              text={
+                this.state.info
+                  ? this.state.info.componentStack
+                  : "Error information is unknown"
+              }
+            />
+            <Text
+              className="something-wrong__info"
+              text={
+                this.state.errorTime
+                  ? this.state.errorTime.toString()
+                  : "The time of the error is unknown"
+              }
+            />
+            <Button onClick={this.fixApp} className="somethingWrongInfo__btn">
+              try to fix the app
+            </Button>
+          </div>
+        </>
       );
     }
     return this.props.children;

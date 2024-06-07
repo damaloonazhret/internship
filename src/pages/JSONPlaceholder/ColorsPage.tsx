@@ -1,16 +1,12 @@
 import { FC, memo } from "react";
-import Pagination from "./Pagination";
+import Pagination, {PaginationProps} from "./Pagination";
 import { ColorLink } from "./ColorLink";
 import { Title } from "../../components/common/InfoText/Title";
-import {LinkColorData} from "./ColorsCC/ColorsCC";
+import {LinkColorData, UserSelectedColors} from "./ColorsCC/ColorsCC";
 
-interface ColorsPageProps {
-  totalItems: number;
-  currentPage: number;
-  itemsPerPage: number;
+interface ColorsPageProps extends PaginationProps{
   paginatedColors: LinkColorData[];
-  handlePageChange: (pageNumber: number) => void;
-  activities?: { [key: string]: string };
+  activities?: UserSelectedColors ;
 }
 
 export const ColorsPage: FC<ColorsPageProps> = memo(
@@ -19,7 +15,7 @@ export const ColorsPage: FC<ColorsPageProps> = memo(
     currentPage,
     itemsPerPage,
     paginatedColors,
-    handlePageChange,
+    onPageChange,
     activities,
   }) => {
     const colors = paginatedColors.map((color) => (
@@ -39,7 +35,7 @@ export const ColorsPage: FC<ColorsPageProps> = memo(
           totalItems={totalItems}
           itemsPerPage={itemsPerPage}
           currentPage={currentPage}
-          onPageChange={handlePageChange}
+          onPageChange={onPageChange}
         />
       </div>
     );

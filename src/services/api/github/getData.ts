@@ -14,8 +14,8 @@ const headers = {
 };
 
 export interface ExtractUserData {
-  userInfo: UserInfo;
-  userRepo: UserRepo[];
+  userInfo: Readonly<UserInfo>;
+  userRepo: Readonly<UserRepo>[];
 }
 
 const extractUserData = ({ userInfo, userRepo }: ExtractUserData) => {

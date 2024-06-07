@@ -1,3 +1,3 @@
 import {lazy} from "react";
 
-export const SettingsLazy = lazy(() => import('./Settings'))
+export const Settings = lazy(() => import('./Settings'))

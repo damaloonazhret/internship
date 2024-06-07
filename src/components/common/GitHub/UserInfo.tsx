@@ -3,7 +3,7 @@ import { CustomLink } from "../CustomLink";
 import { GithubInfo } from "../../Main/Main";
 
 interface UserProps {
-  userInfo: GithubInfo;
+  userInfo: Readonly<GithubInfo>;
 }
 
 export const UserInfo = ({ userInfo }: UserProps) => {

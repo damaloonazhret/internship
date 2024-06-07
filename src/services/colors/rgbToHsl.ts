@@ -1,4 +1,6 @@
-export const rgbToHsl = ([r, g, b]: Array<number>): Array<number> => {
+export type RGB = [number, number, number]
+
+export const rgbToHsl = ([r, g, b]: RGB): RGB => {
   r /= 255;
   g /= 255;
   b /= 255;

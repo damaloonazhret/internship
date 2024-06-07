@@ -2,7 +2,7 @@ import { Text } from "../InfoText/Text";
 import { GithubRepo } from "../../Main/Main";
 
 interface CardsProps {
-  userRepo: GithubRepo[];
+  userRepo: Readonly<GithubRepo>[];
 }
 
 export const Cards = ({ userRepo }: CardsProps) => {

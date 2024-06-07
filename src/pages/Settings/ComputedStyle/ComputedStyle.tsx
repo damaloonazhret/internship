@@ -14,21 +14,13 @@ import {
   DEFAULT_COLOR_WHITE,
 } from "../../../components/constants/constants";
 import { ColorsPage, FontsPage } from "../index";
-import {
-  ThemeColorsState,
-  SetColorsState,
-  ThemeState,
-} from "../../../components/App";
 import { RefObjectWithValue } from "../../../components/common/Input/Input";
 import { useParams } from "react-router-dom";
 import { ColorsKey, FontsActionTypes } from "../../../components/common/Enums";
 import { useColorManagement } from "../../../services/hooks/useColorManagement";
+import {SettingsProps} from "../Settings";
 
-interface ComputedStyleProps {
-  colors: ThemeColorsState;
-  theme: ThemeState;
-  setColors: SetColorsState;
-}
+type ComputedStyleProps = SettingsProps;
 
 export type ColorKeyType = ColorsKey.PRIMARY | ColorsKey.SECONDARY;
 

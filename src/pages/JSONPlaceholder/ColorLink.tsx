@@ -2,12 +2,12 @@ import { extractColorFromUrl } from "../../services/colors/extractColorFromUrl";
 import { Text } from "../../components/common/InfoText/Text";
 import { CustomLink } from "../../components/common/CustomLink";
 import { FC, useEffect, useState } from "react";
-import {LinkColorData} from "./ColorsCC/ColorsCC";
+import {LinkColorData, UserSelectedColors} from "./ColorsCC/ColorsCC";
 
 interface ColorLinkProps {
   color: LinkColorData;
   id: number;
-  activities: { [key: string]: string };
+  activities: UserSelectedColors;
 }
 
 export const ColorLink: FC<ColorLinkProps> = ({

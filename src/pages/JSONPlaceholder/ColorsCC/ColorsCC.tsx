@@ -5,6 +5,8 @@ import { MainLoader } from "../../../components/common/Loaders/MainLoader";
 import { sortColors } from "../../../services/colors/sortColors";
 import { getAllSessionStorage } from "../../../services/sessionStorage/getAllSessionStorage";
 import "../index.scss";
+import { colorsRequest } from "../../../services/api/JSONPlaceholder/api";
+import { Text } from "../../../components/common/InfoText/Text";
 
 export interface RouterProps {
   location: ReturnType<typeof useLocation>;
@@ -15,6 +17,8 @@ export interface RouterProps {
 export interface WithRouterProps {
   router?: RouterProps;
 }
+
+export type UserSelectedColors = { [key: string]: string };
 
 export function withRouter<T>(Component: ComponentType<T & WithRouterProps>) {
   function ComponentWithRouterProp(props: T) {
@@ -28,19 +32,20 @@ export function withRouter<T>(Component: ComponentType<T & WithRouterProps>) {
   return ComponentWithRouterProp;
 }
 
-export interface LinkColorData {
+export type LinkColorData = Readonly<{
   albumId: number;
   id: number;
   title: string;
   url: string;
   thumbnailUrl: string;
-}
+}>;
 
 interface ColorsCCState {
   colors: LinkColorData[];
   currentPage: number;
   isLoading: boolean;
-  activities: { [key: string]: string };
+  activities: UserSelectedColors;
+  error: string;
 }
 
 class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
@@ -49,6 +54,7 @@ class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
     currentPage: 1,
     isLoading: true,
     activities: {},
+    error: "",
   };
 
   itemsPerPage = 40;
@@ -72,10 +78,11 @@ class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
     if (sessionPage) {
       this.setState({ currentPage: Number(sessionPage) });
     }
-    fetch("https://jsonplaceholder.typicode.com/photos/")
-      .then((response) => response.json())
+    colorsRequest()
       .then((data) => this.setState({ colors: data, isLoading: false }))
-      .catch((error) => console.error("Error fetching colors:", error));
+      .catch((error) => {
+        this.setState({ colors: [], isLoading: false, error: error });
+      });
   }
 
   componentDidUpdate(
@@ -152,9 +159,13 @@ class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
   };
 
   render() {
-    const { colors, currentPage, isLoading } = this.state;
+    const { colors, currentPage, isLoading, error } = this.state;
     const sortedColors = this.getSortedColors(colors);
     const paginatedColors = this.getPaginatedColors(sortedColors);
+
+    if (error) {
+      return <Text text={error} className="colors-error" />;
+    }
 
     return isLoading ? (
       <MainLoader />
@@ -165,7 +176,7 @@ class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
         activities={this.state.activities}
         itemsPerPage={this.itemsPerPage}
         paginatedColors={paginatedColors}
-        handlePageChange={this.handlePageChange}
+        onPageChange={this.handlePageChange}
       />
     );
   }

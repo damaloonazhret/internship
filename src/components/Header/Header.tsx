@@ -8,22 +8,30 @@ import React, {
   useState,
 } from "react";
 import { checkValidate } from "../../services/validate/checkUserName";
-import { getUserInfo, getUserInfoAsync } from "../../services/api/getData";
+import {
+  getUserInfo,
+  getUserInfoAsync,
+} from "../../services/api/github/getData";
 import { InputWithError } from "../common/Input/InputWithError";
 import { useAsyncRequest } from "../../services/hooks/useAsyncRequest";
 import { useDebounce } from "../../services/hooks/useDebounce";
 import { DEBOUNCE_DELAY } from "../constants/constants";
-import { Preloader } from "../common/Loaders/Preloader";
 import { useLocation, useNavigate } from "react-router-dom";
 import { RefObjectWithValue } from "../common/Input/Input";
-import { RenderRequest, SetStateRequest } from "../common/GitHub/Request";
+import {
+  RenderRequest,
+  SetIsLoadingRequest,
+  SetStateRequest,
+} from "../common/GitHub/Request";
+import { GithubData } from "../Main/Main";
 
 interface HeaderProps {
   setState: SetStateRequest;
   render: RenderRequest;
+  setIsLoading: SetIsLoadingRequest;
 }
 
-export const Header: FC<HeaderProps> = ({ setState, render }) => {
+export const Header: FC<HeaderProps> = ({ setState, render, setIsLoading }) => {
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
@@ -31,7 +39,8 @@ export const Header: FC<HeaderProps> = ({ setState, render }) => {
   const userNameRef = useRef<RefObjectWithValue>(null);
   const [userName, setUserName] = useState<string>("");
   const debouncedValue = useDebounce(userName, DEBOUNCE_DELAY);
-  const { isLoading, error, data, setError, fetchData } = useAsyncRequest();
+  const { isLoading, error, data, setError, fetchData } =
+    useAsyncRequest<GithubData>();
 
   useEffect(() => {
     if (data && data.userInfoData && data.userRepoData) {
@@ -45,25 +54,24 @@ export const Header: FC<HeaderProps> = ({ setState, render }) => {
     }
   }, []);
 
+  useEffect(() => {
+    setIsLoading(isLoading);
+  }, [isLoading, setIsLoading]);
+
   const setRepos = useCallback(
     async (value: string) => {
       const isChecked = checkValidate(value);
       if (isChecked.validate) {
-        try {
-          await fetchData(
-            pathname === "/async" ? getUserInfoAsync : getUserInfo,
-            value,
-          );
-          const params = new URLSearchParams();
-          params.append("query", value);
-          navigate({
-            pathname: pathname,
-            search: params.toString(),
-          });
-          setError("");
-        } catch (err) {
-          setError((err as Error).message);
-        }
+        await fetchData(
+          pathname === "/async" ? getUserInfoAsync : getUserInfo,
+          value,
+        );
+        const params = new URLSearchParams();
+        params.append("query", value);
+        navigate({
+          pathname: pathname,
+          search: params.toString(),
+        });
       } else {
         setError(isChecked.error);
       }
@@ -85,7 +93,6 @@ export const Header: FC<HeaderProps> = ({ setState, render }) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     setNameValue(e.target.value);
   };
-
   return (
     <header className="header">
       <form onSubmit={(e) => e.preventDefault()}>
@@ -101,10 +108,9 @@ export const Header: FC<HeaderProps> = ({ setState, render }) => {
             list="names"
             ref={userNameRef}
             value={userName}
-            error={error}
+            error={error instanceof Error ? error.message : error}
             onChange={handleInputChange}
           />
-          <Preloader isLoading={isLoading} />
         </div>
       </form>
     </header>

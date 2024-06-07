@@ -1,15 +1,12 @@
 import { DARK } from "../../../../components/constants/constants";
 import { Button } from "../../../../components/common/Button";
-import { ThemeState } from "../../../../components/App";
-import { Purpose } from "./ColorSetting";
+import { ColorSettingProps } from "./ColorSetting";
 import { FC } from "react";
 
-interface ResetButtonProps {
-  theme: ThemeState;
-  purpose: Purpose;
-  resetPrimaryColor: () => void;
-  resetSecondaryColor: () => void;
-}
+type ResetButtonProps = Pick<
+  ColorSettingProps,
+  "theme" | "purpose" | "resetPrimaryColor" | "resetSecondaryColor"
+>;
 
 export const ResetButton: FC<ResetButtonProps> = ({
   theme,

@@ -1,9 +1,11 @@
-import {GithubInfo, GithubRepo} from "../../components/Main/Main";
-
 const repos = "/repos";
 const userUrl = "https://api.github.com/users/";
 
-export interface UserInfo extends GithubInfo{
+export interface UserInfo {
+  name: string;
+  html_url: string;
+  avatar_url: string;
+  login: string;
   id: number;
   node_id: string;
   url: string;
@@ -45,7 +47,12 @@ export interface UserInfo extends GithubInfo{
   };
 }
 
-export interface UserRepo extends GithubRepo{
+export interface UserRepo {
+  full_name: string;
+  language: string | null;
+  visibility: string;
+  html_url: string;
+  created_at: string;
   name: string;
   id: number;
   node_id: string;
@@ -58,8 +65,8 @@ export interface UserRepo extends GithubRepo{
 }
 
 export interface UserData {
-  userInfo: UserInfo;
-  userRepo: UserRepo[];
+  userInfo: Readonly<UserInfo>;
+  userRepo: Readonly<UserRepo>[];
 }
 
 export const promiseRequest = (
@@ -71,14 +78,20 @@ export const promiseRequest = (
     xhrUserInfo.open("GET", `${userUrl}${username}`);
     xhrUserInfo.setRequestHeader("Authorization", headers.Authorization);
     xhrUserInfo.onload = () => {
-      if (!(xhrUserInfo.status >= 200 && xhrUserInfo.status <= 299)) {
-        reject(new Error(`User: error ${xhrUserInfo.status}`));
-      } else {
+      if (xhrUserInfo.status >= 200 && xhrUserInfo.status <= 299) {
         resolve(JSON.parse(xhrUserInfo.responseText));
+      } else {
+        reject(
+          new Error(
+            `Unknown error fetching data for user ${username} ${xhrUserInfo.status}`,
+          ),
+        );
       }
     };
-    xhrUserInfo.onerror = (error) => {
-      reject(error);
+    xhrUserInfo.onerror = () => {
+      reject(
+        new Error(`Error fetching data for user ${username}: Failed to fetch`),
+      );
     };
     xhrUserInfo.send();
   });
@@ -88,14 +101,18 @@ export const promiseRequest = (
     xhrUserRepo.open("GET", `${userUrl}${username}${repos}`);
     xhrUserRepo.setRequestHeader("Authorization", headers.Authorization);
     xhrUserRepo.onload = () => {
-      if (!(xhrUserRepo.status >= 200 && xhrUserRepo.status <= 299)) {
-        reject(new Error(`User: error ${xhrUserRepo.status}`));
-      } else {
+      if (xhrUserRepo.status >= 200 && xhrUserRepo.status <= 299) {
         resolve(JSON.parse(xhrUserRepo.responseText));
+      } else {
+        reject(
+          new Error(
+            `Unknown error fetching data for user ${username} ${xhrUserRepo.status}`,
+          ),
+        );
       }
     };
-    xhrUserRepo.onerror = (error) => {
-      reject(error);
+    xhrUserRepo.onerror = () => {
+      reject(new Error("Connection error"));
     };
     xhrUserRepo.send();
   });
