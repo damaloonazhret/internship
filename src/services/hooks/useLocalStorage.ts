@@ -1,4 +1,4 @@
-import {useCallback} from "react";
+import { useCallback } from "react";
 
 interface UseLocalStorage {
   setItem: (key: string, value: string) => void;

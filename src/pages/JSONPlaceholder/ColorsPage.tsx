@@ -1,12 +1,12 @@
 import { FC, memo } from "react";
-import Pagination, {PaginationProps} from "./Pagination";
+import Pagination, { PaginationProps } from "./Pagination";
 import { ColorLink } from "./ColorLink";
 import { Title } from "../../components/common/InfoText/Title";
-import {LinkColorData, UserSelectedColors} from "./ColorsCC/ColorsCC";
+import { LinkColorData, UserSelectedColors } from "./ColorsCC/ColorsCC";
 
-interface ColorsPageProps extends PaginationProps{
+interface ColorsPageProps extends PaginationProps {
   paginatedColors: LinkColorData[];
-  activities?: UserSelectedColors ;
+  activities?: UserSelectedColors;
 }
 
 export const ColorsPage: FC<ColorsPageProps> = memo(

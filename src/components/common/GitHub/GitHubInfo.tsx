@@ -1,11 +1,11 @@
 import { Cards } from "./Cards";
 import { UserInfo } from "./UserInfo";
-import {GithubData} from "../../Main/Main";
-import {FC} from "react";
+import { GithubData } from "../../Main/Main";
+import { FC } from "react";
 
 interface GitHubInfoProps {
-    userInfo: GithubData["userInfoData"];
-    userRepo: GithubData["userRepoData"];
+  userInfo: GithubData["userInfoData"];
+  userRepo: GithubData["userRepoData"];
 }
 
 export const GitHubInfo: FC<GitHubInfoProps> = ({ userInfo, userRepo }) => {

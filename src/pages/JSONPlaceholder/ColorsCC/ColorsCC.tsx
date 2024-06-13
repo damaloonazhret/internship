@@ -1,12 +1,14 @@
-import React, { Component, ComponentType } from "react";
+import { Component, ComponentType } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { ColorsPage } from "../ColorsPage";
 import { MainLoader } from "../../../components/common/Loaders/MainLoader";
 import { sortColors } from "../../../services/colors/sortColors";
 import { getAllSessionStorage } from "../../../services/sessionStorage/getAllSessionStorage";
 import "../index.scss";
-import { colorsRequest } from "../../../services/api/JSONPlaceholder/api";
 import { Text } from "../../../components/common/InfoText/Text";
+import { AppDispatch, RootState } from "../../../store/app/store";
+import { connect, ConnectedProps } from "react-redux";
+import { fetchColorsCC } from "../../../store/colors/colorsThunks";
 
 export interface RouterProps {
   location: ReturnType<typeof useLocation>;
@@ -18,7 +20,24 @@ export interface WithRouterProps {
   router?: RouterProps;
 }
 
+interface ColorsCCState {
+  currentPage: number;
+  activities: UserSelectedColors;
+}
+
+export type LinkColorData = Readonly<{
+  albumId: number;
+  id: number;
+  title: string;
+  url: string;
+  thumbnailUrl: string;
+}>;
+
 export type UserSelectedColors = { [key: string]: string };
+
+type PropsFromRedux = ConnectedProps<typeof connector>;
+
+type ColorsCCProps = PropsFromRedux & WithRouterProps;
 
 export function withRouter<T>(Component: ComponentType<T & WithRouterProps>) {
   function ComponentWithRouterProp(props: T) {
@@ -32,29 +51,10 @@ export function withRouter<T>(Component: ComponentType<T & WithRouterProps>) {
   return ComponentWithRouterProp;
 }
 
-export type LinkColorData = Readonly<{
-  albumId: number;
-  id: number;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
-}>;
-
-interface ColorsCCState {
-  colors: LinkColorData[];
-  currentPage: number;
-  isLoading: boolean;
-  activities: UserSelectedColors;
-  error: string;
-}
-
-class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
+class ColorsCC extends Component<ColorsCCProps, ColorsCCState> {
   state: ColorsCCState = {
-    colors: [],
     currentPage: 1,
-    isLoading: true,
     activities: {},
-    error: "",
   };
 
   itemsPerPage = 40;
@@ -62,6 +62,8 @@ class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
   prevColors: LinkColorData[] | null = null;
 
   componentDidMount() {
+    this.props.fetchColors();
+
     let params = new URLSearchParams();
     if (this.props.router) {
       const { location } = this.props.router;
@@ -78,18 +80,9 @@ class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
     if (sessionPage) {
       this.setState({ currentPage: Number(sessionPage) });
     }
-    colorsRequest()
-      .then((data) => this.setState({ colors: data, isLoading: false }))
-      .catch((error) => {
-        this.setState({ colors: [], isLoading: false, error: error });
-      });
   }
 
-  componentDidUpdate(
-    prevProps: WithRouterProps,
-    prevState: ColorsCCState,
-    snapshot: number | null,
-  ) {
+  componentDidUpdate(prevProps: WithRouterProps, prevState: ColorsCCState) {
     if (this.props.router && prevProps.router) {
       if (
         this.props.router.location.search !== prevProps.router.location.search
@@ -106,9 +99,9 @@ class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
     }
   }
 
-  shouldComponentUpdate(nextProps: WithRouterProps, nextState: ColorsCCState) {
+  shouldComponentUpdate(nextProps: PropsFromRedux, nextState: ColorsCCState) {
     return (
-      this.state.colors !== nextState.colors ||
+      this.props.colors !== nextProps.colors ||
       this.state.currentPage !== nextState.currentPage
     );
   }
@@ -146,8 +139,8 @@ class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
     }
 
     this.sortedColorsCache = sortColors(colors);
-
     this.prevColors = colors;
+
     return this.sortedColorsCache;
   };
 
@@ -159,21 +152,22 @@ class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
   };
 
   render() {
-    const { colors, currentPage, isLoading, error } = this.state;
+    const { colors, isLoading, error } = this.props;
+    const { currentPage, activities } = this.state;
+    console.log(activities);
     const sortedColors = this.getSortedColors(colors);
     const paginatedColors = this.getPaginatedColors(sortedColors);
+    console.log(paginatedColors);
 
-    if (error) {
-      return <Text text={error} className="colors-error" />;
-    }
-
-    return isLoading ? (
+    return error ? (
+      <Text text={error} className="colors-error" />
+    ) : isLoading ? (
       <MainLoader />
     ) : (
       <ColorsPage
         totalItems={colors.length}
         currentPage={currentPage}
-        activities={this.state.activities}
+        activities={activities}
         itemsPerPage={this.itemsPerPage}
         paginatedColors={paginatedColors}
         onPageChange={this.handlePageChange}
@@ -182,4 +176,16 @@ class ColorsCC extends Component<WithRouterProps, ColorsCCState> {
   }
 }
 
-export default withRouter(ColorsCC);
+const mapStateToProps = (state: RootState) => ({
+  colors: state.colorsCC.colors,
+  isLoading: state.colorsCC.isLoading,
+  error: state.colorsCC.error,
+});
+
+const mapDispatchToProps = (dispatch: AppDispatch) => ({
+  fetchColors: () => dispatch(fetchColorsCC()),
+});
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
+
+export default connector(withRouter(ColorsCC));

@@ -1,6 +1,5 @@
 import {
   Dispatch,
-  FC,
   lazy,
   SetStateAction,
   useCallback,
@@ -18,11 +17,9 @@ import { RefObjectWithValue } from "../../../components/common/Input/Input";
 import { useParams } from "react-router-dom";
 import { ColorsKey, FontsActionTypes } from "../../../components/common/Enums";
 import { useColorManagement } from "../../../services/hooks/useColorManagement";
-import { SettingsProps } from "../Settings";
+import { useTheme } from "../../../components/App";
 export const FontsPage = lazy(() => import("./Fonts/Fonts"));
 export const ColorsPage = lazy(() => import("./Colors/Colors"));
-
-type ComputedStyleProps = SettingsProps;
 
 export type ColorKeyType = ColorsKey.PRIMARY | ColorsKey.SECONDARY;
 
@@ -33,11 +30,8 @@ export type ChangeColorFunction = (
   setColorFn: Dispatch<SetStateAction<string>>,
 ) => () => void;
 
-export const ComputedStyle: FC<ComputedStyleProps> = ({
-  theme,
-  setColors,
-  colors,
-}) => {
+export const ComputedStyle = () => {
+  const { theme, colors, setColors } = useTheme();
   const { settingsId } = useParams();
   const primaryColorRef = useRef<RefObjectWithValue>(null);
   const secondaryColorRef = useRef<RefObjectWithValue>(null);

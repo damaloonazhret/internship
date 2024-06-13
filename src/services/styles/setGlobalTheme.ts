@@ -4,7 +4,7 @@ import {
   WHITE,
   WHITE_ROOT,
 } from "../../components/constants/constants";
-import {ThemeColors} from "../../components/App";
+import { ThemeColors } from "../../components/App";
 
 export function setGlobalTheme(currentTheme: string, colors: ThemeColors) {
   if (currentTheme === WHITE) {

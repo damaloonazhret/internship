@@ -1,4 +1,4 @@
-import {CSSProperties, FC} from "react";
+import { CSSProperties, FC } from "react";
 
 interface TextProps {
   className?: string;
@@ -6,6 +6,10 @@ interface TextProps {
   text?: string | null;
 }
 
-export const Text: FC<TextProps> = ({ className, style, text = '' }) => {
-  return <span className={className} style={style}>{text}</span>;
+export const Text: FC<TextProps> = ({ className, style, text = "" }) => {
+  return (
+    <span className={className} style={style}>
+      {text}
+    </span>
+  );
 };

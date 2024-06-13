@@ -1,4 +1,4 @@
-import {RGB} from "./rgbToHsl";
+import { RGB } from "./rgbToHsl";
 
 export const hexToRgb = (hex: string): RGB => {
   const bigint = parseInt(hex, 16);
@@ -6,4 +6,4 @@ export const hexToRgb = (hex: string): RGB => {
   const g = (bigint >> 8) & 255;
   const b = bigint & 255;
   return [r, g, b];
-}
+};

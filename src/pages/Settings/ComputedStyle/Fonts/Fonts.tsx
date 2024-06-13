@@ -1,5 +1,5 @@
 import { FC } from "react";
-import {Button} from "../../../../components/common/Button";
+import { Button } from "../../../../components/common/Button";
 
 interface FontsProps {
   count: {
@@ -17,7 +17,7 @@ const Fonts: FC<FontsProps> = (props) => {
       <p>Value: {props.count.fontSize ? props.count.fontSize : props.FS}px </p>
       <p>Here you can set a custom font size for the entire page</p>
       <Button className="btn big" onClick={props.decrement}>
-          Decrease
+        Decrease
       </Button>
       <Button className="btn" onClick={props.reset}>
         Reset

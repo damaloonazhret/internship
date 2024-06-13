@@ -1,12 +1,11 @@
 import { NavLink } from "react-router-dom";
-import { FC } from "react";
 import "./index.scss";
 
-export const Nav: FC = () => {
+export const Nav = () => {
   return (
     <nav className="nav">
-      <NavLink to="/promise">Promise</NavLink>
-      <NavLink to="/async">Async</NavLink>
+      <NavLink to="/promise">Github</NavLink>
+      <NavLink to="/async">Github</NavLink>
       <NavLink to="/settings">Settings</NavLink>
       <NavLink to="/colorsCC">Colors class</NavLink>
       <NavLink to="/colorsFC">Colors func</NavLink>

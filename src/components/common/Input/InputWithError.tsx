@@ -3,7 +3,7 @@ import { Input, RefObjectWithValue } from "./Input";
 import { forwardRef, InputHTMLAttributes } from "react";
 
 export interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
-  error: null | string;
+  error: null | string | boolean;
 }
 
 export const InputWithError = forwardRef<RefObjectWithValue, InputProps>(

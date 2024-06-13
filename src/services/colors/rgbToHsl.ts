@@ -1,4 +1,4 @@
-export type RGB = [number, number, number]
+export type RGB = [number, number, number];
 
 export const rgbToHsl = ([r, g, b]: RGB): RGB => {
   r /= 255;
@@ -33,4 +33,4 @@ export const rgbToHsl = ([r, g, b]: RGB): RGB => {
     h /= 6;
   }
   return [h, s, l];
-}
+};

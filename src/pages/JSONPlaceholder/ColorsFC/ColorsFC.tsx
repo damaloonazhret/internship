@@ -3,22 +3,28 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { ColorsPage } from "../ColorsPage";
 import { MainLoader } from "../../../components/common/Loaders/MainLoader";
 import { sortColors } from "../../../services/colors/sortColors";
-import { LinkColorData } from "../ColorsCC/ColorsCC";
 import "../index.scss";
-import { colorsRequest } from "../../../services/api/JSONPlaceholder/api";
-import { useAsyncRequest } from "../../../services/hooks/useAsyncRequest";
 import { Text } from "../../../components/common/InfoText/Text";
+import {
+  useAppDispatch,
+  useAppSelector,
+} from "../../../services/hooks/redux/redux";
+import { fetchColorsFC } from "../../../store/colors/colorsThunks";
 
 const ColorsFC = () => {
-  const [colors, setColors] = useState<LinkColorData[]>([]);
   const [currentPage, setCurrentPage] = useState<number>(1);
   const itemsPerPage = 40;
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
+  const dispatch = useAppDispatch();
+  const { colors, isLoading, error } = useAppSelector(
+    (state) => state.colorsFC,
+  );
 
-  const { isLoading, error, data, fetchData } =
-    useAsyncRequest<LinkColorData[]>();
+  useEffect(() => {
+    dispatch(fetchColorsFC());
+  }, [dispatch]);
 
   useEffect(() => {
     const params = new URLSearchParams(location.search);
@@ -27,16 +33,6 @@ const ColorsFC = () => {
       setCurrentPage(Number(page));
     }
   }, [location]);
-
-  useEffect(() => {
-    fetchData(colorsRequest);
-  }, [fetchData]);
-
-  useEffect(() => {
-    if (Array.isArray(data) && data.length > 0) {
-      setColors(data);
-    }
-  }, [data]);
 
   const sortedColors = useMemo(() => {
     if (!Array.isArray(colors) || colors.length === 0) return [];
@@ -62,15 +58,10 @@ const ColorsFC = () => {
     [navigate, pathname],
   );
 
-  if (isLoading) {
-    return <MainLoader />;
-  }
-
-  return error ? (
-    <Text
-      text={error instanceof Error ? error.message : error}
-      className="colors-error"
-    ></Text>
+  return isLoading ? (
+    <MainLoader />
+  ) : error ? (
+    <Text text={error} className="colors-error"></Text>
   ) : (
     <ColorsPage
       totalItems={colors.length}

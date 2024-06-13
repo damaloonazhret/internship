@@ -5,7 +5,7 @@ interface SetNavProps {
   url: string;
 }
 
-export const SetNav:FC<SetNavProps> = ({ url }) => {
+export const SetNav: FC<SetNavProps> = ({ url }) => {
   return (
     <nav className="settings-nav">
       <h2>Settings page</h2>

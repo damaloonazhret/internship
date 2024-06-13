@@ -1,13 +1,11 @@
 import { Navigate, Route, Routes } from "react-router-dom";
 import { PublicRoute } from "../../routes/PublicRoute";
 import { PrivateRoute } from "../../routes/PrivateRoute";
-import React, { FC, lazy, Suspense, useEffect, useState } from "react";
-import { Title } from "../common/InfoText/Title";
+import { lazy, Suspense, useEffect, useState } from "react";
 import { getCookie } from "../../services/cookie/getCookie";
 import { MainLoader } from "../common/Loaders/MainLoader";
-
-import { ThemeColors, SetColorsState, ThemeState } from "../App";
 import { UserInfo, UserRepo } from "../../services/api/github/api";
+
 export const AsyncPage = lazy(() => import("../../pages/Request/Async"));
 export const PromisePage = lazy(() => import("../../pages/Request/Promise"));
 export const ColorsCCPage = lazy(
@@ -35,15 +33,7 @@ export interface GithubData {
   userRepoData: Readonly<GithubRepo>[];
 }
 
-interface MainProps {
-  theme: ThemeState;
-  colors: ThemeColors;
-  setColors: SetColorsState;
-}
-
-export const Main: FC<MainProps> = ({ colors, theme, setColors }) => {
-  const [async, setAsync] = useState<GithubData | {}>({});
-  const [promise, setPromise] = useState<GithubData | {}>({});
+export const Main = () => {
   const [isAuth, setIsAuth] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -53,10 +43,6 @@ export const Main: FC<MainProps> = ({ colors, theme, setColors }) => {
     setLoading(false);
   }, []);
 
-  const headerInfo = (title: string) => {
-    return <Title title={title} />;
-  };
-
   if (loading) {
     return <MainLoader />;
   }
@@ -65,40 +51,13 @@ export const Main: FC<MainProps> = ({ colors, theme, setColors }) => {
     <>
       <Suspense fallback={<MainLoader />}>
         <Routes>
-          <Route
-            path="/async"
-            element={
-              <AsyncPage
-                setAsyncState={(newState: GithubData) => setAsync(newState)}
-                asyncState={async}
-                render={headerInfo}
-              />
-            }
-          />
+          <Route path="/async" element={<AsyncPage />} />
           <Route path="/" element={<Navigate to="/promise" />} />
-          <Route
-            path="/promise"
-            element={
-              <PromisePage
-                setPromiseState={(newState: GithubData) => setPromise(newState)}
-                promiseState={promise}
-                render={headerInfo}
-              />
-            }
-          />
+          <Route path="/promise" element={<PromisePage />} />
           <Route
             path="settings/*"
             element={
-              <PrivateRoute
-                element={
-                  <SettingsPage
-                    colors={colors}
-                    theme={theme}
-                    setColors={setColors}
-                  />
-                }
-                isAuth={isAuth}
-              />
+              <PrivateRoute element={<SettingsPage />} isAuth={isAuth} />
             }
           />
           <Route

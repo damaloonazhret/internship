@@ -2,7 +2,8 @@ import { extractColorFromUrl } from "../../services/colors/extractColorFromUrl";
 import { Text } from "../../components/common/InfoText/Text";
 import { CustomLink } from "../../components/common/CustomLink";
 import { FC, useEffect, useState } from "react";
-import {LinkColorData, UserSelectedColors} from "./ColorsCC/ColorsCC";
+import { LinkColorData, UserSelectedColors } from "./ColorsCC/ColorsCC";
+import { useLocation } from "react-router-dom";
 
 interface ColorLinkProps {
   color: LinkColorData;
@@ -10,13 +11,11 @@ interface ColorLinkProps {
   activities: UserSelectedColors;
 }
 
-export const ColorLink: FC<ColorLinkProps> = ({
-  color,
-  id,
-  activities,
-}) => {
+export const ColorLink: FC<ColorLinkProps> = ({ color, id, activities }) => {
   const bgColor = extractColorFromUrl(color.thumbnailUrl);
   const [active, setActive] = useState(false);
+  const location = useLocation();
+  const pathname = location.pathname;
 
   useEffect(() => {
     if (activities[id] === "true") {
@@ -39,7 +38,7 @@ export const ColorLink: FC<ColorLinkProps> = ({
       <CustomLink
         style={{ backgroundColor: `#${bgColor}` }}
         href={color.thumbnailUrl}
-        onClick={handleClick}
+        onClick={pathname === "/colorsCC" ? handleClick : undefined}
         className={active ? "active" : ""}
       >
         <Text style={{ visibility: "hidden" }} text={color.title} />

@@ -1,26 +1,10 @@
-import {
-  RenderRequest,
-  Request,
-  SetStateRequest,
-  StateRequest,
-} from "../../components/common/GitHub/Request";
-import { FC } from "react";
+import { Request } from "../../components/common/GitHub/Request";
+import { useAppSelector } from "../../services/hooks/redux/redux";
 
-interface AsyncProps {
-  setAsyncState: SetStateRequest;
-  asyncState: StateRequest;
-  render: RenderRequest;
-}
+const Async = () => {
+  const { userName } = useAppSelector((state) => state.async);
 
-const Async: FC<AsyncProps> = ({ setAsyncState, asyncState, render }) => {
-  return (
-    <Request
-      setState={setAsyncState}
-      state={asyncState}
-      render={render}
-      title="Async Page Request"
-    />
-  );
+  return <Request title="Async Page Request" userName={userName} />;
 };
 
 export default Async;

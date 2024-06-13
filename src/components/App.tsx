@@ -1,7 +1,13 @@
 import { BrowserRouter as Router } from "react-router-dom";
 import { Aside } from "./Aside/Aside";
 import { Main } from "./Main/Main";
-import React, { useState } from "react";
+import {
+  createContext,
+  Dispatch,
+  SetStateAction,
+  useContext,
+  useState,
+} from "react";
 import "../index.scss";
 
 export interface ThemeColors {
@@ -16,6 +22,23 @@ export type SetColorsState = (
 export type ThemeState = "dark" | "white";
 
 export type SetThemeState = (theme: ThemeState) => void;
+
+interface ThemeContextType {
+  theme: ThemeState;
+  setTheme: Dispatch<SetStateAction<ThemeState>>;
+  colors: ThemeColors;
+  setColors: Dispatch<SetStateAction<ThemeColors>>;
+}
+
+const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
+
+export const useTheme = () => {
+  const context = useContext(ThemeContext);
+  if (!context) {
+    throw new Error("useTheme must be used within a ThemeProvider");
+  }
+  return context;
+};
 
 export const App = () => {
   function initialTheme(): ThemeState {
@@ -33,13 +56,10 @@ export const App = () => {
 
   return (
     <Router>
-      <Aside
-        theme={theme}
-        setTheme={setTheme}
-        colors={colors}
-        setColors={setColors}
-      />
-      <Main theme={theme} colors={colors} setColors={setColors} />
+      <ThemeContext.Provider value={{ theme, setTheme, colors, setColors }}>
+        <Aside />
+        <Main />
+      </ThemeContext.Provider>
     </Router>
   );
 };
