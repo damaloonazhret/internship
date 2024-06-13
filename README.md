@@ -34,3 +34,6 @@
 ### Typescript
 
 - [Iteration 12: Typescript](https://beautiful-liger-ce1081.netlify.app/promise) — [Branch](https://github.com/damaloonazhret/internship/tree/typescript) — [ZIP](https://github.com/damaloonazhret/internship/archive/refs/heads/typescript.zip) — [Pull Request](https://github.com/damaloonazhret/internship/pull/14)
+
+### Redux
+- [Iteration 13: Redux](https://majestic-brigadeiros-7ee8a1.netlify.app/promise) — [Branch](https://github.com/damaloonazhret/internship/tree/redux) — [ZIP](https://github.com/damaloonazhret/internship/archive/refs/heads/redux.zip) — [Pull Request](https://github.com/damaloonazhret/internship/pull/15)
