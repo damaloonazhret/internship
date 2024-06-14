@@ -3,8 +3,6 @@ import { Aside } from "./Aside/Aside";
 import { Main } from "./Main/Main";
 import {
   createContext,
-  Dispatch,
-  SetStateAction,
   useContext,
   useState,
 } from "react";
@@ -25,9 +23,9 @@ export type SetThemeState = (theme: ThemeState) => void;
 
 interface ThemeContextType {
   theme: ThemeState;
-  setTheme: Dispatch<SetStateAction<ThemeState>>;
+  setTheme: SetThemeState;
   colors: ThemeColors;
-  setColors: Dispatch<SetStateAction<ThemeColors>>;
+  setColors: SetColorsState;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
