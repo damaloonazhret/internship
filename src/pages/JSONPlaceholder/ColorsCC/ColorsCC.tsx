@@ -154,10 +154,8 @@ class ColorsCC extends Component<ColorsCCProps, ColorsCCState> {
   render() {
     const { colors, isLoading, error } = this.props;
     const { currentPage, activities } = this.state;
-    console.log(activities);
     const sortedColors = this.getSortedColors(colors);
     const paginatedColors = this.getPaginatedColors(sortedColors);
-    console.log(paginatedColors);
 
     return error ? (
       <Text text={error} className="colors-error" />
