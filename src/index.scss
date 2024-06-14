@@ -187,14 +187,6 @@ label {
   & p:hover {
     color: var(--green);
   }
-  @media (hover: none) {
-    & a:hover {
-      color: inherit;
-    }
-    & p:hover {
-      color: inherit;
-    }
-  }
 }
 
 a.white {
