@@ -3,8 +3,8 @@ import {
   BLACK_ROOT,
   WHITE,
   WHITE_ROOT,
-} from "../../components/constants/constants";
-import { ThemeColors } from "../../components/App";
+} from "components/constants";
+import { ThemeColors } from "components/App";
 
 export function setGlobalTheme(currentTheme: string, colors: ThemeColors) {
   if (currentTheme === WHITE) {

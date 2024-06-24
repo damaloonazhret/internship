@@ -1,4 +1,4 @@
-import { FontsActionTypes } from "../../components/common/Enums";
+import { FontsActionTypes } from "components/common/Enums";
 
 interface FontState {
   fontSize: number;

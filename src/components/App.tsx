@@ -1,6 +1,6 @@
 import { BrowserRouter as Router } from "react-router-dom";
-import { Aside } from "./Aside/Aside";
-import { Main } from "./Main/Main";
+import { Aside } from "components/Aside";
+import { Main } from "components/Main";
 import {
   createContext,
   useContext,

@@ -1,6 +1,6 @@
-import { Text } from "../InfoText/Text";
+import { Txt } from "components/common/InfoText/Txt";
 import { CustomLink } from "../CustomLink";
-import { GithubInfo } from "../../Main/Main";
+import { GithubInfo } from "components/Main";
 
 interface UserProps {
   userInfo: Readonly<GithubInfo>;
@@ -17,8 +17,8 @@ export const UserInfo = ({ userInfo }: UserProps) => {
           className="avatar"
         />
       </CustomLink>
-      <Text key={userInfo.name} text={`Name: ${userInfo.name}`} />
-      <Text key={userInfo.login} text={userInfo.login} />
+      <Txt key={userInfo.name} text={`Name: ${userInfo.name}`} />
+      <Txt key={userInfo.login} text={userInfo.login} />
     </div>
   );
 };

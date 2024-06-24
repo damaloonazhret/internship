@@ -1,7 +1,7 @@
 import { rgbToHsl } from "./rgbToHsl";
 import { hexToRgb } from "./hexToRgb";
 import { extractColorFromUrl } from "./extractColorFromUrl";
-import { LinkColorData } from "../../pages/JSONPlaceholder/ColorsCC/ColorsCC";
+import { LinkColorData } from "pages/Colors";
 
 type Colors = LinkColorData[];
 

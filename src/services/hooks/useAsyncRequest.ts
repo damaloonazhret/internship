@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 type NoArgRequestFunction<T> = () => Promise<T>;
 type ArgRequestFunction<T> = (value: string) => Promise<T>;
 
-type RequestFunction<T> = {
+export type RequestFunction<T> = {
   (requestFunction: NoArgRequestFunction<T>): Promise<void>;
   (requestFunction: ArgRequestFunction<T>, value: string): Promise<void>;
 };

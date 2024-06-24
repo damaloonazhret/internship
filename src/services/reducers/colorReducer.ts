@@ -1,5 +1,5 @@
-import { ThemeColors } from "../../components/App";
-import { ColorsActionTypes } from "../../components/common/Enums";
+import { ThemeColors } from "components/App";
+import { ColorsActionTypes } from "components/common/Enums";
 
 export type ColorsTypes =
   | ColorsActionTypes.SET_PRIMARY

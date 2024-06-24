@@ -1,13 +1,13 @@
-import { ColorsActionTypes, ColorsKey } from "../../components/common/Enums";
+import { ColorsActionTypes, ColorsKey } from "components/common/Enums";
 import { colorReducer, ColorsTypes } from "../reducers/colorReducer";
 import { useLocalStorage } from "./useLocalStorage";
 import { useCallback, useEffect, useReducer, useState } from "react";
 import { useThrottle } from "./useThrottle";
-import { ThemeColors, SetColorsState } from "../../components/App";
+import { ThemeColors, SetColorsState } from "components/App";
 import {
   ActionType,
   ColorKeyType,
-} from "../../pages/Settings/ComputedStyle/ComputedStyle";
+} from "pages/Settings/Components/ComputedStyle";
 
 const getActionType = (
   colorKey: ColorsKey,

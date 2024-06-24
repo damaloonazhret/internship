@@ -1,5 +1,5 @@
-import { Text } from "../InfoText/Text";
-import { GithubRepo } from "../../Main/Main";
+import { Txt } from "components/common/InfoText/Txt";
+import { GithubRepo } from "components/Main";
 
 interface CardsProps {
   userRepo: Readonly<GithubRepo>[];
@@ -8,9 +8,9 @@ interface CardsProps {
 export const Cards = ({ userRepo }: CardsProps) => {
   return userRepo.map((repoData, index) => (
     <div key={index} className="repos">
-      <Text key={repoData.full_name} text={repoData.full_name} />
-      <Text key={repoData.language} text={repoData.language} />
-      <Text
+      <Txt key={repoData.full_name} text={repoData.full_name} />
+      <Txt key={repoData.language} text={repoData.language} />
+      <Txt
         key={repoData.visibility}
         text={`Visibility ${repoData.language}`}
       />
@@ -22,7 +22,7 @@ export const Cards = ({ userRepo }: CardsProps) => {
       >
         Link to repo
       </a>
-      <Text key={repoData.created_at} text={repoData.created_at} />
+      <Txt key={repoData.created_at} text={repoData.created_at} />
     </div>
   ));
 };

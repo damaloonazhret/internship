@@ -1,6 +1,6 @@
 import { Cards } from "./Cards";
 import { UserInfo } from "./UserInfo";
-import { GithubData } from "../../Main/Main";
+import { GithubData } from "components/Main";
 import { FC } from "react";
 
 interface GitHubInfoProps {

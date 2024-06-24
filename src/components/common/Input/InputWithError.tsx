@@ -1,4 +1,4 @@
-import { Text } from "../InfoText/Text";
+import { Txt } from "components/common/InfoText/Txt";
 import { Input, RefObjectWithValue } from "./Input";
 import { forwardRef, InputHTMLAttributes } from "react";
 
@@ -13,7 +13,7 @@ export const InputWithError = forwardRef<RefObjectWithValue, InputProps>(
     return (
       <>
         <Input ref={ref} {...rest} />
-        {error && <Text className="error" text={String(error)} />}
+        {error && <Txt className="error" text={String(error)} />}
       </>
     );
   },
