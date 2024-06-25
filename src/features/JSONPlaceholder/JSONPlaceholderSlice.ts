@@ -1,31 +1,31 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { LinkColorData } from "pages/Colors";
 
-interface IColors {
+interface ColorsState {
   colors: LinkColorData[];
   isLoading: boolean;
   error: string;
 }
 
-const initialState: IColors = {
+const initialState: ColorsState = {
   colors: [],
   isLoading: false,
   error: "",
 };
 
-const colorsSlice = createSlice({
+const JSONPlaceholderSlice = createSlice({
   name: "colors",
   initialState,
   reducers: {
-    colorsFetching(state) {
+    JSONPlaceholderFetching(state) {
       state.isLoading = true;
     },
-    colorsFetchingSuccess(state, action: PayloadAction<LinkColorData[]>) {
+    JSONPlaceholderFetchingSuccess(state, action: PayloadAction<LinkColorData[]>) {
       state.isLoading = false;
       state.error = "";
       state.colors = action.payload;
     },
-    colorsFetchingError(state, action: PayloadAction<string>) {
+    JSONPlaceholderFetchingError(state, action: PayloadAction<string>) {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -33,9 +33,9 @@ const colorsSlice = createSlice({
 });
 
 export const {
-  colorsFetchingError,
-  colorsFetchingSuccess,
-  colorsFetching,
-} = colorsSlice.actions;
+  JSONPlaceholderFetchingError,
+  JSONPlaceholderFetchingSuccess,
+  JSONPlaceholderFetching,
+} = JSONPlaceholderSlice.actions;
 
-export const colorsReducer = colorsSlice.reducer;
+export const JSONPlaceholderReducer = JSONPlaceholderSlice.reducer;

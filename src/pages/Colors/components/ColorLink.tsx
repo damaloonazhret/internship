@@ -38,7 +38,7 @@ export const ColorLink: FC<ColorLinkProps> = ({ color, id, activities }) => {
       <CustomLink
         style={{ backgroundColor: `#${bgColor}` }}
         href={color.thumbnailUrl}
-        onClick={pathname === "/colors" ? handleClick : undefined}
+        onClick={pathname === "/JSONPlaceholder" ? handleClick : undefined}
         className={active ? "active" : ""}
       >
         <Txt style={{ visibility: "hidden" }} text={color.title} />

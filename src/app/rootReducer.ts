@@ -1,8 +1,8 @@
 import {combineReducers} from "redux";
 import {githubReducer} from "features/github/githubSlice";
-import {colorsReducer} from "features/colors/colorsSlice";
+import {JSONPlaceholderReducer} from "features/JSONPlaceholder/JSONPlaceholderSlice";
 
 export const rootReducer = combineReducers({
   github: githubReducer,
-  colors: colorsReducer,
+  JSONPlaceholder: JSONPlaceholderReducer,
 });

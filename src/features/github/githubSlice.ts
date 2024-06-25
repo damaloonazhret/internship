@@ -1,12 +1,12 @@
 import {createSlice, PayloadAction} from "@reduxjs/toolkit";
 import {GithubData} from "components/Main";
 
-interface GithubSlice {
+interface GithubState {
   userName: string;
   githubData: GithubData;
 }
 
-const initialState: GithubSlice = {
+const initialState: GithubState = {
   userName: "",
   githubData: {
     userInfoData: {

@@ -7,7 +7,7 @@ import {sortColors} from "services/colors/sortColors";
 import {MainLoader} from "components/common/Loaders/MainLoader";
 import {ColorsPage} from "pages/Colors/components/ColorsPage";
 import {AppDispatch, RootState} from "app/store";
-import {fetchColors} from "features/colors/colorsThunks";
+import {fetchColors} from "features/JSONPlaceholder/JSONPlaceholderThunk";
 import {Txt} from "components/common/InfoText/Txt";
 
 export interface RouterProps {
@@ -175,9 +175,9 @@ class Colors extends Component<ColorsProps, ColorsState> {
 }
 
 const mapStateToProps = (state: RootState) => ({
-  colors: state.colors.colors,
-  isLoading: state.colors.isLoading,
-  error: state.colors.error,
+  colors: state.JSONPlaceholder.colors,
+  isLoading: state.JSONPlaceholder.isLoading,
+  error: state.JSONPlaceholder.error,
 });
 
 const mapDispatchToProps = (dispatch: AppDispatch) => ({
