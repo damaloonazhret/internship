@@ -6,27 +6,21 @@ import {DEBOUNCE_DELAY} from "components/constants";
 import {useLocation, useNavigate} from "react-router-dom";
 import {RefObjectWithValue} from "../common/Input/Input";
 import {Title} from "../common/InfoText/Title";
-import {useAppDispatch, useAppSelector,} from "services/hooks/redux/redux";
-import {setAsyncName} from "features/github/githubSlice";
-import {RequestFunction} from "services/hooks/useAsyncRequest";
-import {GithubData} from "components/Main";
-import {getUserInfoAsync} from "services/api";
-import {selectUserName} from "features/github/selectors";
+import {useAppDispatch,} from "services/hooks/redux/redux";
+import {fetchUserByName} from "features/github/githubSlice";
 
 interface HeaderProps {
   msg: string;
   isError: boolean;
-  fetchData: RequestFunction<GithubData>;
 }
 
-export const Header: FC<HeaderProps> = ({msg, isError, fetchData}) => {
+export const Header: FC<HeaderProps> = ({msg, isError}) => {
   const navigate = useNavigate();
   const location = useLocation();
   const pathname = location.pathname;
   const title = pathname.charAt(1).toUpperCase() + pathname.slice(2);
   const userNameRef = useRef<RefObjectWithValue>(null);
   const [userNameL, setUserLName] = useState<string>("");
-  const userName = useAppSelector(selectUserName);
   const dispatch = useAppDispatch();
   const debouncedValue = useDebounce(userNameL, DEBOUNCE_DELAY);
   const [localError, setLocalError] = useState("");
@@ -36,8 +30,7 @@ export const Header: FC<HeaderProps> = ({msg, isError, fetchData}) => {
       const isChecked = checkValidate(value);
       if (isChecked.validate) {
         const pathname = location.pathname;
-        dispatch(setAsyncName(value))
-        fetchData(getUserInfoAsync, value);
+        dispatch(fetchUserByName(value));
         const params = new URLSearchParams();
         params.append("query", value);
         navigate({
@@ -48,7 +41,7 @@ export const Header: FC<HeaderProps> = ({msg, isError, fetchData}) => {
         setLocalError(isChecked.error);
       }
     },
-    [dispatch, fetchData, location.pathname, navigate],
+    [dispatch, location.pathname, navigate],
   );
 
   useEffect(() => {
@@ -80,7 +73,7 @@ export const Header: FC<HeaderProps> = ({msg, isError, fetchData}) => {
             type="search"
             list="names"
             ref={userNameRef}
-            value={userName}
+            value={userNameL}
             error={localError ? localError : isError && msg}
             onChange={handleInputChange}
           />

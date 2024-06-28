@@ -1,4 +1,4 @@
-import {UserInfo, UserRepo} from "components/Main";
+import {UserInfo, UserRepo} from "types";
 
 const token = process.env.REACT_APP_TOKEN;
 
@@ -13,7 +13,7 @@ export interface ExtractUserData {
 }
 
 const repos = "/repos";
-const userUrl = "https://api.github.com/users/";
+const userUrl = "https://api.githube.com/users/";
 
 export const asyncRequest = async (
   username: string,
@@ -50,7 +50,7 @@ export const asyncRequest = async (
   }
 };
 
-const extractUserData = ({ userInfo, userRepo }: ExtractUserData) => {
+export const extractUserData = ({ userInfo, userRepo }: ExtractUserData) => {
   const userInfoData = {
     name: userInfo["name"],
     html_url: userInfo["html_url"],

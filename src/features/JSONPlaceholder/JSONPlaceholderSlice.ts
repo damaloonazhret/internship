@@ -17,15 +17,15 @@ const JSONPlaceholderSlice = createSlice({
   name: "colors",
   initialState,
   reducers: {
-    JSONPlaceholderFetching(state) {
+    setIsLoading(state) {
       state.isLoading = true;
     },
-    JSONPlaceholderFetchingSuccess(state, action: PayloadAction<LinkColorData[]>) {
+    setIsSuccess(state, action: PayloadAction<LinkColorData[]>) {
       state.isLoading = false;
       state.error = "";
       state.colors = action.payload;
     },
-    JSONPlaceholderFetchingError(state, action: PayloadAction<string>) {
+    setIsError(state, action: PayloadAction<string>) {
       state.isLoading = false;
       state.error = action.payload;
     },
@@ -33,9 +33,9 @@ const JSONPlaceholderSlice = createSlice({
 });
 
 export const {
-  JSONPlaceholderFetchingError,
-  JSONPlaceholderFetchingSuccess,
-  JSONPlaceholderFetching,
+  setIsError,
+  setIsSuccess,
+  setIsLoading,
 } = JSONPlaceholderSlice.actions;
 
 export const JSONPlaceholderReducer = JSONPlaceholderSlice.reducer;
