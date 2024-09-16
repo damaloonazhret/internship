@@ -1,0 +1,30 @@
+@media screen and (max-width: 600px) {
+    .body {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    #aside {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .property {
+        height: 70px;
+    }
+
+    .header {
+        gap: 10px;
+    }
+
+    .items {
+        height: 120px;
+        padding: 0;
+    }
+
+    .content form, .content fieldset {
+        height: 120px;
+    }
+}
