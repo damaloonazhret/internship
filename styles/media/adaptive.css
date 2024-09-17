@@ -1,0 +1,95 @@
+@media screen and (width <= 1280px) {
+    .body {
+        grid-template-columns: 1fr;
+        grid-template-rows: 250px auto;
+        row-gap: 20px;
+    }
+
+    .header {
+        grid-column: 1 / 2;
+        grid-row: 1 / 2;
+        grid-template-columns: repeat(2, auto);
+        display: block;
+        position: sticky;
+        top: 0;
+        z-index: -1;
+    }
+
+    .header a {
+        display: none;
+    }
+
+    #firstRow, #secondRow {
+        grid-template-columns: repeat(5, 1fr);
+    }
+
+    .main {
+        grid-row: 2 / 3;
+    }
+
+    .data {
+        margin-top: 0;
+    }
+
+    .main {
+        grid-row: 2 / 3;
+        grid-template-columns: auto;
+        grid-template-rows: auto auto 1fr;
+    }
+
+    .elements {
+        grid-row: 2 / 3;
+        grid-column: 1 / 3;
+        grid-template-rows: 1fr;
+        grid-template-columns: repeat(3, 100px);
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .lists {
+        grid-column: 1 / 3;
+    }
+
+    fieldset div {
+        justify-content: space-around;
+    }
+
+    fieldset section {
+        row-gap: 5px;
+    }
+
+    fieldset > section > div:nth-child(5) > label {
+        width: 100%;
+    }
+
+}
+
+@media print and (orientation: landscape) {
+    .body {
+        background-color: #ff0000;
+    }
+}
+
+@media print and (orientation: portrait) {
+    .body {
+        background-color: violet;
+    }
+}
+
+@media print and (min-resolution: 150dpi) {
+    span {
+        font-size: 30px;
+    }
+}
+
+@media print and (min-resolution: 300dpi) {
+    span {
+        font-size: 18px;
+    }
+}
+
+@media (aspect-ratio: 1/1) {
+    .body {
+        background-color: #dc0155;
+    }
+}

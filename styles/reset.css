@@ -1,0 +1,40 @@
+input:not([type="radio"]) {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    border: none;
+    outline: none;
+}
+
+textarea {
+    resize: none;
+}
+
+select:focus {
+    border: none;
+    outline: none;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: var(--font-family-main);
+    text-align: center;
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    font-size: larger;
+}
+
+select,
+.data input,
+.data textarea {
+    border: 0;
+    outline: none;
+    background-color: transparent;
+}
