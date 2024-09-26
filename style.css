@@ -1,0 +1,320 @@
+:root {
+    --white: #e8e8e8;
+    --red: #dc0155;
+    --yellow: #ffc548;
+    --black: #000000;
+    --gray: #404b62;
+    --dark-blue: #19253b;
+
+    --background-color-dark: var(--dark-blue);
+    --time-color-dark: var(--dark-blue);
+    --hover-color-dark: var(--dark-blue);
+    --border-color-interaction-dark: var(--white);
+    --background-color-interaction-dark: var(--white);
+    --focus-color-interaction-dark: var(--white);
+    --active-link-color-dark: var(--white);
+    --text-color-dark-input-label: var(--red);
+    --text-color-dark-input-bg: var(--red);
+    --time-bg-dark-input: var(--red);
+    --text-shadow-dark: var(--red);
+    --text-color-dark: var(--yellow);
+    --visited-link-color-dark: var(--yellow);
+    --checked-input-color-dark: var(--yellow);
+
+    --background-color-light: var(--white);
+    --time-color-light: var(--white);
+    --hover-color-light: var(--white);
+    --border-color-interaction-light: var(--gray);
+    --background-color-interaction-light: var(--gray);
+    --focus-color-interaction-light: var(--gray);
+    --active-link-color-light: var(--gray);
+    --text-color-light-input-label: var(--red);
+    --text-color-light-input-bg: var(--red);
+    --time-bg-light-input: var(--red);
+    --text-shadow-lighg: var(--red);
+    --text-color-light: var(--black);
+    --visited-link-color-light: var(--black);
+    --checked-input-color-light: var(--black);
+
+    --font-family-main: consolas, "Times New Roman", serif;
+    /*--transition-all: .5s all;*/
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: var(--font-family-main);
+    text-align: center;
+}
+
+body::-webkit-scrollbar {
+    width: 5px;
+}
+
+body::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+}
+
+body::-webkit-scrollbar-track {
+    background-color: transparent;
+}
+
+.header > a > img {
+    width: 30vw;
+    /*transition: var(--transition-all);*/
+}
+
+.header > a p ~ img:hover {
+    transform: scale(0.9)
+}
+
+#anchor {
+    margin-bottom: 20px;
+    display: block;
+}
+
+#anchor img {
+    border-top: 8px groove #541515;
+    border-bottom: 8px inset #82d8da;
+    border-left: 8px groove #155254;
+    border-right: 8px inset #82d8da;
+    background-color: transparent;
+    background-image: url("./assets/button.png");
+    background-size: 25%;
+    box-shadow: -8px -8px, 10px 10px 10px green, 15px 15px 10px red;
+}
+
+#styleTable td {
+    user-select: none;
+    cursor: wait;
+    /*transition: var(--transition-all);*/
+}
+
+select,
+.data input,
+.data textarea {
+    border: 0;
+    outline: none;
+    background-color: transparent;
+}
+
+#firstRow .bold {
+    font-weight: 800;
+    line-height: 2rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+#firstRow .strong {
+    font-weight: 100;
+    letter-spacing: 4px;
+}
+
+#firstRow .sup {
+    vertical-align: super;
+    font-size: smaller;
+}
+
+#firstRow .sub {
+    vertical-align: sub;
+    font-size: smaller;
+}
+
+#firstRow .ins {
+    text-decoration: underline;
+}
+
+#secondRow .del {
+    text-decoration: line-through;
+}
+
+#secondRow .small {
+    font-size: 80%;
+}
+
+#secondRow .mark {
+    position: relative;
+}
+
+#secondRow div.mark::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: yellow;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+#secondRow .i {
+    font-style: italic;
+}
+
+#secondRow .em {
+    font-style: oblique;
+}
+
+.data {
+    padding: 5px;
+}
+
+.data div {
+    padding-bottom: 20px;
+}
+
+input[type = range] {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    outline: none;
+    margin: 0;
+}
+
+input[type = file] {
+    background-color: transparent;
+}
+
+/*input[type = image] {*/
+/*    transition: 1s;*/
+/*}*/
+
+input[type = image]:hover {
+    transform: rotate(260deg);
+}
+
+input:focus {
+    background-color: rgba(82, 82, 82, 0.18);
+}
+
+input[type=checkbox] {
+    display: inline-block;
+    position: relative;
+    height: 20px;
+    width: 20px;
+    /*transition: var(--transition-all);*/
+}
+
+input:invalid:not(:placeholder-shown).required {
+    border-color: red;
+}
+
+input:valid:not(:placeholder-shown).required {
+    border-color: green;
+}
+
+.radio input[type=radio]:checked + label {
+    margin: 0;
+    padding: 0;
+}
+
+.radio input[type=radio] {
+    display: inline-block;
+    position: relative;
+    height: 20px;
+    width: 20px;
+    border-radius: 20px;
+    /*transition: var(--transition-all);*/
+}
+
+.button-hover:hover {
+    cursor: pointer;
+    background-color: rgba(152, 152, 152, 0.39);
+}
+
+.button-hover:active {
+    background-color: rgba(152, 152, 152, 0.16);
+}
+
+textarea {
+    resize: none;
+}
+
+textarea::-webkit-scrollbar {
+    width: 6px;
+}
+
+textarea::-webkit-scrollbar-thumb {
+    border-radius: 5px;
+}
+
+#file::file-selector-button {
+    background: rgba(255, 255, 255, 0.12);
+    border: none;
+}
+
+#file::file-selector-button:hover {
+    background: rgba(255, 255, 255, 0.22);
+}
+
+#file::file-selector-button:active {
+    background: rgba(255, 255, 255, 0.36);
+}
+
+select:focus {
+    border: none;
+    outline: none;
+}
+
+.lists table {
+    border-spacing: 20px;
+}
+
+.lists table td {
+    padding: 10px;
+    cursor: text;
+    user-select: text;
+}
+
+#listAnchor {
+    text-shadow: 5px 5px rgba(255, 0, 0, 0.4);
+}
+
+li::first-letter,
+dt::first-letter,
+dd::first-letter {
+    color: red;
+}
+
+li::first-letter,
+dt::first-letter,
+dd::first-letter {
+    color: red;
+}
+
+.nav :first-child {
+    text-transform: lowercase;
+}
+
+.nav :last-child {
+    text-transform: uppercase;
+}
+
+article[data-hacker]:before {
+    content: 'hac';
+}
+
+article[data-hacker]:after {
+    content: 'ker';
+}
+
+.footer h4,
+.footer h3 {
+    display: inline;
+}
+
+.footer h4 a {
+    text-decoration: overline wavy green;
+}
+
+.footer h3 a {
+    text-decoration: underline double red;
+}
